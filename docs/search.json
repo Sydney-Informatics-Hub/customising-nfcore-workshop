@@ -1,5 +1,75 @@
 [
   {
+    "objectID": "setup.html",
+    "href": "setup.html",
+    "title": "Setup",
+    "section": "",
+    "text": "1. Get a client\nThese are the setup instructions…\n\n\n\n\nAll materials copyright Sydney Informatics Hub, University of Sydney"
+  },
+  {
+    "objectID": "notebooks/2.5_custommodule.html",
+    "href": "notebooks/2.5_custommodule.html",
+    "title": "Sydney Informatics Hub Course name",
+    "section": "",
+    "text": "All materials copyright Sydney Informatics Hub, University of Sydney"
+  },
+  {
+    "objectID": "notebooks/2.3_config.html",
+    "href": "notebooks/2.3_config.html",
+    "title": "Sydney Informatics Hub Course name",
+    "section": "",
+    "text": "All materials copyright Sydney Informatics Hub, University of Sydney"
+  },
+  {
+    "objectID": "notebooks/00_introduction.html",
+    "href": "notebooks/00_introduction.html",
+    "title": "Sydney Informatics Hub Course name",
+    "section": "",
+    "text": "All materials copyright Sydney Informatics Hub, University of Sydney"
+  },
+  {
+    "objectID": "notebooks/2.2_paramsfile.html",
+    "href": "notebooks/2.2_paramsfile.html",
+    "title": "Sydney Informatics Hub Course name",
+    "section": "",
+    "text": "All materials copyright Sydney Informatics Hub, University of Sydney"
+  },
+  {
+    "objectID": "notebooks/1.2_nfcoretools.html",
+    "href": "notebooks/1.2_nfcoretools.html",
+    "title": "Sydney Informatics Hub Course name",
+    "section": "",
+    "text": "All materials copyright Sydney Informatics Hub, University of Sydney"
+  },
+  {
+    "objectID": "notebooks/2.1_flags.html",
+    "href": "notebooks/2.1_flags.html",
+    "title": "Sydney Informatics Hub Course name",
+    "section": "",
+    "text": "All materials copyright Sydney Informatics Hub, University of Sydney"
+  },
+  {
+    "objectID": "notebooks/2.4_paramsconfig.html",
+    "href": "notebooks/2.4_paramsconfig.html",
+    "title": "Sydney Informatics Hub Course name",
+    "section": "",
+    "text": "All materials copyright Sydney Informatics Hub, University of Sydney"
+  },
+  {
+    "objectID": "notebooks/01c_exampleMDcontent.html",
+    "href": "notebooks/01c_exampleMDcontent.html",
+    "title": "Sydney Informatics Hub Course name",
+    "section": "",
+    "text": "Sample lesson from markdown\n\nQuestions\n\nWhat can I do?\nHow do I do it?\n\n\n\nObjectives\n\nLearn the basic Unix commands\n\n\n# I am a comment\npwd\n\nfor i in $(seq 1 10); do echo $i;done\n\nChallenge\nThis is a challenge question\n\n\nSolution\n\n\n#Declare the name of the function\necho \"Joy\"\n\n\n\nKey points\n\nKey\nPoints\nHere\n\n\n\n\n\n\nAll materials copyright Sydney Informatics Hub, University of Sydney"
+  },
+  {
+    "objectID": "notebooks/1.1_nfcore.html",
+    "href": "notebooks/1.1_nfcore.html",
+    "title": "Sydney Informatics Hub Course name",
+    "section": "",
+    "text": "All materials copyright Sydney Informatics Hub, University of Sydney"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Course title",
@@ -47,33 +117,5 @@
     "title": "Course title",
     "section": "Setup Instructions",
     "text": "Setup Instructions\nPlease complete the Setup Instructions before the course.\nIf you have any trouble, please get in contact with us ASAP."
-  },
-  {
-    "objectID": "setup.html",
-    "href": "setup.html",
-    "title": "Setup",
-    "section": "",
-    "text": "All materials copyright Sydney Informatics Hub, University of Sydney"
-  },
-  {
-    "objectID": "notebooks/01a-fundamentals.html",
-    "href": "notebooks/01a-fundamentals.html",
-    "title": "Sydney Informatics Hub Course name",
-    "section": "",
-    "text": "All materials copyright Sydney Informatics Hub, University of Sydney"
-  },
-  {
-    "objectID": "notebooks/01c_exampleMDcontent.html",
-    "href": "notebooks/01c_exampleMDcontent.html",
-    "title": "Sydney Informatics Hub Course name",
-    "section": "",
-    "text": "All materials copyright Sydney Informatics Hub, University of Sydney"
-  },
-  {
-    "objectID": "notebooks/01b_exampleRcontent.html",
-    "href": "notebooks/01b_exampleRcontent.html",
-    "title": "Sydney Informatics Hub Course name",
-    "section": "",
-    "text": "All materials copyright Sydney Informatics Hub, University of Sydney"
   }
 ]
