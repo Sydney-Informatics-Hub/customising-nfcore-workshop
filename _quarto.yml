@@ -13,13 +13,24 @@ website:
         text: "Setup"
       - text: "Session 1"
         menu:
-        - text: "Python from ipynb example"
-          href: notebooks/01a-fundamentals.html
-        - text: "R from qmd example"
-          href: notebooks/01b_exampleRcontent.html
+        - text: "Intro to nf-core"
+          href: notebooks/1.1_introduction.html
+        - text: "nf-core tools"
+          href: notebooks/1.2_nfcoretools.html
         - text: "Markdown from md example"
           href: notebooks/01c_exampleMDcontent.html
-
+      - text: "Session 2"
+        menu:
+        - text: "CLI flags"
+          href: notebooks/2.1_flags.html
+        - text: "Params file"
+          href: notebooks/2.2_paramsfile.html
+        - text: "Custom configs"
+          href: notebooks/2.3_config.html
+        - text: "Params & configs"
+          href: notebooks/2.4_paramsconfig.html
+        - text: "Custom module"
+          href: notebooks/2.5_custommodule.html
   body-footer: "All materials copyright Sydney Informatics Hub, University of Sydney"
           
 format:
