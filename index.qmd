@@ -12,8 +12,9 @@ output:
 
 ## Trainers
 
-* Cali Willet 
-* Georgie Samaha
+* Cali Willet, Sydney Informatics Hub
+* Georgie Samaha, Sydney Informatics Hub
+* X, Seqera
 
 ## Course pre-requisites and setup requirements
 
@@ -24,8 +25,8 @@ Participants will be provided with a Zoom link. Trainers will be broadcasting fr
 
 #### Zoom etiquette and how we interact
 
-* Do not use Zoom chat. Instead use Slack channel for help and discussion 
-* 
+* Avoid using Zoom chat. Instead use Slack channel to chat to facilitators and other attendees
+* ...
 
 ## Code of Conduct
 We expect all attendees of our training to follow our code of conduct, including bullying, harassment and discrimination prevention policies.

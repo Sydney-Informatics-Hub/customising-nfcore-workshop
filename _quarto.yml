@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "Sydney Informatics Hub Course name"
+  title: "Customising nf-core workflows"
   navbar:
     background: primary
     left:
