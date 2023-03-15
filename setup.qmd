@@ -1,12 +1,115 @@
 ---
-title: "Setup"
+title: "**Set up your computer**"
 output:
   html_document:
     toc: false
     toc_float: false
 ---
 
+<div class="questions">
+### **Questions**{.unlisted}
 
-# 1. Get a client
+- How do I install a terminal or IDE application on my computer?
+- How do I log in to a Nimbus instance?
+</div>  
 
-These are the setup instructions...
+In this workshop series, we will be using Pawsey’s Nimbus cloud. The [Pawsey Supercomputing Research Centre](https://pawsey.org.au/about-us/about-pawsey/) is one of two, Tier-1, High Performance Computing facilities in Australia. Their Nimbus cloud platform is an accessible and flexible solution for bioinformatics applications that may not be suitable for large-scale HPC machines including:
+
+* Developing and refining scalable workflows in prepration for HPC allocation applications.
+* Workflows with long runtimes that excede wall time queue limits on HPC facilities.
+* Complex data-bound workflows with variable compute resource profiles that are common in bioinformatics pipelines.
+
+The main requirements for this workshop are a personal computer with:
+
+* A web broswer 
+* Terminal or IDE application 
+
+On this page you will find instructions on how to set up a terminal application and web browser on your computer and how to connect to Nimbus. Each participant will be provided with their instance’s IP address at the beginning of the workshop.
+
+To connect to your Nimbus instance, you will need either a terminal or integrated development environment (IDE) application installed on your computer. While we recommend you use the Visual Studio Code IDE for this workshop, we have also provided directions for installing and using a terminal applications below. 
+
+### **Install and set up Visual Studio Code**
+
+Visual Studio Code is a lightweight and powerful source code editor available for Windows, macOS and Linux computers. 
+
+1. Download Visual Studio Code for your system from [here](https://code.visualstudio.com/download) and follow the instructions for:
+    * [macOS](https://code.visualstudio.com/docs/setup/mac)
+    * [Linux](https://code.visualstudio.com/docs/setup/linux)
+    * [Windows](https://code.visualstudio.com/docs/setup/windows)
+    
+2. Open the VS Code application on your computer 
+
+![](https://user-images.githubusercontent.com/73086054/224881239-86457c3f-9f8f-4724-b780-c633ea8d2180.png)
+
+3. Click on the extensions button (four blocks) on the left side bar and install the remote SSH extension. Click on the blue `install` button. 
+
+![](https://user-images.githubusercontent.com/73086054/224881365-2517157c-7bf9-4bd3-ba98-c9d7e3653674.png)
+
+#### **Login via Visual Studio Code**
+
+### **Install and set up a terminal application**
+
+The terminal applications available to you will depend on your operating system. 
+
+#### **Linux terminals**
+If you use Linux, chances are you already know your shell and how to use it. Basically, just open your preferred terminal program and off you go!
+
+#### **OS X (Mac)**
+
+Mac operating systems come with a terminal program, called Terminal. Just look for it in your Applications folder, or hit `Command + Space` and type 'terminal'. You may find that other, 3rd party terminal programs are more user-friendly and powerful, like [Iterm2](https://iterm2.com/).
+
+#### **Windows**
+
+We recommend [MobaXterm](https://mobaxterm.mobatek.net/download.html), which offers a rich experience as a full-featured X-server and terminal emulator for ssh connections, the free version is more than adequate.
+
+To install and start using MobaXterm:
+
+1. Go to https://mobaxterm.mobatek.net/download.html
+2. Under ‘Home Edition’ select the Download now button
+3. Select the MobaXterm Home Edition (Installer edition)
+4. Once the program is downloaded, install it as you would any other windows program
+5. Once the program is installed, start the MobaXterm program
+6. From this screen, click on ‘start local terminal’ (and install Cygwin if prompted) 
+
+![](https://user-images.githubusercontent.com/73086054/224888551-527c08c3-90fa-4f6b-beaf-308114880624.png)
+
+#### **Login via Terminal**
+
+To log in to Nimbus, we will use a Secure Shell (SSH) connection. To connect, you need 3 things:
+1. The assigned IP address of your instance (i.e. ###.###.##.###). Each participant will be provided with their instance’s IP address at the beginning of the workshop.
+2. Your login name. In our case, this will be **training** for all participants.
+3. Your password. All participants will be provided with a password at the beginning of the workshop.
+
+To log in, type the following into your terminal, using your login name and the instance’s IP address:
+
+```bash
+ssh training@###.###.###.###
+```
+
+You will receive a message saying:
+
+```bash
+The authenticity of host 'XXX.XXX.XX.XXX (XXX.XXX.XX.XXX)' can't be established.
+```
+
+Remember your host address will be different than the one above. There will then be a message saying:
+
+```bash
+Are you sure you want to continue connecting (yes/no)?
+```
+
+If you would like to skip this message next time you log in, answer ‘yes’. It will then give a warning:
+
+```bash
+Warning: Permanently added 'XXX.XXX.XX.XXX' (ECDSA) to the list of known hosts.
+```
+
+Enter the password provided at the beginning of the workshop. Ask one of the demonstrators if you’ve forgotten it.
+
+::: {.callout-note appearance="simple"}
+## Pay Attention
+When you type a password on the terminal, there will not be any indication the password is being entered. You'll not see a moving cursor, or even any asterisks, or bullets. That is an intentional security mechanism used by all terminal applications and can trip us up sometimes, so be careful when typing or copying your password in.  
+:::
+
+
+Having successfully logged in, your terminal should then display something like that shown in the figure below:

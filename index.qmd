@@ -1,34 +1,38 @@
 ---
-title: "Customising nf-core workflows"
+title: "**Reproducible workflows with nf-core**"
 output:
   html_document:
     toc: false
     toc_float: false
+from: markdown+emoji
 ---
-
 
 **This course is currently under development**
 
+This workshop will set you up with the foundational knowledge required to run and customise nf-core workflows in a reproducible manner. Using the nf-core/rnaseq workflow as an example, we will step through essential features common across all nf-core workflows. We will explore ways to adjust the workflow parameters based on the needs of your dataset and configuration the workflow to run on your computational environment. 
 
-## Trainers
+### **Trainers**{.unlisted}
 
 * Cali Willet, Sydney Informatics Hub
+* Chris Hakkaart, Seqera Labs
 * Georgie Samaha, Sydney Informatics Hub
-* X, Seqera
 
-## Course pre-requisites and setup requirements
+### **Target audience**{.unlisted}
 
+This workshop is suitable for people who are familiar with working at the command line interface and have some experience running [nf-core workflows](). 
 
+### **Prerequisites**{.unlisted}
 
-## Venue, online via Zoom
-Participants will be provided with a Zoom link. Trainers will be broadcasting from Sydney.
+* Experience navigating the Unix command line 
+* Familiarity with Nextflow and nf-core workflows 
 
-#### Zoom etiquette and how we interact
+### **Set up requirements**{.unlisted}
 
-* Avoid using Zoom chat. Instead use Slack channel to chat to facilitators and other attendees
-* ...
+Please complete the [Setup Instructions](./setup.html) **before the course**.
 
-## Code of Conduct
+If you have any trouble, please get in contact with us ASAP.
+
+### **Code of Conduct**{.unlisted}
 We expect all attendees of our training to follow our code of conduct, including bullying, harassment and discrimination prevention policies.
 
 In order to foster a positive and professional learning environment we encourage the following kinds of behaviours at all our events and on our platforms:
@@ -39,15 +43,20 @@ In order to foster a positive and professional learning environment we encourage
 * Focus on what is best for the community
 * Show courtesy and respect towards other community members
 
-Our full CoC, with incident reporting guidelines, is available [here]https://sydney-informatics-hub.github.io/codeofconduct/).
+Our full CoC, with incident reporting guidelines, is available [here](https://sydney-informatics-hub.github.io/codeofconduct/).
 
-## General session timings
+### **Workshop schedule**{.unlisted}
 
-* ...
+| Lesson     | Overview |
+|------------|----------|
+| [Set up your computer](setup.html)| Follow these instructions to install VSCode and login to your Nimbus instance. |
+| [Day 1: Introduction to nf-core]()| |
+| [Day 2: Customising nf-core]()| |
 
+### **Course survey**{.unlisted}
 
-## Setup Instructions
+Please fill out our [course survey]() before you leave! Help us help you! 😁
 
-Please complete the [Setup Instructions](./setup.html) **before the course**.
+### **Credits and acknowledgements**{.unlisted}
 
-If you have any trouble, please get in contact with us ASAP.
+This workshop event and accompanying materials were developed by the Sydney Informatics Hub, University of Sydney in partnership with Seqera Labs, Pawsey Supercomputing Research Centre, and Australia’s National Research Education Network (AARNet) enabled through the Australian BioCommons (NCRIS via Bioplatforms Australia).

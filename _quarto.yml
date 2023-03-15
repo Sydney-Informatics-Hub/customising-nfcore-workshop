@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "Customising nf-core workflows"
+  title: "nf-core workflows series"
   navbar:
     background: primary
     left:
@@ -13,14 +13,12 @@ website:
         text: "Setup"
       - text: "Session 1"
         menu:
-        - text: "Intro to nf-core"
-          href: notebooks/1.1_introduction.html
-        - text: "nf-core tools"
-          href: notebooks/1.2_nfcoretools.html
-        - text: "Markdown from md example"
-          href: notebooks/01c_exampleMDcontent.html
+        - text: "Lesson template"
+          href: notebooks/0.0_template.html
       - text: "Session 2"
         menu:
+        - text: "Sesson 2 kick-off"
+          href: notebooks/2.0_part2.html
         - text: "CLI flags"
           href: notebooks/2.1_flags.html
         - text: "Params file"

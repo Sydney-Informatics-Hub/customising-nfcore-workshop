@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Customising nf-core workflows - Setup</title>
+<title>nf-core workflows series - Set up your computer</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -72,7 +135,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Customising nf-core workflows</span>
+    <span class="navbar-title">nf-core workflows series</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -94,16 +157,8 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-session-1">    
         <li>
-    <a class="dropdown-item" href="./notebooks/1.1_introduction.html">
- <span class="dropdown-text">Intro to nf-core</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./notebooks/1.2_nfcoretools.html">
- <span class="dropdown-text">nf-core tools</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./notebooks/01c_exampleMDcontent.html">
- <span class="dropdown-text">Markdown from md example</span></a>
+    <a class="dropdown-item" href="./notebooks/0.0_template.html">
+ <span class="dropdown-text">Lesson template</span></a>
   </li>  
     </ul>
   </li>
@@ -112,6 +167,10 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Session 2</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-session-2">    
+        <li>
+    <a class="dropdown-item" href="./notebooks/2.0_part2.html">
+ <span class="dropdown-text">Sesson 2 kick-off</span></a>
+  </li>  
         <li>
     <a class="dropdown-item" href="./notebooks/2.1_flags.html">
  <span class="dropdown-text">CLI flags</span></a>
@@ -149,7 +208,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#get-a-client" id="toc-get-a-client" class="nav-link active" data-scroll-target="#get-a-client">1. Get a client</a></li>
+  <li><a href="#install-and-set-up-visual-studio-code" id="toc-install-and-set-up-visual-studio-code" class="nav-link active" data-scroll-target="#install-and-set-up-visual-studio-code"><strong>Install and set up Visual Studio Code</strong></a></li>
+  <li><a href="#install-and-set-up-a-terminal-application" id="toc-install-and-set-up-a-terminal-application" class="nav-link" data-scroll-target="#install-and-set-up-a-terminal-application"><strong>Install and set up a terminal application</strong></a></li>
   </ul>
 </nav>
     </div>
@@ -158,7 +218,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Setup</h1>
+<h1 class="title"><strong>Set up your computer</strong></h1>
 </div>
 
 
@@ -173,11 +233,101 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="get-a-client" class="level1">
-<h1>1. Get a client</h1>
-<p>These are the setup instructions…</p>
+<section id="questions" class="level3 unlisted questions">
+<h3 class="unlisted anchored" data-anchor-id="questions"><strong>Questions</strong></h3>
+<ul>
+<li>How do I install a terminal or IDE application on my computer?</li>
+<li>How do I log in to a Nimbus instance?</li>
+</ul>
+</section>
+<p>In this workshop series, we will be using Pawsey’s Nimbus cloud. The <a href="https://pawsey.org.au/about-us/about-pawsey/">Pawsey Supercomputing Research Centre</a> is one of two, Tier-1, High Performance Computing facilities in Australia. Their Nimbus cloud platform is an accessible and flexible solution for bioinformatics applications that may not be suitable for large-scale HPC machines including:</p>
+<ul>
+<li>Developing and refining scalable workflows in prepration for HPC allocation applications.</li>
+<li>Workflows with long runtimes that excede wall time queue limits on HPC facilities.</li>
+<li>Complex data-bound workflows with variable compute resource profiles that are common in bioinformatics pipelines.</li>
+</ul>
+<p>The main requirements for this workshop are a personal computer with:</p>
+<ul>
+<li>A web broswer</li>
+<li>Terminal or IDE application</li>
+</ul>
+<p>On this page you will find instructions on how to set up a terminal application and web browser on your computer and how to connect to Nimbus. Each participant will be provided with their instance’s IP address at the beginning of the workshop.</p>
+<p>To connect to your Nimbus instance, you will need either a terminal or integrated development environment (IDE) application installed on your computer. While we recommend you use the Visual Studio Code IDE for this workshop, we have also provided directions for installing and using a terminal applications below.</p>
+<section id="install-and-set-up-visual-studio-code" class="level3">
+<h3 class="anchored" data-anchor-id="install-and-set-up-visual-studio-code"><strong>Install and set up Visual Studio Code</strong></h3>
+<p>Visual Studio Code is a lightweight and powerful source code editor available for Windows, macOS and Linux computers.</p>
+<ol type="1">
+<li>Download Visual Studio Code for your system from <a href="https://code.visualstudio.com/download">here</a> and follow the instructions for:
+<ul>
+<li><a href="https://code.visualstudio.com/docs/setup/mac">macOS</a></li>
+<li><a href="https://code.visualstudio.com/docs/setup/linux">Linux</a></li>
+<li><a href="https://code.visualstudio.com/docs/setup/windows">Windows</a></li>
+</ul></li>
+<li>Open the VS Code application on your computer</li>
+</ol>
+<p><img src="https://user-images.githubusercontent.com/73086054/224881239-86457c3f-9f8f-4724-b780-c633ea8d2180.png" class="img-fluid"></p>
+<ol start="3" type="1">
+<li>Click on the extensions button (four blocks) on the left side bar and install the remote SSH extension. Click on the blue <code>install</code> button.</li>
+</ol>
+<p><img src="https://user-images.githubusercontent.com/73086054/224881365-2517157c-7bf9-4bd3-ba98-c9d7e3653674.png" class="img-fluid"></p>
+<section id="login-via-visual-studio-code" class="level4">
+<h4 class="anchored" data-anchor-id="login-via-visual-studio-code"><strong>Login via Visual Studio Code</strong></h4>
+</section>
+</section>
+<section id="install-and-set-up-a-terminal-application" class="level3">
+<h3 class="anchored" data-anchor-id="install-and-set-up-a-terminal-application"><strong>Install and set up a terminal application</strong></h3>
+<p>The terminal applications available to you will depend on your operating system.</p>
+<section id="linux-terminals" class="level4">
+<h4 class="anchored" data-anchor-id="linux-terminals"><strong>Linux terminals</strong></h4>
+<p>If you use Linux, chances are you already know your shell and how to use it. Basically, just open your preferred terminal program and off you go!</p>
+</section>
+<section id="os-x-mac" class="level4">
+<h4 class="anchored" data-anchor-id="os-x-mac"><strong>OS X (Mac)</strong></h4>
+<p>Mac operating systems come with a terminal program, called Terminal. Just look for it in your Applications folder, or hit <code>Command + Space</code> and type ‘terminal’. You may find that other, 3rd party terminal programs are more user-friendly and powerful, like <a href="https://iterm2.com/">Iterm2</a>.</p>
+</section>
+<section id="windows" class="level4">
+<h4 class="anchored" data-anchor-id="windows"><strong>Windows</strong></h4>
+<p>We recommend <a href="https://mobaxterm.mobatek.net/download.html">MobaXterm</a>, which offers a rich experience as a full-featured X-server and terminal emulator for ssh connections, the free version is more than adequate.</p>
+<p>To install and start using MobaXterm:</p>
+<ol type="1">
+<li>Go to https://mobaxterm.mobatek.net/download.html</li>
+<li>Under ‘Home Edition’ select the Download now button</li>
+<li>Select the MobaXterm Home Edition (Installer edition)</li>
+<li>Once the program is downloaded, install it as you would any other windows program</li>
+<li>Once the program is installed, start the MobaXterm program</li>
+<li>From this screen, click on ‘start local terminal’ (and install Cygwin if prompted)</li>
+</ol>
+<p><img src="https://user-images.githubusercontent.com/73086054/224888551-527c08c3-90fa-4f6b-beaf-308114880624.png" class="img-fluid"></p>
+</section>
+<section id="login-via-terminal" class="level4">
+<h4 class="anchored" data-anchor-id="login-via-terminal"><strong>Login via Terminal</strong></h4>
+<p>To log in to Nimbus, we will use a Secure Shell (SSH) connection. To connect, you need 3 things: 1. The assigned IP address of your instance (i.e.&nbsp;###.###.##.###). Each participant will be provided with their instance’s IP address at the beginning of the workshop. 2. Your login name. In our case, this will be <strong>training</strong> for all participants. 3. Your password. All participants will be provided with a password at the beginning of the workshop.</p>
+<p>To log in, type the following into your terminal, using your login name and the instance’s IP address:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> training@###.###.###.###</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You will receive a message saying:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> authenticity of host <span class="st">'XXX.XXX.XX.XXX (XXX.XXX.XX.XXX)'</span> can<span class="st">'t be established.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Remember your host address will be different than the one above. There will then be a message saying:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Are</span> you sure you want to continue connecting <span class="er">(</span><span class="ex">yes/no</span><span class="kw">)</span><span class="ex">?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you would like to skip this message next time you log in, answer ‘yes’. It will then give a warning:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Warning:</span> Permanently added <span class="st">'XXX.XXX.XX.XXX'</span> <span class="er">(</span><span class="ex">ECDSA</span><span class="kw">)</span> <span class="ex">to</span> the list of known hosts.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Enter the password provided at the beginning of the workshop. Ask one of the demonstrators if you’ve forgotten it.</p>
+<div class="callout-note callout callout-style-simple callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Pay Attention
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When you type a password on the terminal, there will not be any indication the password is being entered. You’ll not see a moving cursor, or even any asterisks, or bullets. That is an intentional security mechanism used by all terminal applications and can trip us up sometimes, so be careful when typing or copying your password in.</p>
+</div>
+</div>
+<p>Having successfully logged in, your terminal should then display something like that shown in the figure below:</p>
 
 
+</section>
 </section>
 
 <p>All materials copyright Sydney Informatics Hub, University of Sydney</p></main> <!-- /main -->
