@@ -19,7 +19,7 @@ This workshop will set you up with the foundational knowledge required to run an
 
 ### **Target audience**{.unlisted}
 
-This workshop is suitable for people who are familiar with working at the command line interface and have some experience running [nf-core workflows](). 
+This workshop is suitable for people who are familiar with working at the command line interface and have some experience running [nf-core workflows](https://nf-co.re/pipelines). 
 
 ### **Prerequisites**{.unlisted}
 
@@ -51,7 +51,7 @@ Our full CoC, with incident reporting guidelines, is available [here](https://sy
 |------------|----------|
 | [Set up your computer](setup.html)| Follow these instructions to install VSCode and login to your Nimbus instance. |
 | [Day 1: Introduction to nf-core]()| |
-| [Day 2: Customising nf-core]()| |
+| [Day 2: Customising nf-core](notebooks/2.0_intro.html)| |
 
 ### **Course survey**{.unlisted}
 
