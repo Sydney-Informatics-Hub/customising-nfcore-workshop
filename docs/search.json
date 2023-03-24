@@ -68,5 +68,26 @@
     "title": "Reproducible workflows with nf-core",
     "section": "",
     "text": "This course is currently under development\nThis workshop will set you up with the foundational knowledge required to run and customise nf-core workflows in a reproducible manner. Using the nf-core/rnaseq workflow as an example, we will step through essential features common across all nf-core workflows. We will explore ways to adjust the workflow parameters based on the needs of your dataset and configuration the workflow to run on your computational environment.\n\nTrainers\n\nCali Willet, Sydney Informatics Hub\nChris Hakkaart, Seqera Labs\nGeorgie Samaha, Sydney Informatics Hub\n\n\n\nTarget audience\nThis workshop is suitable for people who are familiar with working at the command line interface and have some experience running nf-core workflows.\n\n\nPrerequisites\n\nExperience navigating the Unix command line\nFamiliarity with Nextflow and nf-core workflows\n\n\n\nSet up requirements\nPlease complete the Setup Instructions before the course.\nIf you have any trouble, please get in contact with us ASAP.\n\n\nCode of Conduct\nWe expect all attendees of our training to follow our code of conduct, including bullying, harassment and discrimination prevention policies.\nIn order to foster a positive and professional learning environment we encourage the following kinds of behaviours at all our events and on our platforms:\n\nUse welcoming and inclusive language\nBe respectful of different viewpoints and experiences\nGracefully accept constructive criticism\nFocus on what is best for the community\nShow courtesy and respect towards other community members\n\nOur full CoC, with incident reporting guidelines, is available here.\n\n\nWorkshop schedule\n\n\n\nLesson\nOverview\n\n\n\n\nSet up your computer\nFollow these instructions to install VSCode and login to your Nimbus instance.\n\n\nDay 1: Introduction to nf-core\n\n\n\nDay 2: Customising nf-core\n\n\n\n\n\n\nCourse survey\nPlease fill out our course survey before you leave! Help us help you! 😁\n\n\nCredits and acknowledgements\nThis workshop event and accompanying materials were developed by the Sydney Informatics Hub, University of Sydney in partnership with Seqera Labs, Pawsey Supercomputing Research Centre, and Australia’s National Research Education Network (AARNet) enabled through the Australian BioCommons (NCRIS via Bioplatforms Australia).\n\n\n\n\nAll materials copyright Sydney Informatics Hub, University of Sydney"
+  },
+  {
+    "objectID": "notebooks/2.0_intro.html",
+    "href": "notebooks/2.0_intro.html",
+    "title": "nf-core workflows series",
+    "section": "",
+    "text": "All materials copyright Sydney Informatics Hub, University of Sydney"
+  },
+  {
+    "objectID": "notebooks/2.2_params.html",
+    "href": "notebooks/2.2_params.html",
+    "title": "nf-core workflows series",
+    "section": "",
+    "text": "All materials copyright Sydney Informatics Hub, University of Sydney"
+  },
+  {
+    "objectID": "notebooks/2.1_design.html",
+    "href": "notebooks/2.1_design.html",
+    "title": "nf-core workflows series",
+    "section": "",
+    "text": "Customising with flags\n\n\n\n\nAll materials copyright Sydney Informatics Hub, University of Sydney"
   }
 ]

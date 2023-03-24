@@ -18,17 +18,19 @@ website:
       - text: "Session 2"
         menu:
         - text: "Sesson 2 kick-off"
-          href: notebooks/2.0_part2.html
-        - text: "CLI flags"
-          href: notebooks/2.1_flags.html
-        - text: "Params file"
-          href: notebooks/2.2_paramsfile.html
-        - text: "Custom configs"
-          href: notebooks/2.3_config.html
-        - text: "Params & configs"
-          href: notebooks/2.4_paramsconfig.html
-        - text: "Custom module"
+          href: notebooks/2.0_intro.html
+        - text: "Run command design"
+          href: notebooks/2.1_design.html
+        - text: "Using a params file"
+          href: notebooks/2.2_params.html
+        - text: "Run configuration"
+          href: notebooks/2.3_configEnv.html
+        - text: "Using multiple configurations"
+          href: notebooks/2.4_extargs.html
+        - text: "Using external arguments"
           href: notebooks/2.5_custommodule.html
+        - text: "Troubleshooting issues"
+          href: notebooks/2.6_troubleshoot.html
   body-footer: "All materials copyright Sydney Informatics Hub, University of Sydney"
           
 format:
