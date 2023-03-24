@@ -21,7 +21,7 @@ website:
           href: notebooks/2.0_intro.html
         - text: "Run command design"
           href: notebooks/2.1_design.html
-        - text: "Using a params file"
+        - text: "Using a parameters file"
           href: notebooks/2.2_params.html
         - text: "Configuring a workflow run"
           href: notebooks/2.3_configEnv.html
