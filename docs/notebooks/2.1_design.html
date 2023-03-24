@@ -243,9 +243,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>It can be very easy to lose track while working on the command line, especially when we’re working with large datasets and complex commands as we do with bioinformatics workflows. To make sure we work reproducibly, we will be organising our workspace and using a local copy of the <a href="https://nf-co.re/rnaseq">nf-core/rnaseq</a> workflow for all exercises.</p>
 <p>Start by creating a new directory for all of today’s activities and move into it:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> ~/nfcore-workshop/session2 <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> <span class="va">$_</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>There are a number of ways to download a nf-core workflow to your machine. We recommend using git or nf-core tools. To download the most recent version of the workflow from it’s <a href="https://github.com/nf-core/rnaseq">GitHub repository</a> with git, run:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/nf-core/rnaseq.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>To download the workflow using the nf-core tools utility, read and follow directions <a href="https://nf-co.re/tools/">here</a>.</p>
+<p>There are a number of ways to download a nf-core workflow to your machine. We recommend using git or nf-core tools.</p>
+<p>To download the workflow using the nf-core tools utility, read and follow directions <a href="https://nf-co.re/tools/">here</a> and complete the following exercise:</p>
 </section>
 <section id="challenge" class="level3 unlisted challenge">
 <h3 class="unlisted anchored" data-anchor-id="challenge"><strong>Challenge</strong></h3>
@@ -255,36 +254,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 Solution
 </summary>
 <p>Search for the rnaseq pipeline:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> list rnaseq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> list rnaseq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Then, download the correct pipeline:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> download nf-core/rnaseq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> download nf-core/rnaseq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You will be prompted to select a version. Use your arrow keys to specify 3.10.1 and hit enter.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ubuntu@georgiedev:~$</span> nf-core download nf-core/rnaseq</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                                          <span class="ex">,--./,-.</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>          <span class="ex">___</span>     __   __   __   ___     /,-._.--~<span class="dt">\</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">|</span><span class="ex">\ </span><span class="kw">|</span> <span class="kw">|</span><span class="ex">__</span>  __ /  <span class="kw">`</span> <span class="ex">/</span>  <span class="dt">\ </span><span class="kw">|</span><span class="ex">__</span><span class="er">)</span> <span class="kw">|</span><span class="ex">__</span>         }  {</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">|</span> <span class="ex">\|</span> <span class="kw">|</span>       <span class="ex">\__,</span> <span class="dt">\_</span>_/ <span class="kw">|</span>  <span class="ex">\ </span><span class="kw">|</span><span class="ex">___</span>     <span class="dt">\`</span>-._,-<span class="kw">`</span><span class="at">-,</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                                          <span class="kw">`</span><span class="ex">._,._,</span><span class="st">'</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="st">    nf-core/tools version 2.7.2 - https://nf-co.re</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="st">? Select release / branch: 3.10.1  [release]</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="st">In addition to the pipeline code, this tool can download software containers.</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="st">? Download software container images: none</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="st">If transferring the downloaded files to another system, it can be convenient to have everything compressed in a single file.</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="st">? Choose compression type: none</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="st">INFO     Saving '</span><span class="ex">nf-core/rnaseq</span><span class="st">'                                                                                            </span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="st">          Pipeline revision: '</span><span class="ex">3.10.1</span><span class="st">'                                                                                       </span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="st">          Pull containers: '</span><span class="ex">none</span><span class="st">'                                                                                           </span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="st">          Output directory: '</span><span class="ex">nf-core-rnaseq-3.10.1</span><span class="st">'                                                                         </span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="st">INFO     Downloading workflow files from GitHub                                                                             </span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="st">INFO     Downloading centralised configs from GitHub </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ubuntu@georgiedev:~$</span> nf-core download nf-core/rnaseq</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                                          <span class="ex">,--./,-.</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>          <span class="ex">___</span>     __   __   __   ___     /,-._.--~<span class="dt">\</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">|</span><span class="ex">\ </span><span class="kw">|</span> <span class="kw">|</span><span class="ex">__</span>  __ /  <span class="kw">`</span> <span class="ex">/</span>  <span class="dt">\ </span><span class="kw">|</span><span class="ex">__</span><span class="er">)</span> <span class="kw">|</span><span class="ex">__</span>         }  {</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">|</span> <span class="ex">\|</span> <span class="kw">|</span>       <span class="ex">\__,</span> <span class="dt">\_</span>_/ <span class="kw">|</span>  <span class="ex">\ </span><span class="kw">|</span><span class="ex">___</span>     <span class="dt">\`</span>-._,-<span class="kw">`</span><span class="at">-,</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                                          <span class="kw">`</span><span class="ex">._,._,</span><span class="st">'</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="st">    nf-core/tools version 2.7.2 - https://nf-co.re</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="st">? Select release / branch: 3.10.1  [release]</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="st">In addition to the pipeline code, this tool can download software containers.</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="st">? Download software container images: none</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="st">If transferring the downloaded files to another system, it can be convenient to have everything compressed in a single file.</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="st">? Choose compression type: none</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="st">INFO     Saving '</span><span class="ex">nf-core/rnaseq</span><span class="st">'                                                                                            </span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="st">          Pipeline revision: '</span><span class="ex">3.10.1</span><span class="st">'                                                                                       </span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="st">          Pull containers: '</span><span class="ex">none</span><span class="st">'                                                                                           </span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="st">          Output directory: '</span><span class="ex">nf-core-rnaseq-3.10.1</span><span class="st">'                                                                         </span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="st">INFO     Downloading workflow files from GitHub                                                                             </span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="st">INFO     Downloading centralised configs from GitHub </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Check the workflow has been downloaded:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </section>
+<p>Alternatively, to download the most recent version of the workflow from it’s <a href="https://github.com/nf-core/rnaseq">GitHub repository</a> with git, run:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/nf-core/rnaseq.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <section id="building-your-run-command" class="level3 unlisted">
 <h3 class="unlisted anchored" data-anchor-id="building-your-run-command"><strong>Building your run command</strong></h3>
 <p>All nf-core workflows are provided with sensible default settings that have broad applicability and comprensive documentation that explains all available parameters. What is ‘sensible’ varies dramatically between different experiments, computing environments, and datasets, so these settings might not suit your needs.</p>
