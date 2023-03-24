@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>nf-core workflows series – paramsconfig</title>
+<title>nf-core workflows series - Using multiple configuration files at once</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -105,28 +105,32 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-session-2">    
         <li>
-    <a class="dropdown-item" href="../notebooks/2.0_part2.html">
+    <a class="dropdown-item" href="../notebooks/2.0_intro.html">
  <span class="dropdown-text">Sesson 2 kick-off</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/2.1_flags.html">
- <span class="dropdown-text">CLI flags</span></a>
+    <a class="dropdown-item" href="../notebooks/2.1_design.html">
+ <span class="dropdown-text">Run command design</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/2.2_paramsfile.html">
- <span class="dropdown-text">Params file</span></a>
+    <a class="dropdown-item" href="../notebooks/2.2_params.html">
+ <span class="dropdown-text">Using a params file</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/2.3_config.html">
- <span class="dropdown-text">Custom configs</span></a>
+    <a class="dropdown-item" href="../notebooks/2.3_configEnv.html">
+ <span class="dropdown-text">Configuring a workflow run</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/2.4_paramsconfig.html">
- <span class="dropdown-text">Params &amp; configs</span></a>
+    <a class="dropdown-item" href="../notebooks/2.4_multiConfig.html">
+ <span class="dropdown-text">Using multiple configurations</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/2.5_custommodule.html">
- <span class="dropdown-text">Custom module</span></a>
+    <a class="dropdown-item" href="../notebooks/2.5_extArgs.html">
+ <span class="dropdown-text">Using external arguments</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../notebooks/2.6_troubleshoot.html">
+ <span class="dropdown-text">Troubleshooting issues</span></a>
   </li>  
     </ul>
   </li>
@@ -146,8 +150,30 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><strong>Using multiple configuration files at once</strong></h1>
+</div>
 
 
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="objectives" class="level3 unlisted objectives">
+<h3 class="unlisted anchored" data-anchor-id="objectives">Objectives</h3>
+<ul>
+<li>Understand the heirarchy of configuration files specified by Nextflow</li>
+<li>Write a custom configuration file for MultiQC in the YAML file format</li>
+</ul>
+</section>
 
 
 

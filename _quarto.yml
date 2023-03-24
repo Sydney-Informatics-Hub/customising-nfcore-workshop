@@ -23,12 +23,12 @@ website:
           href: notebooks/2.1_design.html
         - text: "Using a params file"
           href: notebooks/2.2_params.html
-        - text: "Run configuration"
+        - text: "Configuring a workflow run"
           href: notebooks/2.3_configEnv.html
         - text: "Using multiple configurations"
-          href: notebooks/2.4_extargs.html
+          href: notebooks/2.4_multiConfig.html
         - text: "Using external arguments"
-          href: notebooks/2.5_custommodule.html
+          href: notebooks/2.5_extArgs.html
         - text: "Troubleshooting issues"
           href: notebooks/2.6_troubleshoot.html
   body-footer: "All materials copyright Sydney Informatics Hub, University of Sydney"

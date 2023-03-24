@@ -7,32 +7,18 @@
     "text": "Questions\n\nHow do I install a terminal or IDE application on my computer?\nHow do I log in to a Nimbus instance?\n\n\nIn this workshop series, we will be using Pawsey’s Nimbus cloud. The Pawsey Supercomputing Research Centre is one of two, Tier-1, High Performance Computing facilities in Australia. Their Nimbus cloud platform is an accessible and flexible solution for bioinformatics applications that may not be suitable for large-scale HPC machines including:\n\nDeveloping and refining scalable workflows in prepration for HPC allocation applications.\nWorkflows with long runtimes that excede wall time queue limits on HPC facilities.\nComplex data-bound workflows with variable compute resource profiles that are common in bioinformatics pipelines.\n\nThe main requirements for this workshop are a personal computer with:\n\nA web broswer\nTerminal or IDE application\n\nOn this page you will find instructions on how to set up a terminal application and web browser on your computer and how to connect to Nimbus. Each participant will be provided with their instance’s IP address at the beginning of the workshop.\nTo connect to your Nimbus instance, you will need either a terminal or integrated development environment (IDE) application installed on your computer. While we recommend you use the Visual Studio Code IDE for this workshop, we have also provided directions for installing and using a terminal applications below.\n\nInstall and set up Visual Studio Code\nVisual Studio Code is a lightweight and powerful source code editor available for Windows, macOS and Linux computers.\n\nDownload Visual Studio Code for your system from here and follow the instructions for:\n\nmacOS\nLinux\nWindows\n\nOpen the VS Code application on your computer\n\n\n\nClick on the extensions button (four blocks) on the left side bar and install the remote SSH extension. Click on the blue install button.\n\n\n\nLogin via Visual Studio Code\n\n\n\nInstall and set up a terminal application\nThe terminal applications available to you will depend on your operating system.\n\nLinux terminals\nIf you use Linux, chances are you already know your shell and how to use it. Basically, just open your preferred terminal program and off you go!\n\n\nOS X (Mac)\nMac operating systems come with a terminal program, called Terminal. Just look for it in your Applications folder, or hit Command + Space and type ‘terminal’. You may find that other, 3rd party terminal programs are more user-friendly and powerful, like Iterm2.\n\n\nWindows\nWe recommend MobaXterm, which offers a rich experience as a full-featured X-server and terminal emulator for ssh connections, the free version is more than adequate.\nTo install and start using MobaXterm:\n\nGo to https://mobaxterm.mobatek.net/download.html\nUnder ‘Home Edition’ select the Download now button\nSelect the MobaXterm Home Edition (Installer edition)\nOnce the program is downloaded, install it as you would any other windows program\nOnce the program is installed, start the MobaXterm program\nFrom this screen, click on ‘start local terminal’ (and install Cygwin if prompted)\n\n\n\n\nLogin via Terminal\nTo log in to Nimbus, we will use a Secure Shell (SSH) connection. To connect, you need 3 things: 1. The assigned IP address of your instance (i.e. ###.###.##.###). Each participant will be provided with their instance’s IP address at the beginning of the workshop. 2. Your login name. In our case, this will be training for all participants. 3. Your password. All participants will be provided with a password at the beginning of the workshop.\nTo log in, type the following into your terminal, using your login name and the instance’s IP address:\nssh training@###.###.###.###\nYou will receive a message saying:\nThe authenticity of host 'XXX.XXX.XX.XXX (XXX.XXX.XX.XXX)' can't be established.\nRemember your host address will be different than the one above. There will then be a message saying:\nAre you sure you want to continue connecting (yes/no)?\nIf you would like to skip this message next time you log in, answer ‘yes’. It will then give a warning:\nWarning: Permanently added 'XXX.XXX.XX.XXX' (ECDSA) to the list of known hosts.\nEnter the password provided at the beginning of the workshop. Ask one of the demonstrators if you’ve forgotten it.\n\n\n\n\n\n\nPay Attention\n\n\n\nWhen you type a password on the terminal, there will not be any indication the password is being entered. You’ll not see a moving cursor, or even any asterisks, or bullets. That is an intentional security mechanism used by all terminal applications and can trip us up sometimes, so be careful when typing or copying your password in.\n\n\nHaving successfully logged in, your terminal should then display something like that shown in the figure below:\n\n\n\n\n\nAll materials copyright Sydney Informatics Hub, University of Sydney"
   },
   {
-    "objectID": "notebooks/2.5_custommodule.html",
-    "href": "notebooks/2.5_custommodule.html",
-    "title": "nf-core workflows series",
-    "section": "",
-    "text": "All materials copyright Sydney Informatics Hub, University of Sydney"
-  },
-  {
-    "objectID": "notebooks/2.3_config.html",
-    "href": "notebooks/2.3_config.html",
-    "title": "nf-core workflows series",
-    "section": "",
-    "text": "All materials copyright Sydney Informatics Hub, University of Sydney"
-  },
-  {
     "objectID": "notebooks/0.0_template.html",
     "href": "notebooks/0.0_template.html",
     "title": "Lesson title",
     "section": "",
-    "text": "Questions\n\nQuestion that addresses learning outcomes\nQuestion 2 that addresses learning outcomes\n\n\nSome intro text to what this lesson is about\n\nSub-section heading\nCommands should be written like this:\ncommand \nWhere relevant include expected standard output:\nstdout here\nAny important notes for attendees should be present in information boxes. For example:\n\n\n\n\n\n\nCopying the code from the grey boxes on training materials\n\n\n\nIn this workshop we need to copy code from the grey boxes in the training materials and run it in the terminal. If you hover your mouse over a grey box on the website, a clipboard icon will appear on the right side. Click on the clipboard logo to copy the code. Test it out with:\nssh training@###.###.###.###\n\n\nChallenges/activites should be provided in challenge boxes:\n\n\nChallenge\nQuestion or activity for attendees.\n\n\nSolution\n\nProvide solution, including code where relevant\n# comment\ncommand to run  \n\n\nEach lesson page should wrap up with key takeaways:\n\nKey points\n\nTakeaway 1\nTakeaway 2\n\n\n\n\n\nAll materials copyright Sydney Informatics Hub, University of Sydney"
+    "text": "Objectives\n\nLearning outcome1\nLearning outcome2\n\n\nSome intro text to what this lesson is about\n\nSub-section heading\nCommands should be written like this:\ncommand \nWhere relevant include expected standard output:\nstdout here\nAny important notes for attendees should be present in information boxes. For example:\n\n\n\n\n\n\nCopying the code from the grey boxes on training materials\n\n\n\nIn this workshop we need to copy code from the grey boxes in the training materials and run it in the terminal. If you hover your mouse over a grey box on the website, a clipboard icon will appear on the right side. Click on the clipboard logo to copy the code. Test it out with:\nssh training@###.###.###.###\n\n\nChallenges/activites should be provided in challenge boxes:\n\n\nChallenge\nQuestion or activity for attendees.\n\n\nSolution\n\nProvide solution, including code where relevant\n# comment\ncommand to run  \n\n\nEach lesson page should wrap up with key takeaways:\n\nKey points\n\nTakeaway 1\nTakeaway 2\n\n\n\n\n\nAll materials copyright Sydney Informatics Hub, University of Sydney"
   },
   {
-    "objectID": "notebooks/2.2_paramsfile.html",
-    "href": "notebooks/2.2_paramsfile.html",
-    "title": "nf-core workflows series",
+    "objectID": "notebooks/2.2_params.html",
+    "href": "notebooks/2.2_params.html",
+    "title": "Using a params file",
     "section": "",
-    "text": "All materials copyright Sydney Informatics Hub, University of Sydney"
+    "text": "Objectives\n\nWrite a parameter file in the YAML file format\nRun a workflow using a parameters file and appropriate Nextflow flag\nUnderstand the value of using a parameter file for reproducibility\nObserve the behaviour of Nextflow’s cache functionality\n\n\n\n\n\nAll materials copyright Sydney Informatics Hub, University of Sydney"
   },
   {
     "objectID": "notebooks/1.2_nfcoretools.html",
@@ -42,18 +28,46 @@
     "text": "Using the nf-core tools utility\n\n\n\n\nAll materials copyright Sydney Informatics Hub, University of Sydney"
   },
   {
-    "objectID": "notebooks/2.1_flags.html",
-    "href": "notebooks/2.1_flags.html",
-    "title": "nf-core workflows series",
+    "objectID": "notebooks/2.4_multiConfig.html",
+    "href": "notebooks/2.4_multiConfig.html",
+    "title": "Using multiple configuration files at once",
     "section": "",
-    "text": "Customising with flags\n\n\n\n\nAll materials copyright Sydney Informatics Hub, University of Sydney"
+    "text": "Objectives\n\nUnderstand the heirarchy of configuration files specified by Nextflow\nWrite a custom configuration file for MultiQC in the YAML file format\n\n\n\n\n\nAll materials copyright Sydney Informatics Hub, University of Sydney"
   },
   {
-    "objectID": "notebooks/2.4_paramsconfig.html",
-    "href": "notebooks/2.4_paramsconfig.html",
-    "title": "nf-core workflows series",
+    "objectID": "notebooks/2.0_intro.html",
+    "href": "notebooks/2.0_intro.html",
+    "title": "Session 2 kick-off",
     "section": "",
-    "text": "All materials copyright Sydney Informatics Hub, University of Sydney"
+    "text": "In this session we will be writing, running, adjusting, and rerunning the nf-core/rnaseq workflow run command as we step through various customisation scenarios. While all activities in this session will be performed using the nf-core/rnaseq workflow, all customisation scenarios we explore are applicable to other nf-core workflows and do not require an understanding of rnaseq data processing.\n\nThings to keep in mind\nBefore starting this session, we will discuss some important considerations and recommendations for you to keep in mind as you proceed through the lessons and apply these techniques to your own research. Some things to keep in mind:\n\nnf-core is a collaborative, open source, community-driven effort\nnf-core prioritises workflows that are in high-demand and have broad applicability\nnf-core workflows are not all built to the same standard, some are works in progress\nWorkflow developers volunteer their time to build, support, and maintain their workflows\nThe level of support and ongoing maintenance available differ between workflows\nnf-core is a very young community, it only started in 2018!\n\nAs with other open source bioinformatics resources, nf-core workflows may not suit all applications. It is important that you understand the needs of your dataset and research questions before deciding on a workflow. We recommend approaching the application and customisation of nf-core workflows with the following framework:\n\nEndeavour to understand the structure and requirements of the workflow\nUse reproducible coding practices and follow nf-core guidelines\nDocument your customisations and the reasons for those changes\nTest your changes thoroughly\nConsider contributing to the community\nSeek help from developers and the community\n\n\n\nLog back in to your instance\nEach lesson page should wrap up with key takeaways:\n\n\nKey points\n\nTakeaway 1\nTakeaway 2\n\n\n\n\n\nAll materials copyright Sydney Informatics Hub, University of Sydney"
+  },
+  {
+    "objectID": "notebooks/2.5_extArgs.html",
+    "href": "notebooks/2.5_extArgs.html",
+    "title": "Specifying external arguments to a process",
+    "section": "",
+    "text": "Objectives\n\nUnderstand how to use the ext.args feature to pass additional command-line arguments to a process\nImplement additional external arguments to a process that are not hardcoded in the process script\nWrite a custom configuration file for MultiQC in the YAML file format\nObserve the behaviour of Nextflow’s cache functionality\n\n\n\n\n\nAll materials copyright Sydney Informatics Hub, University of Sydney"
+  },
+  {
+    "objectID": "notebooks/2.3_configEnv.html",
+    "href": "notebooks/2.3_configEnv.html",
+    "title": "Configuring a run for your environment",
+    "section": "",
+    "text": "Objectives\n\nUnderstand formatting requirements of a config file\nWrite a custom config file for your local environment that overwrites default workflow settings\nRun a workflow using the custom config file and appropriate Nextflow flag\nUse an alternative container source for a workflow process\n\n\n\n\n\nAll materials copyright Sydney Informatics Hub, University of Sydney"
+  },
+  {
+    "objectID": "notebooks/2.6_troubleshoot.html",
+    "href": "notebooks/2.6_troubleshoot.html",
+    "title": "Troubleshooting issues and errors",
+    "section": "",
+    "text": "Objectives\n\n\n\n\n\n\n\nAll materials copyright Sydney Informatics Hub, University of Sydney"
+  },
+  {
+    "objectID": "notebooks/2.1_design.html",
+    "href": "notebooks/2.1_design.html",
+    "title": "Designing your run command",
+    "section": "",
+    "text": "Objectives\n\nUse the nf-core documentation to select appropriate parameters for a run command\nWrite and run a nf-core rnaseq command on the command line\nExplore workflow deployment and set up\n\n\n\n\n\nAll materials copyright Sydney Informatics Hub, University of Sydney"
   },
   {
     "objectID": "notebooks/1.1_nfcore.html",
@@ -68,26 +82,5 @@
     "title": "Reproducible workflows with nf-core",
     "section": "",
     "text": "This course is currently under development\nThis workshop will set you up with the foundational knowledge required to run and customise nf-core workflows in a reproducible manner. Using the nf-core/rnaseq workflow as an example, we will step through essential features common across all nf-core workflows. We will explore ways to adjust the workflow parameters based on the needs of your dataset and configuration the workflow to run on your computational environment.\n\nTrainers\n\nCali Willet, Sydney Informatics Hub\nChris Hakkaart, Seqera Labs\nGeorgie Samaha, Sydney Informatics Hub\n\n\n\nTarget audience\nThis workshop is suitable for people who are familiar with working at the command line interface and have some experience running nf-core workflows.\n\n\nPrerequisites\n\nExperience navigating the Unix command line\nFamiliarity with Nextflow and nf-core workflows\n\n\n\nSet up requirements\nPlease complete the Setup Instructions before the course.\nIf you have any trouble, please get in contact with us ASAP.\n\n\nCode of Conduct\nWe expect all attendees of our training to follow our code of conduct, including bullying, harassment and discrimination prevention policies.\nIn order to foster a positive and professional learning environment we encourage the following kinds of behaviours at all our events and on our platforms:\n\nUse welcoming and inclusive language\nBe respectful of different viewpoints and experiences\nGracefully accept constructive criticism\nFocus on what is best for the community\nShow courtesy and respect towards other community members\n\nOur full CoC, with incident reporting guidelines, is available here.\n\n\nWorkshop schedule\n\n\n\nLesson\nOverview\n\n\n\n\nSet up your computer\nFollow these instructions to install VSCode and login to your Nimbus instance.\n\n\nDay 1: Introduction to nf-core\n\n\n\nDay 2: Customising nf-core\n\n\n\n\n\n\nCourse survey\nPlease fill out our course survey before you leave! Help us help you! 😁\n\n\nCredits and acknowledgements\nThis workshop event and accompanying materials were developed by the Sydney Informatics Hub, University of Sydney in partnership with Seqera Labs, Pawsey Supercomputing Research Centre, and Australia’s National Research Education Network (AARNet) enabled through the Australian BioCommons (NCRIS via Bioplatforms Australia).\n\n\n\n\nAll materials copyright Sydney Informatics Hub, University of Sydney"
-  },
-  {
-    "objectID": "notebooks/2.0_intro.html",
-    "href": "notebooks/2.0_intro.html",
-    "title": "nf-core workflows series",
-    "section": "",
-    "text": "All materials copyright Sydney Informatics Hub, University of Sydney"
-  },
-  {
-    "objectID": "notebooks/2.2_params.html",
-    "href": "notebooks/2.2_params.html",
-    "title": "nf-core workflows series",
-    "section": "",
-    "text": "All materials copyright Sydney Informatics Hub, University of Sydney"
-  },
-  {
-    "objectID": "notebooks/2.1_design.html",
-    "href": "notebooks/2.1_design.html",
-    "title": "nf-core workflows series",
-    "section": "",
-    "text": "Customising with flags\n\n\n\n\nAll materials copyright Sydney Informatics Hub, University of Sydney"
   }
 ]
