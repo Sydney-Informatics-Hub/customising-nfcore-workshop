@@ -276,6 +276,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="https://user-images.githubusercontent.com/73086054/224881365-2517157c-7bf9-4bd3-ba98-c9d7e3653674.png" class="img-fluid"></p>
 <section id="login-via-visual-studio-code" class="level4">
 <h4 class="anchored" data-anchor-id="login-via-visual-studio-code"><strong>Login via Visual Studio Code</strong></h4>
+<ol type="1">
+<li>Connect to your instance with VS code by adding the host details to your ssh config file.
+<ul>
+<li><code>Ctrl</code>+<code>Shift</code>+<code>P</code> to open command palette</li>
+<li>Select <code>Remote-SSH: Open SSH configuraiton file</code></li>
+<li>Add new entry, filling out host name and identity file:</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Host nfcoreWorkshop</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  HostName 146.118.XX.XXX  </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  User training     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li>Connect to this address
+<ul>
+<li><code>Ctrl</code>+<code>Shift</code>+<code>P</code> to open command palette</li>
+<li>Select <code>Remote-SSH: Connect to Host</code> and select name of your host</li>
+<li>Select <code>Linux</code> from dropdown menu and then <code>continue</code></li>
+</ul></li>
+</ol>
 </section>
 </section>
 <section id="install-and-set-up-a-terminal-application" class="level3">
@@ -307,13 +324,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4 class="anchored" data-anchor-id="login-via-terminal"><strong>Login via Terminal</strong></h4>
 <p>To log in to Nimbus, we will use a Secure Shell (SSH) connection. To connect, you need 3 things: 1. The assigned IP address of your instance (i.e.&nbsp;###.###.##.###). Each participant will be provided with their instance’s IP address at the beginning of the workshop. 2. Your login name. In our case, this will be <strong>training</strong> for all participants. 3. Your password. All participants will be provided with a password at the beginning of the workshop.</p>
 <p>To log in, type the following into your terminal, using your login name and the instance’s IP address:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> training@###.###.###.###</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> training@###.###.###.###</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You will receive a message saying:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> authenticity of host <span class="st">'XXX.XXX.XX.XXX (XXX.XXX.XX.XXX)'</span> can<span class="st">'t be established.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> authenticity of host <span class="st">'XXX.XXX.XX.XXX (XXX.XXX.XX.XXX)'</span> can<span class="st">'t be established.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Remember your host address will be different than the one above. There will then be a message saying:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Are</span> you sure you want to continue connecting <span class="er">(</span><span class="ex">yes/no</span><span class="kw">)</span><span class="ex">?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Are</span> you sure you want to continue connecting <span class="er">(</span><span class="ex">yes/no</span><span class="kw">)</span><span class="ex">?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If you would like to skip this message next time you log in, answer ‘yes’. It will then give a warning:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Warning:</span> Permanently added <span class="st">'XXX.XXX.XX.XXX'</span> <span class="er">(</span><span class="ex">ECDSA</span><span class="kw">)</span> <span class="ex">to</span> the list of known hosts.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Warning:</span> Permanently added <span class="st">'XXX.XXX.XX.XXX'</span> <span class="er">(</span><span class="ex">ECDSA</span><span class="kw">)</span> <span class="ex">to</span> the list of known hosts.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Enter the password provided at the beginning of the workshop. Ask one of the demonstrators if you’ve forgotten it.</p>
 <div class="callout-note callout callout-style-simple callout-captioned">
 <div class="callout-header d-flex align-content-center">

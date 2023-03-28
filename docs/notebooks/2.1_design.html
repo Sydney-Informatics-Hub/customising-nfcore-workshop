@@ -238,13 +238,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Explore workflow deployment and set up</li>
 </ul>
 </section>
-<section id="reproducibility-is-a-state-of-mind" class="level3 unlisted">
-<h3 class="unlisted anchored" data-anchor-id="reproducibility-is-a-state-of-mind"><strong>Reproducibility is a state of mind</strong></h3>
+<section id="download-the-workflow-code" class="level3 unlisted">
+<h3 class="unlisted anchored" data-anchor-id="download-the-workflow-code"><strong>Download the workflow code</strong></h3>
 <p>It can be very easy to lose track while working on the command line, especially when we’re working with large datasets and complex commands as we do with bioinformatics workflows. To make sure we work reproducibly, we will be organising our workspace and using a local copy of the <a href="https://nf-co.re/rnaseq">nf-core/rnaseq</a> workflow for all exercises.</p>
 <p>Start by creating a new directory for all of today’s activities and move into it:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> ~/nfcore-workshop/session2 <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> <span class="va">$_</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>There are a number of ways to download a nf-core workflow to your machine. We recommend using git or nf-core tools.</p>
-<p>To download the workflow using the nf-core tools utility, read and follow directions <a href="https://nf-co.re/tools/">here</a> and complete the following exercise:</p>
+<p>There are a number of ways to download a nf-core workflow to your machine. We recommend using git or nf-core tools. To download the workflow using the nf-core tools utility, read and follow directions <a href="https://nf-co.re/tools/">here</a> and complete the following exercise:</p>
 </section>
 <section id="challenge" class="level3 unlisted challenge">
 <h3 class="unlisted anchored" data-anchor-id="challenge"><strong>Challenge</strong></h3>
@@ -288,15 +287,101 @@ Solution
 </section>
 <p>Alternatively, to download the most recent version of the workflow from it’s <a href="https://github.com/nf-core/rnaseq">GitHub repository</a> with git, run:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/nf-core/rnaseq.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Zoom reaction check in!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Is everyone ok?</strong><br>
+<span class="emoji" data-emoji="clap">👏</span> (clap) yes, lets move on.<br>
+<span class="emoji" data-emoji="cry">😢</span> (cry) no, please help.</p>
+</div>
+</div>
 <section id="building-your-run-command" class="level3 unlisted">
 <h3 class="unlisted anchored" data-anchor-id="building-your-run-command"><strong>Building your run command</strong></h3>
-<p>All nf-core workflows are provided with sensible default settings that have broad applicability and comprensive documentation that explains all available parameters. What is ‘sensible’ varies dramatically between different experiments, computing environments, and datasets, so these settings might not suit your needs.</p>
+<p>All nf-core workflows are provided with sensible default settings that have broad applicability and comprensive documentation that explains all available parameters. What is ‘sensible’ varies dramatically between different experiments, computing environments, and datasets, so these settings might not suit your needs. For this workshop, consider the experimental design below:</p>
+<ul>
+<li>We won’t run the pseudo alignment step</li>
+<li>We have chosen to use <strong>STAR</strong> to align reads</li>
+<li>We have chosen to use <strong>Salmon</strong> to estimate transcript abundance</li>
+<li>We only have access to <strong>2 CPUs and 8Gb</strong> of RAM today</li>
+<li>We are working with our own subset data today (including reference data)</li>
+</ul>
+<p><img src="../figs/RNAseq_experiment.png" class="img-fluid"></p>
 </section>
+<section id="challenge-1" class="level3 unlisted challenge">
+<h3 class="unlisted anchored" data-anchor-id="challenge-1"><strong>Challenge</strong></h3>
+<p>Using the <a href="https://nf-co.re/rnaseq/3.10.1/parameters">nf-core/rnaseq documentation</a> and the diagram above, can you decide which flags you may need to add to this command for this experiment?</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.10.1/workflow/main.nf \</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  --input &lt;samples.tsv&gt; \</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  -profile singularity \</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  -with-report execution_report_exercise2_1.html \</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  -with-trace execution_trace_exercise2_1.txt \</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  -with-timeline timeline_exercise2_1.html \</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  -with-dag dag_exercise2_1.png</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>HINT: You will need to look at the <a href="https://nf-co.re/rnaseq/3.10.1/parameters#reference-genome-options">reference genome</a>, <a href="https://nf-co.re/rnaseq/3.10.1/parameters#alignment-options">alignment</a>, and <a href="https://nf-co.re/rnaseq/3.10.1/parameters#max-job-request-options">max job request</a> options.</p>
+<details>
+<summary>
+Solution
+</summary>
+<p>Given we are using STAR and Salmon as our aligner and quantification tool of choice (respectively) and it is the default choice of this workflow we will not need to provide an <code>--aligner</code> flag. However, if you wanted to provide this for the sake of reproducibility in case things change in the future:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>--aligner 'star_salmon'</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Given we are providing our own subset data for this workshop, we will need to use:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>--fasta /path/to/mouse.fa  </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>--gtf /path/to/mouse.gtf </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>--star_index /path/to/STAR</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Given we have limited computing resources today, we will need to specify a ceiling for both memory and CPUs:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>--max_memory '6.GB' </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>--max_cpus 2 </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</section>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Zoom reaction check in!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Is everyone ok?</strong><br>
+<span class="emoji" data-emoji="clap">👏</span> (clap) yes, lets move on.<br>
+<span class="emoji" data-emoji="cry">😢</span> (cry) no, please help.</p>
+</div>
+</div>
 <section id="run-the-workflow" class="level3 unlisted">
 <h3 class="unlisted anchored" data-anchor-id="run-the-workflow"><strong>Run the workflow</strong></h3>
+<p>Make a new working directory for this lesson and move into it:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>mkdir ~/nfcore-workshop/session2/exercise1 &amp;&amp; cd $_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>For the sake of expediency, we are using prepared subset data for this session. All the data (including fastqs, input manifest, reference fasta, gtf, and STAR indexes) are available on the CernVM-FS file system. CernVM-FS is a read-only file system that Pawsey have used to store files such as containerised tools (<a href="https://biocontainers.pro/">Biocontainers</a>), reference datasets, and other shared resources that are commonly used by many researchers. Take a look <a href="https://support.pawsey.org.au/documentation/display/US/Nimbus+for+Bioinformatics">here</a> for more information on bioinformatics resources provided by Pawsey on Nimbus.</p>
+<p>Take a quick look at the workshop data we’re working with today:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>ls /path/to/aarnet-cvmfs/training/workshopMaterials</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We need to store this path in a variable for our run command:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>materials=/path/to/aarnet-cvmfs/training/workshopMaterials</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now run the workflow:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.10.1/workflow/main.nf \</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  --input $materials/samples.tsv \</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  -profile singularity \</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  --fasta $materials/mm10_chr18.fa \</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  --gtf $materials/mm10_chr18.gtf \</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  --star_index $materials/STAR \</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  --max_memory '6 GB' --max_cpus 2 \</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  --outdir ex1_results \</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  -with-report execution_report_exercise2_1.html \</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  -with-trace execution_trace_exercise2_1.txt \</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  -with-timeline timeline_exercise2_1.html \</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  -with-dag dag_exercise2_1.png</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="check-the-outputs" class="level3 unlisted">
-<h3 class="unlisted anchored" data-anchor-id="check-the-outputs"><strong>Check the outputs</strong></h3>
+<section id="reproducibility-is-a-state-of-mind" class="level3 unlisted">
+<h3 class="unlisted anchored" data-anchor-id="reproducibility-is-a-state-of-mind"><strong>Reproducibility is a state of mind</strong></h3>
+<p>We have to wait for the workflow to run (this should take ~20 mins) before we can get on with the other exercises. While we wait, lets discuss how we manage reproducibility in our own practices, and share some useful resources with one another:</p>
+<p><img src="../figs/Ex2.1_whiteboarding.png" class="img-fluid"></p>
 </section>
 <section id="key-points" class="level3 unlisted keypoints">
 <h3 class="unlisted anchored" data-anchor-id="key-points"><strong>Key points</strong></h3>

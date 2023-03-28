@@ -47,6 +47,20 @@ Visual Studio Code is a lightweight and powerful source code editor available fo
 
 #### **Login via Visual Studio Code**
 
+1. Connect to your instance with VS code by adding the host details to your ssh config file. 
+    * `Ctrl`+`Shift`+`P` to open command palette 
+    * Select `Remote-SSH: Open SSH configuraiton file`
+    * Add new entry, filling out host name and identity file:
+```default
+Host nfcoreWorkshop
+  HostName 146.118.XX.XXX  
+  User training  	
+```
+2. Connect to this address
+    * `Ctrl`+`Shift`+`P` to open command palette 
+    * Select `Remote-SSH: Connect to Host` and select name of your host
+    * Select `Linux` from dropdown menu and then `continue` 
+
 ### **Install and set up a terminal application**
 
 The terminal applications available to you will depend on your operating system. 
