@@ -123,8 +123,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 }</script>
 
 
-<link rel="stylesheet" href="../lesson.css">
-<link rel="stylesheet" href="../bootstrap-icons.css">
+<link rel="stylesheet" href="../styles.scss">
 </head>
 
 <body class="nav-fixed">
@@ -197,6 +196,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </li>  
     </ul>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../tips_tricks.html">
+ <span class="menu-text">Tips &amp; Tricks</span></a>
+  </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
@@ -204,14 +207,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
         
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-page" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -230,13 +233,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<section id="objectives" class="level3 unlisted objectives">
-<h3 class="unlisted anchored" data-anchor-id="objectives">Objectives</h3>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<strong>Learning objectives</strong>
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
-<li>Learning outcome1</li>
-<li>Learning outcome2</li>
+<li>learning outcome 1</li>
+<li>learning outcome 2</li>
 </ul>
-</section>
+</div>
+</div>
 <p>Some intro text to what this lesson is about</p>
 <section id="sub-section-heading" class="level3 unlisted">
 <h3 class="unlisted anchored" data-anchor-id="sub-section-heading"><strong>Sub-section heading</strong></h3>
@@ -245,13 +257,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Where relevant include expected standard output:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>stdout here</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Any important notes for attendees should be present in information boxes. For example:</p>
-<div class="callout-note callout callout-style-simple callout-captioned">
+<div class="callout-warning callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Copying the code from the <code>grey</code> boxes on training materials
+Copying the code from the grey boxes on training materials
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -260,29 +272,56 @@ Copying the code from the <code>grey</code> boxes on training materials
 </div>
 </div>
 <p>Challenges/activites should be provided in challenge boxes:</p>
-</section>
-<section id="challenge" class="level3 unlisted challenge">
-<h3 class="unlisted anchored" data-anchor-id="challenge"><strong>Challenge</strong></h3>
-<p>Question or activity for attendees.</p>
-<details>
-<summary>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<strong>Challenge</strong>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Question or activity</p>
+</div>
+</div>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
 Solution
-</summary>
-<p>Provide solution, including code where relevant</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a># comment</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>command to run  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</section>
-<p>Each lesson page should wrap up with key takeaways:</p>
-<section id="key-points" class="level3 unlisted keypoints">
-<h3 class="unlisted anchored" data-anchor-id="key-points"><strong>Key points</strong></h3>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Solution explanation and code where relevant</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<p>For other types of callout blocks see <a href="https://quarto.org/docs/authoring/callouts.html">here</a>. Any figures should be placed in <code>figs</code> directory and embeddeded like this: <img src="../figs/RNAseq_experiment.png" class="img-fluid"></p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<strong>Key points</strong>
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
-<li>Takeaway 1</li>
-<li>Takeaway 2</li>
+<li>takeaway 1</li>
+<li>takeaway 2</li>
 </ul>
+</div>
+</div>
+
+
 </section>
-
-
 
 <p>All materials copyright Sydney Informatics Hub, University of Sydney</p></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

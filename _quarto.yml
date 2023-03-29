@@ -31,15 +31,21 @@ website:
           href: notebooks/2.5_extArgs.html
         - text: "Troubleshooting issues"
           href: notebooks/2.6_troubleshoot.html
+      - text: "Tips & Tricks"
+        href: tips_tricks.html
+
   body-footer: "All materials copyright Sydney Informatics Hub, University of Sydney"
           
 format:
   html:
-    theme: simplex
-    css: [lesson.css, bootstrap-icons.css]
+    theme: 
+      light: flatly
+    css: styles.scss
     toc: true
     code-overflow: wrap
     highlight-style: github
+    page-layout: full
+    
 
 
 

@@ -1,0 +1,7 @@
+---
+title: "**Some tips and tricks**"
+output:
+  html_document:
+    toc: false
+    toc_float: false
+---
