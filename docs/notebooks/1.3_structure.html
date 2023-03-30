@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>nf-core workflows series - Specifying external arguments to a process</title>
+<title>nf-core workflows series - Structure of an nf-core repository</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -165,15 +165,23 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#section" id="toc-section" class="nav-link active" data-scroll-target="#section"></a></li>
+  <li><a href="#configuration" id="toc-configuration" class="nav-link" data-scroll-target="#configuration">Configuration</a></li>
+  <li><a href="#nextflow.config" id="toc-nextflow.config" class="nav-link" data-scroll-target="#nextflow.config"><code>nextflow.config</code></a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><strong>Specifying external arguments to a process</strong></h1>
+<h1 class="title"><strong>Structure of an nf-core repository</strong></h1>
 </div>
 
 
@@ -188,17 +196,48 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="objectives" class="level3 unlisted objectives">
-<h3 class="unlisted anchored" data-anchor-id="objectives">Objectives</h3>
-<ul>
-<li>Understand how to use the ext.args feature to pass additional command-line arguments to a process</li>
-<li>Implement additional external arguments to a process that are not hardcoded in the process script</li>
-<li>Write a custom configuration file for MultiQC in the YAML file format</li>
-<li>Observe the behaviour of Nextflow’s cache functionality</li>
-</ul>
+<section id="section" class="level1">
+<h1></h1>
+<p>nf-core pipelines start from a template and follow the same structure. Although you won’t need to edit the code base to run an nf-core pipeline, having a basic understanding of the repository structure will help you configure its execution.</p>
 </section>
+<section id="configuration" class="level1">
+<h1>Configuration</h1>
+<p>When a pipeline script is launched, Nextflow will look for configuration files in multiple locations. As each configuration file can contain conflicting settings, the sources are ranked to decide which settings to are applied.</p>
+<p>Configuration sources are reported below and listed in order of priority:</p>
+<ol type="1">
+<li>Parameters specified on the command line (<code>--something value</code>)</li>
+<li>Parameters provided using the <code>-params-file</code> option</li>
+<li>Config file specified using the <code>-c my_config</code> option</li>
+<li>The config file named <code>nextflow.config</code> in the current directory</li>
+<li>The config file named <code>nextflow.config</code> in the workflow project directory</li>
+<li>The config file <code>$HOME/.nextflow/config</code></li>
+<li>Values defined within the pipeline script itself (e.g., <code>main.nf</code>)</li>
+</ol>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A <code>--params-file</code> must be used to define parameters.</p>
+<p>Parameters defined in the parameter block in <code>custom.config</code> files <strong>WILL NOT</strong> override defaults in <code>nextflow.config</code> for nf-core pipelines.</p>
+</div>
+</div>
+</section>
+<section id="nextflow.config" class="level1">
+<h1><code>nextflow.config</code></h1>
+<p>For nf-core pipelines, the <code>nextflow.config</code> contains parameter defaults. Inside the <code>nextflow.</code>config several <code>includeConfig</code> statements are used to include additional <code>.config</code> files from the <code>conf/</code> folder.</p>
+<p><code>base.config</code> Generous resource allocations using labels. <code>igenomes.config</code> Default configuration to assess AWS iGenomes. <code>modules.config</code> Module-specific configuration options (both mandatory or optional). <code>test.config</code> A configuration to test the pipeline with a small test dataset <code>test_full.config</code> A configuration to test the pipeline with a full-size test dataset.</p>
+<blockquote class="blockquote">
+<p>note about params and params-file</p>
+</blockquote>
 
 
+</section>
 
 <p>All materials copyright Sydney Informatics Hub, University of Sydney</p></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

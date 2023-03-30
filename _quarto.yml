@@ -13,8 +13,16 @@ website:
         text: "Setup"
       - text: "Session 1"
         menu:
-        - text: "Lesson template"
-          href: notebooks/0.0_template.html
+        - text: "Session 1 kick-off"
+          href: notebooks/1.0_intro.html
+        - text: "Introduction to Nextflow"
+          href: notebooks/1.1_nextflow.html
+        - text: "Introduction to nf-core"
+          href: notebooks/1.2_nfcore.html 
+        - text: "nf-core pipeline structure"
+          href: notebooks/1.3_structure.html
+        - text: "nf-core launch"
+          href: notebooks/1.4_launch.html
       - text: "Session 2"
         menu:
         - text: "Sesson 2 kick-off"
