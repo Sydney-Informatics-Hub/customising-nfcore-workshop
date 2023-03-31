@@ -212,10 +212,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#installing-nextflow" id="toc-installing-nextflow" class="nav-link" data-scroll-target="#installing-nextflow">Installing Nextflow</a></li>
   <li><a href="#environmental-variables" id="toc-environmental-variables" class="nav-link" data-scroll-target="#environmental-variables">Environmental variables</a></li>
-  <li><a href="#executing-a-pipeline" id="toc-executing-a-pipeline" class="nav-link" data-scroll-target="#executing-a-pipeline">Executing a pipeline</a>
-  <ul class="collapse">
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
-  </ul></li>
+  <li><a href="#executing-a-pipeline" id="toc-executing-a-pipeline" class="nav-link" data-scroll-target="#executing-a-pipeline">Executing a pipeline</a></li>
   <li><a href="#pipeline-revisions" id="toc-pipeline-revisions" class="nav-link" data-scroll-target="#pipeline-revisions">Pipeline revisions</a></li>
   <li><a href="#managing-your-pipelines-with-nextflow" id="toc-managing-your-pipelines-with-nextflow" class="nav-link" data-scroll-target="#managing-your-pipelines-with-nextflow">Managing your pipelines with nextflow</a></li>
   </ul></li>
@@ -296,7 +293,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Find out which version of <code>nextflow</code> you are using using an option.</p>
+<p>Find out which version of Nextflow you are using using the version option.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -359,10 +356,10 @@ Solution
 </section>
 <section id="executing-a-pipeline" class="level2">
 <h2 class="anchored" data-anchor-id="executing-a-pipeline">Executing a pipeline</h2>
-<p>The <code>nextflow run</code> command is used to initiate the execution of a pipeline script or pull a pipeline project. Nextflow seamlessly integrates with code repositories such as GitHub. This feature allows you to manage your project code consistently and use public Nextflow pipelines quickly and transparently.</p>
-<p>When you launch a script with Nextflow, it will look for a file with the pipeline name you’ve specified. If that file does not exist, it will look for a public repository with the same name on GitHub (unless otherwise specified). If it is found, the repository is automatically downloaded to your computer and executed. This repository is stored in the Nextflow home directory, which is, by default, the <code>$HOME/.nextflow</code> directory, and will be reused for any further executions.</p>
-<p>To launch the execution of a pipeline project, hosted in a remote code repository, you simply need to specify its qualified name or the repository URL after the run command.</p>
-<p>The qualified name is formed by two parts - the owner name and the repository name separated by a <code>/</code> character. For example, if a Nextflow project is hosted in a GitHub repository at the address <code>http://github.com/foo/bar</code>, it can be executed by using:</p>
+<p>Nextflow seamlessly integrates with code repositories such as GitHub. This feature allows you to manage your project code and use public Nextflow pipelines quickly, consistently, and transparently.</p>
+<p>The <code>pull</code> command will download a pipeline from a hosting platform into your global cache <code>$HOME/.nextflow/assets</code> folder. Alternatively, you can use the <code>clone</code> command to download a pipeline into a another local directory of your choice.</p>
+<p>When you <code>run</code> a pipeline with Nextflow, it will look for a file with the pipeline name you’ve specified. If that file does not exist, it will look for a public repository with the same name on GitHub (unless otherwise specified). If it is found, the repository is automatically <code>pull</code> the pipeline to your global cache and execute it.</p>
+<p>If you are launching the execution of a pipeline project hosted in a remote code repository, you can specify its qualified name or the repository URL after the run command. The qualified name is formed by two parts - the owner name and the repository name separated by a <code>/</code> character. For example, if a Nextflow project (<code>foo</code>) is hosted in a GitHub repository (<code>bar</code>) at the address <code>http://github.com/foo/bar</code>, it can be executed by using:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run foo/bar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Alternatively, the complete URL could be used:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run http://github.com/foo/bar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -397,9 +394,10 @@ Solution
 </div>
 </div>
 </div>
-<section id="section" class="level3">
-<h3 class="anchored" data-anchor-id="section"></h3>
-<p>Running a revision</p>
+</section>
+<section id="pipeline-revisions" class="level2">
+<h2 class="anchored" data-anchor-id="pipeline-revisions">Pipeline revisions</h2>
+<p>Running a revision text</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -430,11 +428,7 @@ Solution
 </div>
 </div>
 </div>
-</section>
-</section>
-<section id="pipeline-revisions" class="level2">
-<h2 class="anchored" data-anchor-id="pipeline-revisions">Pipeline revisions</h2>
-<p>If your version of the pipeline is not the latest you may get a warning.</p>
+<p>If your version of the pipeline is not the latest you may get a warning and will be required to specify</p>
 </section>
 <section id="managing-your-pipelines-with-nextflow" class="level2">
 <h2 class="anchored" data-anchor-id="managing-your-pipelines-with-nextflow">Managing your pipelines with nextflow</h2>
