@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -188,7 +222,13 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>This is nf-core launch page</p>
+<p>Nextflow pipelines can have a considerable number of optional command line flags. To help manage these, you can use the <code>nf-core launch</code> command.</p>
+<p>The command takes one argument - either the name of an nf-core pipeline which will be pulled automatically or the path to a directory containing a Nextflow pipeline. For example:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> launch nf-core/<span class="op">&lt;</span>pipeline name<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>When running this command, you will first be asked about which version of a pipeline you would like to run. Next, you will be given the choice between a web-based graphical interface or an interactive command-line wizard tool to enter the pipeline parameters for your run. Both interfaces show documentation alongside each parameter and validate your inputs.</p>
+<p>The tool uses the <code>nextflow_schema.json</code> file from a pipeline to give parameter descriptions, defaults, and grouping. If no file for the pipeline is found, one will be automatically generated at runtime.</p>
+<p>Nextflow parameter variables are saved into a JSON file called <code>nf-params.json</code> and used by Nextflow with the <code>-params-file</code> flag.</p>
+<p>The wizard will ask if you want to launch the Nextflow run. You will also be given the run command and a copy of the JSON file for you to copy and paste if you wish.</p>
 
 
 

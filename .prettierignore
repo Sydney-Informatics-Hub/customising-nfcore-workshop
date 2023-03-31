@@ -1,0 +1,13 @@
+.github
+.prettier.yml
+.quarto
+LICENSE
+_quarto.yml
+index.qmd
+setup.qmd
+tips_tricks.qmd
+README.md
+bootstrap-icons.css
+styles.scss
+docs
+figs
