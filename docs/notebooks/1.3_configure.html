@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>nf-core workflows series - Structure of an nf-core repository</title>
+<title>nf-core workflows series - Configuring pipelines</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -140,12 +140,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Introduction to nf-core</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/1.3_structure.html" rel="" target="">
+    <a class="dropdown-item" href="../notebooks/1.3_configure.html" rel="" target="">
  <span class="dropdown-text">nf-core pipeline structure</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../notebooks/1.4_launch.html" rel="" target="">
  <span class="dropdown-text">nf-core launch</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../notebooks/1.4_download.html" rel="" target="">
+ <span class="dropdown-text">nf-core download</span></a>
   </li>  
     </ul>
   </li>
@@ -204,7 +208,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#configuration" id="toc-configuration" class="nav-link active" data-scroll-target="#configuration">Configuration</a></li>
+  <li><a href="#nf-core-pipeline-structure" id="toc-nf-core-pipeline-structure" class="nav-link active" data-scroll-target="#nf-core-pipeline-structure">nf-core pipeline structure</a></li>
+  <li><a href="#configuration" id="toc-configuration" class="nav-link" data-scroll-target="#configuration">Configuration</a></li>
   <li><a href="#nextflow.config" id="toc-nextflow.config" class="nav-link" data-scroll-target="#nextflow.config"><code>nextflow.config</code></a></li>
   <li><a href="#config-profiles" id="toc-config-profiles" class="nav-link" data-scroll-target="#config-profiles">Config profiles</a></li>
   </ul>
@@ -215,7 +220,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><strong>Structure of an nf-core repository</strong></h1>
+<h1 class="title"><strong>Configuring pipelines</strong></h1>
 </div>
 
 
@@ -230,7 +235,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>nf-core pipelines start from a template and follow the same structure. Although you won’t need to edit the code base to run an nf-core pipeline, having a basic understanding of the repository structure will help you configure its execution.</p>
+<p>nf-core pipelines follow a set of best practices and standardized conventions. The structure of an nf-core pipeline is designed to be modular, easily customizable, and reproducible. Although you won’t need to edit the code base to run an nf-core pipeline, having a basic understanding of the repository structure will help you understand how to configure its execution.</p>
+<section id="nf-core-pipeline-structure" class="level1">
+<h1>nf-core pipeline structure</h1>
+<p>nf-core pipelines start from a common template and follow the same structure.</p>
+<p><img src="../figs/1.3_structure.excalidraw.png" class="quarto-discovered-preview-image img-fluid"></p>
+</section>
 <section id="configuration" class="level1">
 <h1>Configuration</h1>
 <p>When a pipeline script is launched, Nextflow will look for configuration files in multiple locations. As each configuration file can contain conflicting settings, the sources are ranked to decide which settings to are applied.</p>

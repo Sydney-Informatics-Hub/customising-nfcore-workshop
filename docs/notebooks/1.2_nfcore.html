@@ -140,12 +140,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Introduction to nf-core</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/1.3_structure.html" rel="" target="">
+    <a class="dropdown-item" href="../notebooks/1.3_configure.html" rel="" target="">
  <span class="dropdown-text">nf-core pipeline structure</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../notebooks/1.4_launch.html" rel="" target="">
  <span class="dropdown-text">nf-core launch</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../notebooks/1.4_download.html" rel="" target="">
+ <span class="dropdown-text">nf-core download</span></a>
   </li>  
     </ul>
   </li>
@@ -239,12 +243,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>What is nf-core?</h1>
 <p><img src="../figs/nf-core-logo.png" class="quarto-discovered-preview-image img-fluid" style="width:100.0%"></p>
 <p>nf-core is a community effort to collect a curated set of analysis pipelines built using Nextflow.</p>
-<p><strong>For facilities</strong></p>
-<p>Highly optimised pipelines with excellent reporting. Validated releases ensure reproducibility.</p>
-<p><strong>For users</strong></p>
-<p>Portable, documented and easy to use workflows. Pipelines that you can trust.</p>
-<p><strong>For developers</strong></p>
-<p>Companion templates and tools help to validate your code and simplify common tasks.</p>
+<p>nf-core provides a standardized set of best practices, guidelines, and templates for building and sharing bioinformatics pipelines. These pipelines are designed to be modular, scalable, and portable, allowing researchers to easily adapt and run them on their own data and compute resources.</p>
+<p>The nf-core community comprises a diverse group of bioinformaticians, developers, and researchers from around the world who collaborate on developing and maintaining a growing collection of high-quality pipelines. These pipelines cover a range of applications, including transcriptomics, proteomics, and metagenomics.</p>
+<p>One of the key benefits of nf-core is that it promotes open development, testing, and peer review, ensuring that the pipelines are robust, well-documented, and validated against real-world datasets. This helps to increase the reliability and reproducibility of bioinformatics analyses and ultimately enables researchers to accelerate their scientific discoveries.</p>
 <p>nf-core is published in Nature Biotechnology! <a href="https://www.nature.com/articles/s41587-020-0439-x">Nat Biotechnol 38, 276–278 (2020). Nature Biotechnology</a></p>
 <section id="key-features-of-nf-core-pipelines" class="level2">
 <h2 class="anchored" data-anchor-id="key-features-of-nf-core-pipelines">Key Features of nf-core pipelines</h2>
@@ -260,16 +261,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>nf-core pipelines follow best practices to ensure maximum portability and reproducibility. The large community makes the pipelines exceptionally well-tested and easy to run.</p>
 <p><strong>Cloud-ready</strong></p>
 <p>nf-core pipelines are tested on AWS after every major release. You can even browse results live on the website and use outputs for your own benchmarking.</p>
+<p>All nf-core pipelines are open-source and community driven.</p>
+<p>While</p>
 </section>
 <section id="events" class="level2">
 <h2 class="anchored" data-anchor-id="events">Events</h2>
-<p>The nf-core community is a vibrant global community with regular community-driven events:</p>
-<ul>
-<li>Seminars</li>
-<li>Hackathons</li>
-<li>Community training</li>
-</ul>
-<p>Keep an eye on the [nf-core event page] for more information.</p>
+<p>nf-core events are community-driven gatherings that provide a platform for bioinformaticians, developers, and researchers to come together and discuss the latest developments in Nextflow and nf-core pipelines. These events typically include a combination of seminars, trainings, and hackathons, and are open to anyone who is interested in learning more about nf-core and its applications. Most events are held virtually, making them accessible to a global audience.</p>
+<p>Upcoming events are listed on the [nf-core event page] and announced on Slack and Twitter.</p>
 </section>
 <section id="join-the-community" class="level2">
 <h2 class="anchored" data-anchor-id="join-the-community">Join the community!</h2>
@@ -312,7 +310,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This tutorial will make use of the nf-core/tools, a set of helper tools for use with nf-core Nextflow pipelines. The tool has been developed to provide a range of additional functionality such as pipeline creation, testing, and more.</p>
 <p>The nf-core tool is written in Python and is available from the <a href="https://pypi.org/project/nf-core/">Python Package Index (PyPI)</a>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install nf-core</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Alternatively, nf-core/tools can be installed from <a href="https://anaconda.org/bioconda/nf-core">Bioconda</a>:</p>
+<p>Alternatively, nf-core/tools can also be installed from <a href="https://anaconda.org/bioconda/nf-core">Bioconda</a>:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> install <span class="at">-c</span> bioconda nf-core</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -341,23 +339,42 @@ Solution
 <div class="callout-body-container callout-body">
 <p>Search for the rnaseq pipeline:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>nf-core/tools has commands to help both users and developers. The tooling is for everyone. For users, the helper tools make it easier to run pipelines. For developers, the helper tools make it easier to develop your pipelines using best practises.</p>
 </div>
 </div>
 </div>
-<p>nf-core/tools has commands to help both users and developers. For users, many of the tools are designed to make it easier to run pipelines without having to touch write code yourself.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
+<section id="challenge-1" class="level3 unlisted">
+<h3 class="unlisted anchored" data-anchor-id="challenge-1"><strong>Challenge</strong></h3>
+<p>Find out what other nf-core/tools commands are available using the <code>--help</code> option:</p>
+<p>:::</p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<strong>Challenge</strong>
+Solution
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Find out what other nf-core/tools commands are available</p>
+<p>Run the <code>--help</code> option to list the options, tools for users, and tools for developers</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> <span class="at">--help</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
+</div>
+</section>
+</section>
+<section id="finding-a-nf-core-workflow" class="level2">
+<h2 class="anchored" data-anchor-id="finding-a-nf-core-workflow">Finding a nf-core workflow</h2>
+<p>There are currently 80 pipelines (March 2023) available as part of nf-core. These pipelines are at various stages of development with 49 released, 19 under development, and 12 archived. The list of available pipelines, as well as their documentation, can be explored on the <a href="https://nf-co.re/">nf-core website</a>.</p>
+<p>The <code>list</code> command can also be used to list the available nf-core pipelines along with local information.</p>
+<p>:::</p>
+<section id="challenge-2" class="level3 unlisted">
+<h3 class="unlisted anchored" data-anchor-id="challenge-2"><strong>Challenge</strong></h3>
+<p>Try to find out which pipelines are available and what version they are:</p>
+<p>:::</p>
 <div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -370,19 +387,13 @@ Solution
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Run the <code>--help</code> option to list the options, tools for users, and tools for developers</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> <span class="at">--help</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="finding-a-nf-core-workflow" class="level2">
-<h2 class="anchored" data-anchor-id="finding-a-nf-core-workflow">Finding a nf-core workflow</h2>
-<p>There are currently 77 pipelines (March 2023) available as part of nf-core. These pipelines are at various stages of development with 47 released, 17 under development, and 13 archived. The list of available pipelines, as well as their documentation, can be explored on the <a href="https://nf-co.re/">nf-core website</a>.</p>
-<p>The <code>nf-core list</code> command can also list available nf-core pipelines with local information.</p>
+<p>Run the <code>list</code> command to see what pipelines are available.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
 <p>The output shows the latest pipeline version number and when that was released. It also tells you if and when a pipeline was been pulled locally and whether you have the latest version.</p>
-<p>Unless you are actively developing pipeline code, you can use Nextflow’s built-in functionality to fetch nf-core pipelines. You can use the <code>nextflow pull</code> command to download the latest version of a remote workflow from the nf-core GitHub repository:</p>
+<p>Unless you are actively developing pipeline code, you can use Nextflow’s built-in functionality to fetch nf-core pipelines. You can use the <code>pull</code> command to download the latest version of a remote workflow from the <a href="https://github.com/nf-core/">nf-core GitHub repository</a>:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> pull nf-core/<span class="op">&lt;</span>PIPELINE<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Nextflow can also fetch the pipeline code when you run it without pulling the pipeline beforehand:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/<span class="op">&lt;</span>PIPELINE<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -391,7 +402,7 @@ Solution
 </blockquote>
 <p>You can explicitly reference the pipeline version number that you wish to use with the <code>-revision</code> or <code>-r</code> flag. For example:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> pull nf-core/<span class="op">&lt;</span>PIPELINE<span class="op">&gt;</span> -r 1.0.0<span class="kw">`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>nf-core pipelines use GitHub releases to tag stable versions of the code and software, making pipeline runs reproducible. You will always be able to run a previous version of a pipeline once it is released.</p>
+<p>nf-core pipelines use GitHub releases to tag stable versions of the code and software. You will always be able to run a previous version of a pipeline once it is released.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -402,7 +413,7 @@ Solution
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Try to pull the latest version of the <code>nf-core/rnaseq</code> pipeline directly from GitHub using Nextflow and check what version you have locally</p>
+<p>Try to pull the latest version of the <code>nf-core/rnaseq</code> pipeline directly from GitHub using Nextflow and check what version you have locally.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -426,6 +437,7 @@ Solution
 </div>
 
 
+</section>
 </section>
 </section>
 

@@ -20,9 +20,11 @@ website:
         - text: "Introduction to nf-core"
           href: notebooks/1.2_nfcore.html 
         - text: "nf-core pipeline structure"
-          href: notebooks/1.3_structure.html
+          href: notebooks/1.3_configure.html
         - text: "nf-core launch"
           href: notebooks/1.4_launch.html
+        - text: "nf-core download"
+          href: notebooks/1.4_download.html
       - text: "Session 2"
         menu:
         - text: "Sesson 2 kick-off"
