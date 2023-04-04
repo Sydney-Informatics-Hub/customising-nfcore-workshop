@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>nf-core workflows series - nf-core download</title>
+<title>nf-core workflows series - nf-core for users</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -110,12 +144,8 @@ ul.task-list li input[type="checkbox"] {
  <span class="dropdown-text">nf-core pipeline structure</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/1.4_launch.html" rel="" target="">
- <span class="dropdown-text">nf-core launch</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../notebooks/1.4_download.html" rel="" target="">
- <span class="dropdown-text">nf-core download</span></a>
+    <a class="dropdown-item" href="../notebooks/1.4_users.html" rel="" target="">
+ <span class="dropdown-text">Commands for users</span></a>
   </li>  
     </ul>
   </li>
@@ -169,15 +199,23 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#nf-core-list" id="toc-nf-core-list" class="nav-link active" data-scroll-target="#nf-core-list">nf-core list</a></li>
+  <li><a href="#nf-core-launch" id="toc-nf-core-launch" class="nav-link" data-scroll-target="#nf-core-launch">nf-core launch</a></li>
+  <li><a href="#nf-core-download" id="toc-nf-core-download" class="nav-link" data-scroll-target="#nf-core-download">nf-core download</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><strong>nf-core download</strong></h1>
+<h1 class="title"><strong>nf-core for users</strong></h1>
 </div>
 
 
@@ -192,12 +230,103 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>Sometimes you may need to run an nf-core pipeline on a server or HPC system that has no internet connection. In this case, you will need to fetch the pipeline files and manually transfer them to your system.</p>
+<p>Commands for users</p>
+<section id="nf-core-list" class="level1">
+<h1>nf-core list</h1>
+<p>There are currently 80 workflows (March 2023) available as part of nf-core. These workflows are at various stages of development with 49 released, 19 under development, and 12 archived. The list of available workflows, as well as their documentation, can be explored on the <a href="https://nf-co.re/">nf-core website</a>.</p>
+<p>The nf-core <code>list</code> command can also be used to list the available nf-core workflows along with local information.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Challenge</strong>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Try to find out which workflows are available and if you have any locally:</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Run the <code>list</code> command to see what workflows are available.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<p>The output shows the latest workflow version number and when that was released. It also tells you if and when a workflow was been pulled locally and whether you have the latest version.</p>
+<p>Unless you are actively developing workflow code, you can use Nextflow’s built-in functionality to fetch nf-core workflows. You can use the Nextflow <code>pull</code> command to download the latest version of a remote workflow from the <a href="https://github.com/nf-core/">nf-core GitHub repository</a>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> pull nf-core/<span class="op">&lt;</span>workflow<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Nextflow can also fetch the workflow code when you run it without pulling the workflow beforehand:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/<span class="op">&lt;</span>workflow<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p>Nextflow will fetch the default git branch if a workflow version is not specified. This will be the master branch for workflows with a stable release.</p>
+</blockquote>
+<p>nf-core workflows use GitHub releases to tag stable versions of the code and software. You will always be able to run a previous version of a workflow once it is released.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Challenge</strong>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Try to pull the latest version of the <code>nf-core/rnaseq</code> workflow directly from GitHub using Nextflow and check what version you have locally.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Use <code>nextflow pull</code> to download the <code>rnaseq</code> workflow from the <code>nf-core</code> GitHub repository.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> pull nf-core/rnaseq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Use <code>nf-core list</code> to view what version of the workflow you have locally</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="nf-core-launch" class="level1">
+<h1>nf-core launch</h1>
+<p>Nextflow workflows can have a considerable number of optional command line flags. To help manage these, you can use the <code>nf-core launch</code> command.</p>
+<p>The command takes one argument - either the name of an nf-core workflow which will be pulled automatically or the path to a directory containing a Nextflow workflow. For example:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> launch nf-core/<span class="op">&lt;</span>workflow name<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>When running this command, you will first be asked about which version of a workflow you would like to run. Next, you will be given the choice between a web-based graphical interface or an interactive command-line wizard tool to enter the workflow parameters for your run. Both interfaces show documentation alongside each parameter and validate your inputs.</p>
+<p>The tool uses the <code>nextflow_schema.json</code> file from a workflow to give parameter descriptions, defaults, and grouping. If no file for the workflow is found, one will be automatically generated at runtime.</p>
+<p>Nextflow parameter variables are saved into a JSON file called <code>nf-params.json</code> and used by Nextflow with the <code>-params-file</code> flag.</p>
+<p>The wizard will ask if you want to launch the Nextflow run. You will also be given the run command and a copy of the JSON file for you to copy and paste if you wish.</p>
+</section>
+<section id="nf-core-download" class="level1">
+<h1>nf-core download</h1>
+<p>Sometimes you may need to run an nf-core workflow on a server or HPC system that has no internet connection. In this case, you will need to fetch the workflow files and manually transfer them to your system.</p>
 <p>To make this process easier and ensure accurate retrieval of correctly versioned code and software containers, nf-core has a <code>download</code> helper tool.</p>
-<p>The nf-core <code>download</code> command will download both the pipeline code and the institutional nf-core/configs files. It can also optionally download singularity image file.</p>
+<p>The nf-core <code>download</code> command will download both the workflow code and the institutional nf-core/configs files. It can also optionally download singularity image file.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> download</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If run without any arguments, the download tool will interactively prompt you for the required information. Each prompt option has a flag and if all flags are supplied then it will run without a request for any additional user input.</p>
 
 
+</section>
 
 <p>All materials copyright Sydney Informatics Hub, University of Sydney</p></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
