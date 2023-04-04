@@ -233,11 +233,54 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>In this session we will be writing, running, adjusting, and rerunning the nf-core/rnaseq workflow run command as we step through various customisation scenarios. While all activities in this session will be performed using the nf-core/rnaseq workflow, all customisation scenarios we explore are applicable to other nf-core workflows and do not require an understanding of rnaseq data processing.</p>
-<section id="things-to-keep-in-mind" class="level3 unlisted">
-<h3 class="unlisted anchored" data-anchor-id="things-to-keep-in-mind"><strong>Things to keep in mind</strong></h3>
-<p>Before starting this session, we should discuss some important considerations and recommendations to keep in mind as you proceed through the lessons and apply these techniques to your own research. As with all open source bioinformatics resources, nf-core workflows may not suit all applications. It is important that you understand the needs of your dataset and research questions before deciding on a workflow.</p>
-<p><img src="../figs/2.0_nf-coreCommunity.png" class="img-fluid"></p>
+<p>In this session we will be <strong>writing, running, adjusting, and re-running the nf-core/rnaseq workflow as we step through various customisation scenarios</strong>. While all activities in this session will be performed using the nf-core/rnaseq workflow, all customisation scenarios we explore are applicable to (most) other nf-core workflows and do not require an understanding of rnaseq data processing. Before starting this session, there are a few things you should keep in mind as you proceed through the lessons and apply these techniques to your own research.</p>
+<p>As with all open source bioinformatics resources, nf-core workflows may not suit all applications. It is important that you <strong>understand the needs of your dataset and research questions before deciding on a workflow</strong>. All nf-core workflows are provided with sensible default settings that have broad applicability and comprensive documentation that explains all available parameters. What is ‘sensible’ varies dramatically between different experiments, computing environments, and datasets, so these settings might not suit your needs.</p>
+<section id="introducing-the-case-study" class="level3 unlisted">
+<h3 class="unlisted anchored" data-anchor-id="introducing-the-case-study"><strong>Introducing the case study</strong></h3>
+<p>For the purposes of this session, we are working with a (subset) dataset from a knockout mouse model study by <a href="https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-2801-4">Corley et al.&nbsp;(2016)</a>. The authors used the mouse model to simulate the role of a specific gene (<em>Gtf2ird1</em>) in Williams-Beuren Syndrome (WBS), a rare genetic disease in people. Today, we are performing the pre-processing steps in a slightly different way from the authors, to generate a set of files that can be analysed downstream. In deciding whether or not the nf-core/rnaseq workflow was suitable for reproducing the results presented in this study, we considered a number of factors, including:</p>
+<table class="table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 39%">
+<col style="width: 46%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Consideration</strong></th>
+<th><strong>Questions to ask of our experiment</strong></th>
+<th><strong>Why</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Size of dataset</strong></td>
+<td>Number of samples and data volume</td>
+<td>Scale of data impacts computational efficiency of the workflow</td>
+</tr>
+<tr class="even">
+<td><strong>Input data</strong></td>
+<td>Type of RNA sequenced, availability of reference files</td>
+<td>Determines if we meet input requirements of workflow</td>
+</tr>
+<tr class="odd">
+<td><strong>Research questions</strong></td>
+<td>Suitability of workflow outputs</td>
+<td>Need the right processed data for downstream analysis</td>
+</tr>
+<tr class="even">
+<td><strong>Computational resources</strong></td>
+<td>CPU, memory, RAM available and minimum requirements of the workflow</td>
+<td>Determines if I have enough resources to run the workflow</td>
+</tr>
+<tr class="odd">
+<td><strong>Tool preferences</strong></td>
+<td>Suitability of each tool, required inputs and outputs</td>
+<td>Workflow offers multiple tools for some steps, determines which choices I make</td>
+</tr>
+</tbody>
+</table>
+<p>We consulted the <a href="https://nf-co.re/rnaseq">nf-core/rnaseq documentation</a> to confirm that nf-core/rnaseq is a suitable workflow for our application. W’ve sketched out our experimental design, those considerations, and our choices below. We will discuss these further, shortly.</p>
+<p><img src="../figs/2.1_RNAseq_experiment.png" class="img-fluid"></p>
 </section>
 <section id="log-back-in-to-your-instance" class="level3 unlisted">
 <h3 class="unlisted anchored" data-anchor-id="log-back-in-to-your-instance"><strong>Log back in to your instance</strong></h3>
@@ -258,16 +301,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Enter password:</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Having successfully logged in, your terminal should then display something like that shown in the figure below:</p>
 <p><img src="https://user-images.githubusercontent.com/73086054/228141686-a63a84c1-b714-4797-af8e-2b511421a7d8.png" class="img-fluid"></p>
-</section>
-</section>
-<section id="key-points" class="level3 unlisted keypoints">
-<h3 class="unlisted anchored" data-anchor-id="key-points"><strong>Key points</strong></h3>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<strong>Key points</strong>
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
-<li></li>
+<li>nf-core workflows are provided with sensible defaults. These may not always suit your needs.</li>
+<li>To decide whether an nf-core workflow is the right choice for your experiment you need to understand the needs of your dataset and research questions.</li>
+<li>Use the workflow documentation to understand the requirements for running a workflow.</li>
 </ul>
+</div>
+</div>
+
+
 </section>
-
-
+</section>
 
 <p>All materials copyright Sydney Informatics Hub, University of Sydney</p></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

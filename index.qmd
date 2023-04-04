@@ -19,7 +19,7 @@ This workshop will set you up with the foundational knowledge required to run an
 
 ### **Target audience**{.unlisted}
 
-This workshop is suitable for people who are familiar with working at the command line interface and have some experience running [nf-core workflows](https://nf-co.re/pipelines). 
+This workshop is suitable for people who are familiar with working at the command line interface and have some experience running [Nextflow](https://www.nextflow.io/) and [nf-core workflows](https://nf-co.re/pipelines). 
 
 ### **Prerequisites**{.unlisted}
 
@@ -33,7 +33,6 @@ Please complete the [Setup Instructions](./setup.html) **before the course**.
 If you have any trouble, please get in contact with us ASAP.
 
 ### **Code of Conduct**{.unlisted}
-We expect all attendees of our training to follow our code of conduct, including bullying, harassment and discrimination prevention policies.
 
 In order to foster a positive and professional learning environment we encourage the following kinds of behaviours at all our events and on our platforms:
 
@@ -55,7 +54,7 @@ Our full CoC, with incident reporting guidelines, is available [here](https://sy
 
 ### **Course survey**{.unlisted}
 
-Please fill out our [course survey]() before you leave! Help us help you! 😁
+Please fill out our [course survey]() before you leave. Help us help you! 😁
 
 ### **Credits and acknowledgements**{.unlisted}
 
