@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>nf-core workflows series - Welcome to session 2</title>
+<title>nf-core workflows series - Configuring pipelines</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -199,15 +199,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#nf-core-pipeline-structure" id="toc-nf-core-pipeline-structure" class="nav-link active" data-scroll-target="#nf-core-pipeline-structure">nf-core pipeline structure</a></li>
+  <li><a href="#configuration" id="toc-configuration" class="nav-link" data-scroll-target="#configuration">Configuration</a></li>
+  <li><a href="#nextflow.config" id="toc-nextflow.config" class="nav-link" data-scroll-target="#nextflow.config"><code>nextflow.config</code></a></li>
+  <li><a href="#config-profiles" id="toc-config-profiles" class="nav-link" data-scroll-target="#config-profiles">Config profiles</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><strong>Welcome to session 2</strong></h1>
+<h1 class="title"><strong>Configuring pipelines</strong></h1>
 </div>
 
 
@@ -222,94 +231,88 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>In this session we will be <strong>writing, running, adjusting, and re-running the nf-core/rnaseq workflow as we step through various customisation scenarios</strong>. While all activities in this session will be performed using the nf-core/rnaseq workflow, all customisation scenarios we explore are applicable to (most) other nf-core workflows and do not require an understanding of rnaseq data processing. Before starting this session, there are a few things you should keep in mind as you proceed through the lessons and apply these techniques to your own research.</p>
-<p>As with all open source bioinformatics resources, nf-core workflows may not suit all applications. It is important that you <strong>understand the needs of your dataset and research questions before deciding on a workflow</strong>. All nf-core workflows are provided with sensible default settings that have broad applicability and comprensive documentation that explains all available parameters. What is ‘sensible’ varies dramatically between different experiments, computing environments, and datasets, so these settings might not suit your needs.</p>
-<section id="introducing-the-case-study" class="level3 unlisted">
-<h3 class="unlisted anchored" data-anchor-id="introducing-the-case-study"><strong>Introducing the case study</strong></h3>
-<p>For the purposes of this session, we are working with a (subset) dataset from a knockout mouse model study by <a href="https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-2801-4">Corley et al.&nbsp;(2016)</a>. The authors used the mouse model to simulate the role of a specific gene (<em>Gtf2ird1</em>) in Williams-Beuren Syndrome (WBS), a rare genetic disease in people. Today, we are performing the pre-processing steps in a slightly different way from the authors, to generate a set of files that can be analysed downstream. In deciding whether or not the nf-core/rnaseq workflow was suitable for reproducing the results presented in this study, we considered a number of factors, including:</p>
-<table class="table">
-<colgroup>
-<col style="width: 13%">
-<col style="width: 39%">
-<col style="width: 46%">
-</colgroup>
-<thead>
-<tr class="header">
-<th><strong>Consideration</strong></th>
-<th><strong>Questions to ask of our experiment</strong></th>
-<th><strong>Why</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Size of dataset</strong></td>
-<td>Number of samples and data volume</td>
-<td>Scale of data impacts computational efficiency of the workflow</td>
-</tr>
-<tr class="even">
-<td><strong>Input data</strong></td>
-<td>Type of RNA sequenced, availability of reference files</td>
-<td>Determines if we meet input requirements of workflow</td>
-</tr>
-<tr class="odd">
-<td><strong>Research questions</strong></td>
-<td>Suitability of workflow outputs</td>
-<td>Need the right processed data for downstream analysis</td>
-</tr>
-<tr class="even">
-<td><strong>Computational resources</strong></td>
-<td>CPU, memory, RAM available and minimum requirements of the workflow</td>
-<td>Determines if I have enough resources to run the workflow</td>
-</tr>
-<tr class="odd">
-<td><strong>Tool preferences</strong></td>
-<td>Suitability of each tool, required inputs and outputs</td>
-<td>Workflow offers multiple tools for some steps, determines which choices I make</td>
-</tr>
-</tbody>
-</table>
-<p>We consulted the <a href="https://nf-co.re/rnaseq">nf-core/rnaseq documentation</a> to confirm that nf-core/rnaseq is a suitable workflow for our application. W’ve sketched out our experimental design, those considerations, and our choices below. We will discuss these further, shortly.</p>
-<p><img src="../figs/2.1_RNAseq_experiment.png" class="quarto-discovered-preview-image img-fluid"></p>
+<p>nf-core pipelines follow a set of best practices and standardized conventions. The structure of an nf-core pipeline is designed to be modular, easily customizable, and reproducible. Although you won’t need to edit the code base to run an nf-core pipeline, having a basic understanding of the repository structure will help you understand how to configure its execution.</p>
+<section id="nf-core-pipeline-structure" class="level1">
+<h1>nf-core pipeline structure</h1>
+<p>nf-core pipelines start from a common template and follow the same structure.</p>
+<p><img src="../figs/1.3_structure.excalidraw.png" class="quarto-discovered-preview-image img-fluid"></p>
 </section>
-<section id="log-back-in-to-your-instance" class="level3 unlisted">
-<h3 class="unlisted anchored" data-anchor-id="log-back-in-to-your-instance"><strong>Log back in to your instance</strong></h3>
-<section id="in-visual-studio-code" class="level4">
-<h4 class="anchored" data-anchor-id="in-visual-studio-code"><strong>In Visual Studio Code</strong></h4>
-<p>Same as yesterday, connect to your instance using the command palatte:</p>
-<ul>
-<li><code>Ctrl</code>+<code>Shift</code>+<code>P</code> to open command palette</li>
-<li>Select <code>Remote-SSH: Connect to Host</code> and select name of your host</li>
-<li>Select <code>Linux</code> from dropdown menu and then <code>continue</code></li>
-</ul>
-<p>Having successfully logged in, you should see a small green box in the bottom left corner of your screen:</p>
-<p><img src="https://user-images.githubusercontent.com/73086054/228143085-20a5bdfc-f4e7-4472-b43f-2c975ae5eb4c.png" class="img-fluid"></p>
-</section>
-<section id="in-a-terminal" class="level4">
-<h4 class="anchored" data-anchor-id="in-a-terminal"><strong>In a terminal</strong></h4>
-<p>With a terminal application, run the following on the command-line: <code>default  ssh training@###.###.###.###</code> Enter the password provided at the beginning of the workshop. Ask one of the demonstrators if you’ve forgotten it.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Enter password:</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Having successfully logged in, your terminal should then display something like that shown in the figure below:</p>
-<p><img src="https://user-images.githubusercontent.com/73086054/228141686-a63a84c1-b714-4797-af8e-2b511421a7d8.png" class="img-fluid"></p>
-<div class="callout callout-style-default callout-note callout-titled">
+<section id="configuration" class="level1">
+<h1>Configuration</h1>
+<p>When a pipeline script is launched, Nextflow will look for configuration files in multiple locations. As each configuration file can contain conflicting settings, the sources are ranked to decide which settings to are applied.</p>
+<p>Configuration sources are reported below and listed in order of priority:</p>
+<ol type="1">
+<li>Parameters specified on the command line (<code>--something value</code>)</li>
+<li>Parameters provided using the <code>-params-file</code> option</li>
+<li>Config file specified using the <code>-c my_config</code> option</li>
+<li>The config file named <code>nextflow.config</code> in the current directory</li>
+<li>The config file named <code>nextflow.config</code> in the workflow project directory</li>
+<li>The config file <code>$HOME/.nextflow/config</code></li>
+<li>Values defined within the pipeline script itself (e.g., <code>main.nf</code>)</li>
+</ol>
+<div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<strong>Key points</strong>
+Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<ul>
-<li>nf-core workflows are provided with sensible defaults. These may not always suit your needs.</li>
-<li>To decide whether an nf-core workflow is the right choice for your experiment you need to understand the needs of your dataset and research questions.</li>
-<li>Use the workflow documentation to understand the requirements for running a workflow.</li>
-</ul>
+<p>A <code>--params-file</code> must be used to define parameters.</p>
+<p>Parameters defined in the parameter block in <code>custom.config</code> files <strong>WILL NOT</strong> override defaults in <code>nextflow.config</code> for nf-core pipelines.</p>
 </div>
 </div>
-
-
 </section>
+<section id="nextflow.config" class="level1">
+<h1><code>nextflow.config</code></h1>
+<p>For nf-core pipelines, the <code>nextflow.config</code> contains parameter defaults. Inside the <code>nextflow.</code>config several <code>includeConfig</code> statements are used to include additional <code>.config</code> files from the <code>conf/</code> folder.</p>
+<ul>
+<li><code>base.config</code>
+<ul>
+<li>Generous resource allocations using labels.</li>
+</ul></li>
+<li><code>igenomes.config</code>
+<ul>
+<li>Default configuration to assess AWS iGenomes.</li>
+</ul></li>
+<li><code>modules.config</code>
+<ul>
+<li>Module-specific configuration options (both mandatory or optional).</li>
+</ul></li>
+<li><code>test.config</code>
+<ul>
+<li>A configuration to test the pipeline with a small test dataset</li>
+</ul></li>
+<li><code>test_full.config</code>
+<ul>
+<li>A configuration to test the pipeline with a full-size test dataset.</li>
+</ul></li>
+</ul>
+</section>
+<section id="config-profiles" class="level1">
+<h1>Config profiles</h1>
+<p>Configuration files can also contain the definition of one or more profiles. A profile is a set of configuration attributes that can be activated when launching a pipeline by using the <code>-profile</code> command line option.</p>
+<p>Configuration profiles are defined by using the special scope <code>profiles</code> which group the attributes that belong to the same profile using a common prefix. For example, profiles defined in you your <code>nextflow.config</code> might like like:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">profiles</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">standard</span> {</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        <span class="ex">process.executor</span> = <span class="st">'local'</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="er">}</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">cluster</span> {</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="ex">process.executor</span> = <span class="st">'sge'</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="ex">process.queue</span> = <span class="st">'long'</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="ex">process.memory</span> = <span class="st">'10GB'</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="er">}</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run <span class="op">&lt;</span>your script<span class="op">&gt;</span> -profile standard</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Additionally, <code>includeConfig</code> are used to access custom institutional profiles for different institutions that have been submitted to the nf-core repository on GitHub.</p>
+<p>MORE INFO + LINK</p>
+
+
 </section>
 
 <p>All materials copyright Sydney Informatics Hub, University of Sydney</p></main> <!-- /main -->

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>nf-core workflows series - Welcome to session 2</title>
+<title>nf-core workflows series - Welcome to session 1</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,40 +19,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -207,7 +173,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><strong>Welcome to session 2</strong></h1>
+<h1 class="title"><strong>Welcome to session 1</strong></h1>
 </div>
 
 
@@ -222,95 +188,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>In this session we will be <strong>writing, running, adjusting, and re-running the nf-core/rnaseq workflow as we step through various customisation scenarios</strong>. While all activities in this session will be performed using the nf-core/rnaseq workflow, all customisation scenarios we explore are applicable to (most) other nf-core workflows and do not require an understanding of rnaseq data processing. Before starting this session, there are a few things you should keep in mind as you proceed through the lessons and apply these techniques to your own research.</p>
-<p>As with all open source bioinformatics resources, nf-core workflows may not suit all applications. It is important that you <strong>understand the needs of your dataset and research questions before deciding on a workflow</strong>. All nf-core workflows are provided with sensible default settings that have broad applicability and comprensive documentation that explains all available parameters. What is ‘sensible’ varies dramatically between different experiments, computing environments, and datasets, so these settings might not suit your needs.</p>
-<section id="introducing-the-case-study" class="level3 unlisted">
-<h3 class="unlisted anchored" data-anchor-id="introducing-the-case-study"><strong>Introducing the case study</strong></h3>
-<p>For the purposes of this session, we are working with a (subset) dataset from a knockout mouse model study by <a href="https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-2801-4">Corley et al.&nbsp;(2016)</a>. The authors used the mouse model to simulate the role of a specific gene (<em>Gtf2ird1</em>) in Williams-Beuren Syndrome (WBS), a rare genetic disease in people. Today, we are performing the pre-processing steps in a slightly different way from the authors, to generate a set of files that can be analysed downstream. In deciding whether or not the nf-core/rnaseq workflow was suitable for reproducing the results presented in this study, we considered a number of factors, including:</p>
-<table class="table">
-<colgroup>
-<col style="width: 13%">
-<col style="width: 39%">
-<col style="width: 46%">
-</colgroup>
-<thead>
-<tr class="header">
-<th><strong>Consideration</strong></th>
-<th><strong>Questions to ask of our experiment</strong></th>
-<th><strong>Why</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Size of dataset</strong></td>
-<td>Number of samples and data volume</td>
-<td>Scale of data impacts computational efficiency of the workflow</td>
-</tr>
-<tr class="even">
-<td><strong>Input data</strong></td>
-<td>Type of RNA sequenced, availability of reference files</td>
-<td>Determines if we meet input requirements of workflow</td>
-</tr>
-<tr class="odd">
-<td><strong>Research questions</strong></td>
-<td>Suitability of workflow outputs</td>
-<td>Need the right processed data for downstream analysis</td>
-</tr>
-<tr class="even">
-<td><strong>Computational resources</strong></td>
-<td>CPU, memory, RAM available and minimum requirements of the workflow</td>
-<td>Determines if I have enough resources to run the workflow</td>
-</tr>
-<tr class="odd">
-<td><strong>Tool preferences</strong></td>
-<td>Suitability of each tool, required inputs and outputs</td>
-<td>Workflow offers multiple tools for some steps, determines which choices I make</td>
-</tr>
-</tbody>
-</table>
-<p>We consulted the <a href="https://nf-co.re/rnaseq">nf-core/rnaseq documentation</a> to confirm that nf-core/rnaseq is a suitable workflow for our application. W’ve sketched out our experimental design, those considerations, and our choices below. We will discuss these further, shortly.</p>
-<p><img src="../figs/2.1_RNAseq_experiment.png" class="quarto-discovered-preview-image img-fluid"></p>
-</section>
-<section id="log-back-in-to-your-instance" class="level3 unlisted">
-<h3 class="unlisted anchored" data-anchor-id="log-back-in-to-your-instance"><strong>Log back in to your instance</strong></h3>
-<section id="in-visual-studio-code" class="level4">
-<h4 class="anchored" data-anchor-id="in-visual-studio-code"><strong>In Visual Studio Code</strong></h4>
-<p>Same as yesterday, connect to your instance using the command palatte:</p>
-<ul>
-<li><code>Ctrl</code>+<code>Shift</code>+<code>P</code> to open command palette</li>
-<li>Select <code>Remote-SSH: Connect to Host</code> and select name of your host</li>
-<li>Select <code>Linux</code> from dropdown menu and then <code>continue</code></li>
-</ul>
-<p>Having successfully logged in, you should see a small green box in the bottom left corner of your screen:</p>
-<p><img src="https://user-images.githubusercontent.com/73086054/228143085-20a5bdfc-f4e7-4472-b43f-2c975ae5eb4c.png" class="img-fluid"></p>
-</section>
-<section id="in-a-terminal" class="level4">
-<h4 class="anchored" data-anchor-id="in-a-terminal"><strong>In a terminal</strong></h4>
-<p>With a terminal application, run the following on the command-line: <code>default  ssh training@###.###.###.###</code> Enter the password provided at the beginning of the workshop. Ask one of the demonstrators if you’ve forgotten it.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Enter password:</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Having successfully logged in, your terminal should then display something like that shown in the figure below:</p>
-<p><img src="https://user-images.githubusercontent.com/73086054/228141686-a63a84c1-b714-4797-af8e-2b511421a7d8.png" class="img-fluid"></p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<strong>Key points</strong>
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>nf-core workflows are provided with sensible defaults. These may not always suit your needs.</li>
-<li>To decide whether an nf-core workflow is the right choice for your experiment you need to understand the needs of your dataset and research questions.</li>
-<li>Use the workflow documentation to understand the requirements for running a workflow.</li>
-</ul>
-</div>
-</div>
+<p>In this session we will be…</p>
 
 
-</section>
-</section>
 
 <p>All materials copyright Sydney Informatics Hub, University of Sydney</p></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
