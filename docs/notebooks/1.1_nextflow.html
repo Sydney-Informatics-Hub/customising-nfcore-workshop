@@ -257,16 +257,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Processes and Channels</h1>
 <p>In Nextflow, processes and channels are the fundamental building blocks of a workflow.</p>
 <p><img src="../figs/1.1_channel-process.excalidraw.png" class="img-fluid"></p>
-<p>A process is a unit of execution that represents a single computational step in a workflow. It is defined as a block of code that typically performs a one specific task and specifies its input and outputs, as well as any parameters, environment settings, and command-line options required for its execution. Processes can be written in any language that can be executed from the command line, such as Bash, Python, or R.</p>
+<p>A process is a unit of execution that represents a single computational step in a workflow. It is defined as a block of code that typically performs a one specific task and specifies its input and outputs, as well as any directives and conditional statements required for its execution. Processes can be written in any language that can be executed from the command line, such as Bash, Python, or R.</p>
 <p>Processes in are executed independently (i.e., they do not share a common writable state) and can run in parallel, allowing for efficient utilization of computing resources. Nextflow automatically manages the data dependencies between processes, ensuring that each process is executed only when its input data is available and all of its dependencies have been satisfied.</p>
-<p>A Nextflow workflow is made by joining together different processes using asynchronous first-in, first-out (FIFO) queues called channels. Channels allow data to passed between processes and can be used to manage data dependencies, parallelize tasks, and organize workflows. Any process can define one or more channels as an input and output and the interaction between these processes, and ultimately the workflow execution flow itself, is implicitly defined by these declarations.</p>
-<p>Importantly, processes can be parameterized to allow for flexibility in their behavior and to enable reuse of the same process in different parts of the workflow.</p>
+<p>A Nextflow workflow is made by joining together different processes using asynchronous first-in, first-out (FIFO) queues called channels. Channels allow data to passed between processes and can be used to manage data, parallelize tasks, and structure workflows. Any process can define one or more channels as an input and output and the interaction between these processes, and ultimately the workflow execution flow itself, is implicitly defined by these declarations.</p>
+<p>Importantly, processes can be parameterized to allow for flexibility in their behavior and to enable their reuse in and between workflow.</p>
 </section>
 <section id="execution-abstraction" class="level1">
 <h1>Execution abstraction</h1>
 <p>While a process defines what command or script is executed, the executor determines how and where the script is run.</p>
-<p>Nextflow provides an abstraction between the workflow’s functional logic and the underlying execution system. This abstraction allows users to define a workflow once and run it on different computing platforms without having to modify the workflow definition. Nextflow provides a variety of built-in execution options, such as local execution, HPC cluster execution, and cloud-based execution, and allows users to easily switch between these options using a single command-line argument.</p>
-<p>If not specified, processes are executed on your local computer. The local executor is useful for workflow development and testing purposes, however, for real-world computational workflows, a high-performance computing (HPC) or cloud platform is often required.</p>
+<p>Nextflow provides an abstraction between the workflow’s functional logic and the underlying execution system. This abstraction allows users to define a workflow once and run it on different computing platforms without having to modify the workflow definition. Nextflow provides a variety of built-in execution options, such as local execution, HPC cluster execution, and cloud-based execution, and allows users to easily switch between these options using command-line arguments.</p>
+<p>If not specified, processes are executed on your local computer. The local executor is useful for workflow development and testing purposes. However, for real-world computational workflows, a high-performance computing (HPC) or cloud platform is often required.</p>
 <p><img src="../figs/1.1_abstraction.excalidraw.png" class="img-fluid"></p>
 </section>
 <section id="nextflow-cli" class="level1">
@@ -281,7 +281,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li>Download the executable package using either <code>wget -qO- https://get.nextflow.io | bash</code> or <code>curl -s https://get.nextflow.io | bash</code></li>
 <li>Make the binary executable on your system by running <code>chmod +x nextflow</code>.</li>
-<li>Move the nextflow file to a directory accessible by your $PATH variable, e.g, <code>mv nextflow ~/bin/</code></li>
+<li>Move the <code>nextflow</code> file to a directory accessible by your <code>$PATH</code> variable, e.g, <code>mv nextflow ~/bin/</code></li>
 </ol>
 </section>
 <section id="nextflow-options-and-commands" class="level2">
@@ -322,8 +322,8 @@ Solution
 </section>
 <section id="managing-your-environment" class="level2">
 <h2 class="anchored" data-anchor-id="managing-your-environment">Managing your environment</h2>
-<p>You can control the Nextflow runtime and the underlying Java virtual machine using <a href="https://www.nextflow.io/docs/latest/config.html#environment-variables">environment variables</a>. These variables can be exported before running a Nextflow workflow and will be interpreted as environment variable by Nextflow.</p>
-<p>For most users Nextflow will work without setting any environment variables. However, for consistency, it is good practice to pin the version of Nextflow you are using when running a workflow using the <code>NXF_VER</code> variable.</p>
+<p>You can control the Nextflow runtime and the underlying Java virtual machine using <a href="https://www.nextflow.io/docs/latest/config.html#environment-variables">environment variables</a>. These variables can be exported before running a workflow and will be interpreted as environment variable by Nextflow.</p>
+<p>For most users, Nextflow will work without setting any environment variables. However, for consistency, it is good practice to pin the version of Nextflow you are using when running a workflow using the <code>NXF_VER</code> variable.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">NXF_VER</span><span class="op">=&lt;</span>version number<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Similarly, if you are using a shared resource, you may also consider including paths to where software is stored and can be accessed using the <code>NXF_SINGULARITY_CACHEDIR</code> or the <code>NXF_CONDA_CACHEDIR</code> variables:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">NXF_CONDA_CACHEDIR</span><span class="op">=&lt;</span>custom/path/to/conda/cache<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -385,7 +385,7 @@ Solution
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Try running the <code>hello</code> workflow directly from the <code>nextflow-io</code> <a href="https://github.com/nextflow-io/hello">GitHub account</a>.</p>
+<p>Try running the <code>hello</code> workflow directly from <code>nextflow-io</code> <a href="https://github.com/nextflow-io/hello">GitHub</a>.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -410,8 +410,10 @@ Solution
 <section id="executing-a-revision" class="level2">
 <h2 class="anchored" data-anchor-id="executing-a-revision">Executing a revision</h2>
 <p>When a Nextflow workflow is created or updated, a new revision is created. Each revision is identified by a unique number, which can be used to track changes made to the workflow and to ensure that the same version of the workflow is used consistently across different runs.</p>
+<p>The Nextflow <code>info</code> command can be used to view workflow properties, such as the project name, repository, local path, main script, and revisions. The <code>*</code> indicates which revision of the pipeline you have stickied and will be executed when using the <code>run</code> command.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> info nextflow-io/hello</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>To use a specific revision, you simply need to add it to the command line with the <code>--revision</code> or <code>-r</code> flag. For example, to run a workflow with revision <code>v1.0</code>, you would use the following command:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run <span class="op">&lt;</span>pipeline<span class="op">&gt;</span> -r v1.0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run <span class="op">&lt;</span>pipeline<span class="op">&gt;</span> -r v1.0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Nextflow provides built-in support for version control using Git, which allows users to easily manage and track changes made to a workflow over time. A revision can be a git <code>branch</code>, <code>tag</code> or commit <code>SHA</code> number.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -439,7 +441,7 @@ Solution
 <div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Run the <code>nextflow-io/hello</code> workflow with the revision flag:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nextflow-io/hello <span class="at">-r</span> v1.1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nextflow-io/hello <span class="at">-r</span> v1.1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -447,11 +449,11 @@ Solution
 </section>
 <section id="listing-and-dropping-workflows" class="level2">
 <h2 class="anchored" data-anchor-id="listing-and-dropping-workflows">Listing and dropping workflows</h2>
-<p>Over time you might want to remove or update your stored workflows. Nextflow has functionality to You can also manage what workflows you have stored locally using Nextflow.</p>
+<p>Over time you might want to remove or update your stored workflows. Nextflow also has functionality to help you to view and remove workflows that have been pulled locally.</p>
 <p>The Nextflow <code>list</code> command prints the projects stored in your global cache <code>$HOME/.nextflow/assets</code>. These are the workflows that were pulled when you executed either of the Nextflow <code>pull</code> or <code>run</code> commands:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>If you want to remove a workflow from your cache you can remove it using the <code>drop</code> command:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> drop <span class="op">&lt;</span>workflow<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you want to remove a workflow from your cache you can remove it using the Nextflow <code>drop</code> command:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> drop <span class="op">&lt;</span>workflow<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -478,11 +480,11 @@ Solution
 <div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>List your workflow assets:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Drop the <code>nextflow-io/hello</code> workflow:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> drop nextflow-io/hello</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> drop nextflow-io/hello</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Check it has been removed:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
