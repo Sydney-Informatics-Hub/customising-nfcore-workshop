@@ -210,6 +210,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#nextflow.config" id="toc-nextflow.config" class="nav-link" data-scroll-target="#nextflow.config">nextflow.config</a></li>
   <li><a href="#config-profiles" id="toc-config-profiles" class="nav-link" data-scroll-target="#config-profiles">Config profiles</a></li>
   </ul></li>
+  <li><a href="#custom-config-and-parameter-files" id="toc-custom-config-and-parameter-files" class="nav-link" data-scroll-target="#custom-config-and-parameter-files">Custom config and parameter files</a>
+  <ul class="collapse">
+  <li><a href="#custom-parameter-files" id="toc-custom-parameter-files" class="nav-link" data-scroll-target="#custom-parameter-files">Custom parameter files</a></li>
+  <li><a href="#custom-config-files" id="toc-custom-config-files" class="nav-link" data-scroll-target="#custom-config-files">Custom config files</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -239,9 +244,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>When a workflow is launched, Nextflow will look for configuration files in multiple locations. As each configuration file can contain conflicting settings, the sources are ranked to decide which settings to are applied.</p>
 <p>Configuration sources are reported below and listed in order of priority:</p>
 <ol type="1">
-<li>Parameters specified on the command line (<code>--something value</code>)</li>
+<li>Parameters specified on the command line (<code>--parameter</code>)</li>
 <li>Parameters that are provided using the <code>-params-file</code> option</li>
-<li>Config file specified using the <code>-c my_config</code> option</li>
+<li>Config file specified using the <code>-c</code> option</li>
 <li>The config file named <code>nextflow.config</code> in the current directory</li>
 <li>The config file named <code>nextflow.config</code> in the workflow project directory</li>
 <li>The config file <code>$HOME/.nextflow/config</code></li>
@@ -305,8 +310,56 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core<span class="op">&lt;</span>pipeline<span class="op">&gt;</span> -profile test,docker</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>By default, nf-core workflows are required to define containers and conda environments that can be activated using profiles.</p>
 <p>In theory, it is possible to run the pipelines with software installed by other methods (e.g., environment modules or manual installation), however, this is not recommended. Most people find Docker or Singularity containers to be the most convenient and reproducible.</p>
-<p>Additionally, an <code>includeConfig</code> in the <code>nextflow.config</code> is used to access custom institutional profiles that have been submitted to the nf-core <a href="https://github.com/nf-core/configs">config repository</a> on GitHub. At run time, nf-core pipelines fetch configuration profiles from the remote configs repository and make them available.</p>
-<p>For shared resources, you may consider developing an <a href="https://nf-co.re/docs/usage/tutorials/step_by_step_institutional_profile">institutional profile</a> that can be easily shared with others. # Custom config and parameter files</p>
+<p>Additionally, <code>includeConfig</code> is used in the <code>nextflow.config</code> to access custom institutional profiles that have been submitted to the nf-core <a href="https://github.com/nf-core/configs">config repository</a>. At run time, nf-core pipelines will fetch these configuration profiles from the remote configs repository and make them available.</p>
+<p>For shared resources, you may consider developing your own shared institutional profile. You can follow <a href="https://nf-co.re/docs/usage/tutorials/step_by_step_institutional_profile">this tutorial</a> for more help.</p>
+</section>
+</section>
+<section id="custom-config-and-parameter-files" class="level1">
+<h1>Custom config and parameter files</h1>
+<p>There are several ways to configure an nf-core workflow without modifying the codebase.</p>
+<p>At the highest level of the hierocracy, parameters can be overwritten using parameter flags in the command line:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> nf-core/<span class="op">&lt;</span>pipeline<span class="op">&gt;</span> -profile test,docker <span class="at">--</span><span class="op">&lt;</span>parameter<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>However, it can be messy and difficult to specify every parameter every time you want to run a workflow. You will likely find that it is much easier and more reproducible to write custom <code>.config</code> or <code>.json</code> files that can be included using the <code>-c</code> and <code>-param-file</code> options, respectively.</p>
+<p>There are small but important differences in what you include in these files.</p>
+<section id="custom-parameter-files" class="level3">
+<h3 class="anchored" data-anchor-id="custom-parameter-files">Custom parameter files</h3>
+<p>Parameter files are <code>.json</code> that can contain an unlimited number of parameters:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>   <span class="st">"&lt;parameter1_name&gt;"</span><span class="ex">:</span> 1,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>   <span class="st">"&lt;parameter2_name&gt;"</span><span class="ex">:</span> <span class="st">"&lt;string&gt;"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>   <span class="st">"&lt;parameter3_name&gt;"</span><span class="ex">:</span> true</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="custom-config-files" class="level3">
+<h3 class="anchored" data-anchor-id="custom-config-files">Custom config files</h3>
+<p>Custom <code>.config</code> are used for..</p>
+<p>Nextflow uses scopes</p>
+<p>For example, the <code>process</code> scope can be used to modify resource labels specified in the <code>base.config</code> file.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">process</span> {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">withLabel:process_low</span> {</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">cpus</span> = { check_max<span class="er">(</span> <span class="ex">2</span> <span class="pp">*</span> task.attempt, <span class="st">'cpus'</span> <span class="kw">)</span> <span class="er">}</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">memory</span> = { check_max<span class="er">(</span> <span class="ex">14.GB</span> <span class="pp">*</span> task.attempt, <span class="st">'memory'</span> <span class="kw">)</span> <span class="er">}</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">time</span> = { check_max<span class="er">(</span> <span class="ex">6.h</span> <span class="pp">*</span> task.attempt, <span class="st">'time'</span> <span class="kw">)</span> <span class="er">}</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="er">}</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="ex">withLabel:process_medium</span> {</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="ex">cpus</span> = { check_max<span class="er">(</span> <span class="ex">6</span> <span class="pp">*</span> task.attempt, <span class="st">'cpus'</span> <span class="kw">)</span> <span class="er">}</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">memory</span> = { check_max<span class="er">(</span> <span class="ex">42.GB</span> <span class="pp">*</span> task.attempt, <span class="st">'memory'</span> <span class="kw">)</span> <span class="er">}</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">time</span> = { check_max<span class="er">(</span> <span class="ex">8.h</span> <span class="pp">*</span> task.attempt, <span class="st">'time'</span> <span class="kw">)</span> <span class="er">}</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="er">}</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="ex">withLabel:process_high</span> {</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="ex">cpus</span> = { check_max<span class="er">(</span> <span class="ex">12</span> <span class="pp">*</span> task.attempt, <span class="st">'cpus'</span> <span class="kw">)</span> <span class="er">}</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="ex">memory</span> = { check_max<span class="er">(</span> <span class="ex">84.GB</span> <span class="pp">*</span> task.attempt, <span class="st">'memory'</span> <span class="kw">)</span> <span class="er">}</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">time</span> = { check_max<span class="er">(</span> <span class="ex">10.h</span> <span class="pp">*</span> task.attempt, <span class="st">'time'</span> <span class="kw">)</span> <span class="er">}</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="er">}</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Similarly, you can use the <code>process</code> scope to modify processes defined in the <code>modules.config</code> file.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">process</span> {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">withName</span> : <span class="st">".*:&lt;process name&gt;"</span> {</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        <span class="ex">ext.args</span>   = { <span class="st">"&lt;your custom parameter&gt;"</span> }</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="er">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note the matching pattern.</p>
+<p>Other scopes</p>
+<p>Singularity</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
