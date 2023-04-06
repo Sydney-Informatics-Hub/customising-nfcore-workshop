@@ -210,7 +210,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#nextflow.config" id="toc-nextflow.config" class="nav-link" data-scroll-target="#nextflow.config">nextflow.config</a></li>
   <li><a href="#config-profiles" id="toc-config-profiles" class="nav-link" data-scroll-target="#config-profiles">Config profiles</a></li>
   </ul></li>
-  <li><a href="#custom-config-and-parameter-files" id="toc-custom-config-and-parameter-files" class="nav-link" data-scroll-target="#custom-config-and-parameter-files">Custom config and parameter files</a></li>
   </ul>
 </nav>
     </div>
@@ -241,7 +240,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Configuration sources are reported below and listed in order of priority:</p>
 <ol type="1">
 <li>Parameters specified on the command line (<code>--something value</code>)</li>
-<li>Parameters provided using the <code>-params-file</code> option</li>
+<li>Parameters that are provided using the <code>-params-file</code> option</li>
 <li>Config file specified using the <code>-c my_config</code> option</li>
 <li>The config file named <code>nextflow.config</code> in the current directory</li>
 <li>The config file named <code>nextflow.config</code> in the workflow project directory</li>
@@ -252,12 +251,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="nf-core-workflow-structure" class="level1">
 <h1>nf-core workflow structure</h1>
-<p>nf-core pipelines start from a common template and follow the same structure. To make workflows flexible, the parameters used to configure nf-core pipelines are stored in different files in different locations. Although many of these configuration files are loaded automatically at runtime, you can choose to included or excluded others when you execute the workflow.</p>
+<p>nf-core pipelines start from a common template and follow the same structure. To make workflows flexible, the parameters used to configure nf-core pipelines are stored in different files in different locations. Although many of these configuration files are loaded automatically at runtime, you can choose to include or exclude others when you execute the workflow.</p>
 <p><img src="../figs/1.3_structure.excalidraw.png" class="quarto-discovered-preview-image img-fluid"></p>
 <section id="nextflow.config" class="level2">
 <h2 class="anchored" data-anchor-id="nextflow.config">nextflow.config</h2>
 <p>For nf-core pipelines, the <code>nextflow.config</code> contains parameter defaults.</p>
-<p>Inside the <code>nextflow.</code>config there are also several <code>includeConfig</code> statements that are used to specify additional <code>.config</code> files from the <code>conf/</code> folder. Each additional <code>.config</code> file contains information that may be important when you run the workflow:</p>
+<p>Additionally, inside the <code>nextflow.</code>config, several <code>includeConfig</code> statements are used to specify additional <code>.config</code> files from the <code>conf/</code> folder. Each additional <code>.config</code> file contains categorized configuration information for your workflow execution:</p>
 <ul>
 <li><code>base.config</code>
 <ul>
@@ -268,12 +267,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>igenomes.config</code>
 <ul>
 <li>Loaded by default.</li>
-<li>Default configuration to access AWS iGenomes.</li>
+<li>Default configuration to access reference files stored on AWS iGenomes.</li>
 </ul></li>
 <li><code>modules.config</code>
 <ul>
 <li>Loaded by default.</li>
-<li>Module-specific configuration options (both mandatory or optional).</li>
+<li>Module-specific configuration options (both mandatory and optional).</li>
 </ul></li>
 <li><code>test.config</code>
 <ul>
@@ -291,24 +290,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="config-profiles">Config profiles</h2>
 <p>Configuration files can also contain the definition of one or more profiles. A profile is a set of configuration attributes that can be activated when launching a pipeline by using the <code>-profile</code> command option.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core<span class="op">&lt;</span>pipeline<span class="op">&gt;</span> -profile <span class="op">&lt;</span>profile<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Configuration profiles are defined by using the special scope <code>profiles</code> which group the attributes that belong to that profile. Typical profiles used by nf-core workflows include:</p>
+<p>Configuration profiles are defined by using the special scope <code>profiles</code> which group the attributes that belong to that profile. Profiles used by nf-core workflows include:</p>
 <ul>
 <li>Software management profiles
 <ul>
-<li>Profiles for the management of software using software management tools. E.g., <code>docker</code>, <code>singularity</code>, and <code>conda</code>.</li>
+<li>Profiles for the management of software using software management tools, e.g., <code>docker</code>, <code>singularity</code>, and <code>conda</code>.</li>
 </ul></li>
 <li>Test profiles
 <ul>
-<li>Profiles to execute the workflow with a standardized set of test data and parameters.</li>
+<li>Profiles to execute the workflow with a standardized set of test data and parameters, e.g., <code>test</code>.</li>
 </ul></li>
 </ul>
 <p>Multiple profiles can be specified in a comma-separated list when you execute your command. The order of profiles is important!</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core<span class="op">&lt;</span>pipeline<span class="op">&gt;</span> -profile test,docker</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Additionally, an <code>includeConfig</code> in the <code>nextflow.config</code> is used to access custom institutional profiles that have been submitted to the nf-core config repository on GitHub. At run time, nf-core pipelines fetch configuration profiles from the remote configs repository and make them available.</p>
-</section>
-</section>
-<section id="custom-config-and-parameter-files" class="level1">
-<h1>Custom config and parameter files</h1>
+<p>By default, nf-core workflows are required to define containers and conda environments that can be activated using profiles.</p>
+<p>In theory, it is possible to run the pipelines with software installed by other methods (e.g., environment modules or manual installation), however, this is not recommended. Most people find Docker or Singularity containers to be the most convenient and reproducible.</p>
+<p>Additionally, an <code>includeConfig</code> in the <code>nextflow.config</code> is used to access custom institutional profiles that have been submitted to the nf-core <a href="https://github.com/nf-core/configs">config repository</a> on GitHub. At run time, nf-core pipelines fetch configuration profiles from the remote configs repository and make them available.</p>
+<p>For shared resources, you may consider developing an <a href="https://nf-co.re/docs/usage/tutorials/step_by_step_institutional_profile">institutional profile</a> that can be easily shared with others. # Custom config and parameter files</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -320,11 +318,12 @@ Warning
 </div>
 <div class="callout-body-container callout-body">
 <p>A <code>--params-file</code> must be used to define parameters.</p>
-<p>Parameters defined in the parameter block in <code>custom.config</code> files <strong>WILL NOT</strong> override defaults in <code>nextflow.config</code> for nf-core pipelines.</p>
+<p>Parameters that are defined in the parameter block in <code>custom.config</code> files <strong>WILL NOT</strong> override defaults in <code>nextflow.config</code> for nf-core pipelines.</p>
 </div>
 </div>
 
 
+</section>
 </section>
 
 <p>All materials copyright Sydney Informatics Hub, University of Sydney</p></main> <!-- /main -->

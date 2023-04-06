@@ -1,0 +1,57 @@
+Apr-06 16:31:37.057 [main] DEBUG nextflow.cli.Launcher - $> nextflow run nextflow-io/hello -r v1.1
+Apr-06 16:31:37.096 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 22.04.5
+Apr-06 16:31:37.390 [main] DEBUG nextflow.scm.AssetManager - Git config: /Users/chrishakkaart/.nextflow/assets/nextflow-io/hello/.git/config; branch: master; remote: origin; url: https://github.com/nextflow-io/hello.git
+Apr-06 16:31:37.397 [main] DEBUG nextflow.scm.AssetManager - Git config: /Users/chrishakkaart/.nextflow/assets/nextflow-io/hello/.git/config; branch: master; remote: origin; url: https://github.com/nextflow-io/hello.git
+Apr-06 16:31:38.038 [main] INFO  nextflow.scm.AssetManager - NOTE: Your local project version looks outdated - a different revision is available in the remote repository [3b355db864]
+Apr-06 16:31:38.065 [main] DEBUG nextflow.cli.CmdRun - Applied DSL=1 by probing script field
+Apr-06 16:31:38.066 [main] INFO  nextflow.cli.CmdRun - Launching `https://github.com/nextflow-io/hello` [curious_meucci] DSL1 - revision: baba3959d7 [v1.1]
+Apr-06 16:31:38.075 [main] DEBUG nextflow.plugin.PluginsFacade - Setting up plugin manager > mode=prod; plugins-dir=/Users/chrishakkaart/.nextflow/plugins; core-plugins: nf-amazon@1.7.2,nf-azure@0.13.2,nf-console@1.0.3,nf-ga4gh@1.0.3,nf-google@1.1.4,nf-sqldb@0.4.0,nf-tower@1.4.0
+Apr-06 16:31:38.076 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins default=[]
+Apr-06 16:31:38.081 [main] INFO  org.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
+Apr-06 16:31:38.082 [main] INFO  org.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
+Apr-06 16:31:38.084 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.4.1 in 'deployment' mode
+Apr-06 16:31:38.088 [main] INFO  org.pf4j.AbstractPluginManager - No plugins
+Apr-06 16:31:38.117 [main] DEBUG nextflow.Session - Session uuid: 19337b45-3818-41b6-8f50-c45119beb445
+Apr-06 16:31:38.117 [main] DEBUG nextflow.Session - Run name: curious_meucci
+Apr-06 16:31:38.118 [main] DEBUG nextflow.Session - Executor pool size: 8
+Apr-06 16:31:38.140 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 22.04.5 build 5708
+  Created: 15-07-2022 16:09 UTC (18:09 CEST)
+  System: Mac OS X 13.0.1
+  Runtime: Groovy 3.0.10 on OpenJDK 64-Bit Server VM 17.0.3+7
+  Encoding: UTF-8 (UTF-8)
+  Process: 3480@chakkaart [192.168.1.203]
+  CPUs: 8 - Mem: 8 GB (72.8 MB) - Swap: 8 GB (723.9 MB)
+Apr-06 16:31:38.146 [main] DEBUG nextflow.Session - Work-dir: /Users/chrishakkaart/workspace/biocommons/customising-nfcore-workshop/work [Mac OS X]
+Apr-06 16:31:38.146 [main] DEBUG nextflow.Session - Script base path does not exist or is not a directory: /Users/chrishakkaart/.nextflow/assets/nextflow-io/hello/bin
+Apr-06 16:31:38.152 [main] DEBUG nextflow.executor.ExecutorFactory - Extension executors providers=[]
+Apr-06 16:31:38.157 [main] DEBUG nextflow.Session - Observer factory: DefaultObserverFactory
+Apr-06 16:31:38.174 [main] DEBUG nextflow.cache.CacheFactory - Using Nextflow cache factory: nextflow.cache.DefaultCacheFactory
+Apr-06 16:31:38.179 [main] DEBUG nextflow.util.CustomThreadPool - Creating default thread pool > poolSize: 9; maxThreads: 1000
+Apr-06 16:31:38.216 [main] DEBUG nextflow.Session - Session start invoked
+Apr-06 16:31:38.322 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Apr-06 16:31:38.327 [main] WARN  nextflow.script.BaseScript - The use of `echo` method has been deprecated
+Apr-06 16:31:38.367 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Apr-06 16:31:38.367 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Apr-06 16:31:38.370 [main] DEBUG nextflow.executor.Executor - [warm up] executor > local
+Apr-06 16:31:38.372 [main] DEBUG n.processor.LocalPollingMonitor - Creating local task monitor for executor 'local' > cpus=8; memory=8 GB; capacity=8; pollInterval=100ms; dumpInterval=5m
+Apr-06 16:31:38.410 [main] DEBUG nextflow.Session - Workflow process names [dsl1]: sayHello
+Apr-06 16:31:38.411 [main] DEBUG nextflow.script.ScriptRunner - > Await termination 
+Apr-06 16:31:38.411 [main] DEBUG nextflow.Session - Session await
+Apr-06 16:31:38.468 [Task submitter] DEBUG nextflow.executor.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Apr-06 16:31:38.470 [Task submitter] INFO  nextflow.Session - [b8/79ba79] Submitted process > sayHello (4)
+Apr-06 16:31:38.475 [Task submitter] DEBUG nextflow.executor.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Apr-06 16:31:38.475 [Task submitter] INFO  nextflow.Session - [fa/189326] Submitted process > sayHello (2)
+Apr-06 16:31:38.481 [Task submitter] DEBUG nextflow.executor.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Apr-06 16:31:38.482 [Task submitter] INFO  nextflow.Session - [c5/bca055] Submitted process > sayHello (3)
+Apr-06 16:31:38.488 [Task submitter] DEBUG nextflow.executor.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Apr-06 16:31:38.488 [Task submitter] INFO  nextflow.Session - [81/7a7d0f] Submitted process > sayHello (1)
+Apr-06 16:31:38.499 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 4; name: sayHello (4); status: COMPLETED; exit: 0; error: -; workDir: /Users/chrishakkaart/workspace/biocommons/customising-nfcore-workshop/work/b8/79ba7911cab43dcff839bfe506b103]
+Apr-06 16:31:38.505 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 2; name: sayHello (2); status: COMPLETED; exit: 0; error: -; workDir: /Users/chrishakkaart/workspace/biocommons/customising-nfcore-workshop/work/fa/18932619737da725b758f9fe63704e]
+Apr-06 16:31:38.506 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 3; name: sayHello (3); status: COMPLETED; exit: 0; error: -; workDir: /Users/chrishakkaart/workspace/biocommons/customising-nfcore-workshop/work/c5/bca0550b20d5767cb2bf5c5218ef4e]
+Apr-06 16:31:38.514 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 1; name: sayHello (1); status: COMPLETED; exit: 0; error: -; workDir: /Users/chrishakkaart/workspace/biocommons/customising-nfcore-workshop/work/81/7a7d0fdd63ad5215dd76260d5f460d]
+Apr-06 16:31:38.515 [main] DEBUG nextflow.Session - Session await > all process finished
+Apr-06 16:31:38.620 [main] DEBUG nextflow.Session - Session await > all barriers passed
+Apr-06 16:31:38.624 [main] DEBUG nextflow.trace.WorkflowStatsObserver - Workflow completed > WorkflowStats[succeededCount=4; failedCount=0; ignoredCount=0; cachedCount=0; pendingCount=0; submittedCount=0; runningCount=0; retriesCount=0; abortedCount=0; succeedDuration=39ms; failedDuration=0ms; cachedDuration=0ms;loadCpus=0; loadMemory=0; peakRunning=2; peakCpus=2; peakMemory=0; ]
+Apr-06 16:31:38.655 [main] DEBUG nextflow.cache.CacheDB - Closing CacheDB done
+Apr-06 16:31:38.660 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye
