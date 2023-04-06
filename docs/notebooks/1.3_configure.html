@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>nf-core workflows series - Configuring pipelines</title>
+<title>nf-core workflows series - Configuring workflows</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -141,7 +141,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
         <li>
     <a class="dropdown-item" href="../notebooks/1.3_configure.html" rel="" target="">
- <span class="dropdown-text">nf-core pipeline structure</span></a>
+ <span class="dropdown-text">nf-core workflow structure</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../notebooks/1.4_users.html" rel="" target="">
@@ -204,10 +204,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#nf-core-pipeline-structure" id="toc-nf-core-pipeline-structure" class="nav-link active" data-scroll-target="#nf-core-pipeline-structure">nf-core pipeline structure</a></li>
-  <li><a href="#configuration" id="toc-configuration" class="nav-link" data-scroll-target="#configuration">Configuration</a></li>
-  <li><a href="#nextflow.config" id="toc-nextflow.config" class="nav-link" data-scroll-target="#nextflow.config"><code>nextflow.config</code></a></li>
+  <li><a href="#workflow-configuration" id="toc-workflow-configuration" class="nav-link active" data-scroll-target="#workflow-configuration">Workflow Configuration</a></li>
+  <li><a href="#nf-core-workflow-structure" id="toc-nf-core-workflow-structure" class="nav-link" data-scroll-target="#nf-core-workflow-structure">nf-core workflow structure</a>
+  <ul class="collapse">
+  <li><a href="#nextflow.config" id="toc-nextflow.config" class="nav-link" data-scroll-target="#nextflow.config">nextflow.config</a></li>
   <li><a href="#config-profiles" id="toc-config-profiles" class="nav-link" data-scroll-target="#config-profiles">Config profiles</a></li>
+  </ul></li>
+  <li><a href="#custom-config-and-parameter-files" id="toc-custom-config-and-parameter-files" class="nav-link" data-scroll-target="#custom-config-and-parameter-files">Custom config and parameter files</a></li>
   </ul>
 </nav>
     </div>
@@ -216,7 +219,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><strong>Configuring pipelines</strong></h1>
+<h1 class="title"><strong>Configuring workflows</strong></h1>
 </div>
 
 
@@ -232,14 +235,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 <p>nf-core pipelines follow a set of best practices and standardized conventions. The structure of an nf-core pipeline is designed to be modular, easily customizable, and reproducible. Although you won’t need to edit the code base to run an nf-core pipeline, having a basic understanding of the repository structure will help you understand how to configure its execution.</p>
-<section id="nf-core-pipeline-structure" class="level1">
-<h1>nf-core pipeline structure</h1>
-<p>nf-core pipelines start from a common template and follow the same structure.</p>
-<p><img src="../figs/1.3_structure.excalidraw.png" class="quarto-discovered-preview-image img-fluid"></p>
-</section>
-<section id="configuration" class="level1">
-<h1>Configuration</h1>
-<p>When a pipeline script is launched, Nextflow will look for configuration files in multiple locations. As each configuration file can contain conflicting settings, the sources are ranked to decide which settings to are applied.</p>
+<section id="workflow-configuration" class="level1">
+<h1>Workflow Configuration</h1>
+<p>When a workflow is launched, Nextflow will look for configuration files in multiple locations. As each configuration file can contain conflicting settings, the sources are ranked to decide which settings to are applied.</p>
 <p>Configuration sources are reported below and listed in order of priority:</p>
 <ol type="1">
 <li>Parameters specified on the command line (<code>--something value</code>)</li>
@@ -250,6 +248,67 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>The config file <code>$HOME/.nextflow/config</code></li>
 <li>Values defined within the pipeline script itself (e.g., <code>main.nf</code>)</li>
 </ol>
+<p>Notably, while some of these files are included in the nf-core repository by default (e.g., <code>nextflow.config</code>), others are external to the code base and are included using run options (e.g., <code>-c</code> and <code>-params-file</code>).</p>
+</section>
+<section id="nf-core-workflow-structure" class="level1">
+<h1>nf-core workflow structure</h1>
+<p>nf-core pipelines start from a common template and follow the same structure. To make workflows flexible, the parameters used to configure nf-core pipelines are stored in different files in different locations. Although many of these configuration files are loaded automatically at runtime, you can choose to included or excluded others when you execute the workflow.</p>
+<p><img src="../figs/1.3_structure.excalidraw.png" class="quarto-discovered-preview-image img-fluid"></p>
+<section id="nextflow.config" class="level2">
+<h2 class="anchored" data-anchor-id="nextflow.config">nextflow.config</h2>
+<p>For nf-core pipelines, the <code>nextflow.config</code> contains parameter defaults.</p>
+<p>Inside the <code>nextflow.</code>config there are also several <code>includeConfig</code> statements that are used to specify additional <code>.config</code> files from the <code>conf/</code> folder. Each additional <code>.config</code> file contains information that may be important when you run the workflow:</p>
+<ul>
+<li><code>base.config</code>
+<ul>
+<li>Loaded by default.</li>
+<li>Generous resource allocations using labels.</li>
+<li>Does not specify any method for software management and expects software to be available (or specified elsewhere).</li>
+</ul></li>
+<li><code>igenomes.config</code>
+<ul>
+<li>Loaded by default.</li>
+<li>Default configuration to access AWS iGenomes.</li>
+</ul></li>
+<li><code>modules.config</code>
+<ul>
+<li>Loaded by default.</li>
+<li>Module-specific configuration options (both mandatory or optional).</li>
+</ul></li>
+<li><code>test.config</code>
+<ul>
+<li>Only included if specified as a profile.</li>
+<li>A configuration profile to test the pipeline with a small test dataset.</li>
+</ul></li>
+<li><code>test_full.config</code>
+<ul>
+<li>Only included if specified as a profile.</li>
+<li>A configuration profile to test the pipeline with a full-size test dataset.</li>
+</ul></li>
+</ul>
+</section>
+<section id="config-profiles" class="level2">
+<h2 class="anchored" data-anchor-id="config-profiles">Config profiles</h2>
+<p>Configuration files can also contain the definition of one or more profiles. A profile is a set of configuration attributes that can be activated when launching a pipeline by using the <code>-profile</code> command option.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core<span class="op">&lt;</span>pipeline<span class="op">&gt;</span> -profile <span class="op">&lt;</span>profile<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Configuration profiles are defined by using the special scope <code>profiles</code> which group the attributes that belong to that profile. Typical profiles used by nf-core workflows include:</p>
+<ul>
+<li>Software management profiles
+<ul>
+<li>Profiles for the management of software using software management tools. E.g., <code>docker</code>, <code>singularity</code>, and <code>conda</code>.</li>
+</ul></li>
+<li>Test profiles
+<ul>
+<li>Profiles to execute the workflow with a standardized set of test data and parameters.</li>
+</ul></li>
+</ul>
+<p>Multiple profiles can be specified in a comma-separated list when you execute your command. The order of profiles is important!</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core<span class="op">&lt;</span>pipeline<span class="op">&gt;</span> -profile test,docker</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Additionally, an <code>includeConfig</code> in the <code>nextflow.config</code> is used to access custom institutional profiles that have been submitted to the nf-core config repository on GitHub. At run time, nf-core pipelines fetch configuration profiles from the remote configs repository and make them available.</p>
+</section>
+</section>
+<section id="custom-config-and-parameter-files" class="level1">
+<h1>Custom config and parameter files</h1>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -264,53 +323,6 @@ Warning
 <p>Parameters defined in the parameter block in <code>custom.config</code> files <strong>WILL NOT</strong> override defaults in <code>nextflow.config</code> for nf-core pipelines.</p>
 </div>
 </div>
-</section>
-<section id="nextflow.config" class="level1">
-<h1><code>nextflow.config</code></h1>
-<p>For nf-core pipelines, the <code>nextflow.config</code> contains parameter defaults. Inside the <code>nextflow.</code>config several <code>includeConfig</code> statements are used to include additional <code>.config</code> files from the <code>conf/</code> folder.</p>
-<ul>
-<li><code>base.config</code>
-<ul>
-<li>Generous resource allocations using labels.</li>
-</ul></li>
-<li><code>igenomes.config</code>
-<ul>
-<li>Default configuration to assess AWS iGenomes.</li>
-</ul></li>
-<li><code>modules.config</code>
-<ul>
-<li>Module-specific configuration options (both mandatory or optional).</li>
-</ul></li>
-<li><code>test.config</code>
-<ul>
-<li>A configuration to test the pipeline with a small test dataset</li>
-</ul></li>
-<li><code>test_full.config</code>
-<ul>
-<li>A configuration to test the pipeline with a full-size test dataset.</li>
-</ul></li>
-</ul>
-</section>
-<section id="config-profiles" class="level1">
-<h1>Config profiles</h1>
-<p>Configuration files can also contain the definition of one or more profiles. A profile is a set of configuration attributes that can be activated when launching a pipeline by using the <code>-profile</code> command line option.</p>
-<p>Configuration profiles are defined by using the special scope <code>profiles</code> which group the attributes that belong to the same profile using a common prefix. For example, profiles defined in you your <code>nextflow.config</code> might like like:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">profiles</span> {</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">standard</span> {</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        <span class="ex">process.executor</span> = <span class="st">'local'</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="er">}</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">cluster</span> {</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="ex">process.executor</span> = <span class="st">'sge'</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="ex">process.queue</span> = <span class="st">'long'</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="ex">process.memory</span> = <span class="st">'10GB'</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="er">}</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run <span class="op">&lt;</span>your script<span class="op">&gt;</span> -profile standard</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Additionally, <code>includeConfig</code> are used to access custom institutional profiles for different institutions that have been submitted to the nf-core repository on GitHub.</p>
-<p>MORE INFO + LINK</p>
 
 
 </section>
