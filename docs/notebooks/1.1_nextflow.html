@@ -260,7 +260,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>A process is a unit of execution that represents a single computational step in a workflow. It is defined as a block of code that typically performs a one specific task and specifies its input and outputs, as well as any directives and conditional statements required for its execution. Processes can be written in any language that can be executed from the command line, such as Bash, Python, or R.</p>
 <p>Processes in are executed independently (i.e., they do not share a common writable state) and can run in parallel, allowing for efficient utilization of computing resources. Nextflow automatically manages the data dependencies between processes, ensuring that each process is executed only when its input data is available and all of its dependencies have been satisfied.</p>
 <p>A Nextflow workflow is made by joining together different processes using asynchronous first-in, first-out (FIFO) queues called channels. Channels allow data to passed between processes and can be used to manage data, parallelize tasks, and structure workflows. Any process can define one or more channels as an input and output and the interaction between these processes, and ultimately the workflow execution flow itself, is implicitly defined by these declarations.</p>
-<p>Importantly, processes can be parameterized to allow for flexibility in their behavior and to enable their reuse in and between workflow.</p>
+<p>Importantly, processes can be parameterized to allow for flexibility in their behavior and to enable their reuse in and between workflows.</p>
 </section>
 <section id="execution-abstraction" class="level1">
 <h1>Execution abstraction</h1>
@@ -285,7 +285,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="nextflow-options-and-commands" class="level2">
 <h2 class="anchored" data-anchor-id="nextflow-options-and-commands">Nextflow options and commands</h2>
-<p>Nextflow provides a robust command line interface for the management and execution pipelines. The top-level interface consists of options and commands.</p>
+<p>Nextflow provides a robust command line interface for the management and execution of workflows. The top-level interface consists of options and commands.</p>
 <p>A list of options and commands can be viewed using the <code>-h</code> option:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> <span class="at">-h</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Options for a specific command can also be viewed by appending the help option to a Nextflow command:</p>
@@ -373,9 +373,9 @@ Solution
 <div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> pull http://github.com/foo/bar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Alternatively, the Nextflow <code>clone</code> command can be used to download a workflow into a local directory of your choice:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> clone foo/bar <span class="op">&lt;</span>your/path<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The Nextflow <code>run</code> command is used to initiate the execution of a workflow script.</p>
+<p>The Nextflow <code>run</code> command is used to initiate the execution of a workflow :</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run foo/bar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>When you <code>run</code> a workflow, it will look for a local file with the workflow name you’ve specified. If that file does not exist, it will look for a public repository with the same name on GitHub (unless otherwise specified). If it is found, Nextflow will automatically <code>pull</code> the workflow to your global cache and execute it.</p>
+<p>It is worth noting that you <code>run</code> a workflow, it will look for a local file with the workflow name you’ve specified. If that file does not exist, it will look for a public repository with the same name on GitHub (unless otherwise specified). If it is found, Nextflow will automatically <code>pull</code> the workflow to your global cache and execute it.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -411,10 +411,10 @@ Solution
 <section id="executing-a-revision" class="level2">
 <h2 class="anchored" data-anchor-id="executing-a-revision">Executing a revision</h2>
 <p>When a Nextflow workflow is created or updated, a new revision is created. Each revision is identified by a unique number, which can be used to track changes made to the workflow and to ensure that the same version of the workflow is used consistently across different runs.</p>
-<p>The Nextflow <code>info</code> command can be used to view workflow properties, such as the project name, repository, local path, main script, and revisions. The <code>*</code> indicates which revision of the pipeline you have stickied and will be executed when using the <code>run</code> command.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> info <span class="op">&lt;</span>pipeline<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The Nextflow <code>info</code> command can be used to view workflow properties, such as the project name, repository, local path, main script, and revisions. The <code>*</code> indicates which revision of the workflow you have stickied and will be executed when using the <code>run</code> command.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> info <span class="op">&lt;</span>workflow<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>To use a specific revision, you simply need to add it to the command line with the <code>--revision</code> or <code>-r</code> flag. For example, to run a workflow with the <code>v1.0</code> revision, you would use the following command:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run <span class="op">&lt;</span>pipeline<span class="op">&gt;</span> -r v1.0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run <span class="op">&lt;</span>workflow<span class="op">&gt;</span> -r v1.0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Nextflow provides built-in support for version control using Git, which allows users to easily manage and track changes made to a workflow over time. A revision can be a git <code>branch</code>, <code>tag</code> or commit <code>SHA</code> number.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -426,7 +426,7 @@ Solution
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Try running <code>hello</code> workflow again using the <code>v1.1</code> revision tag.</p>
+<p>Try to run the <code>hello</code> workflow directly from <code>nextflow-io</code> GitHub using the <code>v1.1</code> revision tag.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -446,7 +446,7 @@ Solution
 </div>
 </div>
 </div>
-<p>If your local version of a workflow is not the latest you be shown a warning and will be required to use a revision flag when executing the workflow. You can update a pipeline with the Nextflow <code>pull</code> command.</p>
+<p>If your local version of a workflow is not the latest you be shown a warning and will be required to use a revision flag when executing the workflow. You can update a workflow with the Nextflow <code>pull</code> command.</p>
 </section>
 <section id="listing-and-dropping-workflows" class="level2">
 <h2 class="anchored" data-anchor-id="listing-and-dropping-workflows">Listing and dropping workflows</h2>
@@ -465,7 +465,7 @@ Solution
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>See which workflows you have stored and them with the <code>drop</code> command.</p>
+<p>See which workflows you have stored and the remove them with the <code>drop</code> command.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -503,8 +503,7 @@ Solution
 <li>Nextflow is a workflow orchestration engine and domain-specific language (DSL) that makes it easy to write data-intensive computational workflows.</li>
 <li>Environment variables can be used to control your Nextflow runtime and the underlying Java virtual machine.</li>
 <li>Nextflow supports version control and has automatic integrations with online code repositories.</li>
-<li>The Nextflow <code>pull</code>, <code>run</code>, and <code>clone</code> commands can be used to download and store Nextflow workflows.</li>
-<li>The <code>list</code> and <code>drop</code> commands can be used to view and remove local workflows.</li>
+<li>You can manage local workflows with Nextflow options and commands (e.g., <code>pull</code>, <code>clone</code>, <code>list</code>, and <code>drop</code>).</li>
 </ul>
 </div>
 </div>
