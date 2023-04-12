@@ -239,14 +239,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p><img src="../figs/1.2_nf-core.png" class="quarto-discovered-preview-image img-fluid" style="width:100.0%"></p>
 <p>nf-core workflows follow a set of best practices and standardized conventions. nf-core workflows start from a common template and follow the same structure. Although you won’t need to edit code in the workflow project directory, having a basic understanding of the project structure will help you understand how to configure its execution and where files of interest are located.</p>
-<p><img src="../figs/1.2_structure.excalidraw.png" class="img-fluid"></p>
+<p><img src="../figs/1.3_structure.excalidraw.png" class="img-fluid"></p>
 <p>Notably, while some of these files are already included in the nf-core workflow repository (e.g., the <code>nextflow.config</code> file in the nf-core workflow repository), others are automatically identified on your local system (e.g., the <code>nextflow.config</code> in the launch directory), and others are only included if they are specified using <code>run</code> options (e.g., <code>-params-file</code>, and <code>-c</code>).</p>
 <section id="viewing-parameters" class="level1">
 <h1>Viewing parameters</h1>
-<p>Every nf-core workflow has a full list and description of parameters on the nf-core website. Some parameters will also have additional text to help you understand when and how a parameter should be used.</p>
+<p>Every nf-core workflow has a full list of parameters on the nf-core website. You will also be shown a description of the parameter as well as the type. Some parameters will also have additional text to help you understand when and how a parameter should be used.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="https://nf-co.re/rnaseq/3.11.1/parameters"><img src="../figs/1.3_params.excalidraw.png" class="img-fluid figure-img"></a></p>
+<p><a href="https://nf-co.re/rnaseq/3.11.1/parameters"><img src="../figs/1.3_params.excalidraw.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
 </figure>
 </div>
 <p>For nf-core workflows, parameters and their descriptions can also be viewed in the command line using the <code>run</code> command with the <code>--help</code> parameter:</p>
@@ -433,7 +433,8 @@ Tip
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>        <span class="ex">ext.args</span> = <span class="st">"&lt;your custom parameter&gt;"</span></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="er">}</span></span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The extended execution path is built from the workflows, subworkflows, and modules used to execute the process. In the example above, the nf-core <a href="https://github.com/nf-core/rnaseq/blob/master/modules/nf-core/trimgalore/main.nf"><code>TRIMGALORE</code></a> module, was called by the <a href="https://github.com/nf-core/rnaseq/blob/master/subworkflows/nf-core/fastq_fastqc_umitools_trimgalore/main.nf"><code>FASTQ_FASTQC_UMITOOLS_TRIMGALORE</code></a> subworkflow, which was called by the <a href="https://github.com/nf-core/rnaseq/blob/master/workflows/rnaseq.nf"><code>RNASEQ</code></a> workflow, which was called by the <code>NFCORE_RNASEQ</code> workflow in the <a href="https://github.com/nf-core/rnaseq/blob/master/main.nf"><code>main.nf</code></a> file in the <code>nf-core/rnaseq</code> repository.</p>
+<p>The extended execution path is built from the workflows, subworkflows, and modules used to execute the process.</p>
+<p>In the example above, the nf-core <a href="https://github.com/nf-core/rnaseq/blob/master/modules/nf-core/trimgalore/main.nf"><code>TRIMGALORE</code></a> module, was called by the <a href="https://github.com/nf-core/rnaseq/blob/master/subworkflows/nf-core/fastq_fastqc_umitools_trimgalore/main.nf"><code>FASTQ_FASTQC_UMITOOLS_TRIMGALORE</code></a> subworkflow, which was called by the <a href="https://github.com/nf-core/rnaseq/blob/master/workflows/rnaseq.nf"><code>RNASEQ</code></a> workflow, which was called by the <a href="https://github.com/nf-core/rnaseq/blob/master/main.nf"><code>NFCORE_RNASEQ</code></a> workflow in the <a href="https://github.com/nf-core/rnaseq/blob/master/main.nf"><code>main.nf</code></a> file in the <a href="https://github.com/nf-core/rnaseq"><code>nf-core/rnaseq</code></a> repository.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -444,7 +445,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>It can be helpful to copy the name used in the <code>conf/modules.conf</code> to prevent any mistakes.</p>
+<p>If you are unsure of how to build the execution path you can copy it from the <code>conf/modules.conf</code> file.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled">
