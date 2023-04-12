@@ -147,11 +147,19 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#when-to-use-a-config-file" id="toc-when-to-use-a-config-file" class="nav-link active" data-scroll-target="#when-to-use-a-config-file"><strong>When to use a config file</strong></a></li>
+  <li><a href="#how-to-use-a-config-file" id="toc-how-to-use-a-config-file" class="nav-link" data-scroll-target="#how-to-use-a-config-file"><strong>How to use a config file</strong></a></li>
+  <li><a href="#write-a-custom-config" id="toc-write-a-custom-config" class="nav-link" data-scroll-target="#write-a-custom-config"><strong>Write a custom config</strong></a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -170,17 +178,73 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="objectives" class="level3 unlisted objectives">
-<h3 class="unlisted anchored" data-anchor-id="objectives">Objectives</h3>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
 <li>Understand formatting requirements of a config file</li>
 <li>Write a custom config file for your local environment that overwrites default workflow settings</li>
 <li>Run a workflow using the custom config file and appropriate Nextflow flag</li>
-<li>Use an alternative container source for a workflow process</li>
+<li>Use an alternative container source for a workflow process<br>
+</li>
 </ul>
+</div>
+</div>
+<p>Nextflow’s portability is enabled by its ability to separate workflow implementation from the configuration settings required to execute it. In the previous lesson we used a parameter file to define some workflow implementation settings, in this lesson we will be using configuration files to define the specifications required for task execution on our compute environment.</p>
+<p>While nf-core workflows are designed to be portable and work out of the box, sometimes it will be necessary for you to customise the workflow’s configuration so that it can run on your computational environment. Bioinformatics workflows, like those provided by nf-core, comprise multiple steps that have varying computational resource needs. These workflows can also be long running, especially when you’re working at scale with multiple samples and organisms with complex and large genomes. To ensure you can successfully run your workflow, it is important to understand the computational resources it will be consuming and configure your workflows computational resource useage accordingly.</p>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<strong>What are compute resources?</strong>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Compute resources refer to the Central Processing Unit (CPU), Random Access Memory (RAM), and disk requirements of the workflow, which can vary depending on the size and complexity of our input data, and the specific work being performed. These are critical resources that determine the efficiency and scalability of our workflows. Consider the following analogy for how CPUs, RAM, and disk space work together to process data.</p>
+<p><img src="../figs/2.3_CPUnigella.png" class="img-fluid"></p>
+<p>Imagine Nigella Lawson preparing a Christmas dinner in her kitchen. Like Nigella in the kitchen, the <strong>CPU is the main processing unit</strong> in a computer that performs the various tasks in your compute environment.</p>
+<p>Like Nigella’s countertop that acts as her working space in the kitchen, <strong>RAM is the temporary working space</strong> used to store and manipulate data during computation. The amount of RAM required by a task depends on the size of the input data, as well as the complexity of the task being performed. Insufficient RAM can cause the workflow to fail or significantly slow down due to excessive disk I/O.</p>
+<p>Like Nigella’s fridge and pantry that hold all her ingredients, <strong>disk space is required to store all the input/output data and intermediate files</strong> generated by a task. In bioinformatics, well organised and large amounts of disk space is required because biological data sets can be large, complex, and varied in format.</p>
+</div>
+</div>
+</div>
+<section id="when-to-use-a-config-file" class="level3">
+<h3 class="anchored" data-anchor-id="when-to-use-a-config-file"><strong>When to use a config file</strong></h3>
+<p>While nf-core workflows</p>
 </section>
+<section id="how-to-use-a-config-file" class="level3">
+<h3 class="anchored" data-anchor-id="how-to-use-a-config-file"><strong>How to use a config file</strong></h3>
+</section>
+<section id="write-a-custom-config" class="level3">
+<h3 class="anchored" data-anchor-id="write-a-custom-config"><strong>Write a custom config</strong></h3>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<strong>Why should I be concerned with computational efficiency?</strong> <span class="emoji" data-emoji="earth_asia">🌏</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Bioinformatics relies on large-scale computational infrastructures and has a signficant carbon footprint due to the energy required to run computational workflows. We can optimise our worklfows to not only reduce their runtime, but also adopt more sustainable computing practices.</p>
+<p>By using cloud computing services and high-performance computing clusters (like those provided by <a href="https://pawsey.org.au/our-green-credentials/">Pawsey</a>), we can take advantage of energy-efficient infrastructure. We can also use tools like Nextflow that provide features like intelligent task scheduling, automatic job parallelisation, and task-level resource allocation. If you’d like to learn more about the carbon footprint of some bioinformatics workflows and tools, this <a href="https://academic.oup.com/mbe/article/39/3/msac034/6526403">paper</a> makes for an interesting read!</p>
+</div>
+</div>
 
 
+</section>
 
 <p>All materials copyright Sydney Informatics Hub, University of Sydney</p></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

@@ -1,0 +1,16 @@
+---
+title: "**Troubleshooting issues and errors**"
+output:
+  html_document:
+    toc: false
+    toc_float: false
+---
+
+<div class="objectives">
+  
+### Objectives{.unlisted}
+
+- 
+
+</div>
+

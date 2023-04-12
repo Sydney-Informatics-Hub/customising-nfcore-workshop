@@ -1,0 +1,19 @@
+---
+title: "**Specifying external arguments to a process**"
+output:
+  html_document:
+    toc: false
+    toc_float: false
+---
+
+<div class="objectives">
+  
+### Objectives{.unlisted}
+
+- Understand how to use the ext.args feature to pass additional command-line arguments to a process
+- Implement additional external arguments to a process that are not hardcoded in the process script 
+- Write a custom configuration file for MultiQC in the YAML file format
+- Observe the behaviour of Nextflow's cache functionality   
+
+</div>
+
