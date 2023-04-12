@@ -230,12 +230,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>nf-core/tools has additional commands to help users. Although you do not need to use these commands to execute the nf-core workflows, they can greatly assist and improve your experience.</p>
+<p>nf-core tools has additional commands to help users. Although you do not need to use these commands to execute the nf-core workflows, they can greatly assist and improve your experience.</p>
 <section id="nf-core-list" class="level1">
 <h1>nf-core list</h1>
 <p>The nf-core <code>list</code> command can used to print a list of remote nf-core workflows along with your local information.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="../figs/1.4_nf-corelist.svg" class="quarto-discovered-preview-image img-fluid" style="width:100.0%"></p>
 <p>The output shows the latest workflow version number and when it was released. You will also be shown if and when a workflow was pulled locally and whether you have the latest version.</p>
+<p>Keywords can be supplied to help filter the workflows based on matches in titles, descriptions, or topics:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> list dna</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="../figs/1.4_nf-corelist-dna.svg" class="img-fluid" style="width:100.0%"></p>
+<p>Options can also be used to sort the workflows by latest release (<code>-s release</code>, default), when you last pulled a workflow locally (<code>-s pulled</code>), alphabetically (<code>-s name</code>), or number by the number of GitHub stars (<code>-s stars</code>).</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -246,7 +251,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Try to find out which workflows are available using nf-core/tools:</p>
+<p>Try to filter the list of nf-core workflows for those that are for <code>rna</code> and sort them by stars.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -261,31 +266,38 @@ Solution
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Run the <code>list</code> command to see what workflows are available.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Run the <code>list</code> command, filter it for <code>rna</code>, and sort by <code>stars</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> list rna <span class="at">-s</span> stars</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
-<p>Keywords can be supplied to help filter the workflows based on matches in titles, descriptions, or topics:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> list rna</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Options can also be used to sort the workflows by latest release (<code>-s release</code>, default), when you last pulled a workflow locally (<code>-s pulled</code>), alphabetically (<code>-s name</code>), or number by the number of GitHub stars (<code>-s stars</code>).</p>
 </section>
 <section id="nf-core-launch" class="level1">
 <h1>nf-core launch</h1>
 <p>Nextflow workflows can have a considerable number of optional command line flags. To help manage these, you can use the <code>nf-core launch</code> command.</p>
-<p>The command takes one argument - either the name of an nf-core workflow which will be pulled automatically or the path to a directory containing a Nextflow workflow. For example:</p>
+<p>The command takes one argument - either the name of an nf-core workflow which will be pulled automatically or the path to a directory containing a Nextflow workflow:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> launch nf-core/<span class="op">&lt;</span>workflow<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>When running this command, you will first be asked about which version of a workflow you would like to run. Next, you will be given the choice between a web-based graphical interface or an interactive command-line wizard tool to enter the workflow parameters for your run. Both interfaces show documentation alongside each parameter and will validate your inputs.</p>
+<p>When running this command, you will first be asked about which version of a workflow you would like to run. Next, you will be given the choice between a web-based graphical interface or an interactive command-line wizard tool to enter the workflow parameters for your run. Both interfaces show documentation alongside each parameter, will generate a run ID, and will validate your inputs.</p>
+<p><img src="../figs/1.4_wizard.excalidraw.png" class="img-fluid" style="width:100.0%"></p>
 <p>The <code>launch</code> tool uses the <code>nextflow_schema.json</code> file from a workflow to give parameter descriptions, defaults, and grouping. If no file for the workflow is found, one will be automatically generated at runtime.</p>
 <p>The <code>launch</code> tool will save your parameter variables as a JSON file called <code>nf-params.json</code> and will suggest an execution command that includes the <code>-params-file</code> flag and your new <code>nf-params.json</code> file.</p>
 <p>The wizard will ask if you want to launch the Nextflow run. You will also be given the run command and a copy of the JSON file for you to copy and paste if you wish.</p>
-<p>:: callout-tip</p>
-<section id="challenge-1" class="level3 unlisted">
-<h3 class="unlisted anchored" data-anchor-id="challenge-1"><strong>Challenge</strong></h3>
-<p>Try to run the nf-core/rnaseq workflow with the nf-core <code>launch</code> command. Use the <code>test</code> and <code>singularity</code> profiles and name your output directory <code>results</code>:</p>
-<p>:::</p>
+<p>Any profiles or Nextflow options that are set using the wizard will also be included in your run command.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Challenge</strong>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Try to run the nf-core/rnaseq workflow with the nf-core <code>launch</code> command. Use the latest version of the workflow with the the <code>test</code> and <code>singularity</code> profiles, and name your output directory <code>results</code>:</p>
+</div>
+</div>
 <div class="callout callout-style-default callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -294,21 +306,26 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Run the nf-core <code>launch</code> command with the <code>nf-core/rnaseq</code> workflow and follow the prompts:</p>
+<p>Use the nf-core <code>launch</code> command for the <code>nf-core/rnaseq</code> workflow and follow the prompts:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> launch nf-core/rnaseq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Your final run command should look like this:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/rnaseq <span class="at">-r</span> 3.11.1 <span class="at">-profile</span> test,singularity <span class="at">-params-file</span> nf-params.json</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Your <code>nf-params.json</code> file should look like this:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"outdir"</span><span class="ex">:</span> <span class="st">"results"</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
-</section>
 </section>
 <section id="nf-core-download" class="level1">
 <h1>nf-core download</h1>
 <p>Sometimes you may need to run an nf-core workflow on a server or HPC system that has no internet connection. In this case, you will need to fetch the workflow files and manually transfer them to your system.</p>
 <p>To make this process easier and ensure accurate retrieval of correctly versioned code and software containers, nf-core has the <code>download</code> helper tool.</p>
 <p>The nf-core <code>download</code> command will download both the workflow code and the institutional nf-core/configs files. It can also optionally download singularity image file.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> download</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> download</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If run without any arguments, the download tool will interactively prompt you for the required information. Each prompt option has a flag and if all flags are supplied then it will run without a request for any additional user input.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
