@@ -213,7 +213,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#local-configuration-files" id="toc-local-configuration-files" class="nav-link" data-scroll-target="#local-configuration-files">Local configuration files</a>
   <ul class="collapse">
   <li><a href="#paramteter-files" id="toc-paramteter-files" class="nav-link" data-scroll-target="#paramteter-files">Paramteter files</a></li>
-  <li><a href="#config-files" id="toc-config-files" class="nav-link" data-scroll-target="#config-files">Config files</a></li>
+  <li><a href="#configuration-files" id="toc-configuration-files" class="nav-link" data-scroll-target="#configuration-files">Configuration files</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -242,10 +242,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="../figs/1.2_nf-core.png" class="quarto-discovered-preview-image img-fluid" style="width:100.0%"></p>
 <p>nf-core workflows follow a set of best practices and standardized conventions. nf-core workflows start from a common template and follow the same structure. Although you won’t need to edit code in the workflow project directory, having a basic understanding of the project structure will help you understand how to configure its execution and where files of interest are located.</p>
 <p><img src="../figs/1.2_structure.excalidraw.png" class="img-fluid"></p>
-<p>Notably, while some of these files are already included in the nf-core workflow repository (e.g., the <code>nextflow.config</code> file in the nf-core workflow repository) others need to be created and stored locally (e.g., the <code>nextflow.config</code> in the launch directory). Similarly, others are only included using <code>run</code> options (e.g., <code>-params-file</code>, and <code>-c</code>).</p>
+<p>Notably, while some of these files are already included in the nf-core workflow repository (e.g., the <code>nextflow.config</code> file in the nf-core workflow repository), others are automatically identified on your local system (e.g., the <code>nextflow.config</code> in the launch directory), and others are only included if they are specified using <code>run</code> options (e.g., <code>-params-file</code>, and <code>-c</code>).</p>
 <section id="viewing-parameters" class="level1">
 <h1>Viewing parameters</h1>
-<p>Every nf-core workflow has a full list and description of parameters on the nf-core website. Some parameters will also have additional help text to help you understand when and how a parameter should be used.</p>
+<p>Every nf-core workflow has a full list and description of parameters on the nf-core website. Some parameters will also have additional text to help you understand when and how a parameter should be used.</p>
+<p><img src="../figs/1.2_parametersweb.png" class="img-fluid" style="width:100.0%"></p>
 <p>For nf-core workflows, parameters and their descriptions can also be viewed in the command line using the <code>run</code> command with the <code>--help</code> parameter:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/<span class="op">&lt;</span>workflow<span class="op">&gt;</span> --help</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -258,7 +259,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>View the parameters for the nf-core/rnaseq pipeline.</p>
+<p>Try to view the parameters for the <code>nf-core/rnaseq</code> pipeline:</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -275,6 +276,7 @@ Solution
 <div class="callout-body-container callout-body">
 <p>Parameters for the nf-core/rnaseq workflow can be printed using the <code>--help</code> option:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/rnaseq <span class="at">--help</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="../figs/1.2_rnaseqlist.svg" class="img-fluid" style="width:100.0%"></p>
 </div>
 </div>
 </div>
@@ -313,7 +315,7 @@ Tip
 <section id="default-configuration-settings" class="level2">
 <h2 class="anchored" data-anchor-id="default-configuration-settings">Default configuration settings</h2>
 <p>All parameters will have a default setting that is defined using the <code>nextflow.config</code> file in the workflow project directory.</p>
-<p>Notably, several <code>includeConfig</code> statements in the <code>nextflow.config</code> file are used to include additional <code>.config</code> files from the <code>conf/</code> folder. Each additional <code>.config</code> file contains categorized configuration information for your workflow execution, some of which can be optionally included:</p>
+<p>There are also several <code>includeConfig</code> statements in the <code>nextflow.config</code> file that are used to include additional <code>.config</code> files from the <code>conf/</code> folder. Each additional <code>.config</code> file contains categorized configuration information for your workflow execution, some of which can be optionally included:</p>
 <ul>
 <li><code>base.config</code>
 <ul>
@@ -342,7 +344,7 @@ Tip
 <li>A configuration profile to test the workflow with a full-size test dataset.</li>
 </ul></li>
 </ul>
-<p>Configuration files can also contain the definition of one or more profiles. A profile is a set of configuration attributes that can be activated when launching a workflow by using the <code>-profile</code> command option:</p>
+<p>Notably, configuration files can also contain the definition of one or more profiles. A profile is a set of configuration attributes that can be activated when launching a workflow by using the <code>-profile</code> command option:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/<span class="op">&lt;</span>workflow<span class="op">&gt;</span> -profile <span class="op">&lt;</span>profile<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Profiles used by nf-core workflows include:</p>
 <ul>
@@ -372,6 +374,7 @@ Tip
 <li>Your working directory: <code>nextflow.config</code></li>
 <li>Custom paths specified on the command line: <code>-c &lt;path/to/config&gt;</code> or <code>-params-file &lt;path/to/config&gt;</code></li>
 </ul>
+<p>You can be clever with the what you configure in each of these files. For example, you might consider configuring parameters that are unique to you as a user (such as your name and email address) in your home directory as this can be applied to every execution.</p>
 <section id="paramteter-files" class="level3">
 <h3 class="anchored" data-anchor-id="paramteter-files">Paramteter files</h3>
 <p>Parameter files are <code>.json</code> files that can contain an unlimited number of parameters:</p>
@@ -383,10 +386,10 @@ Tip
 <p>You can override default parameters by creating a custom <code>.json</code> file and passing it as a command-line argument using the <code>-param-file</code> option.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/<span class="op">&lt;</span>workflow<span class="op">&gt;</span> -profile test,docker <span class="at">-param-file</span> <span class="op">&lt;</span>path/to/params.json<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="config-files" class="level3">
-<h3 class="anchored" data-anchor-id="config-files">Config files</h3>
+<section id="configuration-files" class="level3">
+<h3 class="anchored" data-anchor-id="configuration-files">Configuration files</h3>
 <p>Configuration files are <code>.config</code> files that can contain various workflow properties.</p>
-<p>Configuration properties are organized into scopes by dot prefixing the property names with a scope identifier or grouping the properties in the same scope using the curly brackets notation. For example:</p>
+<p>Configuration properties are organized into <a href="https://www.nextflow.io/docs/latest/config.html#config-scopes">scopes</a> by dot prefixing the property names with a scope identifier or grouping the properties in the same scope using the curly brackets notation. For example:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">alpha.x</span>  = 1</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">alpha.y</span>  = <span class="st">'string value..'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Is equivalent to:</p>
@@ -394,33 +397,35 @@ Tip
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>     <span class="ex">x</span> = 1</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>     <span class="ex">y</span> = <span class="st">'string value..'</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Importantly, the <code>process</code> scope allows you to configure workflow processes and is used extensively in nf-core workflows.</p>
-<p>Modules in nf-core workflows make use of labels. By default, process resources are allocated in the <code>conf/base.config</code> file using the <code>withLabel</code> selector. For example:</p>
+<p>Importantly, the <code>process</code> scope allows you to configure workflow processes and is used extensively to define resources and additional arguments for modules.</p>
+<p>By default, process resources are allocated in the <code>conf/base.config</code> file using the <code>withLabel</code> selector. For example:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">process</span> {</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">withLabel:</span> big_mem {</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">withLabel:</span> BIG_MEM {</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>        <span class="ex">cpus</span> = 16</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>        <span class="ex">memory</span> = 64.GB</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="er">}</span></span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Similarly, the <code>withName</code> selector allows the configuration of a specific process by its name. By default, module parameters are defined in the <code>conf/modules.config</code> file. For example:</p>
+<p>Similarly, the <code>withName</code> selector enables the configuration of a process by name. By default, module parameters are defined in the <code>conf/modules.config</code> file. For example:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">process</span> {</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">withName:</span> HELLO {</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>        <span class="ex">cpus</span> = 4</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>        <span class="ex">memory</span> = 8.GB</span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="er">}</span></span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Most tool arguments are defined in the <code>conf/modules.conf</code> file in the workflow code under the <code>ext.args</code> entry.</p>
-<p>For example, if you were trying to overwrite arguments in the <code>TRIMGALORE</code> process in the <code>nf-core/rnaseq</code> workflow you could use the process scope:</p>
+<p>While some tool arguments are included as a part of a module. To make modules sharable across workflows, most tool arguments are defined in the <code>conf/modules.conf</code> file in the workflow code under the <code>ext.args</code> entry.</p>
+<p>For example, if you were trying to overwrite arguments in the <code>TRIMGALORE</code> process in the <code>nf-core/rnaseq</code> workflow, you could use the process scope:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">process</span> {</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">withName</span> : <span class="st">".*:TRIMGALORE"</span> {</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>        <span class="ex">ext.args</span>   = { <span class="st">"&lt;your custom parameter&gt;"</span> }</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="er">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>However, in other cases, a workflow may use a tool multiple times in the workflow and you will need to specify an extended execution path of the module. For example:</p>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="er">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>However, as the <code>TRIMGALORE</code> process is used multiple times in this workflow, an extended execution path of the module is required to make it more specific. For example:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">process</span> {</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">withName:</span> <span class="st">"NFCORE_RNASEQ:RNASEQ:FASTQ_FASTQC_UMITOOLS_TRIMGALORE:TRIMGALORE"</span> {</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>        <span class="ex">ext.args</span> = <span class="st">"&lt;your custom parameter&gt;"</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="er">}</span></span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The extended execution path is built from the workflows, subworkflows, and modules used to execute the process. In the example above, the nf-core <a href="https://github.com/nf-core/rnaseq/blob/master/modules/nf-core/trimgalore/main.nf"><code>TRIMGALORE</code></a> module, was called by the <a href="https://github.com/nf-core/rnaseq/blob/master/subworkflows/nf-core/fastq_fastqc_umitools_trimgalore/main.nf"><code>FASTQ_FASTQC_UMITOOLS_TRIMGALORE</code></a> subworkflow, which was called by the <a href="https://github.com/nf-core/rnaseq/blob/master/workflows/rnaseq.nf"><code>RNASEQ</code></a> workflow, which was called by the <code>NFCORE_RNASEQ</code> workflow in the <a href="https://github.com/nf-core/rnaseq/blob/master/main.nf"><code>main.nf</code></a> file in the <code>nf-core/rnaseq</code> repository.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -434,8 +439,8 @@ Tip
 <p>It can be helpful to copy the name used in the <code>conf/modules.conf</code> to prevent any mistakes.</p>
 </div>
 </div>
-<p>Custom <code>.config</code> file are passed in the command-line using the <code>-c</code> option.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/<span class="op">&lt;</span>workflow<span class="op">&gt;</span> -profile test,docker <span class="at">-c</span> custom.config</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Custom <code>.config</code> file are passed in the command-line using the <code>-c</code> option:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/<span class="op">&lt;</span>workflow<span class="op">&gt;</span> -profile test,docker <span class="at">-c</span> <span class="op">&lt;</span>path/to/custom.config<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You can include multiple custom <code>.config</code> files at the same time by separating them using a <code>,</code>.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -447,11 +452,27 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A <code>-params-file</code> must be used to define parameters.</p>
+<p>A <code>-params-file</code> <strong>MUST</strong> be used to define workflow parameters.</p>
 <p>Parameters that are defined in the parameter block in <code>custom.config</code> files <strong>WILL NOT</strong> override defaults in <code>nextflow.config</code> for nf-core workflows.</p>
 </div>
 </div>
-<p>A full list of configuration scopes can be found <a href="https://www.nextflow.io/docs/latest/config.html#config-scopes">here</a>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Key points</strong>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Point 1</li>
+<li>Point 2</li>
+<li>Point 3</li>
+</ul>
+</div>
+</div>
 
 
 </section>
