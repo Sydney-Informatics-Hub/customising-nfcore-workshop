@@ -141,7 +141,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
         <li>
     <a class="dropdown-item" href="../notebooks/1.3_configure.html" rel="" target="">
- <span class="dropdown-text">nf-core workflow structure</span></a>
+ <span class="dropdown-text">Configuring nf-core workflows</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../notebooks/1.4_users.html" rel="" target="">
@@ -313,7 +313,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="nf-core-tooling" class="level2">
 <h2 class="anchored" data-anchor-id="nf-core-tooling">nf-core tooling</h2>
-<p>This tutorial will make use of nf-core tools, a set of helper tools for use with Nextflow workflows. These tools have been developed to provide a range of additional functionality using, developing, and testing workflows.</p>
+<p>This workshop will make use of nf-core tools, a set of helper tools for use with Nextflow workflows. These tools have been developed to provide a range of additional functionality using, developing, and testing workflows.</p>
 <p>nf-core tools is written in Python and is available from the <a href="https://pypi.org/project/nf-core/">Python Package Index (PyPI)</a>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install nf-core</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Alternatively, nf-core tools can be installed from <a href="https://anaconda.org/bioconda/nf-core">Bioconda</a>:</p>
@@ -387,8 +387,8 @@ Solution
 <section id="running-an-nf-core-workflow" class="level2">
 <h2 class="anchored" data-anchor-id="running-an-nf-core-workflow">Running an nf-core workflow</h2>
 <p>There are currently 80 workflows (March 2023) available as part of nf-core. These workflows are at various stages of development with 49 released, 19 under development, and 12 archived.</p>
-<p>The <a href="https://nf-co.re/">nf-core website</a> has a full list of workflows, as well as their documentation which can be explored to understand a workflow.</p>
-<p>The documentation for each workflow includes:</p>
+<p>The <a href="https://nf-co.re/">nf-core website</a> has a full list of workflows, as well as their documentation, which can be explored.</p>
+<p>Each workflow has a dedicated page that includes expansive documentation that is split into 7 sections:</p>
 <ul>
 <li>Introduction</li>
 <li>Results</li>
@@ -397,7 +397,7 @@ Solution
 <li>Output docs</li>
 <li>Releases &amp; Statistics</li>
 </ul>
-<p>Unless you are actively developing workflow code, you do not need to clone the workflow code from GitHub and can use Nextflow’s built-in functionality to <code>pull</code> and store the workflows for you. As shown in the <a href="../notebooks/1.1_nextflow.html#executing-a-workflow">Introduction to Nextflow</a>, The Nextflow <code>pull</code> command to download and cache nf-core workflows from the <a href="https://github.com/nf-core/">nf-core GitHub</a> repository:</p>
+<p>Unless you are actively developing workflow code, you do not need to clone the workflow code from GitHub and can use Nextflow’s built-in functionality to <code>pull</code> and store workflows for you. As shown in the <a href="../notebooks/1.1_nextflow.html#executing-a-workflow">Introduction to Nextflow</a>, The Nextflow <code>pull</code> command to download and cache nf-core workflows from the <a href="https://github.com/nf-core/">nf-core GitHub</a> repository:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> pull nf-core/<span class="op">&lt;</span>pipeline<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Nextflow <code>run</code> will also automatically <code>pull</code> the workflow if it was not already available locally:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/<span class="op">&lt;</span>pipeline<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
