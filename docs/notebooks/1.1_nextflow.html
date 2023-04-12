@@ -300,7 +300,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Find out which version of Nextflow you are using using a Nextflow option.</p>
+<p>Find out which version of Nextflow you are using using the Nextflow version option.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -323,7 +323,7 @@ Solution
 </section>
 <section id="managing-your-environment" class="level2">
 <h2 class="anchored" data-anchor-id="managing-your-environment">Managing your environment</h2>
-<p>You can control the Nextflow runtime and the underlying Java virtual machine using <a href="https://www.nextflow.io/docs/latest/config.html#environment-variables">environment variables</a>. These variables can be exported before running a workflow and will be interpreted as environment variable by Nextflow.</p>
+<p>You can use <a href="https://www.nextflow.io/docs/latest/config.html#environment-variables">environment variables</a> to control the Nextflow runtime and the underlying Java virtual machine. These variables can be exported before running a workflow and will be interpreted by Nextflow.</p>
 <p>For most users, Nextflow will work without setting any environment variables. However, for consistency, it is good practice to pin the version of Nextflow you are using when running a workflow using the <code>NXF_VER</code> variable.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">NXF_VER</span><span class="op">=&lt;</span>version number<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Similarly, if you are using a shared resource, you may also consider including paths to where software is stored and can be accessed using the <code>NXF_SINGULARITY_CACHEDIR</code> or the <code>NXF_CONDA_CACHEDIR</code> variables:</p>
