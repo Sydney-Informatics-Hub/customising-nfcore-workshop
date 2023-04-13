@@ -288,8 +288,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Nextflow provides a robust command line interface for the management and execution of workflows. The top-level interface consists of options and commands.</p>
 <p>A list of options and commands can be viewed using the <code>-h</code> option:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> <span class="at">-h</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Options for a specific command can also be viewed by appending the help option to a Nextflow command:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> <span class="op">&lt;</span>command<span class="op">&gt;</span> -h</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="../figs/1.1_help.svg" class="img-fluid"></p>
+<p>Options for a specific command can also be viewed by appending the help option to a Nextflow command. For example, the <code>run</code> command:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run <span class="at">-h</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="../figs/1.1_runhelp.svg" class="img-fluid"></p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -317,6 +319,7 @@ Solution
 <div class="callout-body-container callout-body">
 <p>The version of Nextflow you are using can be printed using the <code>-v</code> option:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> <span class="at">-v</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="../figs/1.1_version.svg" class="img-fluid"></p>
 </div>
 </div>
 </div>
@@ -358,6 +361,7 @@ Solution
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">NXF_VER</span><span class="op">=</span>22.04.5</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Check that the new version has been applied using the <code>-v</code> option:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> <span class="at">-v</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="../figs/1.1_versionexp.svg" class="img-fluid"></p>
 </div>
 </div>
 </div>
@@ -403,6 +407,7 @@ Solution
 <div class="callout-body-container callout-body">
 <p>Run the <a href="https://github.com/nextflow-io/hello">nextflow-io/hello</a> workflow:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nextflow-io/hello</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="../figs/1.1_runhello.svg" class="img-fluid"></p>
 </div>
 </div>
 </div>
@@ -443,6 +448,7 @@ Solution
 <div class="callout-body-container callout-body">
 <p>Run the <code>nextflow-io/hello</code> workflow with the revision <code>-r</code> option:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nextflow-io/hello <span class="at">-r</span> v1.1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="../figs/1.1_runhello1.1.svg" class="img-fluid"></p>
 </div>
 </div>
 </div>
@@ -453,6 +459,7 @@ Solution
 <p>Over time you might want to remove a stored workflows. Nextflow also has functionality to help you to view and remove workflows that have been pulled locally.</p>
 <p>The Nextflow <code>list</code> command prints the projects stored in your global cache <code>$HOME/.nextflow/assets</code>. These are the workflows that were pulled when you executed either of the Nextflow <code>pull</code> or <code>run</code> commands:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="../figs/1.1_list.svg" class="img-fluid"></p>
 <p>If you want to remove a workflow from your cache you can remove it using the Nextflow <code>drop</code> command:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> drop <span class="op">&lt;</span>workflow<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-tip callout-titled">

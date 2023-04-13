@@ -269,7 +269,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>nf-core workflows are tested on AWS after every major release. You can even browse results live on the website and use outputs for your own benchmarking.</li>
 </ul></li>
 </ul>
-<p>All nf-core workflows are open-source and community driven.</p>
+<p>It is important to remember all nf-core workflows are open-source and community driven. Most pipelines are under active community development and are regularly updated with fixes and other improvements. Even though the pipelines and tools undergo repeated community review and testing - it is important to check your results.</p>
 <section id="events" class="level2">
 <h2 class="anchored" data-anchor-id="events">Events</h2>
 <p>nf-core events are community-driven gatherings that provide a platform to discuss the latest developments in Nextflow and nf-core workflows. These events include community seminars, trainings, and hackathons, and are open to anyone who is interested in using and developing nf-core and its applications. Most events are held virtually, making them accessible to a global audience.</p>
@@ -390,12 +390,30 @@ Solution
 <p>The <a href="https://nf-co.re/">nf-core website</a> has a full list of workflows, as well as their documentation, which can be explored.</p>
 <p>Each workflow has a dedicated page that includes expansive documentation that is split into 7 sections:</p>
 <ul>
-<li>Introduction</li>
-<li>Results</li>
-<li>Usage docs</li>
-<li>Parameters</li>
-<li>Output docs</li>
-<li>Releases &amp; Statistics</li>
+<li>Introduction
+<ul>
+<li>An introduction and overview of the workflow</li>
+</ul></li>
+<li>Results
+<ul>
+<li>Example output files generated from the full test dataset</li>
+</ul></li>
+<li>Usage docs
+<ul>
+<li>Descriptions of how to run the workflow</li>
+</ul></li>
+<li>Parameters
+<ul>
+<li>Grouped workflow parameters with descriptions</li>
+</ul></li>
+<li>Output docs
+<ul>
+<li>Descriptions and examples of the expected output files</li>
+</ul></li>
+<li>Releases &amp; Statistics
+<ul>
+<li>Workflow version history and statistics</li>
+</ul></li>
 </ul>
 <p>Unless you are actively developing workflow code, you do not need to clone the workflow code from GitHub and can use Nextflow’s built-in functionality to <code>pull</code> and a workflow. As shown in the <a href="../notebooks/1.1_nextflow.html#executing-a-workflow">Introduction to Nextflow</a>, the Nextflow <code>pull</code> command can download and cache nf-core workflows from the <a href="https://github.com/nf-core/">nf-core GitHub</a> repository:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> pull nf-core/<span class="op">&lt;</span>pipeline<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

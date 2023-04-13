@@ -208,8 +208,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#configuration-hierarchy" id="toc-configuration-hierarchy" class="nav-link" data-scroll-target="#configuration-hierarchy">Configuration hierarchy</a>
   <ul class="collapse">
   <li><a href="#command-line-parameters" id="toc-command-line-parameters" class="nav-link" data-scroll-target="#command-line-parameters">Command line parameters</a></li>
-  <li><a href="#default-configuration" id="toc-default-configuration" class="nav-link" data-scroll-target="#default-configuration">Default configuration</a></li>
-  <li><a href="#shared-configs" id="toc-shared-configs" class="nav-link" data-scroll-target="#shared-configs">Shared configs</a></li>
+  <li><a href="#default-configuration-files" id="toc-default-configuration-files" class="nav-link" data-scroll-target="#default-configuration-files">Default configuration files</a></li>
+  <li><a href="#shared-configuration-files" id="toc-shared-configuration-files" class="nav-link" data-scroll-target="#shared-configuration-files">Shared configuration files</a></li>
   <li><a href="#custom-configuration-files" id="toc-custom-configuration-files" class="nav-link" data-scroll-target="#custom-configuration-files">Custom configuration files</a>
   <ul class="collapse">
   <li><a href="#paramteter-files" id="toc-paramteter-files" class="nav-link" data-scroll-target="#paramteter-files">Paramteter files</a></li>
@@ -280,7 +280,7 @@ Solution
 <div class="callout-body-container callout-body">
 <p>Parameters for the nf-core/rnaseq workflow can be printed using the <code>--help</code> option:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/rnaseq <span class="at">--help</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><img src="../figs/1.2_rnaseqlist.svg" class="img-fluid" style="width:100.0%"></p>
+<p><img src="../figs/1.3_rnaseqhelp.svg" class="img-fluid" style="width:100.0%"></p>
 </div>
 </div>
 </div>
@@ -316,8 +316,8 @@ Tip
 </div>
 </div>
 </section>
-<section id="default-configuration" class="level2">
-<h2 class="anchored" data-anchor-id="default-configuration">Default configuration</h2>
+<section id="default-configuration-files" class="level2">
+<h2 class="anchored" data-anchor-id="default-configuration-files">Default configuration files</h2>
 <p>All parameters will have a default setting that is defined using the <code>nextflow.config</code> file in the workflow project directory.</p>
 <p>There are also several <code>includeConfig</code> statements in the <code>nextflow.config</code> file that are used to include additional <code>.config</code> files from the <code>conf/</code> folder. Each additional <code>.config</code> file contains categorized configuration information for your workflow execution, some of which can be optionally included:</p>
 <ul>
@@ -364,9 +364,22 @@ Tip
 <p>Multiple profiles can be specified in a comma-separated list when you execute your command. The order of profiles is important as they will be read from left to right:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/<span class="op">&lt;</span>workflow<span class="op">&gt;</span> -profile test,singularity</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>By default, nf-core workflows are required to define software containers and conda environments that can be activated using profiles. Although it is possible to run the workflows with software installed by other methods (e.g., environment modules or manual installation), most users find that Docker and Singularity are most convenient and reproducible.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you’re computer has internet access and one of Conda, Singularity, or Docker installed, you will be able to run nf-core workflows with a <code>test</code> profile and the respective software management profile. The test data profile will pull test data directly from the <code>nf-core/test-data</code> GitHub repository and run it on your local system. This can be a test a workflow without setting up your own test data.</p>
+</div>
+</div>
 </section>
-<section id="shared-configs" class="level2">
-<h2 class="anchored" data-anchor-id="shared-configs">Shared configs</h2>
+<section id="shared-configuration-files" class="level2">
+<h2 class="anchored" data-anchor-id="shared-configuration-files">Shared configuration files</h2>
 <p>An <code>includeConfig</code> statement in the <code>nextflow.config</code> file is also used to include custom institutional profiles that have been submitted to the nf-core <a href="https://github.com/nf-core/configs">config repository</a>. At run time, nf-core workflows will fetch these configuration profiles from the remote configs repository and make them available.</p>
 <p>For shared resources such as an HPC cluster, you may consider developing a shared institutional profile. You can follow <a href="https://nf-co.re/docs/usage/tutorials/step_by_step_institutional_profile">this tutorial</a> for more help.</p>
 </section>
@@ -463,8 +476,7 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A <code>-params-file</code> <strong>MUST</strong> be used to define workflow parameters.</p>
-<p>Parameters that are defined in the parameter block in <code>custom.config</code> files <strong>WILL NOT</strong> override defaults in <code>nextflow.config</code> for nf-core workflows.</p>
+<p>Command line flags (<code>--&lt;parameter&gt;</code> or <code>.json</code> files passed with the <code>-params-file</code> option <strong>MUST</strong> be used to define custom workflow parameters. Parameters that are defined in the parameter block in <code>custom.config</code> files <strong>WILL NOT</strong> override defaults in <code>nextflow.config</code> for nf-core workflows.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
