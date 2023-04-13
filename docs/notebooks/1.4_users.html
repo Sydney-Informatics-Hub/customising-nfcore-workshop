@@ -328,7 +328,26 @@ Solution
 <p>To make this process easier and ensure accurate retrieval of correctly versioned code and software containers, nf-core has the <code>download</code> helper tool.</p>
 <p>The nf-core <code>download</code> command will download both the workflow code and the institutional nf-core/configs files. It can also optionally download singularity image file.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> download</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>If run without any arguments, the download tool will interactively prompt you for the required information. Each prompt option has a flag and if all flags are supplied then it will run without a request for any additional user input.</p>
+<p>If run without any arguments, the download tool will interactively prompt you for the required information. Each prompt option has a flag and if all flags are supplied then it will run without a request for any additional user input:</p>
+<ul>
+<li><strong>Pipeline name</strong>
+<ul>
+<li>Name of workflow you would like to download</li>
+</ul></li>
+<li><strong>Pipeline revision</strong>
+<ul>
+<li>Select the revision you would like to download</li>
+</ul></li>
+<li><strong>Pull containers</strong>
+<ul>
+<li>Choose if you would like to download Singularity images</li>
+<li>This will only work if you have Singularity installed</li>
+</ul></li>
+<li><strong>Choose compression type</strong>
+<ul>
+<li>Choose compression type for Singularity images</li>
+</ul></li>
+</ul>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
