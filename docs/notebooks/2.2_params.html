@@ -274,7 +274,7 @@ Objectives
 <li>Select <code>Live Server: Open with Live Server</code> to open html file in your browser window.</li>
 </ol>
 <p>Take a look a the section labelled <strong>WARNING: Fail Strand Check</strong></p>
-<p><img src="https://user-images.githubusercontent.com/73086054/231065216-940fb01f-a7dc-416c-a481-27676bbcfff3.png" class="img-fluid"></p>
+<p><img src="https://user-images.githubusercontent.com/73086054/231065216-940fb01f-a7dc-416c-a481-27676bbcfff3.png" class="quarto-discovered-preview-image img-fluid"></p>
 <p>The issue here is <strong>provided strandedness</strong> that we specified in our <code>samplesheet.csv</code> and <strong>inferred strandedness</strong> do not match. Look’s like we’ve incorrectly specified strandedness as forward, when our reads show an equal distribution of sense and antisense reads. Given our previous experience with using Salmon to perform transcript quantification, we know it has an option to automatically detect the library type from the data, rather than infer it from the strandedness metadata we provided. Let’s check how the nf-core/rnaseq workflow ran the Salmon quantification process.</p>
 <section id="how-can-we-know-what-tool-flags-are-applied-by-default" class="level4">
 <h4 class="anchored" data-anchor-id="how-can-we-know-what-tool-flags-are-applied-by-default"><strong>How can we know what tool flags are applied by default?</strong></h4>
@@ -319,12 +319,12 @@ Objectives
 <p>Compared with the salmon quant <code>main.nf</code> file, we get more information from the <code>.command.sh</code> process scripts:</p>
 <p><img src="../figs/2.2_salmon_quant.png" class="img-fluid"></p>
 <p>Looking at the nf-core/rnaseq documentation, we can see library type is automatically inferred based on provided strandedness and this can be overridden using Salmon’s <code>--libType=$strandedness</code> flag. Following the recommendations in the <a href="https://salmon.readthedocs.io/en/latest/salmon.html#what-s-this-libtype">Salmon documentation</a>, we’re going to override this default with the nf-core/rnaseq workflow’s <code>--salmon_quant_libtype A</code> <a href="https://nf-co.re/rnaseq/3.11.1/parameters#salmon_quant_libtype">parameter</a>.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 <strong>For those not familiar with Salmon</strong>
 </div>
 </div>
@@ -345,7 +345,7 @@ Objectives
 <li>Each key and value must be unique</li>
 <li>The order of keys or values in a list doesn’t matter</li>
 </ul>
-<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -371,7 +371,7 @@ Objectives
 <span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    --outdir Exercise1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -417,12 +417,12 @@ Solution
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>CPU hours   : 0.4 (85% cached)</span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>Succeeded   : 15</span>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>Cached      : 185</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 <strong>Key points</strong>
 </div>
 </div>
