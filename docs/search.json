@@ -11,7 +11,7 @@
     "href": "tips_tricks.html",
     "title": "Some tips and tricks",
     "section": "",
-    "text": "All materials copyright Sydney Informatics Hub, University of Sydney"
+    "text": "The most recent Nextlfow log file is always called nextflow.log\nNextflow uses a log rotation system to manage the log files generated during workflow execution. By default, Nextflow keeps a maximum of 10 log files, and rotates the file names based on the number of times a workflow has been executed. When you first run a workflow, the log file is named nextflow.log. On subsequent runs, the current nextflow.log is renamed to nextflow.log.1, and the previous nextflow.log.1 is renamed to nextflow.log.2, and so on.\n\n\n\n\nAll materials copyright Sydney Informatics Hub, University of Sydney"
   },
   {
     "objectID": "setup.html",
