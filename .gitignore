@@ -4,3 +4,4 @@ data
 .nextflow*
 work/
 results/
+null/
