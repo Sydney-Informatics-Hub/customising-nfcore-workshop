@@ -45,6 +45,10 @@ Visual Studio Code is a lightweight and powerful source code editor available fo
 
 ![](https://user-images.githubusercontent.com/73086054/224881365-2517157c-7bf9-4bd3-ba98-c9d7e3653674.png)
 
+4. Install the Live Server extension. Click on the blue `install` button. 
+
+![](https://user-images.githubusercontent.com/73086054/231062539-6a4fc78f-da2e-40a6-9d94-00b702930b67.png)
+
 #### **Login via Visual Studio Code**
 
 1. Connect to your instance with VS code by adding the host details to your ssh config file. 
