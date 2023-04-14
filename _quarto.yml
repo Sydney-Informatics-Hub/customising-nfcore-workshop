@@ -29,16 +29,16 @@ website:
           href: notebooks/2.0_intro.html
         - text: "Run command design"
           href: notebooks/2.1_design.html
-        - text: "Using a parameters file"
+        - text: "The parameters file"
           href: notebooks/2.2_params.html
-        - text: "Configuring a workflow run"
+        - text: "Resource configuration"
           href: notebooks/2.3_configEnv.html
-        - text: "Using multiple configurations"
+        - text: "Multiple configurations"
           href: notebooks/2.4_multiConfig.html
-        - text: "Using external arguments"
+        - text: "External arguments"
           href: notebooks/2.5_extArgs.html
-        - text: "Troubleshooting issues"
-          href: notebooks/2.6_troubleshoot.html
+        - text: "nf-core launch"
+          href: notebooks/2.6_launch.html
       - text: "Tips & Tricks"
         href: tips_tricks.html
 

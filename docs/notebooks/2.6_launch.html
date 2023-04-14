@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>nf-core workflows series - nf-core for users</title>
+<title>nf-core workflows series - Troubleshooting issues and errors</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -207,8 +207,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  <span class="dropdown-text">Using external arguments</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/2.6_troubleshoot.html">
- <span class="dropdown-text">Troubleshooting issues</span></a>
+    <a class="dropdown-item" href="../notebooks/2.6_launch.html">
+ <span class="dropdown-text">Using launch</span></a>
   </li>  
     </ul>
   </li>
@@ -231,9 +231,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#nf-core-list" id="toc-nf-core-list" class="nav-link active" data-scroll-target="#nf-core-list">nf-core list</a></li>
-  <li><a href="#nf-core-launch" id="toc-nf-core-launch" class="nav-link" data-scroll-target="#nf-core-launch">nf-core launch</a></li>
-  <li><a href="#nf-core-download" id="toc-nf-core-download" class="nav-link" data-scroll-target="#nf-core-download">nf-core download</a></li>
+  <li><a href="#construct-an-execution-command" id="toc-construct-an-execution-command" class="nav-link active" data-scroll-target="#construct-an-execution-command"><strong>Construct an execution command</strong></a></li>
+  <li><a href="#launch-the-workflow-without-internet-access" id="toc-launch-the-workflow-without-internet-access" class="nav-link" data-scroll-target="#launch-the-workflow-without-internet-access"><strong>Launch the workflow without internet access</strong></a></li>
   </ul>
 </nav>
     </div>
@@ -242,7 +241,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><strong>nf-core for users</strong></h1>
+<h1 class="title"><strong>Troubleshooting issues and errors</strong></h1>
 </div>
 
 
@@ -257,124 +256,101 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p><img src="../figs/1.2_nf-core.png" class="img-fluid" style="width:100.0%"></p>
-<p>nf-core tools has additional commands to help <strong>users</strong> execute workflows. Although you do not need to use these commands to execute the nf-core workflows, they can greatly assist and improve and simplify your experience.</p>
-<p>There are also nf-core tools for <strong>developers</strong> - however these will not be covered as a part of this workshop. If you are curious to learn more about these tools you can find more information on the <a href="https://nf-co.re/tools/">tools page</a> on the nf-core website.</p>
-<section id="nf-core-list" class="level1">
-<h1>nf-core list</h1>
-<p>The nf-core <code>list</code> command can used to print a list of remote nf-core workflows along with your local information.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><img src="../figs/1.4_nf-corelist.svg" class="img-fluid" style="width:100.0%"></p>
-<p>The output shows the latest workflow version number and when it was released. You will also be shown if and when a workflow was pulled locally and whether you have the latest version.</p>
-<p>Keywords can be supplied to help filter the workflows based on matches in titles, descriptions, or topics:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> list dna</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><img src="../figs/1.4_nf-corelist-dna.svg" class="img-fluid" style="width:100.0%"></p>
-<p>Options can also be used to sort the workflows by latest release (<code>-s release</code>, default), when you last pulled a workflow locally (<code>-s pulled</code>), alphabetically (<code>-s name</code>), or number by the number of GitHub stars (<code>-s stars</code>).</p>
-<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-<strong>Challenge</strong>
+<strong>Learning objectives</strong>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Try to filter the list of nf-core workflows for those that are for <code>rna</code> and sort them by stars.</p>
-</div>
-</div>
-<div class="callout-caution callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Run the <code>list</code> command, filter it for <code>rna</code>, and sort by <code>stars</code>:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> list rna <span class="at">-s</span> stars</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="nf-core-launch" class="level1">
-<h1>nf-core launch</h1>
-<p>Nextflow workflows can have a considerable number of optional command line flags. To help manage these, you can use the <code>nf-core launch</code> command.</p>
-<p>The command takes one argument - either the name of an nf-core workflow which will be pulled automatically or the path to a directory containing a Nextflow workflow:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> launch nf-core/<span class="op">&lt;</span>workflow<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>When running this command, you will first be asked about which version of a workflow you would like to run. Next, you will be given the choice between a web-based graphical interface or an interactive command-line wizard tool to enter the workflow parameters for your run. Both interfaces show documentation alongside each parameter, will generate a run ID, and will validate your inputs.</p>
-<p><img src="../figs/1.4_wizard.excalidraw.png" class="img-fluid" style="width:100.0%"></p>
-<p>The <code>launch</code> tool uses the <code>nextflow_schema.json</code> file from a workflow to give parameter descriptions, defaults, and grouping. If no file for the workflow is found, one will be automatically generated at runtime.</p>
-<p>The <code>launch</code> tool will save your parameter variables as a JSON file called <code>nf-params.json</code> and will suggest an execution command that includes the <code>-params-file</code> flag and your new <code>nf-params.json</code> file.</p>
-<p>The wizard will ask if you want to launch the Nextflow run. You will also be given the run command and a copy of the JSON file for you to copy and paste if you wish.</p>
-<p>Any profiles or Nextflow options that are set using the wizard will also be included in your run command.</p>
-<div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-<strong>Challenge</strong>
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Try to run the nf-core/rnaseq workflow with the nf-core <code>launch</code> command. Use the latest version of the workflow with the the <code>test</code> and <code>singularity</code> profiles, and name your output directory <code>results</code>:</p>
-</div>
-</div>
-<div class="callout-caution callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Use the nf-core <code>launch</code> command for the <code>nf-core/rnaseq</code> workflow and follow the prompts:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> launch nf-core/rnaseq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Your final run command should look like this:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/rnaseq <span class="at">-r</span> 3.11.1 <span class="at">-profile</span> test,singularity <span class="at">-params-file</span> nf-params.json</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Your <code>nf-params.json</code> file should look like this:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"outdir"</span><span class="ex">:</span> <span class="st">"results"</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="nf-core-download" class="level1">
-<h1>nf-core download</h1>
-<p>Sometimes you may need to run an nf-core workflow on a server or HPC system that has no internet connection. In this case, you will need to fetch the workflow files and manually transfer them to your system.</p>
-<p>To make this process easier and ensure accurate retrieval of correctly versioned code and software containers, nf-core has the <code>download</code> helper tool.</p>
-<p>The nf-core <code>download</code> command will download both the workflow code and the institutional nf-core/configs files. It can also optionally download singularity image file.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> download</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>If run without any arguments, the download tool will interactively prompt you for the required information. Each prompt option has a flag and if all flags are supplied then it will run without a request for any additional user input:</p>
 <ul>
-<li><strong>Pipeline name</strong>
-<ul>
-<li>Name of workflow you would like to download</li>
-</ul></li>
-<li><strong>Pipeline revision</strong>
-<ul>
-<li>Select the revision you would like to download</li>
-</ul></li>
-<li><strong>Pull containers</strong>
-<ul>
-<li>Choose if you would like to download Singularity images</li>
-<li>This will only work if you have Singularity installed</li>
-</ul></li>
-<li><strong>Choose compression type</strong>
-<ul>
-<li>Choose compression type for Singularity images</li>
-</ul></li>
+<li>Use the nf-core launch web GUI to adjust parameters</li>
+<li>Understand different options to using launch and when each would be applicable</li>
+<li>Run a workflow in an offline mode</li>
 </ul>
+</div>
+</div>
+<section id="construct-an-execution-command" class="level3">
+<h3 class="anchored" data-anchor-id="construct-an-execution-command"><strong>Construct an execution command</strong></h3>
+<p>Open the <a href="https://nf-co.re/launch">nf-core launch</a> website and select the rnaseq pipeline from the select a pipeline menu and select pipeline release 3.11.1. Then select <span class="emoji" data-emoji="rocket">🚀</span> <strong>Launch</strong>.</p>
+<p><img src="../figs/2.6_launchGUI_1.png" class="img-fluid"></p>
+<p>On the far right, unhide <strong>Show hidden params</strong> and then fill out the <strong>Nextflow command-line flags</strong> section:</p>
+<ul>
+<li>Leave <code>-name</code> blank. Doing this will ensure a random name will be applied, like it has been for our CLI runs so far</li>
+<li>For <code>-profile</code>, enter <code>singularity,c2r8</code></li>
+<li>Leave <code>-work-dir</code> as default</li>
+<li>Toggle <code>-resume</code> to <code>true</code></li>
+</ul>
+<p><img src="../figs/2.6_launchGUI_2.png" class="img-fluid"></p>
+<p>Next, fill out the input section:</p>
+<ul>
+<li>Copy and paste the full path to the <code>samplesheet.csv</code></li>
+<li>For <code>-outdir</code>, specify <code>Exercise6</code></li>
+<li>Enter your email address</li>
+<li>Leave the other sections blank</li>
+</ul>
+<p><img src="../figs/2.6_launchGUI_3.png" class="img-fluid"></p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<strong>Challenge</strong>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Now scroll through the remaining options, and fill in all of the parameters we have applied via our params file (including the multiqc_yaml file!)</p>
+</div>
+</div>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+</div>
+<p>Once you are satisified that the params are all accounted for (remember that the extra_args.config should have the quality decreased from 40 to 30), click Launch workflow</p>
+</section>
+<section id="launch-the-workflow-without-internet-access" class="level3">
+<h3 class="anchored" data-anchor-id="launch-the-workflow-without-internet-access"><strong>Launch the workflow without internet access</strong></h3>
+<p>Because we are on a VM, which has internet connection, we could use the first option ‘If your system has an internet connection’. However, as this was covered in Part 1, we will practice with the ‘no internet connection’ option, which is usually the case if you are running on a HPC. Follow the instructions for this method:</p>
+<ol type="1">
+<li>Copy the JSON params to a file in your working directory and save it as nf-params.json</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    "input": "\/home\/ubuntu\/materials\/samplesheet.csv",</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    "outdir": "Exercise6",</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    "email": "georgina.samaha@sydney.edu.au",</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    "fasta": "\/home\/ubuntu\/materials\/mm10_reference\/mm10_chr18.fa",</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    "gtf": "\/home\/ubuntu\/materials\/mm10_reference\/mm10_chr18.gtf",</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    "star_index": "\/home\/ubuntu\/materials\/mm10_reference\/STAR",</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    "save_trimmed": true,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    "salmon_quant_libtype": "A",</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    "extra_salmon_quant_args": "'--numBootstraps 10'",</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    "save_unaligned": true,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    "config_profile_name": "pawsey_nimbus.config,extra_args.config",</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    "max_cpus": 2,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    "max_memory": "6.GB",</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    "multiqc_config": "\/home\/ubuntu\/run_then_launch\/multiqc_config.yaml",</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    "show_hidden_params": true</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li>Copy the nextflow run command and execute it in your VM</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core/rnaseq -r 3.11.1 -profile singularity,c2r8 -resume -params-file nf-params.json</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -386,9 +362,8 @@ Solution
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>Point 1</li>
-<li>Point 2</li>
-<li>Point 3</li>
+<li>takeaway 1</li>
+<li>takeaway 2</li>
 </ul>
 </div>
 </div>

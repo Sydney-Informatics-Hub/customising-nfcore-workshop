@@ -28,7 +28,7 @@ On this page you will find instructions on how to set up a terminal application 
 
 To connect to your Nimbus instance, you will need either a terminal or integrated development environment (IDE) application installed on your computer. While we recommend you use the Visual Studio Code IDE for this workshop, we have also provided directions for installing and using a terminal applications below. 
 
-### **Install and set up Visual Studio Code**
+### **Option 1: Install and set up Visual Studio Code**
 
 Visual Studio Code is a lightweight and powerful source code editor available for Windows, macOS and Linux computers. 
 
@@ -65,7 +65,7 @@ Host nfcoreWorkshop
     * Select `Remote-SSH: Connect to Host` and select name of your host
     * Select `Linux` from dropdown menu and then `continue` 
 
-### **Install and set up a terminal application**
+### **Option 2: Install and set up a terminal application**
 
 The terminal applications available to you will depend on your operating system. 
 
