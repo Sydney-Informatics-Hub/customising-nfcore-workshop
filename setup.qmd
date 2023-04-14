@@ -4,14 +4,8 @@ output:
   html_document:
     toc: false
     toc_float: false
+from: markdown+emoji
 ---
-
-<div class="questions">
-### **Questions**{.unlisted}
-
-- How do I install a terminal or IDE application on my computer?
-- How do I log in to a Nimbus instance?
-</div>  
 
 In this workshop series, we will be using Pawsey’s Nimbus cloud. The [Pawsey Supercomputing Research Centre](https://pawsey.org.au/about-us/about-pawsey/) is one of two, Tier-1, High Performance Computing facilities in Australia. Their Nimbus cloud platform is an accessible and flexible solution for bioinformatics applications that may not be suitable for large-scale HPC machines including:
 
@@ -100,25 +94,25 @@ To log in to Nimbus, we will use a Secure Shell (SSH) connection. To connect, yo
 
 To log in, type the following into your terminal, using your login name and the instance’s IP address:
 
-```bash
+```default
 ssh training@###.###.###.###
 ```
 
 You will receive a message saying:
 
-```bash
+```default
 The authenticity of host 'XXX.XXX.XX.XXX (XXX.XXX.XX.XXX)' can't be established.
 ```
 
 Remember your host address will be different than the one above. There will then be a message saying:
 
-```bash
+```default
 Are you sure you want to continue connecting (yes/no)?
 ```
 
 If you would like to skip this message next time you log in, answer ‘yes’. It will then give a warning:
 
-```bash
+```default
 Warning: Permanently added 'XXX.XXX.XX.XXX' (ECDSA) to the list of known hosts.
 ```
 
