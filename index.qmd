@@ -13,9 +13,9 @@ This workshop will set you up with the foundational knowledge required to run an
 
 ### **Trainers**{.unlisted}
 
+* Georgie Samaha, Sydney Informatics Hub
 * Cali Willet, Sydney Informatics Hub
 * Chris Hakkaart, Seqera Labs
-* Georgie Samaha, Sydney Informatics Hub
 
 ### **Target audience**{.unlisted}
 
@@ -49,8 +49,8 @@ Our full CoC, with incident reporting guidelines, is available [here](https://sy
 | Lesson     | Overview |
 |------------|----------|
 | [Set up your computer](setup.html)| Follow these instructions to install VSCode and login to your Nimbus instance. |
-| [Day 1: Introduction to nf-core]()| |
-| [Day 2: Customising nf-core](notebooks/2.0_intro.html)| |
+| [Day 1: Introduction to nf-core](notebooks/1.0_intro.html)|  |
+| [Day 2: Customising nf-core](notebooks/2.0_intro.html)| Write, run, adjust, and re-run an nf-core workflow as we step through various customisation scenarios. |
 
 ### **Course survey**{.unlisted}
 
@@ -58,4 +58,6 @@ Please fill out our [course survey]() before you leave. Help us help you! 😁
 
 ### **Credits and acknowledgements**{.unlisted}
 
-This workshop event and accompanying materials were developed by the Sydney Informatics Hub, University of Sydney in partnership with Seqera Labs, Pawsey Supercomputing Research Centre, and Australia’s National Research Education Network (AARNet) enabled through the Australian BioCommons (NCRIS via Bioplatforms Australia).
+This workshop event and accompanying materials were developed by the Sydney Informatics Hub, University of Sydney in partnership with Seqera Labs, Pawsey Supercomputing Research Centre, and Australia’s National Research Education Network (AARNet) enabled through the Australian BioCommons (NCRIS via Bioplatforms Australia). This workshop was developed as a part of the Australian BioCommons Bring Your Own Data Platforms project. 
+
+![](./figs/0.0_logos.png)

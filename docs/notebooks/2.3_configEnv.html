@@ -234,7 +234,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#default-nf-core-configuration" id="toc-default-nf-core-configuration" class="nav-link active" data-scroll-target="#default-nf-core-configuration"><strong>Default nf-core configuration</strong></a></li>
   <li><a href="#when-to-use-a-custom-config-file" id="toc-when-to-use-a-custom-config-file" class="nav-link" data-scroll-target="#when-to-use-a-custom-config-file"><strong>When to use a custom config file</strong></a></li>
   <li><a href="#write-a-custom-config" id="toc-write-a-custom-config" class="nav-link" data-scroll-target="#write-a-custom-config"><strong>Write a custom config</strong></a></li>
-  <li><a href="#how-to-use-a-config-file" id="toc-how-to-use-a-config-file" class="nav-link" data-scroll-target="#how-to-use-a-config-file"><strong>How to use a config file</strong></a></li>
   </ul>
 </nav>
     </div>
@@ -277,8 +276,7 @@ Objectives
 </ul>
 </div>
 </div>
-<p><strong>This section assumes content <a href="https://nf-co.re/usage/configuration">here</a> about what is a config file, config heirarchy has been addressed in session 1 and will be edited to refer to session 1 content</strong>.</p>
-<p>Nextflow’s portability is enabled by its ability to separate workflow implementation from the configuration settings required to execute it. In the previous lesson we used a parameter file to define some workflow implementation settings, in this lesson we will be using configuration files to define the specifications required for task execution on our compute environment. While nf-core workflows are designed to be portable and work out of the box, sometimes it will be necessary for you to customise the workflow’s configuration so that it can run on your environment. The nf-core developer community currently offer a number of ways to <a href="https://nf-co.re/usage/configuration">configure nf-core workflows</a>.</p>
+<p>Nextflow’s portability is enabled by its ability to separate workflow implementation from the configuration settings required to execute it. In this lesson we will be using a custom configuration file to define the specifications required for workflow execution on our compute environment. While nf-core workflows are designed to be portable and work out of the box, sometimes it will be necessary for you to customise the workflow’s configuration so that it can run on your environment. The nf-core developer community currently offer a number of ways to <a href="https://nf-co.re/usage/configuration">configure nf-core workflows</a>.</p>
 <div class="callout-caution callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -302,8 +300,8 @@ Objectives
 <section id="default-nf-core-configuration" class="level3">
 <h3 class="anchored" data-anchor-id="default-nf-core-configuration"><strong>Default nf-core configuration</strong></h3>
 <p>Remember that when a <code>main.nf</code> file is run for any Nextflow workflow, Nextflow looks for <a href="https://www.nextflow.io/docs/latest/config.html#configuration-file">configuration files in multiple locations</a> to determine how to execute the workflow and its processes. One of the files Nextflow will always look for is <code>nextflow.config</code>. Currently, all nf-core workflows use a <code>nextflow.config</code> file and a <code>conf/base.config</code> file to define the default execution settings and parameters of a workflow.</p>
-<p>Let’s take a look at the nf-core/rnaseq <code>nextflow.config</code> file, either on the terminal or using your VScode file browser:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>cat rnaseq/nextflow.config</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Let’s take a look at the nf-core/rnaseq <code>nextflow.config</code> file:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>cat nf-core-rnaseq-3.11.1/workflow/nextflow.config</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -350,63 +348,10 @@ Solution
 </div>
 </div>
 </div>
-<p>In Nextflow workflows, additional configuration files can be included using the keyword <code>includeConfig</code>. In the nf-core/rnaseq workflow’s <code>nextflow.config</code> this keyword is used to load the <code>conf/base.config</code> file, which defines a set of process-specific and workflow-level parameters that define resource requirements. This config file should be appropriate for general use on most high performane compute environments. Take a look at this file:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>cat rnaseq/conf/base.config</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The <code>conf/base.config</code> makes use of a number of Nextflow keywords. It has a <code>process</code> section and a series of <code>withLabel</code> and <code>withName</code> subsections:</p>
-<ul>
-<li>The <a href="https://www.nextflow.io/docs/latest/process.html">Process</a> scope defines default resource requirements for all processes in the workflow</li>
-<li>Process selectors <a href="https://www.nextflow.io/docs/latest/config.html?highlight=withlabel#process-selectors">withLabel</a> and <a href="https://www.nextflow.io/docs/latest/config.html?highlight=withlabel#process-selectors">withName</a> define process-specific configurations that can be applied selectively depending on their resource requirements.</li>
-</ul>
-<p>Let’s look at how processes have been labelled to reflect these resource configuration in the nf-core/rnaseq workflow:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>grep "label" rnaseq/modules/*/*/main.nf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>rnaseq/modules/nf-core/fastp/main.nf:       label 'process_medium'</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>rnaseq/modules/nf-core/fastqc/main.nf:      label 'process_medium'</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>rnaseq/modules/nf-core/gffread/main.nf:     label 'process_low'</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>rnaseq/modules/nf-core/gunzip/main.nf:      label 'process_single'</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>rnaseq/modules/nf-core/sortmerna/main.nf:   label "process_high"</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>rnaseq/modules/nf-core/trimgalore/main.nf:  label 'process_high'</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>rnaseq/modules/nf-core/untar/main.nf:       label 'process_single'</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Only some of the processes have been labelled, for example the <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FastQC</a> process that performs quality checks on fastq files, has been labelled as a medium process. The <code>conf/base.config</code> file allocates processes labelled a medium a maxiumum of 6 CPUs, 36 Gb and 8 hours of walltime.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>withLabel:process_medium {</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  cpus   = { check_max( 6     * task.attempt, 'cpus'    ) }</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  memory = { check_max( 36.GB * task.attempt, 'memory'  ) }</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  time   = { check_max( 8.h   * task.attempt, 'time'    ) }</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The <code>check_max()</code> function applies the thresholds set by <code>--max_cpus</code>, <code>--max_memory</code> and <code>--max_time</code> parameters. The * task.attempt means that these values are doubled if a process is automatically retried after failing with an exit code that corresponds to a lack of resources.</p>
-<div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-<strong>Challenge</strong>
-</div>
-</div>
-<div class="callout-body-container callout-body">
-
-</div>
-</div>
-<div class="callout-caution callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-
-</div>
-</div>
-</div>
-<p>Resource configurations present in the <code>conf/base.config</code> file are not appropriate for our compute environment, given we are working with only 2 CPUs, 8 Gb of RAM, and 40 Gb of disk space. Additionally, from previous experience running FastQC we know this resource allocation goes above requirements for RNAseq data. The <a href="https://nf-co.re/usage/configuration#tuning-workflow-resources"><code>conf/base.config</code> files are deliberately generous</a> due to the variety of possible workflow applications. There are opportunities for us to configure resources for this workflow to make better use of the computational environment we’re working with.</p>
 </section>
 <section id="when-to-use-a-custom-config-file" class="level3">
 <h3 class="anchored" data-anchor-id="when-to-use-a-custom-config-file"><strong>When to use a custom config file</strong></h3>
-<p>In the past two lessons, we’ve successfully overridden these maximum resource allocations specified in the <code>nextflow.config</code> and <code>conf/base.config</code> using flags in our run command. There are a number of situations in which you may want to write a custom configuration file:</p>
+<p>There are a number of situations in which you may want to write a custom configuration file:</p>
 <ol type="1">
 <li>To override the default resource allocations of the workflow specified in the <code>nextflow.config</code></li>
 <li>To override the default resource allocations for a process specified in <code>conf/base.config</code></li>
@@ -414,44 +359,6 @@ Solution
 <li>To run a workflow on an HPC and interact with a job scheduler like PBSpro or SLURM</li>
 </ol>
 <p>Creating a custom configuration file is good practice to ensure that your workflow runs efficiently and reproducibly across different environments. It also allows you to easily share your workflow with others, who can use your custom config file to run the workflow in the same way in the same computational environment or on the same infrastructure.</p>
-</section>
-<section id="write-a-custom-config" class="level3">
-<h3 class="anchored" data-anchor-id="write-a-custom-config"><strong>Write a custom config</strong></h3>
-<p>Let’s create a custom configuration file to override the default configurations specified by <code>nextflow.config</code> and <code>conf/base.config</code> that match the compute resources available to us on our instances. Open a new file called <code>custom.config</code> and add the following lines:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>// Custom config for 2c.8r Nimbus instance</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>params {</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  max_cpus = 2</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  max_memory = '8.GB'</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Now rerun the workflow with your custom config,again using the resume function and our <code>params.yaml</code> file but this time without using the –max_cpu and –max_mem flags:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>nextflow run rnaseq/main.nf \</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  -c custom.config \</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  -profile singularity \</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  -resume \</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  -params-file params.yaml \</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  --outdir Exercise3  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Note that we recieve a warning about specifying parameters in a config file and our workflow fails to run as we’ve not adequately specified maximum resources for CPUs and RAM:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>WARN: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  Multiple config files detected!</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  Please provide pipeline parameters via the CLI or Nextflow '-params-file' option.</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  Custom config files including those provided by the '-c' Nextflow option can be</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  used to provide any configuration except for parameters.</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  Docs: https://nf-co.re/usage/configuration#custom-configuration-files</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="how-to-use-a-config-file" class="level3">
-<h3 class="anchored" data-anchor-id="how-to-use-a-config-file"><strong>How to use a config file</strong></h3>
-<p>You can apply a custom configuration file to your workflow by passing it as an argument in the nextflow run command using the <code>-c</code> flag. The syntax for specifying a custom configuration file is:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>nextflow run &lt;pipeline&gt;/main.nf -c &lt;name&gt;.config</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>nf-core also offers a centralised collection of Nextflow configurations files that work at an infrastructure or institutional level, called <a href="https://github.com/nf-core/configs">nf-core/configs</a>. These configuration files may be:</p>
-<ul>
-<li><strong>Global profiles</strong> that can be applied to all nf-core pipelines (in theory)</li>
-<li><strong>Pipeline profiles</strong> for configuring a specific nf-core pipeline at an institutional infrastructure.</li>
-</ul>
-<p>These can be applied to your workflow by including the <a href="https://www.nextflow.io/docs/latest/config.html#config-profiles"><code>-profile</code></a> flag in your run command. The syntax for specifying an institutional configuration file is:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>nextflow run &lt;pipeline&gt;/main.nf -profile &lt;name&gt;.config</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -466,6 +373,70 @@ Solution
 <p>By using cloud computing services and high-performance computing clusters (like those provided by <a href="https://pawsey.org.au/our-green-credentials/">Pawsey</a>), we can take advantage of energy-efficient infrastructure. We can also use tools like Nextflow that provide features like intelligent task scheduling, automatic job parallelisation, and task-level resource allocation. If you’d like to learn more about the carbon footprint of some bioinformatics workflows and tools, this <a href="https://academic.oup.com/mbe/article/39/3/msac034/6526403">paper</a> makes for an interesting read!</p>
 </div>
 </div>
+<p>In our case, we are going to write a custom configuration file to override the default configurations of the workflow with configurations that are suitable for our workshop instances. We’re going to replace 3 flags in our run command with this file:</p>
+<ol type="1">
+<li><code>-profile singularity</code></li>
+<li><code>--max_memory 6.GB</code></li>
+<li><code>--max_cpus 2</code></li>
+</ol>
+</section>
+<section id="write-a-custom-config" class="level3">
+<h3 class="anchored" data-anchor-id="write-a-custom-config"><strong>Write a custom config</strong></h3>
+<p>Open a new file called <code>workshop.config</code> and start writing some Nextflow code by adding:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>// Nimbus nf-core workshop profile</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>profiles {</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  workshop {}</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Using the <a href="https://www.nextflow.io/docs/latest/config.html?highlight=scope#config-profiles">profiles scope</a> in a configuration file groups attributes that belong to the same profile, in our case <strong>workshop</strong>. Inside this <strong>workflow</strong> profile, enable Singularity by adding another scope called <strong>Singularity</strong>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>// Nimbus nf-core workshop profile</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>profiles {</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  workshop {</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    singularity {</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>      enabled     = true</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>      autoMounts  = true</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>      cacheDir    = "/home/ubuntu/singularity_cache"</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    }}</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Nextflow has a number of <a href="https://www.nextflow.io/docs/latest/config.html?highlight=singularity#scope-singularity">features for using Singularity</a> that allow you to control how containers are executed. We are using:</p>
+<ul>
+<li><code>enabled</code> to use Singularity to manage containers automatically</li>
+<li><code>autoMounts</code> to allow Nextflow to automatically mount host paths when a container is executed</li>
+<li><code>cacheDir</code> to specify the directory Singularity images can be pulled from</li>
+</ul>
+<p>At the same level as the <code>singularity {}</code> scope, add some parameters:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>// Nimbus nf-core workshop profile</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>profiles {</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  workshop {</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    singularity {</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>      enabled     = true</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>      autoMounts  = true</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>      cacheDir    = "/home/ubuntu/singularity_cache"</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    params {</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>      max_cpus   = 2</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>      max_memory = '6.GB'      </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    }}</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Test it out, by running the pipeline again:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  -profile workshop \</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  -c workshop.config \</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  -params-file params.yaml \</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  --outdir Lesson-3 \</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  -resume</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Take a look at the launch log printed to the screen. You can see your profile, custom config, and parameters have all been applied successfully. However we also get a warning in yellow:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>WARN: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  Multiple config files detected!</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  Please provide pipeline parameters via the CLI or Nextflow '-params-file' option.</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  Custom config files including those provided by the '-c' Nextflow option can be</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  used to provide any configuration except for parameters.</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  Docs: https://nf-co.re/usage/configuration#custom-configuration-files</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The workflow runs to completion! A workaround for this current limitation with specifying parameters inside a configuration file is using the <code>profiles{}</code> scope.</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

@@ -226,11 +226,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#how-to-approach-open-source-software-communities" id="toc-how-to-approach-open-source-software-communities" class="nav-link active" data-scroll-target="#how-to-approach-open-source-software-communities"><strong>How to approach open source software communities</strong></a></li>
+  <li><a href="#log-back-in-to-your-instance" id="toc-log-back-in-to-your-instance" class="nav-link" data-scroll-target="#log-back-in-to-your-instance"><strong>Log back in to your instance</strong></a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -249,57 +256,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>In this session we will be <strong>writing, running, adjusting, and re-running the nf-core/rnaseq workflow as we step through various customisation scenarios</strong>. While all activities in this session will be performed using the nf-core/rnaseq workflow, all customisation scenarios we explore are applicable to (most) other nf-core workflows and do not require an understanding of rnaseq data processing. Before starting this session, there are a few things you should keep in mind as you proceed through the lessons and apply these techniques to your own research.</p>
-<p>As with all open source bioinformatics resources, nf-core workflows may not suit all applications. It is important that you <strong>understand the needs of your dataset and research questions before deciding on a workflow</strong>. All nf-core workflows are provided with sensible default settings that have broad applicability and comprensive documentation that explains all available parameters. What is ‘sensible’ varies dramatically between different experiments, computing environments, and datasets, so these settings might not suit your needs.</p>
-<section id="introducing-the-case-study" class="level3 unlisted">
-<h3 class="unlisted anchored" data-anchor-id="introducing-the-case-study"><strong>Introducing the case study</strong></h3>
-<p>For the purposes of this session, we are working with a (subset) dataset from a knockout mouse model study by <a href="https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-2801-4">Corley et al.&nbsp;(2016)</a>. The authors used the mouse model to simulate the role of a specific gene (<em>Gtf2ird1</em>) in Williams-Beuren Syndrome (WBS), a rare genetic disease in people. Today, we are performing the pre-processing steps in a slightly different way from the authors, to generate a set of files that can be analysed downstream. In deciding whether or not the nf-core/rnaseq workflow was suitable for reproducing the results presented in this study, we considered a number of factors, including:</p>
-<table class="table">
-<colgroup>
-<col style="width: 13%">
-<col style="width: 39%">
-<col style="width: 46%">
-</colgroup>
-<thead>
-<tr class="header">
-<th><strong>Consideration</strong></th>
-<th><strong>Questions to ask of our experiment</strong></th>
-<th><strong>Why</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Size of dataset</strong></td>
-<td>Number of samples and data volume</td>
-<td>Scale of data impacts computational efficiency of the workflow</td>
-</tr>
-<tr class="even">
-<td><strong>Input data</strong></td>
-<td>Type of RNA sequenced, availability of reference files</td>
-<td>Determines if we meet input requirements of workflow</td>
-</tr>
-<tr class="odd">
-<td><strong>Research questions</strong></td>
-<td>Suitability of workflow outputs</td>
-<td>Need the right processed data for downstream analysis</td>
-</tr>
-<tr class="even">
-<td><strong>Computational resources</strong></td>
-<td>CPU, memory, RAM available and minimum requirements of the workflow</td>
-<td>Determines if I have enough resources to run the workflow</td>
-</tr>
-<tr class="odd">
-<td><strong>Tool preferences</strong></td>
-<td>Suitability of each tool, required inputs and outputs</td>
-<td>Workflow offers multiple tools for some steps, determines which choices I make</td>
-</tr>
-</tbody>
-</table>
-<p>We consulted the <a href="https://nf-co.re/rnaseq">nf-core/rnaseq documentation</a> to confirm that nf-core/rnaseq is a suitable workflow for our application. W’ve sketched out our experimental design, those considerations, and our choices below. We will discuss these further, shortly.</p>
-<p><img src="../figs/2.1_RNAseq_experiment.png" class="img-fluid"></p>
+<p>In this session we will be <strong>writing, running, adjusting, and re-running the nf-core/rnaseq workflow as we step through various customisation scenarios</strong>. This session builds on fundamental concepts learned in <a href="">Session 1</a> and provides you with hands-on experience in workflow customisation. Throughout the session we will be working with a case study to apply an nf-core workflow to process data for this experiment. Each lesson will build on the previous one, so you can gain a deeper understanding of the ccustomisation techniques and the impact they have on the workflow and your results. We will be exploring source code of the nf-core/rnaseq workflow and apply customisations using:</p>
+<ul>
+<li>A parameter file</li>
+<li>Custom configuration files</li>
+<li>An institutional configuration file</li>
+</ul>
+<p>You will be writing these files using <strong>Nextflow</strong> and <strong>YAML</strong> languages and also running some custom <strong>Bash</strong> code to efficiently extract information from the source code <span class="emoji" data-emoji="nerd_face">🤓</span>.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>While all activities in this session will be performed using the nf-core/rnaseq workflow, all customisation scenarios we explore are applicable to other nf-core workflows and do not require an understanding of RNAseq data processing.</p>
+</div>
+</div>
+<section id="how-to-approach-open-source-software-communities" class="level3">
+<h3 class="anchored" data-anchor-id="how-to-approach-open-source-software-communities"><strong>How to approach open source software communities</strong></h3>
+<p>As with all open source bioinformatics resources, nf-core workflows may not suit all applications. It is important that you <strong>understand the needs of your dataset and research questions before deciding on a workflow</strong>. nf-core is a community effort powered by life scientists and software developers, who volunteer their time to build, maintain, and support workflows. All nf-core workflows are provided with sensible default settings that have broad applicability and comprensive documentation that explains all available parameters. What is ‘sensible’ varies dramatically between different experiments, computing environments, and datasets, so these settings might not suit your needs. We recommend approaching the application and customisation of nf-core workflows with the following framework:</p>
+<p><strong>DIAGRAM OF NF-CORE COMMUNITY FEATURE - IMPLICATION FOR WORKFLOWS - Q TO ASK - OUR RECOMMENDATIONS</strong></p>
+<p><img src="../figs/2.0_nf-coreCommunity.png" class="img-fluid"></p>
 </section>
-<section id="log-back-in-to-your-instance" class="level3 unlisted">
-<h3 class="unlisted anchored" data-anchor-id="log-back-in-to-your-instance"><strong>Log back in to your instance</strong></h3>
+<section id="log-back-in-to-your-instance" class="level3">
+<h3 class="anchored" data-anchor-id="log-back-in-to-your-instance"><strong>Log back in to your instance</strong></h3>
 <section id="in-visual-studio-code" class="level4">
 <h4 class="anchored" data-anchor-id="in-visual-studio-code"><strong>In Visual Studio Code</strong></h4>
 <p>Same as yesterday, connect to your instance using the command palatte:</p>
