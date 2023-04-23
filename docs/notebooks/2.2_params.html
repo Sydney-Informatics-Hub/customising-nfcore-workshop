@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>nf-core workflows series - Using a parameter file</title>
+<title>nf-core workflows series - Using a parameters file</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -243,7 +243,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><strong>Using a parameter file</strong></h1>
+<h1 class="title"><strong>Using a parameters file</strong></h1>
 </div>
 
 
@@ -353,12 +353,15 @@ Objectives
 <h3 class="anchored" data-anchor-id="write-a-parameter-file"><strong>Write a parameter file</strong></h3>
 <p>Nextflow accepts either YAML or JSON formats for parameter files. YAML and JSON are formats for storing data objects and structures in a file and either is a valid choice for building your parameters file. We will create and apply a YAML file with our inputs for our second run, just because its easier to read. YAML files follow these syntax rules:</p>
 <ul>
+<li>Files use indentation to define nesting and heirarchy</li>
+<li>Files can use comment lines prefaced by a <code>#</code> character</li>
+<li>Files consist of key-value pairs</li>
+<li>Each key is followed by a colon (<code>:</code>) and a space</li>
+<li>The value can be any valid YAML data type (i.e.&nbsp;string, number, boolean, list, or dictionary).</li>
+<li>Strings can be specified using single quotes (’), double quotes (“), and plain text (boolean).</li>
 <li>YAML is case sensitive</li>
-<li>The files should have a yaml or yml as the file extension</li>
+<li>Files should have a <code>.yaml</code> or <code>.yml</code> as the file extension</li>
 <li>YAML does not allow the use of tabs, only spaces</li>
-<li>Uses 3 dashes (---) to indicate the start of a document and 3 dots (…) to indicate the end</li>
-<li>Uses an indentation heirarchy like Python to show a heirarchy in the data</li>
-<li>Key/value pairs are separated by a colon (:) (i.e.&nbsp;input: “samplesheet.csv”)</li>
 <li>Lists begin with a hyphen</li>
 <li>Each key and value must be unique</li>
 <li>The order of keys or values in a list doesn’t matter</li>
@@ -375,18 +378,13 @@ Objectives
 <div class="callout-body-container callout-body">
 <p>Using the syntax rules above:</p>
 <ol type="1">
-<li>Write a YAML file for the parameters run command that can be run by a collaborator working on a <strong>different computational infrastructure</strong> but the <strong>same input and reference files</strong>.</li>
-<li>Add a key for the <code>--salmon_quant_libtype A</code> flag, we have added to the pipeline.</li>
+<li>Add the appropriate YAML fields from your previous run command to the params file below. You’ll be sharing this file with a collaborator working on a <strong>different computational infrastructure</strong> but the <strong>same input and reference files</strong>.</li>
 </ol>
-<div class="sourceCode" id="cb12"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    --input samplesheet.csv \</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    -profile singularity \</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    --fasta $materials/mm10_reference/mm10_chr18.fa \</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    --gtf $materials/mm10_reference/mm10_chr18.gtf \</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    --star_index $materials/mm10_reference/STAR \</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    --max_memory '6 GB' \</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    --max_cpus 2 </span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    --outdir Lesson-2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">outdir</span><span class="kw">:</span><span class="at"> </span><span class="st">"Lesson-2"</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">salmon_quant_libtype</span><span class="kw">:</span><span class="at"> </span><span class="st">"A"</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">save_trimmed</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span><span class="at"> </span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">save_unaligned</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span><span class="at"> </span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">extra_salmon_quant_args</span><span class="kw">:</span><span class="at"> </span><span class="st">"--numBootstraps 10"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><span class="emoji" data-emoji="bulb">💡</span> HINT: you will only need to specify nf-core/rnaseq parameters (i.e.&nbsp;<code>--</code> flags)</p>
 </div>
 </div>
@@ -402,17 +400,16 @@ Solution
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Save this file as <code>params.yaml</code>:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># experiment: WT vs KO mouse model</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># workflow: nf-core/rnaseq/3.11.1 </span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">input</span><span class="kw">:</span><span class="at"> </span><span class="st">"samplesheet.csv"</span><span class="at"> </span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">outdir</span><span class="kw">:</span><span class="at"> </span><span class="st">"Lesson-2"</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">gtf</span><span class="kw">:</span><span class="at"> </span><span class="st">"/home/ubuntu/session2/materials/mm10_reference/mm10_chr18.gtf"</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">fasta</span><span class="kw">:</span><span class="at"> </span><span class="st">"/home/ubuntu/session2/materials/mm10_reference/mm10_chr18.fa"</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">star_index</span><span class="kw">:</span><span class="at"> </span><span class="st">"/home/ubuntu/session2/materials/mm10_reference/STAR"</span><span class="at"> </span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="fu">salmon_quant_libtype </span><span class="kw">:</span><span class="at"> A</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Save this file as <code>workshop-params.yaml</code>:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">input </span><span class="kw">:</span><span class="at"> </span><span class="st">"samplesheet.csv"</span><span class="at"> </span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gtf </span><span class="kw">:</span><span class="at"> </span><span class="st">"/home/ubuntu/session2/materials/mm10_reference/mm10_chr18.gtf"</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">fasta </span><span class="kw">:</span><span class="at"> </span><span class="st">"/home/ubuntu/session2/materials/mm10_reference/mm10_chr18.fa"</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">star_index </span><span class="kw">:</span><span class="at"> </span><span class="st">"/home/ubuntu/session2/materials/mm10_reference/STAR"</span><span class="at"> </span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">outdir </span><span class="kw">:</span><span class="at"> </span><span class="st">"Lesson-2"</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">salmon_quant_libtype </span><span class="kw">:</span><span class="at"> </span><span class="st">"A"</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">save_trimmed </span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span><span class="at"> </span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">save_unaligned </span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span><span class="at"> </span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="fu">extra_salmon_quant_args </span><span class="kw">:</span><span class="at"> </span><span class="st">"--numBootstraps 10"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -430,7 +427,7 @@ Solution
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  --max_cpus 2 \</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  -profile singularity \</span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  -resume \</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  -params-file params.yaml \</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  -params-file workshop-params.yaml \</span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  --outdir Lesson-2                                 </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>As we’ve used the <code>-resume</code> flag, the initial pre-processing stage and STAR alignments should to be restored from cache and only the Salmon and downstream QC steps will be recomputed. The rerun workflow should complete in a much shorter time.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>-[nf-core/rnaseq] Pipeline completed successfully with skipped sampl(es)-</span>

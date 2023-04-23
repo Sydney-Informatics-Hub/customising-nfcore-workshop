@@ -261,7 +261,6 @@ export NXF_SINGULARITY_CACHEDIR=/home/ubuntu/singularity_cache/
 ### Nextflow has environmental variables!
 
 Environmental variables are used to store information that can be accessed by different programs and scripts running on the system. Nextflow has a number of [environmental variables](https://www.nextflow.io/docs/latest/config.html#environment-variables) that can be used to override default Nextflow and pipeline behaviours. You can set them on the command line or by using [env scopes](https://www.nextflow.io/docs/latest/config.html#scope-env) when writing Nextflow.
-
 :::
 
 Now run the pipeline, with the necessary flags and the `samplesheet.csv` file you just created: 
@@ -273,10 +272,19 @@ nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
     --fasta $materials/mm10_reference/mm10_chr18.fa \
     --gtf $materials/mm10_reference/mm10_chr18.gtf \
     --star_index $materials/mm10_reference/STAR \
-    --max_memory '7 GB' \
+    --max_memory '6.GB' \
     --max_cpus 2 \
     --outdir Lesson-1
 ```
+
+::: {.callout-important}
+## :shrug: Zoom check-in! :shrug:
+
+Is everyone ok? 
+
+Yes, move on :clap: `:clap:`   
+No, help! :cry: `:cry:` 
+:::
 
 ### **Examine the outputs**
 

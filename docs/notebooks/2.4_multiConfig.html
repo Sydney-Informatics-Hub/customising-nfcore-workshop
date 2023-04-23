@@ -226,11 +226,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#when-to-use-multiple-configurations" id="toc-when-to-use-multiple-configurations" class="nav-link active" data-scroll-target="#when-to-use-multiple-configurations"><strong>When to use multiple configurations?</strong></a></li>
+  <li><a href="#institutionalshared-configs" id="toc-institutionalshared-configs" class="nav-link" data-scroll-target="#institutionalshared-configs"><strong>Institutional/shared configs</strong></a></li>
+  <li><a href="#configure-multiqc-reports" id="toc-configure-multiqc-reports" class="nav-link" data-scroll-target="#configure-multiqc-reports"><strong>Configure MultiQC reports</strong></a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -267,39 +275,59 @@ Objectives
 </ul>
 </div>
 </div>
-<p>Create a file in working directory called <code>multiqc_config.yaml</code>.</p>
-<p>Add the following to this file:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>fastqc_config:  </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  fastqc_theoretical_gc: "mm10_txome" </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>To the <code>params.yaml</code> file, add:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>multiqc_config : multiqc_config.yaml </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Make sure both YAML files are saved, then run as usual, ensuring the <code>-resume</code> flag is included:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nextflow run ../rnaseq/main.nf \</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  -c pawsey_nimbus.config \</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  -profile singularity,c2r8 \</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  -params-file params.yaml \</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  -resume \</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  --outdir Exercise4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The logging information printed to the screen shows us again that the <code>params.yaml</code> file with the output directory set to <strong>Exercise2</strong> has been overridden by the use of the flag <code>--outdir Exercise4</code> in the run command. As the workflow runs, notice all the completed processes that are pulled from the cache and not rerun. Our use of the <code>multiqc_config.yaml</code> file adjusted the MultiQC process, as such this process was repeated using the updated settings.</p>
-<p>The changes we made above added the normal mouse transcriptome GC profile as a track to the fastQC per-sequence GC content plot. Take a look at the changes, open the Exercise4 <code>multiqc_report.html</code> file with Live Server as per previosuly (or use scp to take a copy to your local computer if you are not on VS Code):</p>
-<div class="callout-caution callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Download the MultiQC report from your terminal with scp
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
-<p>Compare this report with the MultiQC report from <strong>lesson 1</strong> by looking at the section <strong>FastQC: Per Sequence GC Content</strong>. Compare the two plots to observe the custom track has been successfully added.</p>
+<p>Using multiple configuration files allows you to customise nf-core pipelines to your specific needs. Depending on how you work, where you work, and what pipelines you run, you may have configuration files that handle distinct issues, can be applied to specific infrastructures, or shared by multiple nf-core pipelines. In this lesson we will be applying multiple configuration files to the one run command.</p>
+<section id="when-to-use-multiple-configurations" class="level3">
+<h3 class="anchored" data-anchor-id="when-to-use-multiple-configurations"><strong>When to use multiple configurations?</strong></h3>
+<p>You may need to apply multiple configuration files at once to an nf-core pipeline run. A few scenarios in which you would need to do this include:</p>
+<table class="table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 84%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Scenario</th>
+<th>Why?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Debugging and testing</td>
+<td>If you are toubleshooting a particular process in the workflow, you may want to create a separate config file with process-specific modifications.</td>
+</tr>
+<tr class="even">
+<td>Resource optimisation</td>
+<td>Depending on the scale and complexity of your data, some steps of the pipeline may require different settings or resources to achieve optimal performance. By using different config files with different parameters or settings, you can fine-tune the pipeline run.</td>
+</tr>
+<tr class="odd">
+<td>MultiQC configuration</td>
+<td>MultiQC allows users to specify configuration options in a YAML file called multiqc_config.yaml. This file allows users to customize the behavior and appearance of the MultiQC report.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="institutionalshared-configs" class="level3">
+<h3 class="anchored" data-anchor-id="institutionalshared-configs"><strong>Institutional/shared configs</strong></h3>
+<p>Insert optional exercise for specifying the nimbus institutional configuration file.</p>
+</section>
+<section id="configure-multiqc-reports" class="level3">
+<h3 class="anchored" data-anchor-id="configure-multiqc-reports"><strong>Configure MultiQC reports</strong></h3>
+<p>Many nf-core pipelines use <a href="https://multiqc.info/docs/">MultiQC</a> to generate a summary report at the end of a workflow. MultiQC is a reporting tool that can aggregate results and statistics output by various bioinformatics tools. It helps to summarise experiments containing multiple samples and multiple analysis steps. In nf-core pipelines, MultiQC is used to summarise statistics and results output by processes in the workflow and its reports can be quite verbose. MultiQC can be configured using custom YAML files to <a href="https://multiqc.info/docs/reports/customisation/">customise the outputs of reports</a>.</p>
+<p>We are going to configure MultiQC to aid interpretation of the <a href="https://multiqc.info/modules/fastqc/">FastQC output it plots</a>. Create a custom MultiQC configuration YAML file called <code>multiqc-config.yaml</code> and add the following:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fastqc_config</span><span class="kw">:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">fastqc_theoretical_gc</span><span class="kw">:</span><span class="at"> </span><span class="st">"mm10_txome"</span><span class="at"> </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Here, we’re plotting the <a href="https://multiqc.info/modules/fastqc/#theoretical-gc-content">theoretical GC content</a> for the mouse reference transcript.</p>
+<p>To the <code>workshop-params.yaml</code> file, add:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">multiqc_config</span><span class="kw">:</span><span class="at"> </span><span class="st">"multiqc-config.yaml"</span><span class="at"> </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Make sure both YAML files are saved, then re-run the workflow:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  -profile workshop \</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  -c custom-nimbus.config \</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  -params-file workshop-params.yaml \</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  --outdir Lesson-4 \</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  -resume</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The logging information printed to the screen shows us again that the <code>params.yaml</code> file with the output directory set to <strong>Lesson-2</strong> has been overridden by the use of the flag <code>--outdir Lesson-4</code> in the run command. As the workflow runs, notice all the completed processes that are pulled from the cache and not rerun. Our use of the <code>multiqc-config.yaml</code> file adjusted the MultiQC process, as such this process was repeated using the updated settings.</p>
+<p>The changes we made above added the normal mouse transcriptome GC profile as a track to the fastQC per-sequence GC content plot. Take a look at the changes, open the Exercise4 <code>multiqc_report.html</code> file with Live Server as per previosuly (or use scp to take a copy to your local computer if you are not on VS Code). Compare this report with the MultiQC report from <strong>lesson 1</strong> by looking at the section <strong>FastQC: Per Sequence GC Content</strong>. Compare the two plots to observe the custom track has been successfully added.</p>
 <p><img src="../figs/2.4_MultiQC.png" class="img-fluid"></p>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -311,11 +339,11 @@ Download the MultiQC report from your terminal with scp
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Given the normal mouse transcriptome GC profile indicated by the black dotted line, can you detect any GC bias in the Exercise4 results?</p>
+<p>Given the normal mouse transcriptome GC profile indicated by the black dotted line, can you detect any GC bias in the input sequence data?</p>
 </div>
 </div>
 <div class="callout-caution callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -324,15 +352,15 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>No, all samples’ GC profiles follow a normal distribution.</p>
 </div>
 </div>
 </div>
-<p>Note that if we did detect GC bias, we could go back and correct for this by adding the custom salmon flag <code>--gcBias</code> to the nf-core parameter <code>--extra_salmon_quant_args</code>. If we were to do this, our params.yaml file would have the following line:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>extra_salmon_quant_args : '--writeUnmappedNames --gcBias'</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>TODO: add challenge for location of the multiqc_report.html file is /home/ubuntu/nfcoreWorkshopTesting/exercise2/multiqc/star_salmon - can make an extra challenge to see if user can work out where to look for it given the stdout from the run (ie work/5d/e293 blah blah)</p>
+<p>Note that if we did detect GC bias, we could go back and correct for this by adding the custom salmon flag <code>--gcBias</code> to the nf-core parameter <code>--extra_salmon_quant_args</code>. If we were to do this, we would have to add the following line to our <code>workflow-params.yaml</code> file:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>extra_salmon_quant_args : '--writeUnmappedNames --gcBias'</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>TODO: consider adding challenge for location of the multiqc_report.html file is /home/ubuntu/nfcoreWorkshopTesting/exercise2/multiqc/star_salmon - can make an extra challenge to see if user can work out where to look for it given the stdout from the run (ie work/5d/e293 blah blah)</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -351,6 +379,7 @@ Solution
 </div>
 
 
+</section>
 
 <p>All materials copyright Sydney Informatics Hub, University of Sydney</p></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

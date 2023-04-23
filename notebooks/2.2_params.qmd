@@ -1,5 +1,5 @@
 ---
-title: "**Using a parameter file**"
+title: "**Using a parameters file**"
 output:
   html_document:
     toc: false
@@ -140,12 +140,15 @@ Looking at the nf-core/rnaseq documentation, we can see library type is automati
 
 Nextflow accepts either YAML or JSON formats for parameter files. YAML and JSON are formats for storing data objects and structures in a file and either is a valid choice for building your parameters file. We will create and apply a YAML file with our inputs for our second run, just because its easier to read. YAML files follow these syntax rules: 
 
+* Files use indentation to define nesting and heirarchy
+* Files can use comment lines prefaced by a `#` character 
+* Files consist of key-value pairs
+* Each key is followed by a colon (`:`) and a space
+* The value can be any valid YAML data type (i.e. string, number, boolean, list, or dictionary).
+* Strings can be specified using single quotes ('), double quotes ("), and plain text (boolean).
 * YAML is case sensitive 
-* The files should have a yaml or yml as the file extension 
+* Files should have a `.yaml` or `.yml` as the file extension 
 * YAML does not allow the use of tabs, only spaces
-* Uses 3 dashes (-\-\-) to indicate the start of a document and 3 dots (...) to indicate the end
-* Uses an indentation heirarchy like Python to show a heirarchy in the data 
-* Key/value pairs are separated by a colon (:) (i.e. input: "samplesheet.csv")
 * Lists begin with a hyphen 
 * Each key and value must be unique
 * The order of keys or values in a list doesn't matter
@@ -155,19 +158,14 @@ Nextflow accepts either YAML or JSON formats for parameter files. YAML and JSON 
 
 Using the syntax rules above: 
 
-1. Write a YAML file for the parameters run command that can be run by a collaborator working on a **different computational infrastructure** but the **same input and reference files**.
-2. Add a key for the `--salmon_quant_libtype A` flag, we have added to the pipeline.
+1. Add the appropriate YAML fields from your previous run command to the params file below. You'll be sharing this file with a collaborator working on a **different computational infrastructure** but the **same input and reference files**.
 
-```default
-nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
-    --input samplesheet.csv \
-    -profile singularity \
-    --fasta $materials/mm10_reference/mm10_chr18.fa \
-    --gtf $materials/mm10_reference/mm10_chr18.gtf \
-    --star_index $materials/mm10_reference/STAR \
-    --max_memory '6 GB' \
-    --max_cpus 2 
-    --outdir Lesson-2
+```yaml
+outdir: "Lesson-2"
+salmon_quant_libtype: "A"
+save_trimmed: true 
+save_unaligned: true 
+extra_salmon_quant_args: "--numBootstraps 10"
 ```
 
 :bulb: HINT: you will only need to specify nf-core/rnaseq parameters (i.e. `--` flags)
@@ -176,19 +174,18 @@ nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
 ::: {.callout-caution collapse="true"}
 ### Solution
 
-Save this file as `params.yaml`:
+Save this file as `workshop-params.yaml`:
 
 ```yaml
-# experiment: WT vs KO mouse model
-# workflow: nf-core/rnaseq/3.11.1 
----
 input: "samplesheet.csv" 
-outdir: "Lesson-2"
 gtf: "/home/ubuntu/session2/materials/mm10_reference/mm10_chr18.gtf"
 fasta: "/home/ubuntu/session2/materials/mm10_reference/mm10_chr18.fa"
 star_index: "/home/ubuntu/session2/materials/mm10_reference/STAR" 
-salmon_quant_libtype : A
-...
+outdir: "Lesson-2"
+salmon_quant_libtype: "A"
+save_trimmed: true 
+save_unaligned: true 
+extra_salmon_quant_args: "--numBootstraps 10"
 ```
 :::
 
@@ -206,16 +203,15 @@ nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
   --max_memory 6.GB \
   --max_cpus 2 \
   -profile singularity \
-  -resume \
-  -params-file params.yaml \
-  --outdir Lesson-2                                 
+  -params-file workshop-params.yaml \
+  --outdir Lesson-2 \
+  -resume                        
 ```
 
-As we've used the `-resume` flag, the initial pre-processing stage and STAR alignments should to be restored from cache and only the Salmon and downstream QC steps will be recomputed. The rerun workflow should complete in a much shorter time.
+As we've used the `-resume` flag, the initial pre-processing stage and STAR alignments should to be restored from cache and only the Salmon and downstream QC steps will be recomputed. The rerun workflow should complete in a much shorter time and those warnings should have gone away!
 
 ```default
--[nf-core/rnaseq] Pipeline completed successfully with skipped sampl(es)-
--[nf-core/rnaseq] Please check MultiQC report: 6/6 samples failed strandedness check.-
+-[nf-core/rnaseq] Pipeline completed successfully -
 Completed at: 21-Apr-2023 05:58:06
 Duration    : 2m 1s
 CPU hours   : 0.4 (85.9% cached)
