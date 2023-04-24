@@ -3,10 +3,8 @@ project:
   output-dir: docs
 
 website:
-  title: "nf-core workflows series"
-  image: bin/logos/SIH_white.png
+  title: "Sydney Informatics Hub"
   navbar:
-    logo: bin/logos/SIH_white.png
     background: primary
     left:
       - href: index.qmd
