@@ -133,6 +133,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../bin/logos/SIH.png" alt="" class="navbar-logo">
+    </a>
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">nf-core workflows series</span>
     </a>
@@ -232,7 +235,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
    
   <ul>
   <li><a href="#external-directives-in-action" id="toc-external-directives-in-action" class="nav-link active" data-scroll-target="#external-directives-in-action"><strong>External directives in action</strong></a></li>
-  <li><a href="#customisation-at-the-process-level" id="toc-customisation-at-the-process-level" class="nav-link" data-scroll-target="#customisation-at-the-process-level"><strong>Customisation at the process-level</strong></a></li>
+  <li><a href="#customisation-at-the-process-level" id="toc-customisation-at-the-process-level" class="nav-link" data-scroll-target="#customisation-at-the-process-level"><strong>Customisation at the process level</strong></a></li>
   <li><a href="#observe-the-application-of-ext.args" id="toc-observe-the-application-of-ext.args" class="nav-link" data-scroll-target="#observe-the-application-of-ext.args"><strong>Observe the application of <code>ext.args</code></strong></a></li>
   </ul>
 </nav>
@@ -296,7 +299,7 @@ What’s that Nextflow expression doing?
 <p><img src="../figs/2.5_ext-args.png" class="img-fluid"></p>
 </section>
 <section id="customisation-at-the-process-level" class="level3">
-<h3 class="anchored" data-anchor-id="customisation-at-the-process-level"><strong>Customisation at the process-level</strong></h3>
+<h3 class="anchored" data-anchor-id="customisation-at-the-process-level"><strong>Customisation at the process level</strong></h3>
 <p>To practice this, we are going to pass an optional flag to the Trim Galore process. It is up to you to decipher what customisations are required to make your analysis suitable for your data and research questions. In order to understand what customisations you may want to specify as extra arguments, we recommend you:</p>
 <ol type="1">
 <li>Read the tool documentation to understand all the available parameters for that tool</li>
@@ -353,13 +356,13 @@ Solution
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li><code>--quality</code> or <code>-q</code></li>
-<li>No, but there is an <code>--extra_trimgalore_args</code> parameter</li>
+<li>No</li>
 <li><code>--cores</code> and <code>--gzip</code></li>
 </ol>
 </div>
 </div>
 </div>
-<p>The <code>--extra_trimgalore_args</code> parameter isn’t explained very well, so we will follow the Trim Galore user guide, to apply the <code>--quality</code> flag with a Phred score of 40:</p>
+<p>We will follow the Trim Galore user guide to apply the <code>--quality</code> flag with a Phred score of 40:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>--quality 40</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="observe-the-application-of-ext.args" class="level3">
@@ -439,17 +442,17 @@ Solution
 <ol type="1">
 <li>View one of the Trim Galore log files for a sample</li>
 </ol>
-<div class="sourceCode" id="cb8"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>more Exercise5/trimgalore/SRR3473988.fastq.gz_trimming_report.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>more Lesson-5/trimgalore/SRR3473988.fastq.gz_trimming_report.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="2" type="1">
 <li>View the process execution script</li>
 </ol>
-<p>Define the run_name and tool variables, like we did in Exercise 2:</p>
+<p>Define the run_name and tool variables, like we did in lesson 2:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>run_name=&lt;ENTER_YOUR_RUN_NAME&gt;</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>tool=trim_galore</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The run the following custom bash command again:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>nextflow log ${run_name} | while read line;</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    do</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    cmd=$(ls ${line}/.command.sh 2&gt;/dev/null);</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>      cmd=$(ls ${line}/.command.sh 2&gt;/dev/null);</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>      if grep -q $tool $cmd;</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>      then  </span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        echo $cmd;     </span>

@@ -133,6 +133,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../bin/logos/SIH.png" alt="" class="navbar-logo">
+    </a>
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">nf-core workflows series</span>
     </a>
@@ -379,7 +382,7 @@ Solution
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>      cacheDir    = "/home/ubuntu/singularity_cache"</span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    }}</span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Nextflow has a number of <a href="https://www.nextflow.io/docs/latest/config.html?highlight=singularity#scope-singularity">features for using Singularity</a> that allow you to control how containers are executed. We are using:</p>
+<p>Nextflow has a number of <a href="https://www.nextflow.io/docs/latest/config.html?highlight=singularity#scope-singularity">options for using Singularity</a> that allow you to control how containers are executed. We are using:</p>
 <ul>
 <li><code>enabled</code> to use Singularity to manage containers automatically</li>
 <li><code>autoMounts</code> to allow Nextflow to automatically mount host paths when a container is executed</li>
@@ -460,25 +463,57 @@ Solution
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>// Generate custom resource trace file </span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>trace {</span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  enabled = true </span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  file = 'workshop-resource-trace-${trace_timestamp}.txt'</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  fields = 'name,status,realtime,cpus,%cpu,memory,%mem,rss'</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  file = "workshop-resource-trace-${trace_timestamp}.txt"</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  fields = 'name,status,realtime,cpus,pcpu,memory,pmem,rss'</span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<span class="emoji" data-emoji="skull_and_crossbones">☠️</span> <strong>Don’t confuse double and single quotes!</strong> <span class="emoji" data-emoji="skull_and_crossbones">☠️</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Double quotes (<code>""</code>) allow for variable interpolation</strong>, which means that variables can be evaluated and their values are substituted within the string.</p>
+<p><strong>Single quotes (<code>''</code>) denote a string literally</strong>, which means that the string is treated as-is without any variable interpolation.</p>
+<p>Try swapping the double quoted file value in your custom config above for a single-quoted value, rerun the workflow and see how the file is output:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>file = 'workshop-resource-trace-${trace_timestamp}.txt'</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
 <p>Rerun the pipeline:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  -profile workshop \</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  -c custom-nimbus.config \</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  -params-file workshop-params.yaml \</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  --outdir Lesson-3 \</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  -resume</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  -profile workshop \</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  -c custom-nimbus.config \</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  -params-file workshop-params.yaml \</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  --outdir Lesson-3 \</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  -resume</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Take a look at the launch log printed to the screen. You can see your profile, custom config, and parameters have all been applied successfully! Once the workflow has run, take a look at the <code>workshop-resource-trace-${trace_timestamp}.txt</code> file:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>name    status  realtime        cpus    %cpu    memory  %mem    rss</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>NFCORE_RNASEQ:RNASEQ:INPUT_CHECK:SAMPLESHEET_CHECK (samplesheet.csv)    CACHED  1s      1       28.0%   6 GB    0.2%    16.1 MB</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>NFCORE_RNASEQ:RNASEQ:PREPARE_GENOME:GTF2BED (mm10_chr18.gtf)    CACHED  1s      2       51.3%   6 GB    0.3%    23.8 MB</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>NFCORE_RNASEQ:RNASEQ:PREPARE_GENOME:CUSTOM_GETCHROMSIZES (mm10_chr18.fa)        CACHED  1s      1       34.1%   6 GB    0.0%    4.7 MB</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>NFCORE_RNASEQ:RNASEQ:PREPARE_GENOME:GTF_GENE_FILTER (mm10_chr18.fa)     CACHED  1s      1       34.7%   6 GB    0.1%    13.9 MB</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>NFCORE_RNASEQ:RNASEQ:FASTQ_SUBSAMPLE_FQ_SALMON:FQ_SUBSAMPLE (SRR3473984)        CACHED  2s      1       43.7%   6 GB    0.0%    6.5 MB</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>NFCORE_RNASEQ:RNASEQ:PREPARE_GENOME:MAKE_TRANSCRIPTS_FASTA (rsem/mm10_chr18.fa) CACHED  4s      2       42.0%   6 GB    1.2%    94.4 MB</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>NFCORE_RNASEQ:RNASEQ:FASTQ_SUBSAMPLE_FQ_SALMON:FQ_SUBSAMPLE (SRR3473985)        CACHED  2s      1       44.1%   6 GB    0.0%    6.3 MB</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>name    status  realtime        cpus    %cpu    memory  %mem    rss</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>NFCORE_RNASEQ:RNASEQ:INPUT_CHECK:SAMPLESHEET_CHECK (samplesheet.csv)    CACHED  1s      1       28.0%   6 GB    0.2%    16.1 MB</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>NFCORE_RNASEQ:RNASEQ:PREPARE_GENOME:GTF2BED (mm10_chr18.gtf)    CACHED  1s      2       51.3%   6 GB    0.3%    23.8 MB</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>NFCORE_RNASEQ:RNASEQ:PREPARE_GENOME:CUSTOM_GETCHROMSIZES (mm10_chr18.fa)        CACHED  1s      1       34.1%   6 GB    0.0%    4.7 MB</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>NFCORE_RNASEQ:RNASEQ:PREPARE_GENOME:GTF_GENE_FILTER (mm10_chr18.fa)     CACHED  1s      1       34.7%   6 GB    0.1%    13.9 MB</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>NFCORE_RNASEQ:RNASEQ:FASTQ_SUBSAMPLE_FQ_SALMON:FQ_SUBSAMPLE (SRR3473984)        CACHED  2s      1       43.7%   6 GB    0.0%    6.5 MB</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>NFCORE_RNASEQ:RNASEQ:PREPARE_GENOME:MAKE_TRANSCRIPTS_FASTA (rsem/mm10_chr18.fa) CACHED  4s      2       42.0%   6 GB    1.2%    94.4 MB</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>NFCORE_RNASEQ:RNASEQ:FASTQ_SUBSAMPLE_FQ_SALMON:FQ_SUBSAMPLE (SRR3473985)        CACHED  2s      1       44.1%   6 GB    0.0%    6.3 MB</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<strong>Bonus exercise: applying an institutional config</strong>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+</div>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

@@ -17,7 +17,7 @@ from: markdown+emoji
 
 ### **Introducing the case study**
 
-We are working with a subset dataset from a knockout mouse model study by [Corley et al. (2016)](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-2801-4). The authors used the mouse model to simulate the role of a specific gene (*Gtf2ird1*) in Williams-Beuren Syndrome (WBS), a rare genetic disease in people. Today, we are performing the pre-processing steps to generate a set of files that can be analysed downstream. In deciding whether or not the nf-core/rnaseq pipeline was suitable for reproducing the results presented in this study, we considered a number of factors, including: 
+We are working with a subset dataset from a knockout mouse model study by [Corley et al. (2016)](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-2801-4). The authors used the mouse model to simulate the role of a specific gene (*Gtf2ird1*) in Williams-Beuren Syndrome (WBS), a rare genetic disease in people. Today, we are performing the pre-processing steps to generate a set of files that can be used to perform differential expression analysis. In deciding whether or not the nf-core/rnaseq pipeline was suitable for reproducing the results presented in this study, we considered a number of factors, including: 
 
 |**Consideration**      |**Questions to ask of our experiment**                             |**Why**                                                                       |
 |-----------------------|-------------------------------------------------------------------|------------------------------------------------------------------------------|
@@ -25,7 +25,7 @@ We are working with a subset dataset from a knockout mouse model study by [Corle
 |**Input data**             |Type of RNA sequenced, availability of reference files             |Determines if we meet input requirements of pipeline                          |
 |**Research questions**     |Suitability of pipeline outputs                                    |Need the right processed data for downstream analysis                         |
 |**Computational resources**|CPU, memory, RAM available and minimum requirements of the pipeline|Determines if we have enough resources to run the pipeline                     |
-|**Tool preferences**       |Suitability of each tool, required inputs and outputs              |pipeline offers multiple tools for some steps, determines which choices we make|
+|**Tool preferences**       |Suitability of each tool, required inputs and outputs              |Pipeline offers multiple choices for some stages, determines which choices we make|
 
 We consulted the [nf-core/rnaseq documentation](https://nf-co.re/rnaseq) to confirm that nf-core/rnaseq is a suitable pipeline for our application. We have sketched out our experimental design, those considerations, and our choices below. 
 
@@ -55,7 +55,7 @@ Run:
 ```default
 nf-core download rnaseq \
   --revision 3.11.1 \
-  --outdir ~/session2/nf-core_rnaseq-3.11.1 \
+  --outdir ~/session2/nf-core-rnaseq-3.11.1 \
   --container singularity \
   --compress none \
   --singularity-cache-only
@@ -64,7 +64,7 @@ nf-core download rnaseq \
 You will be prompted to define a Singularity cache directory to store container images (`$NXF_SINGULARITY_CACHEDIR`). Specify the path we used in Session 1:
 
 ```default
-/home/training/singularity_cache
+export NXF_SINGULARITY_CACHEDIR=/home/training/singularity_cache
 ```
 
 The nf-core tools utility will download the pipeline files and centralised configs but not the containers, given they already exist in our specified cache. 
@@ -160,13 +160,13 @@ nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf --help --show_hidden_params
 Hyphens matter when it comes to parameter flags in nf-core pipelines! Nextflow command-line parameters use one (`-`), whereas pipeline-specific parameters use two (`--`). For example: `-profile` is a **Nextflow** parameter, while `--input` is an **nf-core** parameter.
 :::
 
-We need to customise the default run command for our purposes, given the following considerations based on our experiment plan, above: 
+We need to customise the default run command, given the following considerations based on our experiment plan above: 
 
 * We **don't** need to run the pseudo alignment step (Stage 3)
 * We have chosen to use **STAR** to align reads 
 * We have chosen to use **Salmon** to estimate transcript abundance
-* We only have access to **2 CPUs and 8Gb** of RAM today 
-* We have **provided the requisite reference data** (fasta, gtf, STAR index) for our training dataset 
+* We have access to **2 CPUs and 8 Gb** of RAM today 
+* We have **provided the requisite reference data** (fasta, gtf, STAR index) for our input dataset 
 
 ::: callout-tip
 ### **Challenge**{.unlisted}
@@ -198,20 +198,21 @@ Given we have limited computing resources today, we will need to specify a ceili
 ```
 :::
 
-For the sake of expediency, we are using prepared subset data for this session. All the data (including fastqs, input manifest, reference fasta, gtf, and STAR indexes) are already available on an external file system called CernVM-FS that is mounted on Nimbus. Take a look at the files: 
+For the sake of expediency, we are using prepared subset data for this session. All the data (including fastqs, reference fasta, gtf, and STAR indexes) are already available on an external file system called CernVM-FS that we can access from our Nimbus instances. Take a look at the files: 
 
 ```default
-ls /path/to/aarnet-cvmfs/training/workshopMaterials
+#ls -l /path/to/aarnet-cvmfs/training/workshopMaterials
+
+#Workaround for testing (data not yet on cvmfs)
+wget -O nfcore_materials.tar.gz https://cloudstor.aarnet.edu.au/plus/s/gIBdDhKEwfq2j58/download
+tar -zxvf nfcore_materials.tar.gz
+ls -l ~/session2/materials
 ```
 
 ```default
--rwxr-xr-x 1 ubuntu ubuntu 3566569 Sep 26  2022 mm10_reference/
--rwxr-xr-x 1 ubuntu ubuntu 3566569 Sep 26  2022 SRR3473984_selected.fastq.gz
--rwxr-xr-x 1 ubuntu ubuntu 3208125 Sep 26  2022 SRR3473985_selected.fastq.gz
--rwxr-xr-x 1 ubuntu ubuntu 3170753 Sep 26  2022 SRR3473986_selected.fastq.gz
--rwxr-xr-x 1 ubuntu ubuntu 3488119 Sep 26  2022 SRR3473987_selected.fastq.gz
--rwxr-xr-x 1 ubuntu ubuntu 4370755 Sep 26  2022 SRR3473988_selected.fastq.gz
--rwxr-xr-x 1 ubuntu ubuntu 3094352 Sep 26  2022 SRR3473989_selected.fastq.gz
+drwxrwxr-x 2 ubuntu ubuntu 4096 Feb 14 05:36 fastqs
+drwxrwxr-x 3 ubuntu ubuntu 4096 Feb 14 05:46 mm10_reference
+-rw-rw-r-- 1 ubuntu ubuntu  641 Feb 16 05:57 samplesheet.csv
 ```
 
 A [sample sheet](https://nf-co.re/rnaseq/3.11.1/usage#samplesheet-input) is a standard input rquirement for nf-core pipelines, including nf-core/rnaseq. This sheet specifies input files, sample name, and sometimes other metadata for each sample being processed. 
@@ -306,6 +307,7 @@ drwxrwxr-x   7 ubuntu ubuntu 4.0K Apr 21 03:44 .
 drwxr-x---  15 ubuntu ubuntu 4.0K Apr 21 01:56 ..
 drwxrwxr-x   4 ubuntu ubuntu 4.0K Apr 21 03:58 .nextflow
 -rw-rw-r--   1 ubuntu ubuntu 371K Apr 21 03:58 .nextflow.log
+-rw-rw-r--   1 ubuntu ubuntu  17K Apr 21 03:50 .nextflow.log.1
 drwxrwxr-x   7 ubuntu ubuntu 4.0K Apr 21 03:58 Lesson-1
 drwxrwxr-x   4 ubuntu ubuntu 4.0K Apr 21 02:08 nf-core-rnaseq-3.11.1
 -rw-rw-r--   1 ubuntu ubuntu  563 Apr 21 03:14 samplesheet.csv

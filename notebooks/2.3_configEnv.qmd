@@ -106,7 +106,7 @@ profiles {
   }
 ```
 
-Nextflow has a number of [features for using Singularity](https://www.nextflow.io/docs/latest/config.html?highlight=singularity#scope-singularity) that allow you to control how containers are executed. We are using:
+Nextflow has a number of [options for using Singularity](https://www.nextflow.io/docs/latest/config.html?highlight=singularity#scope-singularity) that allow you to control how containers are executed. We are using:
 
 * `enabled` to use Singularity to manage containers automatically 
 * `autoMounts` to allow Nextflow to automatically mount host paths when a container is executed
@@ -170,10 +170,23 @@ def trace_timestamp = new java.util.Date().format( 'yyyy-MM-dd_HH-mm-ss')
 // Generate custom resource trace file 
 trace {
   enabled = true 
-  file = 'workshop-resource-trace-${trace_timestamp}.txt'
-  fields = 'name,status,realtime,cpus,%cpu,memory,%mem,rss'
+  file = "workshop-resource-trace-${trace_timestamp}.txt"
+  fields = 'name,status,realtime,cpus,pcpu,memory,pmem,rss'
 }
 ```
+
+::: {.callout-warning}
+### :skull_and_crossbones: **Don't confuse double and single quotes!** :skull_and_crossbones:
+
+**Double quotes (`""`) allow for variable interpolation**, which means that variables can be evaluated and their values are substituted within the string. 
+
+**Single quotes (`''`) denote a string literally**, which means that the string is treated as-is without any variable interpolation.
+
+Try swapping the double quoted file value in your custom config above for a single-quoted value, rerun the workflow and see how the file is output:
+```default
+file = 'workshop-resource-trace-${trace_timestamp}.txt'
+```
+:::
 
 Rerun the pipeline:
 
@@ -198,6 +211,12 @@ Take a look at the launch log printed to the screen. You can see your profile, c
   NFCORE_RNASEQ:RNASEQ:PREPARE_GENOME:MAKE_TRANSCRIPTS_FASTA (rsem/mm10_chr18.fa) CACHED  4s      2       42.0%   6 GB    1.2%    94.4 MB
   NFCORE_RNASEQ:RNASEQ:FASTQ_SUBSAMPLE_FQ_SALMON:FQ_SUBSAMPLE (SRR3473985)        CACHED  2s      1       44.1%   6 GB    0.0%    6.3 MB
 ```
+
+::: {.callout-tip collapse="true"}
+### **Bonus exercise: applying an institutional config**
+
+
+:::
 
 ::: {.callout-note}
 ### **Key points**

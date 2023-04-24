@@ -4,7 +4,9 @@ project:
 
 website:
   title: "nf-core workflows series"
+  image: bin/logos/SIH_white.png
   navbar:
+    logo: bin/logos/SIH_white.png
     background: primary
     left:
       - href: index.qmd
@@ -41,7 +43,6 @@ website:
           href: notebooks/2.6_launch.html
       - text: "Tips & Tricks"
         href: tips_tricks.html
-
   body-footer: "All materials copyright Sydney Informatics Hub, University of Sydney"
           
 format:
@@ -50,11 +51,6 @@ format:
       light: flatly
     css: styles.scss
     toc: true
-    code-overflow: wrap
+    code-overflow: scroll
     highlight-style: github
     page-layout: full
-    
-
-
-
-

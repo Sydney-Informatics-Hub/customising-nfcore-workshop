@@ -27,7 +27,7 @@ As with all open source bioinformatics resources, nf-core workflows may not suit
 
 ![](../figs/2.0_nf-coreCommunity.png)
 
-### **Log back in to your instance**
+### **Log in to your instance**
 
 #### **In Visual Studio Code** 
 

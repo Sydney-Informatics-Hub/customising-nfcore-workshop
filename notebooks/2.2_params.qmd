@@ -38,7 +38,7 @@ The first warning message isn't very descriptive- do we have a problem or not? A
 Let's take a look at the MultiQC report, as directed by the message. You can find this report in the `Lesson-1/` directory: 
 
 ```default
-ls -la Lesson1/multiqc/star_salmon/
+ls -la Lesson-1/multiqc/star_salmon/
 ```
 
 ```default
@@ -73,21 +73,25 @@ nextflow log
 This will print a list of executed pipelines, by default: 
 
 ```default
-TIMESTAMP               DURATION        RUN NAME                STATUS  REVISION ID     SESSION ID                        COMMAND                                                                                                                                                                                                                                                                                                                                                                                                            
-2023-04-21 03:42:56     -               scruffy_gilbert         -       f421ddc35d      a1cada83-a732-4a8b-9535-aafce197367d nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf --input samplesheet.csv -profile singularity --fasta /home/ubuntu/session2/materials/mm10_reference/mm10_chr18.fa --gtf /home/ubuntu/session2/materials/mm10_reference/mm10_chr18.gtf --star_index /home/ubuntu/session2/materials/mm10_reference/STAR --max_memory '7 GB' --max_cpus 2 --outdir Lesson-1
+TIMESTAMP               DURATION        RUN NAME                STATUS  REVISION ID     SESSION ID                              COMMAND                                                                                                                                                                                                                                                                                                                                                    
+2023-04-21 00:30:30     -               friendly_montalcini     -       f421ddc35d      685266bb-b99b-4945-9a54-981e8f4b1b07    nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf --help                                                                                                                                                                                                                                                                                                 
+2023-04-21 00:40:58     15m 36s         nauseous_lamarck        OK      f421ddc35d      055e7b7f-c3ea-4fd9-a915-02343099939e    nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf --input samplesheet.csv -profile singularity --fasta /home/ubuntu/session2/materials/mm10_reference/mm10_chr18.fa --gtf /home/ubuntu/session2/materials/mm10_reference/mm10_chr18.gtf --star_index /home/ubuntu/session2/materials/mm10_reference/STAR --max_memory 6.GB --max_cpus 2 --outdir Lesson-1
 ```
 
 All recent runs will be listed in this file, with the most recent at the top. Let's query the logs for the Lesson-1 run. Run the command below after filling in your unique run name. For example: 
 
 ```default
-nextflow log scruffy_gilbert
+nextflow log nauseous_lamarck
 ```
 
-That command will list out all the work sub-directories for all processes run.  Recall that the actual tool commands issued by the nexflow processes are all recorded in hidden script files called `.command.sh` within the execution process directory. One way of observing the actual run commands issued by the workflow is to view these comamnd scripts. But how to find them?! Let's add some custom bash code to query a Nextflow run with the run name from the previous lesson.  
+That command will list out all the work sub-directories for all processes run.  Recall that the actual tool commands issued by the nexflow processes are all recorded in hidden script files called `.command.sh` within the execution process directory. One way of observing the actual run commands issued by the workflow is to view these comamnd scripts. 
 
-First, save your run name in a bash variable. For example:
+But how to find them? :thinking: 
+
+Let's add some custom bash code to query a Nextflow run with the run name from the previous lesson. First, save your run name in a bash variable. For example:
+
 ```default
-run_name=scruffy_gilbert
+run_name=nauseous_lamarck
 ```
 
 And let's save the tool of interest (salmon) in another bash variable:
@@ -99,7 +103,7 @@ Next, run the following bash command:
 ```default
 nextflow log ${run_name} | while read line;
     do
-    cmd=$(ls ${line}/.command.sh 2>/dev/null);
+      cmd=$(ls ${line}/.command.sh 2>/dev/null);
       if grep -q $tool $cmd;
       then  
         echo $cmd;     
@@ -189,7 +193,7 @@ extra_salmon_quant_args: "--numBootstraps 10"
 ```
 :::
 
-Any of the pipeline [parameters](https://nf-co.re/rnaseq/3.11.1/parameters) can be added to the parameters file in this way.
+Any of the pipeline [parameters](https://nf-co.re/rnaseq/3.11.1/parameters) can be added to the parameters file in this way. 
 
 ### **Pass the parameter file to the run command**
 
@@ -219,10 +223,132 @@ Succeeded   : 15
 Cached      : 185
 ```
 
+### **Manage parameters with nf-core schema**
+nf-core pipelines all have a `nextflow_schema.json` file in their root directory which explains all the parameters used by the workflow. You can use the [`nf-core schema` tool](https://nf-co.re/tools/#pipeline-schema) to validate pipeline parameters, build a pipeline schema, deploy the documentation for a pipeline schema, or add new parameters to a pipeline schema (take a look at [this nf-core bytesize talk!](https://www.youtube.com/watch?v=PU6vAj_7WRM) for a demonstration). Have a go at these bonus exercises, beware adjusting the `nextflow_schema.json` file will mean any subsequent workflow run will have to start from scratch again and prevent you applying the `-resume` function.  
+
+::: {.callout-tip collapse="true"}
+### **Bonus exercise: `nf-core schema build` to customise help command**
+
+Let's use this utility to simplify the workflow run process for our colleague who is new to nf-core pipelines and RNAseq data processing and works in the same compute environment as us. We'll customise our local copy of the `nextflow_schema.json` file to show only required paramerters for our experiment in the `--help` message to make it easier for them to write their own run command:
+
+1. Run the command below and follow the prompts to launch the schema web builder: 
+
+```default
+nf-core schema build -d nf-core-rnaseq-3.11.1/workflow/
+```
+
+![](../figs/2.2_nfcore-schema.png)
+
+2. For the **Input/output options** group, tick the **Required** box for the following and the **Hide** box for everything else:
+
+* :white_check_mark: input 
+* :white_check_mark: outdir 
+
+
+
+3. For the **UMI filtering options** group, tick the **Hide** box at the group level.
+
+4. For the **Read filtering options** group, tick the **Hide** box at the group level.
+
+5. For the **Reference genome options** group, tick the **Required** box for the following and the **Hide** box for everything else:
+
+* :white_check_mark: fasta 
+* :white_check_mark: gtf 
+* :white_check_mark: star_index 
+
+6. For the **Read trimming options** group, tick the **Required** box for the following and the **Hide** box for everything else:
+
+* :white_check_mark: save_trimmed
+
+7. For the **Alignment options** group, tick the **Required** box for the following and the **Hide** box for everything else:
+
+* :white_check_mark: aligner 
+* :white_check_mark: save_unaligned
+
+8. For the **Process skipping options** group, tick the **Hide** box at the group level.
+
+9. For the **Institutional config options** group, tick the **Hide** box at the group level.
+
+10. For the **Max job request options** group, tick the **Required** box for:
+
+* :white_check_mark: max_cpus 
+* :white_check_mark: max_memory
+
+11.  For the **Generic options** group, untick the **Required** and **Hide** boxes for:
+
+* :green_square: help 
+* :green_square: version
+* :green_square: multiqc_config
+
+Tick the **Hide** box for everything else. 
+
+12. Now re-build the schema by hitting the blue :ballot_box_with_check: **Finished** box in the top right of your browser. 
+
+13. Return to your terminal and look at your updated help message:
+
+```default
+nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf --help
+```
+
+![](../figs/2.2_nfcore-new-help.png)
+:::
+
+::: {.callout-tip collapse="true"}
+### **Bonus exercise: `nf-core schema docs` to customise documentation**
+
+The [schema docs](https://nf-co.re/tools/#display-the-documentation-for-a-pipeline-schema) utility can be used to output parameter documentation to html or markdown format that you could include in custom documentation. To print 
+
+```default
+nf-core schema docs \
+  nf-core-rnaseq-3.11.1/workflow/nextflow_schema.json --force \
+  > custom-params.md
+```
+:::
+
+
+::: {.callout-tip collapse="true"}
+### **Bonus exercise: `nf-core schema validate` to check params file**
+
+The [schema validate](https://nf-co.re/tools/#validate-pipeline-parameters) utility can be used to validate your specified parameters against the provided pipeline schema. Unfortunately, this won't work for your `workshop-params.yaml`, so we first need to convert this to a JSON file format. To do this, run the following from the `session2` directory: 
+
+1. [Convert](https://www.json2yaml.com/convert-yaml-to-json) the YAML file to JSON format and save this file as `workshop-params.json`
+
+```default 
+{
+    "input": "samplesheet.csv",
+    "gtf": "/home/ubuntu/session2/materials/mm10_reference/mm10_chr18.gtf",
+    "fasta": "/home/ubuntu/session2/materials/mm10_reference/mm10_chr18.fa",
+    "star_index": "/home/ubuntu/session2/materials/mm10_reference/STAR",
+    "outdir": "Lesson-2",
+    "salmon_quant_libtype": "A",
+    "save_trimmed": true,
+    "save_unaligned": true,
+    "extra_salmon_quant_args": "--numBootstraps 10"
+  }
+```
+
+2. Run the nf-core schema command to validate the specified parameters:
+
+```default
+nf-core schema validate rnaseq workshop-params.json
+```
+
+Note this only confirms your inputs match their specified type (i.e. boolean, string, number). 
+:::
+
+::: {.callout-tip collapse="true"}
+### **Bonus exercise: `nf-core schema build` to add new parameter**
+
+TODO create activity 
+https://nf-co.re/tools/#add-new-parameters-to-the-pipeline-schema
+
+:::
+
 ::: {.callout-note}
 ### **Key points**
 - A parameter file can be used to specify input parameters for any Nextflow workflow.
 - Specify parameter files in a workflow run command using the `-params-file` flag. 
-- Parameter files can be written in YAML or JSON file formats.  
+- Parameter files can be written in YAML or JSON file formats. 
+- The `nf-core schema` utilities can be used to aid parameter documentation and usage.   
 :::
 

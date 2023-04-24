@@ -133,6 +133,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../bin/logos/SIH.png" alt="" class="navbar-logo">
+    </a>
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">nf-core workflows series</span>
     </a>
@@ -278,7 +281,7 @@ Objectives
 </div>
 <section id="introducing-the-case-study" class="level3">
 <h3 class="anchored" data-anchor-id="introducing-the-case-study"><strong>Introducing the case study</strong></h3>
-<p>We are working with a subset dataset from a knockout mouse model study by <a href="https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-2801-4">Corley et al.&nbsp;(2016)</a>. The authors used the mouse model to simulate the role of a specific gene (<em>Gtf2ird1</em>) in Williams-Beuren Syndrome (WBS), a rare genetic disease in people. Today, we are performing the pre-processing steps to generate a set of files that can be analysed downstream. In deciding whether or not the nf-core/rnaseq pipeline was suitable for reproducing the results presented in this study, we considered a number of factors, including:</p>
+<p>We are working with a subset dataset from a knockout mouse model study by <a href="https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-2801-4">Corley et al.&nbsp;(2016)</a>. The authors used the mouse model to simulate the role of a specific gene (<em>Gtf2ird1</em>) in Williams-Beuren Syndrome (WBS), a rare genetic disease in people. Today, we are performing the pre-processing steps to generate a set of files that can be used to perform differential expression analysis. In deciding whether or not the nf-core/rnaseq pipeline was suitable for reproducing the results presented in this study, we considered a number of factors, including:</p>
 <table class="table">
 <colgroup>
 <col style="width: 13%">
@@ -316,7 +319,7 @@ Objectives
 <tr class="odd">
 <td><strong>Tool preferences</strong></td>
 <td>Suitability of each tool, required inputs and outputs</td>
-<td>pipeline offers multiple tools for some steps, determines which choices we make</td>
+<td>Pipeline offers multiple choices for some stages, determines which choices we make</td>
 </tr>
 </tbody>
 </table>
@@ -335,12 +338,12 @@ Objectives
 <p>Run:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nf-core download rnaseq \</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  --revision 3.11.1 \</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  --outdir ~/session2/nf-core_rnaseq-3.11.1 \</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  --outdir ~/session2/nf-core-rnaseq-3.11.1 \</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  --container singularity \</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  --compress none \</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  --singularity-cache-only</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You will be prompted to define a Singularity cache directory to store container images (<code>$NXF_SINGULARITY_CACHEDIR</code>). Specify the path we used in Session 1:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>/home/training/singularity_cache</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>export NXF_SINGULARITY_CACHEDIR=/home/training/singularity_cache</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The nf-core tools utility will download the pipeline files and centralised configs but not the containers, given they already exist in our specified cache.</p>
 <div class="callout-caution callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
@@ -445,13 +448,13 @@ Objectives
 <p>Hyphens matter when it comes to parameter flags in nf-core pipelines! Nextflow command-line parameters use one (<code>-</code>), whereas pipeline-specific parameters use two (<code>--</code>). For example: <code>-profile</code> is a <strong>Nextflow</strong> parameter, while <code>--input</code> is an <strong>nf-core</strong> parameter.</p>
 </div>
 </div>
-<p>We need to customise the default run command for our purposes, given the following considerations based on our experiment plan, above:</p>
+<p>We need to customise the default run command, given the following considerations based on our experiment plan above:</p>
 <ul>
 <li>We <strong>don’t</strong> need to run the pseudo alignment step (Stage 3)</li>
 <li>We have chosen to use <strong>STAR</strong> to align reads</li>
 <li>We have chosen to use <strong>Salmon</strong> to estimate transcript abundance</li>
-<li>We only have access to <strong>2 CPUs and 8Gb</strong> of RAM today</li>
-<li>We have <strong>provided the requisite reference data</strong> (fasta, gtf, STAR index) for our training dataset</li>
+<li>We have access to <strong>2 CPUs and 8 Gb</strong> of RAM today</li>
+<li>We have <strong>provided the requisite reference data</strong> (fasta, gtf, STAR index) for our input dataset</li>
 </ul>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -491,15 +494,16 @@ Solution
 </div>
 </div>
 </div>
-<p>For the sake of expediency, we are using prepared subset data for this session. All the data (including fastqs, input manifest, reference fasta, gtf, and STAR indexes) are already available on an external file system called CernVM-FS that is mounted on Nimbus. Take a look at the files:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>ls /path/to/aarnet-cvmfs/training/workshopMaterials</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb17"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>-rwxr-xr-x 1 ubuntu ubuntu 3566569 Sep 26  2022 mm10_reference/</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>-rwxr-xr-x 1 ubuntu ubuntu 3566569 Sep 26  2022 SRR3473984_selected.fastq.gz</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>-rwxr-xr-x 1 ubuntu ubuntu 3208125 Sep 26  2022 SRR3473985_selected.fastq.gz</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>-rwxr-xr-x 1 ubuntu ubuntu 3170753 Sep 26  2022 SRR3473986_selected.fastq.gz</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>-rwxr-xr-x 1 ubuntu ubuntu 3488119 Sep 26  2022 SRR3473987_selected.fastq.gz</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>-rwxr-xr-x 1 ubuntu ubuntu 4370755 Sep 26  2022 SRR3473988_selected.fastq.gz</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>-rwxr-xr-x 1 ubuntu ubuntu 3094352 Sep 26  2022 SRR3473989_selected.fastq.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>For the sake of expediency, we are using prepared subset data for this session. All the data (including fastqs, reference fasta, gtf, and STAR indexes) are already available on an external file system called CernVM-FS that we can access from our Nimbus instances. Take a look at the files:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>#ls -l /path/to/aarnet-cvmfs/training/workshopMaterials</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>#Workaround for testing (data not yet on cvmfs)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>wget -O nfcore_materials.tar.gz https://cloudstor.aarnet.edu.au/plus/s/gIBdDhKEwfq2j58/download</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>tar -zxvf nfcore_materials.tar.gz</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>ls -l ~/session2/materials</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 2 ubuntu ubuntu 4096 Feb 14 05:36 fastqs</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 3 ubuntu ubuntu 4096 Feb 14 05:46 mm10_reference</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>-rw-rw-r-- 1 ubuntu ubuntu  641 Feb 16 05:57 samplesheet.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>A <a href="https://nf-co.re/rnaseq/3.11.1/usage#samplesheet-input">sample sheet</a> is a standard input rquirement for nf-core pipelines, including nf-core/rnaseq. This sheet specifies input files, sample name, and sometimes other metadata for each sample being processed.</p>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -604,10 +608,11 @@ No, help! <span class="emoji" data-emoji="cry">😢</span> <code>:cry:</code></p
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>drwxr-x---  15 ubuntu ubuntu 4.0K Apr 21 01:56 ..</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x   4 ubuntu ubuntu 4.0K Apr 21 03:58 .nextflow</span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>-rw-rw-r--   1 ubuntu ubuntu 371K Apr 21 03:58 .nextflow.log</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x   7 ubuntu ubuntu 4.0K Apr 21 03:58 Lesson-1</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x   4 ubuntu ubuntu 4.0K Apr 21 02:08 nf-core-rnaseq-3.11.1</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>-rw-rw-r--   1 ubuntu ubuntu  563 Apr 21 03:14 samplesheet.csv</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 143 ubuntu ubuntu 4.0K Apr 21 03:58 work</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>-rw-rw-r--   1 ubuntu ubuntu  17K Apr 21 03:50 .nextflow.log.1</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x   7 ubuntu ubuntu 4.0K Apr 21 03:58 Lesson-1</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x   4 ubuntu ubuntu 4.0K Apr 21 02:08 nf-core-rnaseq-3.11.1</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>-rw-rw-r--   1 ubuntu ubuntu  563 Apr 21 03:14 samplesheet.csv</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 143 ubuntu ubuntu 4.0K Apr 21 03:58 work</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Nextflow has created 2 new output directories, <strong>work</strong> and <strong>Lesson-1</strong> in the current directory.</p>
 <section id="the-work-directory" class="level4">
 <h4 class="anchored" data-anchor-id="the-work-directory">The <code>work</code> directory</h4>

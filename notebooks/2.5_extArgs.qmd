@@ -30,7 +30,7 @@ But where is the `$ext.args` string actually defined? In the middle of the diagr
 
 ![](../figs/2.5_ext-args.png)
 
-### **Customisation at the process-level**
+### **Customisation at the process level**
 
 To practice this, we are going to pass an optional flag to the Trim Galore process. It is up to you to decipher what customisations are required to make your analysis suitable for your data and research questions. In order to understand what customisations you may want to specify as extra arguments, we recommend you: 
 
@@ -61,11 +61,11 @@ For RNAseq datasets, this Phred score is way too high!
 ### Solution
 
 1. `--quality` or `-q`
-2. No, but there is an `--extra_trimgalore_args` parameter
+2. No
 3. `--cores` and `--gzip` 
 :::
 
-The `--extra_trimgalore_args` parameter isn't explained very well, so we will follow the Trim Galore user guide, to apply the `--quality` flag with a Phred score of 40:
+We will follow the Trim Galore user guide to apply the `--quality` flag with a Phred score of 40:
 
 ```default
 --quality 40
@@ -147,12 +147,12 @@ On your `multiqc_report.html` file, view the section 'nf-core/rnaseq Workflow Su
 1. View one of the Trim Galore log files for a sample
 
 ```default
-more Exercise5/trimgalore/SRR3473988.fastq.gz_trimming_report.txt
+more Lesson-5/trimgalore/SRR3473988.fastq.gz_trimming_report.txt
 ```
 
 2. View the process execution script
 
-Define the run_name and tool variables, like we did in Exercise 2:
+Define the run_name and tool variables, like we did in lesson 2:
 ```default
 run_name=<ENTER_YOUR_RUN_NAME>
 tool=trim_galore
@@ -162,7 +162,7 @@ The run the following custom bash command again:
 ```default
 nextflow log ${run_name} | while read line;
     do
-    cmd=$(ls ${line}/.command.sh 2>/dev/null);
+      cmd=$(ls ${line}/.command.sh 2>/dev/null);
       if grep -q $tool $cmd;
       then  
         echo $cmd;     

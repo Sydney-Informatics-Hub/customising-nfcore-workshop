@@ -10,7 +10,8 @@ from: markdown+emoji
 ::: callout-tip
 ### Objectives{.unlisted}
 
-- Create a custom configuration file for MultiQC
+- Create and apply a custom configuration file for resource tracing
+- Create and apply a custom configuration file for MultiQC
 - Add a custom configuration file details to the params YAML file 
 - Apply multiple custom configuration files in workflow execution
 - Observe the heirarchy of parameter configuration in action
@@ -18,9 +19,7 @@ from: markdown+emoji
 
 Using multiple configuration files allows you to customise nf-core pipelines to your specific needs. Depending on how you work, where you work, and what pipelines you run, you may have configuration files that handle distinct issues, can be applied to specific infrastructures, or shared by multiple nf-core pipelines. In this lesson we will be applying multiple configuration files to the one run command. 
 
-
-
-### **When to use multiple configurations?**
+### **Apply multiple configurations**
 
 You may need to apply multiple configuration files at once to an nf-core pipeline run. A few scenarios in which you would need to do this include: 
 
@@ -30,9 +29,43 @@ You may need to apply multiple configuration files at once to an nf-core pipelin
 |Resource optimisation|Depending on the scale and complexity of your data, some steps of the pipeline may require different settings or resources to achieve optimal performance. By using different config files with different parameters or settings, you can fine-tune the pipeline run.|
 |MultiQC configuration|MultiQC allows users to specify configuration options in a YAML file called multiqc_config.yaml. This file allows users to customize the behavior and appearance of the MultiQC report.|
 
-### **Institutional/shared configs**
+Let's make a portable configuration file for resource tracing called `trace-benchmark.config`. We can apply this config when we want to collect resource benchmarks. Because this config is not infrastructure- or pipeline-specific, we can share it with collaborators and use it across multiple pipelines:
 
-Insert optional exercise for specifying the nimbus institutional configuration file. 
+```default
+// Define timestamp, to avoid overwriting existing trace 
+def trace_timestamp = new java.util.Date().format( 'yyyy-MM-dd_HH-mm-ss')
+
+// Generate custom resource trace file 
+trace {
+  enabled = true 
+  file = "workshop-resource-trace-${trace_timestamp}.txt"
+  fields = 'name,status,realtime,cpus,%cpu,memory,%mem,rss'
+}
+```
+
+Rerun the workflow, adding `` to the config flag and observe the extra file that is saved to our `session2` directory:
+
+```default
+nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
+  -profile workshop \
+  -c custom-nimbus.config \
+  -params-file workshop-params.yaml \
+  --outdir Lesson-4 \
+  -resume
+```
+
+::: {.callout-warning}
+### :skull_and_crossbones: **Don't confuse double and single quotes!** :skull_and_crossbones:
+
+**Double quotes (`""`) allow for variable interpolation**, which means that variables can be evaluated and their values are substituted within the string. 
+
+**Single quotes (`''`) denote a string literally**, which means that the string is treated as-is without any variable interpolation.
+
+Try swapping the double quoted file value in your custom config above for a single-quoted value, rerun the workflow and note the creation of a 
+```default
+file = 'workshop-resource-trace-${trace_timestamp}.txt'
+```
+:::
 
 ### **Configure MultiQC reports**
 
@@ -88,7 +121,7 @@ Note that if we did detect GC bias, we could go back and correct for this by add
 extra_salmon_quant_args : '--writeUnmappedNames --gcBias'
 ```
 
-TODO: consider adding challenge for location of the multiqc_report.html file is /home/ubuntu/nfcoreWorkshopTesting/exercise2/multiqc/star_salmon - can make an extra challenge to see if user can work out where to look for it given the stdout from the run (ie work/5d/e293 blah blah)
+
 
 ::: {.callout-note}
 ### **Key points**
