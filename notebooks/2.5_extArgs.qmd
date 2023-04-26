@@ -1,5 +1,5 @@
 ---
-title: "**Passing external arguments to a process**"
+title: "**2.5. Passing external arguments to a process**"
 output:
   html_document:
     toc: false
@@ -17,7 +17,7 @@ from: markdown+emoji
 
 All nf-core modules are currently required to provide the mandatory arguments for a tool to run in the process' `main.nf` file. Remember that nf-core pipelines generally run with sensible parameters as default, so these processes may also contain commonly changed or applied optional arguments for a tool. Despite this, nf-core pipelines allow you the flexibility to customise the command a process runs, whether it is permitted by the nf-core workflow parameters or not. In this lesson, we will be using Nextflow's [`ext` directive](https://www.nextflow.io/docs/latest/process.html#ext) to specify an optional argument to a process within the workflow. 
 
-### **External directives in action**
+### **2.5.1. External directives in action**
 
  nf-core modules provide all optional non-file arguments as a string using the [`ext` directive](https://www.nextflow.io/docs/latest/process.html#ext) via the `$task.ext.args` variable. In the diagram below, on the left is an example of the standard `main.nf` format of a process stored in the `modules/` directory. Above the script block, the `$args` variable is defined. Inside the script block the `$args` variable is applied to the process command.
 
@@ -30,7 +30,7 @@ But where is the `$ext.args` string actually defined? In the middle of the diagr
 
 ![](../figs/2.5_ext-args.png)
 
-### **Customisation at the process level**
+### **2.5.2. Customisation at the process level**
 
 To practice this, we are going to pass an optional flag to the Trim Galore process. It is up to you to decipher what customisations are required to make your analysis suitable for your data and research questions. In order to understand what customisations you may want to specify as extra arguments, we recommend you: 
 
@@ -71,7 +71,7 @@ We will follow the Trim Galore user guide to apply the `--quality` flag with a P
 --quality 40
 ```
 
-### **Observe the application of `ext.args`**
+### **2.5.3. Observe the application of `ext.args`**
 
 To parse that to the Trim Galore process, we need to specify this in a custom config. This time, our Trim Galore custom configuration file will restrict the usage of the parameter to the only place it applies, the Trim Galore process. We can do this using the Nextflow `process {}` scope and `withName:` selector. 
 

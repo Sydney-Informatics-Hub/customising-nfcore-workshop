@@ -25,19 +25,19 @@ website:
           href: notebooks/1.4_users.html
       - text: "Session 2"
         menu:
-        - text: "Sesson 2 kick-off"
+        - text: "2.0 Intro to session 2"
           href: notebooks/2.0_intro.html
-        - text: "Run command design"
+        - text: "2.1 Design a run command"
           href: notebooks/2.1_design.html
-        - text: "The parameters file"
+        - text: "2.2 Use a parameters file"
           href: notebooks/2.2_params.html
-        - text: "Resource configuration"
+        - text: "2.3 Configure resources"
           href: notebooks/2.3_configEnv.html
-        - text: "Multiple configurations"
+        - text: "2.4 Apply multiple configurations"
           href: notebooks/2.4_multiConfig.html
-        - text: "External arguments"
+        - text: "2.5 Apply external arguments"
           href: notebooks/2.5_extArgs.html
-        - text: "nf-core launch"
+        - text: "2.6 Use nf-core launch"
           href: notebooks/2.6_launch.html
       - text: "Tips & Tricks"
         href: tips_tricks.html

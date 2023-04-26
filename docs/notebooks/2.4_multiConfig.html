@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Sydney Informatics Hub - Using multiple configuration files at once</title>
+<title>Sydney Informatics Hub - 2.4. Using multiple configuration files at once</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -231,8 +231,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#apply-multiple-configurations" id="toc-apply-multiple-configurations" class="nav-link active" data-scroll-target="#apply-multiple-configurations"><strong>Apply multiple configurations</strong></a></li>
-  <li><a href="#configure-multiqc-reports" id="toc-configure-multiqc-reports" class="nav-link" data-scroll-target="#configure-multiqc-reports"><strong>Configure MultiQC reports</strong></a></li>
+  <li><a href="#apply-multiple-configurations" id="toc-apply-multiple-configurations" class="nav-link active" data-scroll-target="#apply-multiple-configurations"><strong>2.4.1. Apply multiple configurations</strong></a></li>
+  <li><a href="#configure-multiqc-reports" id="toc-configure-multiqc-reports" class="nav-link" data-scroll-target="#configure-multiqc-reports"><strong>2.4.2. Configure MultiQC reports</strong></a></li>
   </ul>
 </nav>
     </div>
@@ -241,7 +241,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><strong>Using multiple configuration files at once</strong></h1>
+<h1 class="title"><strong>2.4. Using multiple configuration files at once</strong></h1>
 </div>
 
 
@@ -277,7 +277,7 @@ Objectives
 </div>
 <p>Using multiple configuration files allows you to customise nf-core pipelines to your specific needs. Depending on how you work, where you work, and what pipelines you run, you may have configuration files that handle distinct issues, can be applied to specific infrastructures, or shared by multiple nf-core pipelines. In this lesson we will be applying multiple configuration files to the one run command.</p>
 <section id="apply-multiple-configurations" class="level3">
-<h3 class="anchored" data-anchor-id="apply-multiple-configurations"><strong>Apply multiple configurations</strong></h3>
+<h3 class="anchored" data-anchor-id="apply-multiple-configurations"><strong>2.4.1. Apply multiple configurations</strong></h3>
 <p>You may need to apply multiple configuration files at once to an nf-core pipeline run. A few scenarios in which you would need to do this include:</p>
 <table class="table">
 <colgroup>
@@ -306,7 +306,7 @@ Objectives
 </tbody>
 </table>
 <section id="customised-resource-tracing" class="level4 unlisted">
-<h4 class="unlisted anchored" data-anchor-id="customised-resource-tracing"><strong>Customised resource tracing</strong></h4>
+<h4 class="unlisted anchored" data-anchor-id="customised-resource-tracing"><strong>2.4.2. Customised resource tracing</strong></h4>
 <p>Remember we can use the <code>Nextflow log</code> command to show information about previous pipeline executions. We can customise which fields to print using the <a href="https://www.nextflow.io/docs/latest/tracing.html#customizing-fields"><code>-fields</code> flag</a>. This flag accepts options used by the <a href="https://www.nextflow.io/docs/latest/tracing.html#trace-fields">trace report</a>.</p>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -389,7 +389,7 @@ Solution
 </section>
 </section>
 <section id="configure-multiqc-reports" class="level3">
-<h3 class="anchored" data-anchor-id="configure-multiqc-reports"><strong>Configure MultiQC reports</strong></h3>
+<h3 class="anchored" data-anchor-id="configure-multiqc-reports"><strong>2.4.2. Configure MultiQC reports</strong></h3>
 <p>Many nf-core pipelines use <a href="https://multiqc.info/docs/">MultiQC</a> to generate a summary report at the end of a workflow. MultiQC is a reporting tool that can aggregate results and statistics output by various bioinformatics tools. It helps to summarise experiments containing multiple samples and multiple analysis steps. In nf-core pipelines, MultiQC is used to summarise statistics and results output by processes in the workflow and its reports can be quite verbose. MultiQC can be configured using custom YAML files to <a href="https://multiqc.info/docs/reports/customisation/">customise the outputs of reports</a>.</p>
 <p>We are going to configure MultiQC to aid interpretation of the <a href="https://multiqc.info/modules/fastqc/">FastQC output it plots</a>. Create a custom MultiQC configuration YAML file called <code>multiqc-config.yaml</code> and add the following:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fastqc_config</span><span class="kw">:</span></span>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Sydney Informatics Hub - Passing external arguments to a process</title>
+<title>Sydney Informatics Hub - 2.5. Passing external arguments to a process</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -184,7 +184,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <ul class="dropdown-menu" aria-labelledby="nav-menu-session-2">    
         <li>
     <a class="dropdown-item" href="../notebooks/2.0_intro.html">
- <span class="dropdown-text">Sesson 2 kick-off</span></a>
+ <span class="dropdown-text">2.0 Intro to session 2</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../notebooks/2.1_design.html">
@@ -231,9 +231,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#external-directives-in-action" id="toc-external-directives-in-action" class="nav-link active" data-scroll-target="#external-directives-in-action"><strong>External directives in action</strong></a></li>
-  <li><a href="#customisation-at-the-process-level" id="toc-customisation-at-the-process-level" class="nav-link" data-scroll-target="#customisation-at-the-process-level"><strong>Customisation at the process level</strong></a></li>
-  <li><a href="#observe-the-application-of-ext.args" id="toc-observe-the-application-of-ext.args" class="nav-link" data-scroll-target="#observe-the-application-of-ext.args"><strong>Observe the application of <code>ext.args</code></strong></a></li>
+  <li><a href="#external-directives-in-action" id="toc-external-directives-in-action" class="nav-link active" data-scroll-target="#external-directives-in-action"><strong>2.5.1. External directives in action</strong></a></li>
+  <li><a href="#customisation-at-the-process-level" id="toc-customisation-at-the-process-level" class="nav-link" data-scroll-target="#customisation-at-the-process-level"><strong>2.5.2. Customisation at the process level</strong></a></li>
+  <li><a href="#observe-the-application-of-ext.args" id="toc-observe-the-application-of-ext.args" class="nav-link" data-scroll-target="#observe-the-application-of-ext.args"><strong>2.5.3. Observe the application of <code>ext.args</code></strong></a></li>
   </ul>
 </nav>
     </div>
@@ -242,7 +242,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><strong>Passing external arguments to a process</strong></h1>
+<h1 class="title"><strong>2.5. Passing external arguments to a process</strong></h1>
 </div>
 
 
@@ -277,7 +277,7 @@ Objectives
 </div>
 <p>All nf-core modules are currently required to provide the mandatory arguments for a tool to run in the process’ <code>main.nf</code> file. Remember that nf-core pipelines generally run with sensible parameters as default, so these processes may also contain commonly changed or applied optional arguments for a tool. Despite this, nf-core pipelines allow you the flexibility to customise the command a process runs, whether it is permitted by the nf-core workflow parameters or not. In this lesson, we will be using Nextflow’s <a href="https://www.nextflow.io/docs/latest/process.html#ext"><code>ext</code> directive</a> to specify an optional argument to a process within the workflow.</p>
 <section id="external-directives-in-action" class="level3">
-<h3 class="anchored" data-anchor-id="external-directives-in-action"><strong>External directives in action</strong></h3>
+<h3 class="anchored" data-anchor-id="external-directives-in-action"><strong>2.5.1. External directives in action</strong></h3>
 <p>nf-core modules provide all optional non-file arguments as a string using the <a href="https://www.nextflow.io/docs/latest/process.html#ext"><code>ext</code> directive</a> via the <code>$task.ext.args</code> variable. In the diagram below, on the left is an example of the standard <code>main.nf</code> format of a process stored in the <code>modules/</code> directory. Above the script block, the <code>$args</code> variable is defined. Inside the script block the <code>$args</code> variable is applied to the process command.</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -296,7 +296,7 @@ What’s that Nextflow expression doing?
 <p><img src="../figs/2.5_ext-args.png" class="img-fluid"></p>
 </section>
 <section id="customisation-at-the-process-level" class="level3">
-<h3 class="anchored" data-anchor-id="customisation-at-the-process-level"><strong>Customisation at the process level</strong></h3>
+<h3 class="anchored" data-anchor-id="customisation-at-the-process-level"><strong>2.5.2. Customisation at the process level</strong></h3>
 <p>To practice this, we are going to pass an optional flag to the Trim Galore process. It is up to you to decipher what customisations are required to make your analysis suitable for your data and research questions. In order to understand what customisations you may want to specify as extra arguments, we recommend you:</p>
 <ol type="1">
 <li>Read the tool documentation to understand all the available parameters for that tool</li>
@@ -363,7 +363,7 @@ Solution
 <div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>--quality 40</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="observe-the-application-of-ext.args" class="level3">
-<h3 class="anchored" data-anchor-id="observe-the-application-of-ext.args"><strong>Observe the application of <code>ext.args</code></strong></h3>
+<h3 class="anchored" data-anchor-id="observe-the-application-of-ext.args"><strong>2.5.3. Observe the application of <code>ext.args</code></strong></h3>
 <p>To parse that to the Trim Galore process, we need to specify this in a custom config. This time, our Trim Galore custom configuration file will restrict the usage of the parameter to the only place it applies, the Trim Galore process. We can do this using the Nextflow <code>process {}</code> scope and <code>withName:</code> selector.</p>
 <p>Open a new file <code>trim-galore.config</code> and add the following content:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>// Trim Galore Phred score custom configuration </span>

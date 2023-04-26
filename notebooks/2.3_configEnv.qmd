@@ -1,5 +1,5 @@
 ---
-title: "**Configuring a run for your environment**"
+title: "**2.3. Configuring a run for your environment**"
 output:
   html_document:
     toc: false
@@ -18,7 +18,7 @@ from: markdown+emoji
 
 Nextflow's portability is enabled by its ability to separate workflow implementation from the configuration settings required to execute it. In this lesson we will use configuration files to define specifications required to execute an nf-core pipeline on our compute environment. While nf-core workflows are designed to be portable and work out of the box, sometimes you will need to customise the workflow's configuration so that it can run on your environment. The nf-core developer community currently offer a number of ways to [configure nf-core workflows](https://nf-co.re/usage/configuration). 
 
-### **Default nf-core configuration**
+### **2.3.1. Default nf-core configuration**
 
 Remember that when a `main.nf` file is run for any Nextflow workflow, Nextflow looks for [configuration files in multiple locations](https://www.nextflow.io/docs/latest/config.html#configuration-file) to determine how to execute the workflow and its processes. One of the files Nextflow will always look for is `nextflow.config`. Currently, all nf-core workflows use a `nextflow.config` file and a `conf/base.config` file to define the default execution settings and parameters of a workflow.  
 
@@ -57,7 +57,7 @@ includeConfig 'conf/base.config'
 ```
 :::
 
-### **When to use a custom config file**
+### **2.3.2. When to use a custom config file**
 
 There are a number of situations in which you may want to write a custom configuration file:
 
@@ -80,7 +80,7 @@ In this lesson, we are writing a custom configuration file to override the defau
 Bioinformatics relies on large-scale computational infrastructures and has a signficant carbon footprint due to the energy required to run computational workflows. We can optimise our worklfows to not only reduce their runtime, but also adopt more sustainable computing practices. This [paper](https://academic.oup.com/mbe/article/39/3/msac034/6526403) makes for an interesting read about the carbon footprint of bioinformatics workflows and tools!
 :::
 
-### **Customise resource configuration**
+### **2.3.3. Customise resource configuration**
 
 Open a new file called `custom-nimbus.config` and start writing some Nextflow code by adding: 
 

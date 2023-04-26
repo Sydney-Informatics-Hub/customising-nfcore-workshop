@@ -1,5 +1,5 @@
 ---
-title: "**Using multiple configuration files at once**"
+title: "**2.4. Using multiple configuration files at once**"
 output:
   html_document:
     toc: false
@@ -19,7 +19,7 @@ from: markdown+emoji
 
 Using multiple configuration files allows you to customise nf-core pipelines to your specific needs. Depending on how you work, where you work, and what pipelines you run, you may have configuration files that handle distinct issues, can be applied to specific infrastructures, or shared by multiple nf-core pipelines. In this lesson we will be applying multiple configuration files to the one run command. 
 
-### **Apply multiple configurations**
+### **2.4.1. Apply multiple configurations**
 
 You may need to apply multiple configuration files at once to an nf-core pipeline run. A few scenarios in which you would need to do this include: 
 
@@ -29,7 +29,7 @@ You may need to apply multiple configuration files at once to an nf-core pipelin
 |Resource optimisation|Depending on the scale and complexity of your data, some steps of the pipeline may require different settings or resources to achieve optimal performance. By using different config files with different parameters or settings, you can fine-tune the pipeline run.|
 |MultiQC configuration|MultiQC allows users to specify configuration options in a YAML file called multiqc_config.yaml. This file allows users to customize the behavior and appearance of the MultiQC report.|
 
-#### **Customised resource tracing**{.unlisted}
+#### **2.4.2. Customised resource tracing**{.unlisted}
 
 Remember we can use the `Nextflow log` command to show information about previous pipeline executions. We can customise which fields to print using the [`-fields` flag](https://www.nextflow.io/docs/latest/tracing.html#customizing-fields). This flag accepts options used by the [trace report](https://www.nextflow.io/docs/latest/tracing.html#trace-fields). 
 
@@ -104,7 +104,7 @@ file = 'workshop-resource-trace-${trace_timestamp}.txt'
 ```
 :::
 
-### **Configure MultiQC reports**
+### **2.4.2. Configure MultiQC reports**
 
 Many nf-core pipelines use [MultiQC](https://multiqc.info/docs/) to generate a summary report at the end of a workflow. MultiQC is a reporting tool that can aggregate results and statistics output by various bioinformatics tools. It helps to summarise experiments containing multiple samples and multiple analysis steps. In nf-core pipelines, MultiQC is used to summarise statistics and results output by processes in the workflow and its reports can be quite verbose. MultiQC can be configured using custom YAML files to [customise the outputs of reports](https://multiqc.info/docs/reports/customisation/). 
 
@@ -157,8 +157,6 @@ Note that if we did detect GC bias, we could go back and correct for this by add
 ```default
 extra_salmon_quant_args : '--writeUnmappedNames --gcBias'
 ```
-
-
 
 ::: {.callout-note}
 ### **Key points**

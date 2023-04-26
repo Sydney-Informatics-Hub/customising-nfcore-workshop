@@ -1,5 +1,5 @@
 ---
-title: "**Welcome to session 2**"
+title: "**2.0. Welcome to session 2**"
 output:
   html_document:
     toc: false
@@ -7,31 +7,25 @@ output:
 from: markdown+emoji
 ---
 
-In this session we will be **writing, running, adjusting, and re-running the nf-core/rnaseq workflow as we step through various customisation scenarios**. This session builds on fundamental concepts learned in [Session 1]() and provides you with hands-on experience in workflow customisation. Throughout the session we will be working with a case study to apply an nf-core workflow to process data for this experiment. Each lesson will build on the previous one, so you can gain a deeper understanding of the ccustomisation techniques and the impact they have on the workflow and your results. We will be exploring source code of the nf-core/rnaseq workflow and apply customisations using:
+This session builds on fundamental concepts learned in [Session 1]() and provide you with hands-on experience in nf-core workflow customisation. Throughout the session we will be working with a case study to apply an nf-core workflow. Each lesson will build on the previous one, so you can gain a deeper understanding of the customisation techniques and the impact they have on the workflow and your results. We will be exploring source code of the nf-core/rnaseq workflow and apply customisations using a parameter file and custom configuration files. 
 
-* A parameter file
-* Custom configuration files
-* An institutional configuration file
-
-You will be writing these files using **Nextflow** and **YAML** languages and also running some custom **Bash** code to efficiently extract information from the source code :nerd_face:. 
+You will be writing these files using **Nextflow** and **YAML** languages and also running some Nextflow commands and custom **Bash** code to efficiently extract information from the source code :nerd_face:. 
 
 ::: callout-note
 While all activities in this session will be performed using the nf-core/rnaseq workflow, all customisation scenarios we explore are applicable to other nf-core workflows and do not require an understanding of RNAseq data processing. 
 :::
 
-### **How to approach open source software communities**
+### **2.0.1. How to approach open source software communities**
 
 As with all open source bioinformatics resources, nf-core workflows may not suit all applications. It is important that you **understand the needs of your dataset and research questions before deciding on a workflow**. nf-core is a community effort powered by life scientists and software developers, who volunteer their time to build, maintain, and support workflows. All nf-core workflows are provided with sensible default settings that have broad applicability and comprensive documentation that explains all available parameters. What is 'sensible' varies dramatically between different experiments, computing environments, and datasets, so these settings might not suit your needs. We recommend approaching the application and customisation of nf-core workflows with the following framework:
 
 **DIAGRAM OF NF-CORE COMMUNITY FEATURE - IMPLICATION FOR WORKFLOWS - Q TO ASK - OUR RECOMMENDATIONS**
 
-![](../figs/2.0_nf-coreCommunity.png)
+### **2.0.2. Log in to your instance**
 
-### **Log in to your instance**
+#### **Option 1: In Visual Studio Code** 
 
-#### **In Visual Studio Code** 
-
-Same as yesterday, connect to your instance using the command palatte:
+Follow the [VSCode set up instructions](../setup.qmd#login-via-visual-studio-code) or use the quick start instructions below to connect to your instance using the command palatte:
 
   * `Ctrl`+`Shift`+`P` to open command palette 
   * Select `Remote-SSH: Connect to Host` and select name of your host
@@ -41,15 +35,11 @@ Having successfully logged in, you should see a small green box in the bottom le
 
 ![](https://user-images.githubusercontent.com/73086054/228143085-20a5bdfc-f4e7-4472-b43f-2c975ae5eb4c.png)
 
-#### **In a terminal** 
-With a terminal application, run the following on the command-line: 
- ```default
- ssh training@###.###.###.###
- ```
-Enter the password provided at the beginning of the workshop. Ask one of the demonstrators if you’ve forgotten it.
-```default
-Enter password:
-```
+#### **Option 2: In a terminal** 
+Follow the [terminal set up instructions](../setup.qmd#login-via-terminal) or use the quick start instructions below to connect to your instance on the command-line: 
+
+  * Run: `ssh training@###.###.###.###`
+  * Enter the password provided at the beginning of the workshop. Ask one of the demonstrators if you’ve forgotten it.
 
 Having successfully logged in, your terminal should then display something like that shown in the figure below:
 
