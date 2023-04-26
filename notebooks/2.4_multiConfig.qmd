@@ -43,12 +43,12 @@ trace {
 }
 ```
 
-Rerun the workflow, adding `` to the config flag and observe the extra file that is saved to our `session2` directory:
+Rerun the workflow, adding `trace-benchmark.config` to the config flag and observe the extra file that is saved to our `session2` directory:
 
 ```default
 nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
   -profile workshop \
-  -c custom-nimbus.config \
+  -c custom-nimbus.config,trace-benchmark.config \
   -params-file workshop-params.yaml \
   --outdir Lesson-4 \
   -resume

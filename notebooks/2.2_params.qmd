@@ -244,8 +244,6 @@ nf-core schema build -d nf-core-rnaseq-3.11.1/workflow/
 * :white_check_mark: input 
 * :white_check_mark: outdir 
 
-
-
 3. For the **UMI filtering options** group, tick the **Hide** box at the group level.
 
 4. For the **Read filtering options** group, tick the **Hide** box at the group level.
