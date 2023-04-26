@@ -88,7 +88,7 @@ git clone https://github.com/nf-core/rnaseq.git
 > :no_entry: **BEWARE** :no_entry: this method will download a copy of the pipeline with a different directory name and slightly different structure. If you choose to use this method, you will need to adjust some paths specified in the upcoming lessons accordingly. 
 ::: 
 
-Inside your `nf-core-rnaseq-3.11.1` workflow directory, you should see a 2 subdirectories: 
+Inside your `nf-core-rnaseq-3.11.1` workflow directory, you should see 2 subdirectories: 
 
 ```default
 ls -l nf-core-rnaseq-3.11.1
@@ -104,7 +104,7 @@ Remember, as we ran the download command, a number of `INFO` logs were printed t
 
 ![](../figs/2.1_nfcore-info.png)
 
-For most of this session we will only be working with the `workflow` directory:
+For this session we will be working with the `workflow` directory:
 
 ```default
 ls -l nf-core-rnaseq-3.11.1/workflow
@@ -180,28 +180,32 @@ We need to customise the default run command, given the following considerations
 
 Can you use the [nf-core/rnaseq parameters documentation](https://nf-co.re/rnaseq/3.11.1/parameters) (or the `--help` flag) and the important considerations above to identify flags we will need to apply to our first workflow run? Don't worry about the files required for these flags just yet. 
 
+1. What flag would we use to specify our chosen alignment and quantification method? 
+2. What flags would we use to specify maximum CPU and memory resources? 
+3. What flags would we use to specify the provided fasta, gtf, and STAR index files? 
+
 :bulb: HINT: You will need to look at the [reference genome](https://nf-co.re/rnaseq/3.11.1/parameters#reference-genome-options), [alignment](https://nf-co.re/rnaseq/3.11.1/parameters#alignment-options), and [max job request](https://nf-co.re/rnaseq/3.11.1/parameters#max-job-request-options) sections. 
 :::
 
 ::: {.callout-caution collapse="true"}
 ### Solution
 
-Given we are using STAR and Salmon as our aligner and quantification tool of choice (respectively) and it is the default choice of this pipeline we will not need to provide an `--aligner` flag. However, if you wanted to provide this for the sake of reproducibility in case things change in the future: 
+1. Given we are using STAR and Salmon as our aligner and quantification tool of choice (respectively) and it is the default choice of this pipeline we do not need to provide an `--aligner` flag. However, if you wanted to provide this for the sake of reproducibility in case things change in the future: 
 ```default
 --aligner 'star_salmon'
 ```
 
-Given we are providing our own subset data for this workshop, we will need to use:
+2. Given we have limited computing resources today, we will need to specify a ceiling for both memory and CPUs:
+```default
+--max_memory '6.GB' 
+--max_cpus 2 
+```
+
+3. Given we are providing our own subset data for this workshop, we will need to use:
 ```default
 --fasta /path/to/mouse.fa  
 --gtf /path/to/mouse.gtf 
 --star_index /path/to/STAR
-```
-
-Given we have limited computing resources today, we will need to specify a ceiling for both memory and CPUs:
-```default
---max_memory '6.GB' 
---max_cpus 2 
 ```
 :::
 
@@ -222,7 +226,11 @@ drwxrwxr-x 3 ubuntu ubuntu 4096 Feb 14 05:46 mm10_reference
 -rw-rw-r-- 1 ubuntu ubuntu  641 Feb 16 05:57 samplesheet.csv
 ```
 
-A [sample sheet](https://nf-co.re/rnaseq/3.11.1/usage#samplesheet-input) is a standard input requirement for nf-core pipelines. This sheet specifies input files, sample name, and sometimes other metadata for each sample being processed. 
+A [sample sheet](https://nf-co.re/rnaseq/3.11.1/usage#samplesheet-input) is a standard input requirement for nf-core pipelines. This sheet specifies:
+
+* The sample name
+* Relevant input files for each sample 
+* Other metadata for each sample
 
 ::: callout-tip
 ### **Challenge**{.unlisted}

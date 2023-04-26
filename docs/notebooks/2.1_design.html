@@ -371,14 +371,14 @@ Objectives
 </div>
 </div>
 </div>
-<p>Inside your <code>nf-core-rnaseq-3.11.1</code> workflow directory, you should see a 2 subdirectories:</p>
+<p>Inside your <code>nf-core-rnaseq-3.11.1</code> workflow directory, you should see 2 subdirectories:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ls -l nf-core-rnaseq-3.11.1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb7"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>total 8</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x  7 ubuntu ubuntu 4096 Apr 21 02:08 configs</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 12 ubuntu ubuntu 4096 Apr 21 02:08 workflow</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Remember, as we ran the download command, a number of <code>INFO</code> logs were printed to the screen. The <strong>workflow files from GitHub</strong> were downloaded to the <code>workflow</code> directory and the <strong>centralised configs from GitHub</strong> were downloaded to the <code>configs</code> directory:</p>
 <p><img src="../figs/2.1_nfcore-info.png" class="img-fluid"></p>
-<p>For most of this session we will only be working with the <code>workflow</code> directory:</p>
+<p>For this session we will be working with the <code>workflow</code> directory:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ls -l nf-core-rnaseq-3.11.1/workflow</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb9"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>total 216</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu 58889 Apr 21 02:08 CHANGELOG.md</span>
@@ -472,6 +472,11 @@ Objectives
 </div>
 <div class="callout-body-container callout-body">
 <p>Can you use the <a href="https://nf-co.re/rnaseq/3.11.1/parameters">nf-core/rnaseq parameters documentation</a> (or the <code>--help</code> flag) and the important considerations above to identify flags we will need to apply to our first workflow run? Don’t worry about the files required for these flags just yet.</p>
+<ol type="1">
+<li>What flag would we use to specify our chosen alignment and quantification method?</li>
+<li>What flags would we use to specify maximum CPU and memory resources?</li>
+<li>What flags would we use to specify the provided fasta, gtf, and STAR index files?</li>
+</ol>
 <p><span class="emoji" data-emoji="bulb">💡</span> HINT: You will need to look at the <a href="https://nf-co.re/rnaseq/3.11.1/parameters#reference-genome-options">reference genome</a>, <a href="https://nf-co.re/rnaseq/3.11.1/parameters#alignment-options">alignment</a>, and <a href="https://nf-co.re/rnaseq/3.11.1/parameters#max-job-request-options">max job request</a> sections.</p>
 </div>
 </div>
@@ -487,15 +492,21 @@ Solution
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Given we are using STAR and Salmon as our aligner and quantification tool of choice (respectively) and it is the default choice of this pipeline we will not need to provide an <code>--aligner</code> flag. However, if you wanted to provide this for the sake of reproducibility in case things change in the future:</p>
+<ol type="1">
+<li>Given we are using STAR and Salmon as our aligner and quantification tool of choice (respectively) and it is the default choice of this pipeline we do not need to provide an <code>--aligner</code> flag. However, if you wanted to provide this for the sake of reproducibility in case things change in the future:</li>
+</ol>
 <div class="sourceCode" id="cb13"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>--aligner 'star_salmon'</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Given we are providing our own subset data for this workshop, we will need to use:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>--fasta /path/to/mouse.fa  </span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>--gtf /path/to/mouse.gtf </span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>--star_index /path/to/STAR</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Given we have limited computing resources today, we will need to specify a ceiling for both memory and CPUs:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>--max_memory '6.GB' </span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>--max_cpus 2 </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li>Given we have limited computing resources today, we will need to specify a ceiling for both memory and CPUs:</li>
+</ol>
+<div class="sourceCode" id="cb14"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>--max_memory '6.GB' </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>--max_cpus 2 </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li>Given we are providing our own subset data for this workshop, we will need to use:</li>
+</ol>
+<div class="sourceCode" id="cb15"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>--fasta /path/to/mouse.fa  </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>--gtf /path/to/mouse.gtf </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>--star_index /path/to/STAR</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -509,7 +520,12 @@ Solution
 <div class="sourceCode" id="cb17"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 2 ubuntu ubuntu 4096 Feb 14 05:36 fastqs</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 3 ubuntu ubuntu 4096 Feb 14 05:46 mm10_reference</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>-rw-rw-r-- 1 ubuntu ubuntu  641 Feb 16 05:57 samplesheet.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>A <a href="https://nf-co.re/rnaseq/3.11.1/usage#samplesheet-input">sample sheet</a> is a standard input rquirement for nf-core pipelines, including nf-core/rnaseq. This sheet specifies input files, sample name, and sometimes other metadata for each sample being processed.</p>
+<p>A <a href="https://nf-co.re/rnaseq/3.11.1/usage#samplesheet-input">sample sheet</a> is a standard input requirement for nf-core pipelines. This sheet specifies:</p>
+<ul>
+<li>The sample name</li>
+<li>Relevant input files for each sample</li>
+<li>Other metadata for each sample</li>
+</ul>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

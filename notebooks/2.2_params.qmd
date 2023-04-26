@@ -1,5 +1,5 @@
 ---
-title: "**2.2. Using a parameters file**"
+title: "**2.2. How to use a parameters file**"
 output:
   html_document:
     toc: false
@@ -16,9 +16,9 @@ from: markdown+emoji
 - Understand the use of the params file for reproducible and transparent research
 :::
 
-In Nextflow, parameters are values that can be set by the user and used to control the behaviour of a workflow or process within the workflow. Parameters are also used in nf-core workflows to specify input and output files and define other aspects of workflow execution. Each nf-core pipeline comes with a default set of parameters that can be customised to suit specific requirements. In the previous lesson we supplied these parameters in our run command, on the command line. 
+In Nextflow, [parameters](https://www.nextflow.io/docs/latest/config.html#scope-params) are values that can be set by the user and used to control the behaviour of a workflow or process within the workflow. They are defined by the `params` scope. Parameters are also used in nf-core workflows to specify input and output files and define other aspects of workflow execution. Each nf-core pipeline comes with a default set of parameters that can be customised to suit specific requirements. 
 
-Nextflow allows us to pass all parameters to a pipeline's run command using the `-params-file` flag and a JSON or YAML file. Using a parameter file makes it easier to rerun and reproduce our code, we can also share these files with our collaborators and provide as supplementary file in a publication. In this lesson we're going to adjust our run command and rerun the pipeline using a parameter file, rather than specifying all parameters on the command line.  
+In the previous lesson we supplied these parameters as flags in our run command. Nextflow also allows us to pass all parameters to a pipeline's run command using the `-params-file` flag and a JSON or YAML file. In this lesson we're going to adjust our run command and rerun the pipeline using a parameter file, rather than specifying all parameters as separate flags in the run command.  
 
 ### **2.3.1. Revise the run command**
 
@@ -33,9 +33,12 @@ CPU hours   : 0.4
 Succeeded   : 200
 ```
 
-The first warning message isn't very descriptive- do we have a problem or not? As we were developing these materials we flagged this with the nf-core/rnaseq pipeline's developers (see [pull request](https://github.com/nf-core/rnaseq/pull/963)). You might come across small but inconsequential issues like this when running nf-core pipelines, too. Consider submitting a GitHub issue or flagging this in the pipeline's Slack channel so others are aware and it can be addressed by developers. Turns out this wasn't a problem for our pipeline, so instead let's focus on the second message.
+::: {.callout-warning}
+### Handling dodgy error messages :cursing_face:
+The first warning message isn't very descriptive (see this [pull request](https://github.com/nf-core/rnaseq/pull/963)). You might come across small but inconsequential issues like this when running nf-core pipelines, too. End user feedback is always helpful for software developers, so consider submitting a GitHub issue or starting a discussion in the relevant Slack channel so others are aware and it can be addressed by developers.
+:::
 
-Let's take a look at the MultiQC report, as directed by the message. You can find this report in the `Lesson-1/` directory: 
+Let's take a look at the MultiQC report, as directed by the second message. You can find this report in the `Lesson-1/` directory: 
 
 ```default
 ls -la Lesson-1/multiqc/star_salmon/
@@ -50,7 +53,7 @@ drwxrwxr-x 5 ubuntu ubuntu    4096 Apr 12 04:13 multiqc_plots
 -rw-rw-r-- 1 ubuntu ubuntu 1483297 Apr 12 04:13 multiqc_report.html
 ```
 
-Open the `multiqc_report.html` the file navigator panel on the left side of your VS code window by clicking on it. Then open the rendered html file using the Live Server extension:
+Open the `multiqc_report.html` the file navigator panel on the left side of your VS Code window by clicking on it. Then open the rendered html file using the Live Server extension:
 
 1. `Ctrl`+`Shift`+`P` to open the command palette 
 2. Select `Live Server: Open with Live Server` to open html file in your browser window.
@@ -84,7 +87,7 @@ All recent runs will be listed in this file, with the most recent at the top. Le
 nextflow log nauseous_lamarck
 ```
 
-That command will list out all the work sub-directories for all processes run.  Recall that the actual tool commands issued by the nexflow processes are all recorded in hidden script files called `.command.sh` within the execution process directory. One way of observing the actual run commands issued by the workflow is to view these comamnd scripts. 
+That command will list out all the work subdirectories for all processes run.  Recall that the actual tool commands issued by the nexflow processes are all recorded in hidden script files called `.command.sh` within the execution process directory. One way of observing the actual run commands issued by the workflow is to view these command scripts. 
 
 But how to find them? :thinking: 
 
@@ -129,16 +132,20 @@ That will list all process `.command.sh` scripts containing 'salmon'. There are 
 /home/ubuntu/session2/work/57/a18fcea6a06565b14140ab06a3d077/.command.sh
 ```
 
-Compare the salmon quant command with the command run in the Salmon quant process script block:
+Compared with the salmon quant `main.nf` file, we get more information from the `.command.sh` process scripts: 
+
 ```default
 cat rnaseq/modules/nf-core/salmon/quant/main.nf
 ```
 
-Compared with the salmon quant `main.nf` file, we get more information from the `.command.sh` process scripts: 
-
 ![](../figs/2.2_salmon-quant.png)
 
-Looking at the nf-core/rnaseq documentation, we can see library type is automatically inferred based on provided strandedness and this can be overridden using Salmon's `--libType=$strandedness` flag. Following the recommendations in the [Salmon documentation](https://salmon.readthedocs.io/en/latest/salmon.html#what-s-this-libtype), we're going to override this default with the nf-core/rnaseq pipeline's `--salmon_quant_libtype A` [parameter](https://nf-co.re/rnaseq/3.11.1/parameters#salmon_quant_libtype). 
+Looking at the nf-core/rnaseq documentation, we can see:
+
+*. Library type is automatically inferred based on the `$strandedness` variable
+*. Library type can be adjusted using Salmon's `--libType=` flag and the nf-core `$strandedness` variable. 
+
+Following the recommendations in the [Salmon documentation](https://salmon.readthedocs.io/en/latest/salmon.html#what-s-this-libtype), we're going to override this default with the nf-core/rnaseq pipeline's `--salmon_quant_libtype A` [parameter](https://nf-co.re/rnaseq/3.11.1/parameters#salmon_quant_libtype). 
 
 ### **2.3.3. Write a parameter file**
 
@@ -149,7 +156,7 @@ Nextflow accepts either YAML or JSON formats for parameter files. YAML and JSON 
 * Files consist of key-value pairs
 * Each key is followed by a colon (`:`) and a space
 * The value can be any valid YAML data type (i.e. string, number, boolean, list, or dictionary).
-* Strings can be specified using single quotes ('), double quotes ("), and plain text (boolean).
+* Strings can be specified using single quotes (`'`), double quotes (`"`), and plain text (boolean).
 * YAML is case sensitive 
 * Files should have a `.yaml` or `.yml` as the file extension 
 * YAML does not allow the use of tabs, only spaces
@@ -200,7 +207,7 @@ Any of the pipeline [parameters](https://nf-co.re/rnaseq/3.11.1/parameters) can 
 Once your params file has been saved, run the following command. Observe:
 
 * The command is shorter thanks to offloading some parameters to the params file
-* The `-resume` flag. Nextflow can use cached output!
+* The `-resume` flag. Nextflow has lots of [run options](https://www.nextflow.io/docs/latest/cli.html?highlight=resume#run) including the ability to use cached output!
 
 ```default
 nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \

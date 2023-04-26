@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Sydney Informatics Hub - 2.2. Using a parameters file</title>
+<title>Sydney Informatics Hub - 2.2. How to use a parameters file</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -184,31 +184,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <ul class="dropdown-menu" aria-labelledby="nav-menu-session-2">    
         <li>
     <a class="dropdown-item" href="../notebooks/2.0_intro.html">
- <span class="dropdown-text">Sesson 2 kick-off</span></a>
+ <span class="dropdown-text">2.0 Intro to session 2</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../notebooks/2.1_design.html">
- <span class="dropdown-text">Run command design</span></a>
+ <span class="dropdown-text">2.1 Design a run command</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../notebooks/2.2_params.html">
- <span class="dropdown-text">The parameters file</span></a>
+ <span class="dropdown-text">2.2 Use a parameters file</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../notebooks/2.3_configEnv.html">
- <span class="dropdown-text">Resource configuration</span></a>
+ <span class="dropdown-text">2.3 Configure resources</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../notebooks/2.4_multiConfig.html">
- <span class="dropdown-text">Multiple configurations</span></a>
+ <span class="dropdown-text">2.4 Apply multiple configurations</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../notebooks/2.5_extArgs.html">
- <span class="dropdown-text">External arguments</span></a>
+ <span class="dropdown-text">2.5 Apply external arguments</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../notebooks/2.6_launch.html">
- <span class="dropdown-text">nf-core launch</span></a>
+ <span class="dropdown-text">2.6 Use nf-core launch</span></a>
   </li>  
     </ul>
   </li>
@@ -244,7 +244,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><strong>2.2. Using a parameters file</strong></h1>
+<h1 class="title"><strong>2.2. How to use a parameters file</strong></h1>
 </div>
 
 
@@ -277,8 +277,8 @@ Objectives
 </ul>
 </div>
 </div>
-<p>In Nextflow, parameters are values that can be set by the user and used to control the behaviour of a workflow or process within the workflow. Parameters are also used in nf-core workflows to specify input and output files and define other aspects of workflow execution. Each nf-core pipeline comes with a default set of parameters that can be customised to suit specific requirements. In the previous lesson we supplied these parameters in our run command, on the command line.</p>
-<p>Nextflow allows us to pass all parameters to a pipeline’s run command using the <code>-params-file</code> flag and a JSON or YAML file. Using a parameter file makes it easier to rerun and reproduce our code, we can also share these files with our collaborators and provide as supplementary file in a publication. In this lesson we’re going to adjust our run command and rerun the pipeline using a parameter file, rather than specifying all parameters on the command line.</p>
+<p>In Nextflow, <a href="https://www.nextflow.io/docs/latest/config.html#scope-params">parameters</a> are values that can be set by the user and used to control the behaviour of a workflow or process within the workflow. They are defined by the <code>params</code> scope. Parameters are also used in nf-core workflows to specify input and output files and define other aspects of workflow execution. Each nf-core pipeline comes with a default set of parameters that can be customised to suit specific requirements.</p>
+<p>In the previous lesson we supplied these parameters as flags in our run command. Nextflow also allows us to pass all parameters to a pipeline’s run command using the <code>-params-file</code> flag and a JSON or YAML file. In this lesson we’re going to adjust our run command and rerun the pipeline using a parameter file, rather than specifying all parameters as separate flags in the run command.</p>
 <section id="revise-the-run-command" class="level3">
 <h3 class="anchored" data-anchor-id="revise-the-run-command"><strong>2.3.1. Revise the run command</strong></h3>
 <p>While our pipeline completed successfully, there were a couple of warning messages that may be cause for concern:</p>
@@ -288,8 +288,20 @@ Objectives
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>Duration    : 13m 59s</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>CPU hours   : 0.4</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>Succeeded   : 200</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The first warning message isn’t very descriptive- do we have a problem or not? As we were developing these materials we flagged this with the nf-core/rnaseq pipeline’s developers (see <a href="https://github.com/nf-core/rnaseq/pull/963">pull request</a>). You might come across small but inconsequential issues like this when running nf-core pipelines, too. Consider submitting a GitHub issue or flagging this in the pipeline’s Slack channel so others are aware and it can be addressed by developers. Turns out this wasn’t a problem for our pipeline, so instead let’s focus on the second message.</p>
-<p>Let’s take a look at the MultiQC report, as directed by the message. You can find this report in the <code>Lesson-1/</code> directory:</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Handling dodgy error messages <span class="emoji" data-emoji="cursing_face">🤬</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The first warning message isn’t very descriptive (see this <a href="https://github.com/nf-core/rnaseq/pull/963">pull request</a>). You might come across small but inconsequential issues like this when running nf-core pipelines, too. End user feedback is always helpful for software developers, so consider submitting a GitHub issue or starting a discussion in the relevant Slack channel so others are aware and it can be addressed by developers.</p>
+</div>
+</div>
+<p>Let’s take a look at the MultiQC report, as directed by the second message. You can find this report in the <code>Lesson-1/</code> directory:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ls -la Lesson-1/multiqc/star_salmon/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>total 1468</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 4 ubuntu ubuntu    4096 Apr 12 04:13 .</span>
@@ -297,7 +309,7 @@ Objectives
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 2 ubuntu ubuntu    4096 Apr 12 04:13 multiqc_data</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 5 ubuntu ubuntu    4096 Apr 12 04:13 multiqc_plots</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>-rw-rw-r-- 1 ubuntu ubuntu 1483297 Apr 12 04:13 multiqc_report.html</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Open the <code>multiqc_report.html</code> the file navigator panel on the left side of your VS code window by clicking on it. Then open the rendered html file using the Live Server extension:</p>
+<p>Open the <code>multiqc_report.html</code> the file navigator panel on the left side of your VS Code window by clicking on it. Then open the rendered html file using the Live Server extension:</p>
 <ol type="1">
 <li><code>Ctrl</code>+<code>Shift</code>+<code>P</code> to open the command palette</li>
 <li>Select <code>Live Server: Open with Live Server</code> to open html file in your browser window.</li>
@@ -317,7 +329,7 @@ Objectives
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>2023-04-21 00:40:58     15m 36s         nauseous_lamarck        OK      f421ddc35d      055e7b7f-c3ea-4fd9-a915-02343099939e    nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf --input samplesheet.csv -profile singularity --fasta /home/ubuntu/session2/materials/mm10_reference/mm10_chr18.fa --gtf /home/ubuntu/session2/materials/mm10_reference/mm10_chr18.gtf --star_index /home/ubuntu/session2/materials/mm10_reference/STAR --max_memory 6.GB --max_cpus 2 --outdir Lesson-1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>All recent runs will be listed in this file, with the most recent at the top. Let’s query the logs for the Lesson-1 run. Run the command below after filling in your unique run name. For example:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>nextflow log nauseous_lamarck</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>That command will list out all the work sub-directories for all processes run. Recall that the actual tool commands issued by the nexflow processes are all recorded in hidden script files called <code>.command.sh</code> within the execution process directory. One way of observing the actual run commands issued by the workflow is to view these comamnd scripts.</p>
+<p>That command will list out all the work subdirectories for all processes run. Recall that the actual tool commands issued by the nexflow processes are all recorded in hidden script files called <code>.command.sh</code> within the execution process directory. One way of observing the actual run commands issued by the workflow is to view these command scripts.</p>
 <p>But how to find them? <span class="emoji" data-emoji="thinking">🤔</span></p>
 <p>Let’s add some custom bash code to query a Nextflow run with the run name from the previous lesson. First, save your run name in a bash variable. For example:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>run_name=nauseous_lamarck</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -346,11 +358,12 @@ Objectives
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>/home/ubuntu/session2/work/ec/0a013bfb1f96d3c7170137262294e7/.command.sh</span>
 <span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>/home/ubuntu/session2/work/b7/37428bc5be1fd2c34e3911fb827334/.command.sh</span>
 <span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>/home/ubuntu/session2/work/57/a18fcea6a06565b14140ab06a3d077/.command.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Compare the salmon quant command with the command run in the Salmon quant process script block:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>cat rnaseq/modules/nf-core/salmon/quant/main.nf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Compared with the salmon quant <code>main.nf</code> file, we get more information from the <code>.command.sh</code> process scripts:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>cat rnaseq/modules/nf-core/salmon/quant/main.nf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="../figs/2.2_salmon-quant.png" class="img-fluid"></p>
-<p>Looking at the nf-core/rnaseq documentation, we can see library type is automatically inferred based on provided strandedness and this can be overridden using Salmon’s <code>--libType=$strandedness</code> flag. Following the recommendations in the <a href="https://salmon.readthedocs.io/en/latest/salmon.html#what-s-this-libtype">Salmon documentation</a>, we’re going to override this default with the nf-core/rnaseq pipeline’s <code>--salmon_quant_libtype A</code> <a href="https://nf-co.re/rnaseq/3.11.1/parameters#salmon_quant_libtype">parameter</a>.</p>
+<p>Looking at the nf-core/rnaseq documentation, we can see:</p>
+<p><em>. Library type is automatically inferred based on the <code>$strandedness</code> variable </em>. Library type can be adjusted using Salmon’s <code>--libType=</code> flag and the nf-core <code>$strandedness</code> variable.</p>
+<p>Following the recommendations in the <a href="https://salmon.readthedocs.io/en/latest/salmon.html#what-s-this-libtype">Salmon documentation</a>, we’re going to override this default with the nf-core/rnaseq pipeline’s <code>--salmon_quant_libtype A</code> <a href="https://nf-co.re/rnaseq/3.11.1/parameters#salmon_quant_libtype">parameter</a>.</p>
 </section>
 <section id="write-a-parameter-file" class="level3">
 <h3 class="anchored" data-anchor-id="write-a-parameter-file"><strong>2.3.3. Write a parameter file</strong></h3>
@@ -361,7 +374,7 @@ Objectives
 <li>Files consist of key-value pairs</li>
 <li>Each key is followed by a colon (<code>:</code>) and a space</li>
 <li>The value can be any valid YAML data type (i.e.&nbsp;string, number, boolean, list, or dictionary).</li>
-<li>Strings can be specified using single quotes (’), double quotes (“), and plain text (boolean).</li>
+<li>Strings can be specified using single quotes (<code>'</code>), double quotes (<code>"</code>), and plain text (boolean).</li>
 <li>YAML is case sensitive</li>
 <li>Files should have a <code>.yaml</code> or <code>.yml</code> as the file extension</li>
 <li>YAML does not allow the use of tabs, only spaces</li>
@@ -392,7 +405,7 @@ Objectives
 </div>
 </div>
 <div class="callout-caution callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -401,7 +414,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Save this file as <code>workshop-params.yaml</code>:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">input</span><span class="kw">:</span><span class="at"> </span><span class="st">"samplesheet.csv"</span><span class="at"> </span></span>
@@ -423,7 +436,7 @@ Solution
 <p>Once your params file has been saved, run the following command. Observe:</p>
 <ul>
 <li>The command is shorter thanks to offloading some parameters to the params file</li>
-<li>The <code>-resume</code> flag. Nextflow can use cached output!</li>
+<li>The <code>-resume</code> flag. Nextflow has lots of <a href="https://www.nextflow.io/docs/latest/cli.html?highlight=resume#run">run options</a> including the ability to use cached output!</li>
 </ul>
 <div class="sourceCode" id="cb14"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  --max_memory 6.GB \</span>
@@ -444,7 +457,7 @@ Solution
 <h3 class="anchored" data-anchor-id="manage-parameters-with-nf-core-schema"><strong>2.3.5. Manage parameters with nf-core schema</strong></h3>
 <p>nf-core pipelines all have a <code>nextflow_schema.json</code> file in their root directory which explains all the parameters used by the workflow. You can use the <a href="https://nf-co.re/tools/#pipeline-schema"><code>nf-core schema</code> tool</a> to validate pipeline parameters, build a pipeline schema, deploy the documentation for a pipeline schema, or add new parameters to a pipeline schema (take a look at <a href="https://www.youtube.com/watch?v=PU6vAj_7WRM">this nf-core bytesize talk!</a> for a demonstration). Have a go at these bonus exercises, beware adjusting the <code>nextflow_schema.json</code> file will mean any subsequent workflow run will have to start from scratch again and prevent you applying the <code>-resume</code> function.</p>
 <div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -453,7 +466,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Let’s use this utility to simplify the workflow run process for our colleague who is new to nf-core pipelines and RNAseq data processing and works in the same compute environment as us. We’ll customise our local copy of the <code>nextflow_schema.json</code> file to show only required paramerters for our experiment in the <code>--help</code> message to make it easier for them to write their own run command:</p>
 <ol type="1">
@@ -519,7 +532,7 @@ Solution
 </div>
 </div>
 <div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -528,7 +541,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The <a href="https://nf-co.re/tools/#display-the-documentation-for-a-pipeline-schema">schema docs</a> utility can be used to output parameter documentation to html or markdown format that you could include in custom documentation. To print</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>nf-core schema docs \</span>
@@ -538,7 +551,7 @@ Solution
 </div>
 </div>
 <div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -547,7 +560,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The <a href="https://nf-co.re/tools/#validate-pipeline-parameters">schema validate</a> utility can be used to validate your specified parameters against the provided pipeline schema. Unfortunately, this won’t work for your <code>workshop-params.yaml</code>, so we first need to convert this to a JSON file format. To do this, run the following from the <code>session2</code> directory:</p>
 <ol type="1">
@@ -573,7 +586,7 @@ Solution
 </div>
 </div>
 <div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -582,7 +595,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>TODO create activity https://nf-co.re/tools/#add-new-parameters-to-the-pipeline-schema</p>
 </div>

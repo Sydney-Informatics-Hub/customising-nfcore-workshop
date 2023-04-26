@@ -20,7 +20,7 @@ Nextflow's portability is enabled by its ability to separate workflow implementa
 
 ### **2.3.1. Default nf-core configuration**
 
-Remember that when a `main.nf` file is run for any Nextflow workflow, Nextflow looks for [configuration files in multiple locations](https://www.nextflow.io/docs/latest/config.html#configuration-file) to determine how to execute the workflow and its processes. One of the files Nextflow will always look for is `nextflow.config`. Currently, all nf-core workflows use a `nextflow.config` file and a `conf/base.config` file to define the default execution settings and parameters of a workflow.  
+Recall that when a `main.nf` file is run for any Nextflow workflow, Nextflow looks for [configuration files in multiple locations](https://www.nextflow.io/docs/latest/config.html#configuration-file) to determine how to execute the workflow and its processes. One of the files Nextflow will always look for is `nextflow.config`. Currently, all nf-core workflows use a `nextflow.config` file and a `conf/base.config` file to define the default execution settings and parameters of a workflow.  
 
 Let's take a look at the nf-core/rnaseq `nextflow.config` file:
 
@@ -68,7 +68,7 @@ There are a number of situations in which you may want to write a custom configu
 
 Using a custom configuration file is good practice to ensure that your pipeline runs efficiently and reproducibly on your compute environment. It also allows you to easily share the pipeline with others who can use your custom config file to run it in the same computational environment. 
 
-In this lesson, we are writing a custom configuration file to override the default configurations of the workflow with configurations that are suitable for our workshop instances. We're going to replace 3 flags in our run command with this file:
+We will write a custom configuration file to override the default configurations of the workflow with those that are suitable for our Nimbus instances. We're going to replace 3 flags in our run command with this file:
 
 1. `-profile singularity`
 2.  `--max_memory 6.GB`
