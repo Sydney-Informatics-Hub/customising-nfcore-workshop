@@ -305,23 +305,71 @@ Objectives
 </tr>
 </tbody>
 </table>
+<section id="customised-resource-tracing" class="level4 unlisted">
+<h4 class="unlisted anchored" data-anchor-id="customised-resource-tracing"><strong>Customised resource tracing</strong></h4>
+<p>Remember we can use the <code>Nextflow log</code> command to show information about previous pipeline executions. We can customise which fields to print using the <a href="https://www.nextflow.io/docs/latest/tracing.html#customizing-fields"><code>-fields</code> flag</a>. This flag accepts options used by the <a href="https://www.nextflow.io/docs/latest/tracing.html#trace-fields">trace report</a>.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<strong>Challenge</strong>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Using the <a href="https://www.nextflow.io/docs/latest/tracing.html#trace-fields">trace report fields</a>, write a nextflow log command to query the following for a previous workflow run:</p>
+<ul>
+<li>The name of the task</li>
+<li>The exit status of the task</li>
+<li>The number of CPUs requested for task execution</li>
+<li>The disk space requested for the task execution</li>
+<li>The memory requested for the task execution</li>
+</ul>
+</div>
+</div>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>nextflow log &lt;runName&gt; -f name,exit,cpus,disk,memory</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
 <p>Let’s make a portable configuration file for resource tracing called <code>trace-benchmark.config</code>. We can apply this config when we want to collect resource benchmarks. Because this config is not infrastructure- or pipeline-specific, we can share it with collaborators and use it across multiple pipelines:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>// Define timestamp, to avoid overwriting existing trace </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>def trace_timestamp = new java.util.Date().format( 'yyyy-MM-dd_HH-mm-ss')</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>// Generate custom resource trace file </span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>trace {</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  enabled = true </span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  file = "workshop-resource-trace-${trace_timestamp}.txt"</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  fields = 'name,status,realtime,cpus,%cpu,memory,%mem,rss'</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Rerun the workflow, adding `<code>to the config flag and observe the extra file that is saved to our</code>session2` directory:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  -profile workshop \</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  -c custom-nimbus.config \</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  -params-file workshop-params.yaml \</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  --outdir Lesson-4 \</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  -resume</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>// Define timestamp, to avoid overwriting existing trace </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>def trace_timestamp = new java.util.Date().format('yyyy-MM-dd_HH-mm-ss')</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>// Generate custom resource trace file </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>trace {</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  enabled = true </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  file = "workshop-resource-trace-${trace_timestamp}.txt"</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  fields = 'name,status,realtime,cpus,%cpu,memory,%mem,rss'</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Rerun the workflow, adding <code>trace-benchmark.config</code> to the config flag and observe the extra file that is saved to our <code>session2</code> directory:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  -profile workshop \</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  -c custom-nimbus.config,trace-benchmark.config \</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  -params-file workshop-params.yaml \</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  --outdir Lesson-4 \</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  -resume</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Take a look at the launch log printed to the screen. You can see your profile, custom config, and parameters have all been applied successfully! Once the workflow has run, take a look at the <code>workshop-resource-trace-${trace_timestamp}.txt</code> file:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>name    status  realtime        cpus    %cpu    memory  %mem    rss</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>NFCORE_RNASEQ:RNASEQ:INPUT_CHECK:SAMPLESHEET_CHECK (samplesheet.csv)    CACHED  1s      1       28.0%   6 GB    0.2%    16.1 MB</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>NFCORE_RNASEQ:RNASEQ:PREPARE_GENOME:GTF2BED (mm10_chr18.gtf)    CACHED  1s      2       51.3%   6 GB    0.3%    23.8 MB</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>NFCORE_RNASEQ:RNASEQ:PREPARE_GENOME:CUSTOM_GETCHROMSIZES (mm10_chr18.fa)        CACHED  1s      1       34.1%   6 GB    0.0%    4.7 MB</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>NFCORE_RNASEQ:RNASEQ:PREPARE_GENOME:GTF_GENE_FILTER (mm10_chr18.fa)     CACHED  1s      1       34.7%   6 GB    0.1%    13.9 MB</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>NFCORE_RNASEQ:RNASEQ:FASTQ_SUBSAMPLE_FQ_SALMON:FQ_SUBSAMPLE (SRR3473984)        CACHED  2s      1       43.7%   6 GB    0.0%    6.5 MB</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>NFCORE_RNASEQ:RNASEQ:PREPARE_GENOME:MAKE_TRANSCRIPTS_FASTA (rsem/mm10_chr18.fa) CACHED  4s      2       42.0%   6 GB    1.2%    94.4 MB</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>NFCORE_RNASEQ:RNASEQ:FASTQ_SUBSAMPLE_FQ_SALMON:FQ_SUBSAMPLE (SRR3473985)        CACHED  2s      1       44.1%   6 GB    0.0%    6.3 MB</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout-warning callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -335,26 +383,27 @@ Objectives
 <p><strong>Double quotes (<code>""</code>) allow for variable interpolation</strong>, which means that variables can be evaluated and their values are substituted within the string.</p>
 <p><strong>Single quotes (<code>''</code>) denote a string literally</strong>, which means that the string is treated as-is without any variable interpolation.</p>
 <p>Try swapping the double quoted file value in your custom config above for a single-quoted value, rerun the workflow and note the creation of a</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>file = 'workshop-resource-trace-${trace_timestamp}.txt'</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>file = 'workshop-resource-trace-${trace_timestamp}.txt'</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
+</section>
 </section>
 <section id="configure-multiqc-reports" class="level3">
 <h3 class="anchored" data-anchor-id="configure-multiqc-reports"><strong>Configure MultiQC reports</strong></h3>
 <p>Many nf-core pipelines use <a href="https://multiqc.info/docs/">MultiQC</a> to generate a summary report at the end of a workflow. MultiQC is a reporting tool that can aggregate results and statistics output by various bioinformatics tools. It helps to summarise experiments containing multiple samples and multiple analysis steps. In nf-core pipelines, MultiQC is used to summarise statistics and results output by processes in the workflow and its reports can be quite verbose. MultiQC can be configured using custom YAML files to <a href="https://multiqc.info/docs/reports/customisation/">customise the outputs of reports</a>.</p>
 <p>We are going to configure MultiQC to aid interpretation of the <a href="https://multiqc.info/modules/fastqc/">FastQC output it plots</a>. Create a custom MultiQC configuration YAML file called <code>multiqc-config.yaml</code> and add the following:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fastqc_config</span><span class="kw">:</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">fastqc_theoretical_gc</span><span class="kw">:</span><span class="at"> </span><span class="st">"mm10_txome"</span><span class="at"> </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fastqc_config</span><span class="kw">:</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">fastqc_theoretical_gc</span><span class="kw">:</span><span class="at"> </span><span class="st">"mm10_txome"</span><span class="at"> </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Here, we’re plotting the <a href="https://multiqc.info/modules/fastqc/#theoretical-gc-content">theoretical GC content</a> for the mouse reference transcript.</p>
 <p>To the <code>workshop-params.yaml</code> file, add:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">multiqc_config</span><span class="kw">:</span><span class="at"> </span><span class="st">"multiqc-config.yaml"</span><span class="at"> </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">multiqc_config</span><span class="kw">:</span><span class="at"> </span><span class="st">"multiqc-config.yaml"</span><span class="at"> </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Make sure both YAML files are saved, then re-run the workflow:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  -profile workshop \</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  -c custom-nimbus.config \</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  -params-file workshop-params.yaml \</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  --outdir Lesson-4 \</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  -resume</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  -profile workshop \</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  -c custom-nimbus.config \</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  -params-file workshop-params.yaml \</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  --outdir Lesson-4 \</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  -resume</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The logging information printed to the screen shows us again that the <code>params.yaml</code> file with the output directory set to <strong>Lesson-2</strong> has been overridden by the use of the flag <code>--outdir Lesson-4</code> in the run command. As the workflow runs, notice all the completed processes that are pulled from the cache and not rerun. Our use of the <code>multiqc-config.yaml</code> file adjusted the MultiQC process, as such this process was repeated using the updated settings.</p>
 <p>The changes we made above added the normal mouse transcriptome GC profile as a track to the fastQC per-sequence GC content plot. Take a look at the changes, open the Exercise4 <code>multiqc_report.html</code> file with Live Server as per previosuly (or use scp to take a copy to your local computer if you are not on VS Code). Compare this report with the MultiQC report from <strong>lesson 1</strong> by looking at the section <strong>FastQC: Per Sequence GC Content</strong>. Compare the two plots to observe the custom track has been successfully added.</p>
 <p><img src="../figs/2.4_MultiQC.png" class="img-fluid"></p>
@@ -372,7 +421,7 @@ Objectives
 </div>
 </div>
 <div class="callout-caution callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -381,14 +430,14 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>No, all samples’ GC profiles follow a normal distribution.</p>
 </div>
 </div>
 </div>
 <p>Note that if we did detect GC bias, we could go back and correct for this by adding the custom salmon flag <code>--gcBias</code> to the nf-core parameter <code>--extra_salmon_quant_args</code>. If we were to do this, we would have to add the following line to our <code>workflow-params.yaml</code> file:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>extra_salmon_quant_args : '--writeUnmappedNames --gcBias'</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>extra_salmon_quant_args : '--writeUnmappedNames --gcBias'</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

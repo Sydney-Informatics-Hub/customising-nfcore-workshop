@@ -132,60 +132,8 @@ profiles {
 ```
 
 ::: {.callout-tip}
-
 ### Take note!
 In Nextflow, scope organisation and heirarchy is indicated by curly bracket (`{}`) notation, not by text indentation!
-:::
-
-### **Customised process tracing**
-
-Let's add just one more feature to our custom config file that will help us capture the true resource efficiency of the workflow at the task level. Remember we can use the `Nextflow log` command to show information about previous pipeline executions. We can customise which fields to print using the [`-fields` flag](https://www.nextflow.io/docs/latest/tracing.html#customizing-fields). This flag accepts options used by the [trace report](https://www.nextflow.io/docs/latest/tracing.html#trace-fields). 
-
-::: callout-tip
-### **Challenge**{.unlisted}
-
-Using the [trace report fields](https://www.nextflow.io/docs/latest/tracing.html#trace-fields), write a nextflow log command to query the following for a previous workflow run:
-
-* The name of the task
-* The exit status of the task 
-* The number of CPUs requested for task execution 
-* The disk space requested for the task execution 
-* The memory requested for the task execution 
-:::
-
-::: {.callout-caution collapse="true"}
-### Solution
-
-```default
-nextflow log <runName> -f name,exit,cpus,disk,memory
-```
-:::
-
-Let's adjust our pipeline to automatically generate a custom trace report to track how much of the CPU, memory, and disk we requested were actually used for each process. Below the `profiles {}` scope, add the following section to your `workshop.config`:
-
-```default
-// Define timestamp, to avoid overwriting existing trace 
-def trace_timestamp = new java.util.Date().format( 'yyyy-MM-dd_HH-mm-ss')
-
-// Generate custom resource trace file 
-trace {
-  enabled = true 
-  file = "workshop-resource-trace-${trace_timestamp}.txt"
-  fields = 'name,status,realtime,cpus,pcpu,memory,pmem,rss'
-}
-```
-
-::: {.callout-warning}
-### :skull_and_crossbones: **Don't confuse double and single quotes!** :skull_and_crossbones:
-
-**Double quotes (`""`) allow for variable interpolation**, which means that variables can be evaluated and their values are substituted within the string. 
-
-**Single quotes (`''`) denote a string literally**, which means that the string is treated as-is without any variable interpolation.
-
-Try swapping the double quoted file value in your custom config above for a single-quoted value, rerun the workflow and see how the file is output:
-```default
-file = 'workshop-resource-trace-${trace_timestamp}.txt'
-```
 :::
 
 Rerun the pipeline:
