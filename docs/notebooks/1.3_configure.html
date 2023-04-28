@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.262">
+<meta name="generator" content="quarto-1.3.296">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,9 +17,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -46,43 +47,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -137,87 +108,89 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <span class="navbar-title">Sydney Informatics Hub</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html">
+    <a class="nav-link" href="../index.html" rel="" target="">
  <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../setup.html">
+    <a class="nav-link" href="../setup.html" rel="" target="">
  <span class="menu-text">Setup</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-session-1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-session-1" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">Session 1</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-session-1">    
         <li>
-    <a class="dropdown-item" href="../notebooks/1.0_intro.html">
+    <a class="dropdown-item" href="../notebooks/1.0_intro.html" rel="" target="">
  <span class="dropdown-text">Session 1 kick-off</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/1.1_nextflow.html">
+    <a class="dropdown-item" href="../notebooks/1.1_nextflow.html" rel="" target="">
  <span class="dropdown-text">Introduction to Nextflow</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/1.2_nfcore.html">
+    <a class="dropdown-item" href="../notebooks/1.2_nfcore.html" rel="" target="">
  <span class="dropdown-text">Introduction to nf-core</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/1.3_configure.html">
+    <a class="dropdown-item" href="../notebooks/1.3_configure.html" rel="" target="">
  <span class="dropdown-text">Configuring nf-core workflows</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/1.4_users.html">
+    <a class="dropdown-item" href="../notebooks/1.4_users.html" rel="" target="">
  <span class="dropdown-text">Commands for users</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-session-2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-session-2" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">Session 2</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-session-2">    
         <li>
-    <a class="dropdown-item" href="../notebooks/2.0_intro.html">
+    <a class="dropdown-item" href="../notebooks/2.0_intro.html" rel="" target="">
  <span class="dropdown-text">2.0 Intro to session 2</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/2.1_design.html">
+    <a class="dropdown-item" href="../notebooks/2.1_design.html" rel="" target="">
  <span class="dropdown-text">2.1 Design a run command</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/2.2_params.html">
+    <a class="dropdown-item" href="../notebooks/2.2_params.html" rel="" target="">
  <span class="dropdown-text">2.2 Use a parameters file</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/2.3_configEnv.html">
+    <a class="dropdown-item" href="../notebooks/2.3_configEnv.html" rel="" target="">
  <span class="dropdown-text">2.3 Configure resources</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/2.4_multiConfig.html">
+    <a class="dropdown-item" href="../notebooks/2.4_multiConfig.html" rel="" target="">
  <span class="dropdown-text">2.4 Apply multiple configurations</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/2.5_extArgs.html">
+    <a class="dropdown-item" href="../notebooks/2.5_extArgs.html" rel="" target="">
  <span class="dropdown-text">2.5 Apply external arguments</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/2.6_launch.html">
+    <a class="dropdown-item" href="../notebooks/2.6_launch.html" rel="" target="">
  <span class="dropdown-text">2.6 Use nf-core launch</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../tips_tricks.html">
+    <a class="nav-link" href="../tips_tricks.html" rel="" target="">
  <span class="menu-text">Tips &amp; Tricks</span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
+            <div class="quarto-navbar-tools ms-auto">
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -231,18 +204,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#configuration" id="toc-configuration" class="nav-link active" data-scroll-target="#configuration">Configuration</a>
-  <ul class="collapse">
-  <li><a href="#viewing-parameters" id="toc-viewing-parameters" class="nav-link" data-scroll-target="#viewing-parameters">Viewing parameters</a></li>
-  <li><a href="#cli-parameters" id="toc-cli-parameters" class="nav-link" data-scroll-target="#cli-parameters">CLI parameters</a></li>
-  <li><a href="#default-configuration-files" id="toc-default-configuration-files" class="nav-link" data-scroll-target="#default-configuration-files">Default configuration files</a></li>
-  <li><a href="#shared-configuration-files" id="toc-shared-configuration-files" class="nav-link" data-scroll-target="#shared-configuration-files">Shared configuration files</a></li>
-  <li><a href="#custom-configuration-files" id="toc-custom-configuration-files" class="nav-link" data-scroll-target="#custom-configuration-files">Custom configuration files</a>
-  <ul class="collapse">
-  <li><a href="#paramteter-files" id="toc-paramteter-files" class="nav-link" data-scroll-target="#paramteter-files">Paramteter files</a></li>
-  <li><a href="#configuration-files" id="toc-configuration-files" class="nav-link" data-scroll-target="#configuration-files">Configuration files</a></li>
-  </ul></li>
-  </ul></li>
+  <li><a href="#workflow-structure" id="toc-workflow-structure" class="nav-link active" data-scroll-target="#workflow-structure"><strong>1.3.1. Workflow structure</strong></a></li>
+  <li><a href="#configuration" id="toc-configuration" class="nav-link" data-scroll-target="#configuration"><strong>1.3.2. Configuration</strong></a></li>
+  <li><a href="#viewing-parameters" id="toc-viewing-parameters" class="nav-link" data-scroll-target="#viewing-parameters"><strong>1.3.3. Viewing parameters</strong></a></li>
+  <li><a href="#cli-parameters" id="toc-cli-parameters" class="nav-link" data-scroll-target="#cli-parameters"><strong>1.3.4. CLI parameters</strong></a></li>
+  <li><a href="#default-configuration-files" id="toc-default-configuration-files" class="nav-link" data-scroll-target="#default-configuration-files"><strong>1.3.5. Default configuration files</strong></a></li>
+  <li><a href="#shared-configuration-files" id="toc-shared-configuration-files" class="nav-link" data-scroll-target="#shared-configuration-files"><strong>1.3.6. Shared configuration files</strong></a></li>
+  <li><a href="#custom-configuration-files" id="toc-custom-configuration-files" class="nav-link" data-scroll-target="#custom-configuration-files"><strong>1.3.7. Custom configuration files</strong></a></li>
   </ul>
 </nav>
     </div>
@@ -266,18 +234,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p><img src="../figs/1.2_nf-core.png" class="quarto-discovered-preview-image img-fluid" style="width:100.0%"></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Point 1</li>
+<li>Point 2</li>
+<li>Point 3</li>
+</ul>
+</div>
+</div>
+<section id="workflow-structure" class="level3">
+<h3 class="anchored" data-anchor-id="workflow-structure"><strong>1.3.1. Workflow structure</strong></h3>
 <p>nf-core workflows follow a set of best practices and standardized conventions. nf-core workflows start from a common template and follow the same structure. Although you won’t need to edit code in the workflow project directory, having a basic understanding of the project structure and some core terminology will help you understand how to configure its execution.</p>
-<p><img src="../figs/1.3_structure.excalidraw.png" class="img-fluid" style="width:50.0%"></p>
+<p><img src="../figs/1.3_structure.excalidraw.png" class="quarto-discovered-preview-image img-fluid" style="width:50.0%"></p>
 <p>Nextflow DSL2 <strong>workflows</strong> are built up of <strong>modules</strong> and <strong>subworkflows</strong> that are stored as separate Nextflow (<code>.nf</code>) files.</p>
 <p><img src="../figs/1.3_worksubmod.excalidraw.png" class="img-fluid"></p>
-<p>Most nf-core workflows consist of a single <strong>workflow</strong> file (there are a few exceptions). This is the main <code>.nf</code> file that is used to bring everything else together. Instead of having one large monolithic script, it is broken up into a combination of modules and subworkflows.</p>
-<p>A <strong>subworkflow</strong> is a groups of modules that are used in combination with each other and have a common purpose. For example, the <a href="https://github.com/nf-core/modules/blob/master/modules/nf-core/samtools/stats/main.nf"><code>SAMTOOLS_STATS</code></a>, <a href="https://github.com/nf-core/modules/blob/master/modules/nf-core/samtools/faidx/main.nf"><code>SAMTOOLS_IDXSTATS</code></a>, and <a href="https://github.com/nf-core/modules/blob/master/modules/nf-core/samtools/flagstat/main.nf"><code>SAMTOOLS_FLAGSTAT</code></a> modules are all included in the <a href="https://github.com/nf-core/modules/blob/master/subworkflows/nf-core/bam_stats_samtools/main.nf"><code>BAM_STATS_SAMTOOLS</code></a> subworkflow. Subworkflows improve workflow readability and help with the reuse of modules within a workflow. Like modules, subworkflows can also be developed and shared in the <a href="https://github.com/nf-core/modules/tree/master/subworkflows/nf-core">nf-core GitHub repository</a> or stored locally.</p>
-<p>A <strong>module</strong> is a process, the basic processing primitive to execute a user script. It can specify <a href="https://www.nextflow.io/docs/latest/process.html#directives">directives</a>, <a href="https://www.nextflow.io/docs/latest/process.html#inputs">inputs</a>, <a href="https://www.nextflow.io/docs/latest/process.html#outputs">outputs</a>, <a href="https://www.nextflow.io/docs/latest/process.html#when">when statements</a>, and a <a href="https://www.nextflow.io/docs/latest/process.html#script">script</a> block. Most modules will execute a single tool in the script block and will make use of the directives, inputs, outputs, and when statements dynamically. Within a nf-core workflow, a module can be nf-core module or local module. Like an nf-core workflow, an nf-core module is developed by the community and shared in a <a href="https://github.com/nf-core/modules/tree/master/modules/nf-core">nf-core GitHub repository</a>. All modules from the nf-core repository are version controlled and tested to ensure reproducibility and best practices. Local modules are pipeline specific that are not shared in the nf-core modules repository.</p>
-<section id="configuration" class="level1">
-<h1>Configuration</h1>
+<p>Most nf-core workflows consist of a single <strong>workflow</strong> file (there are a few exceptions). This is the main <code>&lt;pipeline&gt;.nf</code> file that is used to bring everything else together. Instead of having one large monolithic script, it is broken up into a combination of <strong>subworkflows</strong> and <strong>modules</strong>.</p>
+<p>A <strong>subworkflow</strong> is a groups of modules that are used in combination with each other and have a common purpose. For example, the <a href="https://github.com/nf-core/modules/blob/master/modules/nf-core/samtools/stats/main.nf"><code>SAMTOOLS_STATS</code></a>, <a href="https://github.com/nf-core/modules/blob/master/modules/nf-core/samtools/faidx/main.nf"><code>SAMTOOLS_IDXSTATS</code></a>, and <a href="https://github.com/nf-core/modules/blob/master/modules/nf-core/samtools/flagstat/main.nf"><code>SAMTOOLS_FLAGSTAT</code></a> modules are all included in the <a href="https://github.com/nf-core/modules/blob/master/subworkflows/nf-core/bam_stats_samtools/main.nf"><code>BAM_STATS_SAMTOOLS</code></a> subworkflow. Subworkflows improve workflow readability and help with the reuse of modules within a workflow. Within a nf-core workflow, a subworkflow can be an nf-core subworkflow or as a local subworkflow. Like an nf-core workflow, an nf-core subworkflow is developed by the community and are shared in the <a href="https://github.com/nf-core/modules/tree/master/subworkflows/nf-core">nf-core subworkflows GitHub repository</a>. Local subworkflows are pipeline specific that are not shared in the nf-core subworkflows repository.</p>
+<p>A <strong>module</strong> is a wrapper for a process, the basic processing primitive to execute a user script. It can specify <a href="https://www.nextflow.io/docs/latest/process.html#directives">directives</a>, <a href="https://www.nextflow.io/docs/latest/process.html#inputs">inputs</a>, <a href="https://www.nextflow.io/docs/latest/process.html#outputs">outputs</a>, <a href="https://www.nextflow.io/docs/latest/process.html#when">when statements</a>, and a <a href="https://www.nextflow.io/docs/latest/process.html#script">script</a> block. Most modules will execute a single tool in the script block and will make use of the directives, inputs, outputs, and when statements dynamically. Like subworkflows, modules can also be developed and shared in the <a href="https://github.com/nf-core/modules/tree/master/modules/nf-core">nf-core modules GitHub repository</a> or stored as a local module. All modules from the nf-core repository are version controlled and tested to ensure reproducibility and best practices. Local modules are pipeline specific that are not shared in the nf-core modules repository.</p>
+</section>
+<section id="configuration" class="level3">
+<h3 class="anchored" data-anchor-id="configuration"><strong>1.3.2. Configuration</strong></h3>
 <p>Each nf-core workflow has its own configuration and parameter defaults. These default parameters are required for tests to pass as the workflow is being developed and when it is pushed to GitHub. While the defaults are a great place to start, you will almost certainly want to modify these to fit your own purposes and system requirements.</p>
-<p>When a workflow is launched, Nextflow will look for configuration files in several locations. As each configuration file can contain conflicting settings, the sources are ranked to decide which settings to are applied. Configuration sources are reported below and listed in order of priority:</p>
+<p>When a workflow is launched, Nextflow will look for configuration files in several locations. As each configuration file can contain conflicting settings, the sources are ranked to decide which settings to apply. Configuration sources are reported below and listed in order of priority:</p>
 <ol type="1">
 <li>Parameters specified on the command line (<code>--parameter</code>)</li>
 <li>Parameters that are provided using the <code>-params-file</code> option</li>
@@ -301,9 +288,10 @@ Warning
 </div>
 </div>
 <p>Notably, while some of these files are already included in the nf-core workflow repository (e.g., the <code>nextflow.config</code> file in the nf-core workflow repository), others are automatically identified on your local system (e.g., the <code>nextflow.config</code> in the launch directory), and others are only included if they are specified using <code>run</code> options (e.g., <code>-params-file</code>, and <code>-c</code>).</p>
-<section id="viewing-parameters" class="level2">
-<h2 class="anchored" data-anchor-id="viewing-parameters">Viewing parameters</h2>
-<p>Every nf-core workflow has a full list of parameters on the nf-core website. You will also be shown a description of the parameter as well as the type. Some parameters will also have additional text to help you understand when and how a parameter should be used.</p>
+</section>
+<section id="viewing-parameters" class="level3">
+<h3 class="anchored" data-anchor-id="viewing-parameters"><strong>1.3.3. Viewing parameters</strong></h3>
+<p>Every nf-core workflow has a full list of parameters on the nf-core website. When viewing online, you will also be shown a description and the type of the parameter. Some parameters will also have additional text to help you understand when and how a parameter should be used.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><a href="https://nf-co.re/rnaseq/3.11.1/parameters"><img src="../figs/1.3_params.excalidraw.png" class="img-fluid figure-img" style="width:80.0%"></a></p>
@@ -311,12 +299,12 @@ Warning
 </div>
 <p>For nf-core workflows, parameters and their descriptions can also be viewed in the command line using the <code>run</code> command with the <code>--help</code> parameter:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/<span class="op">&lt;</span>workflow<span class="op">&gt;</span> --help</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 <strong>Challenge</strong>
 </div>
 </div>
@@ -325,16 +313,16 @@ Warning
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Parameters for the nf-core/rnaseq workflow can be printed using the <code>--help</code> option:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/rnaseq <span class="at">--help</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -343,16 +331,16 @@ Solution
 </div>
 </div>
 </section>
-<section id="cli-parameters" class="level2">
-<h2 class="anchored" data-anchor-id="cli-parameters">CLI parameters</h2>
+<section id="cli-parameters" class="level3">
+<h3 class="anchored" data-anchor-id="cli-parameters"><strong>1.3.4. CLI parameters</strong></h3>
 <p>At the highest level, parameters can be customized at execution using the command line. Any parameter can be specified on the command line by prefixing the parameter name with a double dash (<code>--</code>):</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> nf-core/<span class="op">&lt;</span>workflow<span class="op">&gt;</span> --<span class="op">&lt;</span>parameter<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Tip
 </div>
 </div>
@@ -361,8 +349,8 @@ Tip
 </div>
 </div>
 </section>
-<section id="default-configuration-files" class="level2">
-<h2 class="anchored" data-anchor-id="default-configuration-files">Default configuration files</h2>
+<section id="default-configuration-files" class="level3">
+<h3 class="anchored" data-anchor-id="default-configuration-files"><strong>1.3.5. Default configuration files</strong></h3>
 <p>All parameters will have a default setting that is defined using the <code>nextflow.config</code> file in the workflow project directory.</p>
 <p>There are also several <code>includeConfig</code> statements in the <code>nextflow.config</code> file that are used to include additional <code>.config</code> files from the <code>conf/</code> folder. Each additional <code>.config</code> file contains categorized configuration information for your workflow execution, some of which can be optionally included:</p>
 <ul>
@@ -409,12 +397,12 @@ Tip
 <p>Multiple profiles can be specified in a comma-separated list when you execute your command. The order of profiles is important as they will be read from left to right:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/<span class="op">&lt;</span>workflow<span class="op">&gt;</span> -profile test,singularity</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>By default, nf-core workflows are required to define software containers and conda environments that can be activated using profiles. Although it is possible to run the workflows with software installed by other methods (e.g., environment modules or manual installation), most users find that Docker and Singularity are most convenient and reproducible.</p>
-<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Tip
 </div>
 </div>
@@ -423,13 +411,13 @@ Tip
 </div>
 </div>
 </section>
-<section id="shared-configuration-files" class="level2">
-<h2 class="anchored" data-anchor-id="shared-configuration-files">Shared configuration files</h2>
+<section id="shared-configuration-files" class="level3">
+<h3 class="anchored" data-anchor-id="shared-configuration-files"><strong>1.3.6. Shared configuration files</strong></h3>
 <p>An <code>includeConfig</code> statement in the <code>nextflow.config</code> file is also used to include custom institutional profiles that have been submitted to the nf-core <a href="https://github.com/nf-core/configs">config repository</a>. At run time, nf-core workflows will fetch these configuration profiles from the remote configs repository and make them available.</p>
 <p>For shared resources such as an HPC cluster, you may consider developing a shared institutional profile. You can follow <a href="https://nf-co.re/docs/usage/tutorials/step_by_step_institutional_profile">this tutorial</a> for more help.</p>
 </section>
-<section id="custom-configuration-files" class="level2">
-<h2 class="anchored" data-anchor-id="custom-configuration-files">Custom configuration files</h2>
+<section id="custom-configuration-files" class="level3">
+<h3 class="anchored" data-anchor-id="custom-configuration-files"><strong>1.3.7. Custom configuration files</strong></h3>
 <p>Nextflow will also look for custom configuration files that are external to the workflow project directory. These files include:</p>
 <ul>
 <li>The config file <code>$HOME/.nextflow/config</code></li>
@@ -442,8 +430,7 @@ Tip
 </ul>
 <p>You can be clever with the what settings you configure in each of these files.</p>
 <p>For example, you might consider configuring settings that are unique to you as a user (such as your name and email address) in your home directory as this will be applied to every execution.</p>
-<section id="paramteter-files" class="level3">
-<h3 class="anchored" data-anchor-id="paramteter-files">Paramteter files</h3>
+<p><strong>Parameter files</strong></p>
 <p>Parameter files are <code>.json</code> files that can contain an unlimited number of parameters:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>   <span class="st">"&lt;parameter1_name&gt;"</span><span class="ex">:</span> 1,</span>
@@ -452,9 +439,7 @@ Tip
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You can override default parameters by creating a custom <code>.json</code> file and passing it as a command-line argument using the <code>-param-file</code> option.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/<span class="op">&lt;</span>workflow<span class="op">&gt;</span> -profile test,docker <span class="at">-param-file</span> <span class="op">&lt;</span>path/to/params.json<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="configuration-files" class="level3">
-<h3 class="anchored" data-anchor-id="configuration-files">Configuration files</h3>
+<p><strong>Configuration files</strong></p>
 <p>Configuration files are <code>.config</code> files that can contain various workflow properties.</p>
 <p>Custom paths passed in the command-line using the <code>-c</code> option:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/<span class="op">&lt;</span>workflow<span class="op">&gt;</span> -profile test,docker <span class="at">-c</span> <span class="op">&lt;</span>path/to/custom.config<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -467,7 +452,7 @@ Tip
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>     <span class="ex">x</span> = 1</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>     <span class="ex">y</span> = <span class="st">'string value..'</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Scopes allow you to quickly configure settings required to deploy a workflow on different infrastructure using different software management. For example, the <code>executor</code> scope can be used to provide settings for the deployment of a workflow on a HPC cluster and the <code>singularity</code> scope controls how Singularity containers are executed by Nextflow. Multiple scopes can be included in the same <code>.config</code> file using a mix of dot prefixes and curly brackets. A full list of scopes is described in detail <a href="https://www.nextflow.io/docs/latest/config.html#config-scopes">here</a>.</p>
+<p>Scopes allow you to quickly configure settings required to deploy a workflow on different infrastructure using different software management. For example, the <code>executor</code> scope can be used to provide settings for the deployment of a workflow on a HPC cluster. Similarly, the <code>singularity</code> scope controls how Singularity containers are executed by Nextflow. Multiple scopes can be included in the same <code>.config</code> file using a mix of dot prefixes and curly brackets. A full list of scopes is described in detail <a href="https://www.nextflow.io/docs/latest/config.html#config-scopes">here</a>.</p>
 <p>Importantly, the <code>process</code> scope allows you to configure workflow processes and is used extensively to define resources and additional arguments for modules.</p>
 <p>By default, process resources are allocated in the <code>conf/base.config</code> file using the <code>withLabel</code> selector:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">process</span> {</span>
@@ -497,18 +482,18 @@ Tip
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="er">}</span></span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The extended execution path is built from the workflows, subworkflows, and modules used to execute the process.</p>
-<p>In the example above, the nf-core <a href="https://github.com/nf-core/rnaseq/blob/master/modules/nf-core/trimgalore/main.nf"><code>TRIMGALORE</code></a> module, was called by the <a href="https://github.com/nf-core/rnaseq/blob/master/subworkflows/nf-core/fastq_fastqc_umitools_trimgalore/main.nf"><code>FASTQ_FASTQC_UMITOOLS_TRIMGALORE</code></a> subworkflow, which was called by the <a href="https://github.com/nf-core/rnaseq/blob/master/workflows/rnaseq.nf"><code>RNASEQ</code></a> workflow, which was called by the <a href="https://github.com/nf-core/rnaseq/blob/master/main.nf"><code>NFCORE_RNASEQ</code></a> workflow in the <a href="https://github.com/nf-core/rnaseq/blob/master/main.nf"><code>main.nf</code></a> file in the <a href="https://github.com/nf-core/rnaseq"><code>nf-core/rnaseq</code></a> repository.</p>
-<div class="callout-tip callout callout-style-default callout-captioned">
+<p>In the example above, the nf-core <a href="https://github.com/nf-core/rnaseq/blob/master/modules/nf-core/trimgalore/main.nf"><code>TRIMGALORE</code></a> module, was called by the <a href="https://github.com/nf-core/rnaseq/blob/master/subworkflows/nf-core/fastq_fastqc_umitools_trimgalore/main.nf"><code>FASTQ_FASTQC_UMITOOLS_TRIMGALORE</code></a> subworkflow, which was called by the <a href="https://github.com/nf-core/rnaseq/blob/master/workflows/rnaseq.nf"><code>RNASEQ</code></a> workflow, which was called by the <a href="https://github.com/nf-core/rnaseq/blob/master/main.nf"><code>NFCORE_RNASEQ</code></a> workflow in the <a href="https://github.com/nf-core/rnaseq/blob/master/main.nf"><code>main.nf</code></a> file.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>If you are unsure of how to build the execution path you can copy it from the <code>conf/modules.conf</code> file.</p>
+<p>It can be tricky to evaluate the path used to execute a module. If you are unsure of how to build the path you can copy it from the <code>conf/modules.conf</code> file.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -516,7 +501,7 @@ Tip
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 <strong>Key points</strong>
 </div>
 </div>
@@ -530,8 +515,6 @@ Tip
 </div>
 
 
-</section>
-</section>
 </section>
 
 <p>All materials copyright Sydney Informatics Hub, University of Sydney</p></main> <!-- /main -->
@@ -562,9 +545,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -629,6 +626,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
