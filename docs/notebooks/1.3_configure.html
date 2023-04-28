@@ -204,10 +204,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#viewing-parameters" id="toc-viewing-parameters" class="nav-link active" data-scroll-target="#viewing-parameters">Viewing parameters</a></li>
-  <li><a href="#configuration-hierarchy" id="toc-configuration-hierarchy" class="nav-link" data-scroll-target="#configuration-hierarchy">Configuration hierarchy</a>
+  <li><a href="#configuration" id="toc-configuration" class="nav-link active" data-scroll-target="#configuration">Configuration</a>
   <ul class="collapse">
-  <li><a href="#command-line-parameters" id="toc-command-line-parameters" class="nav-link" data-scroll-target="#command-line-parameters">Command line parameters</a></li>
+  <li><a href="#viewing-parameters" id="toc-viewing-parameters" class="nav-link" data-scroll-target="#viewing-parameters">Viewing parameters</a></li>
+  <li><a href="#cli-parameters" id="toc-cli-parameters" class="nav-link" data-scroll-target="#cli-parameters">CLI parameters</a></li>
   <li><a href="#default-configuration-files" id="toc-default-configuration-files" class="nav-link" data-scroll-target="#default-configuration-files">Default configuration files</a></li>
   <li><a href="#shared-configuration-files" id="toc-shared-configuration-files" class="nav-link" data-scroll-target="#shared-configuration-files">Shared configuration files</a></li>
   <li><a href="#custom-configuration-files" id="toc-custom-configuration-files" class="nav-link" data-scroll-target="#custom-configuration-files">Custom configuration files</a>
@@ -240,11 +240,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 <p><img src="../figs/1.2_nf-core.png" class="quarto-discovered-preview-image img-fluid" style="width:100.0%"></p>
-<p>nf-core workflows follow a set of best practices and standardized conventions. nf-core workflows start from a common template and follow the same structure. Although you won’t need to edit code in the workflow project directory, having a basic understanding of the project structure will help you understand how to configure its execution and where files of interest are located.</p>
-<p><img src="../figs/1.3_structure.excalidraw.png" class="img-fluid"></p>
+<p>nf-core workflows follow a set of best practices and standardized conventions. nf-core workflows start from a common template and follow the same structure. Although you won’t need to edit code in the workflow project directory, having a basic understanding of the project structure and some core terminology will help you understand how to configure its execution.</p>
+<p><img src="../figs/1.3_structure.excalidraw.png" class="img-fluid" style="width:50.0%"></p>
+<p>Nextflow DSL2 <strong>workflows</strong> are built up of <strong>modules</strong> and <strong>subworkflows</strong> that are stored as separate Nextflow (<code>.nf</code>) files.</p>
+<p><img src="../figs/1.3_worksubmod.excalidraw.png" class="img-fluid"></p>
+<p>Most nf-core workflows consist of a single <strong>workflow</strong> file (there are a few exceptions). This is the main <code>.nf</code> file that is used to bring everything else together. Instead of having one large monolithic script, it is broken up into a combination of modules and subworkflows.</p>
+<p>A <strong>subworkflow</strong> is a groups of modules that are used in combination with each other and have a common purpose. For example, the <a href="https://github.com/nf-core/modules/blob/master/modules/nf-core/samtools/stats/main.nf"><code>SAMTOOLS_STATS</code></a>, <a href="https://github.com/nf-core/modules/blob/master/modules/nf-core/samtools/faidx/main.nf"><code>SAMTOOLS_IDXSTATS</code></a>, and <a href="https://github.com/nf-core/modules/blob/master/modules/nf-core/samtools/flagstat/main.nf"><code>SAMTOOLS_FLAGSTAT</code></a> modules are all included in the <a href="https://github.com/nf-core/modules/blob/master/subworkflows/nf-core/bam_stats_samtools/main.nf"><code>BAM_STATS_SAMTOOLS</code></a> subworkflow. Subworkflows improve workflow readability and help with the reuse of modules within a workflow. Like modules, subworkflows can also be developed and shared in the <a href="https://github.com/nf-core/modules/tree/master/subworkflows/nf-core">nf-core GitHub repository</a> or stored locally.</p>
+<p>A <strong>module</strong> is a process, the basic processing primitive to execute a user script. It can specify <a href="https://www.nextflow.io/docs/latest/process.html#directives">directives</a>, <a href="https://www.nextflow.io/docs/latest/process.html#inputs">inputs</a>, <a href="https://www.nextflow.io/docs/latest/process.html#outputs">outputs</a>, <a href="https://www.nextflow.io/docs/latest/process.html#when">when statements</a>, and a <a href="https://www.nextflow.io/docs/latest/process.html#script">script</a> block. Most modules will execute a single tool in the script block and will make use of the directives, inputs, outputs, and when statements dynamically. Within a nf-core workflow, a module can be nf-core module or local module. Like an nf-core workflow, an nf-core module is developed by the community and shared in a <a href="https://github.com/nf-core/modules/tree/master/modules/nf-core">nf-core GitHub repository</a>. All modules from the nf-core repository are version controlled and tested to ensure reproducibility and best practices. Local modules are pipeline specific that are not shared in the nf-core modules repository.</p>
+<section id="configuration" class="level1">
+<h1>Configuration</h1>
+<p>Each nf-core workflow has its own configuration and parameter defaults. These default parameters are required for tests to pass as the workflow is being developed and when it is pushed to GitHub. While the defaults are a great place to start, you will almost certainly want to modify these to fit your own purposes and system requirements.</p>
+<p>When a workflow is launched, Nextflow will look for configuration files in several locations. As each configuration file can contain conflicting settings, the sources are ranked to decide which settings to are applied. Configuration sources are reported below and listed in order of priority:</p>
+<ol type="1">
+<li>Parameters specified on the command line (<code>--parameter</code>)</li>
+<li>Parameters that are provided using the <code>-params-file</code> option</li>
+<li>Config file that are provided using the <code>-c</code> option</li>
+<li>The config file named <code>nextflow.config</code> in the current directory</li>
+<li>The config file named <code>nextflow.config</code> in the workflow project directory</li>
+<li>The config file <code>$HOME/.nextflow/config</code></li>
+<li>Values defined within the workflow script itself (e.g., <code>main.nf</code>)</li>
+</ol>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Pipeline parameters must be passed via the CLI (<code>--&lt;parameter&gt;</code>) or Nextflow <code>-params-file</code> option. Custom config files, including those provided by the <code>-c</code> option, can be used to provide any configuration <strong>except</strong> for parameters.</p>
+</div>
+</div>
 <p>Notably, while some of these files are already included in the nf-core workflow repository (e.g., the <code>nextflow.config</code> file in the nf-core workflow repository), others are automatically identified on your local system (e.g., the <code>nextflow.config</code> in the launch directory), and others are only included if they are specified using <code>run</code> options (e.g., <code>-params-file</code>, and <code>-c</code>).</p>
-<section id="viewing-parameters" class="level1">
-<h1>Viewing parameters</h1>
+<section id="viewing-parameters" class="level2">
+<h2 class="anchored" data-anchor-id="viewing-parameters">Viewing parameters</h2>
 <p>Every nf-core workflow has a full list of parameters on the nf-core website. You will also be shown a description of the parameter as well as the type. Some parameters will also have additional text to help you understand when and how a parameter should be used.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -267,7 +298,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -276,7 +307,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Parameters for the nf-core/rnaseq workflow can be printed using the <code>--help</code> option:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/rnaseq <span class="at">--help</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -285,21 +316,8 @@ Solution
 </div>
 </div>
 </section>
-<section id="configuration-hierarchy" class="level1">
-<h1>Configuration hierarchy</h1>
-<p>When a workflow is launched, Nextflow will look for configuration files in several locations. As each configuration file can contain conflicting settings, the sources are ranked to decide which settings to are applied. Configuration sources are reported below and listed in order of priority:</p>
-<ol type="1">
-<li>Parameters specified on the command line (<code>--parameter</code>)</li>
-<li>Parameters that are provided using the <code>-params-file</code> option</li>
-<li>Config file that are provided using the <code>-c</code> option</li>
-<li>The config file named <code>nextflow.config</code> in the current directory</li>
-<li>The config file named <code>nextflow.config</code> in the workflow project directory</li>
-<li>The config file <code>$HOME/.nextflow/config</code></li>
-<li>Values defined within the workflow script itself (e.g., <code>main.nf</code>)</li>
-</ol>
-<p>For example, the default parameter parameter value that is included in the config file named <code>nextflow.config</code> in the workflow project directory can be overwritten using the command line.</p>
-<section id="command-line-parameters" class="level2">
-<h2 class="anchored" data-anchor-id="command-line-parameters">Command line parameters</h2>
+<section id="cli-parameters" class="level2">
+<h2 class="anchored" data-anchor-id="cli-parameters">CLI parameters</h2>
 <p>At the highest level, parameters can be customized at execution using the command line. Any parameter can be specified on the command line by prefixing the parameter name with a double dash (<code>--</code>):</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> nf-core/<span class="op">&lt;</span>workflow<span class="op">&gt;</span> --<span class="op">&lt;</span>parameter<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -464,19 +482,6 @@ Tip
 </div>
 <div class="callout-body-container callout-body">
 <p>If you are unsure of how to build the execution path you can copy it from the <code>conf/modules.conf</code> file.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Command line flags (<code>--&lt;parameter&gt;</code>) or <code>.json</code> files passed with the <code>-params-file</code> option <strong>MUST</strong> be used to define custom workflow parameters. Parameters that are defined in the parameter block in <code>custom.config</code> files <strong>WILL NOT</strong> override defaults in <code>nextflow.config</code> for nf-core workflows.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
