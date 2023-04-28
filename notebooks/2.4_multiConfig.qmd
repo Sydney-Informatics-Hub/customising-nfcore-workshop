@@ -1,17 +1,166 @@
 ---
-title: "**Using multiple configuration files at once**"
+title: "**2.4. Using multiple configuration files at once**"
 output:
   html_document:
     toc: false
     toc_float: false
+from: markdown+emoji
 ---
 
-<div class="objectives">
-  
+::: callout-tip
 ### Objectives{.unlisted}
 
-- Understand the heirarchy of configuration files specified by Nextflow 
-- Write a custom configuration file for MultiQC in the YAML file format
+- Create and apply a custom configuration file for resource tracing
+- Create and apply a custom configuration file for MultiQC
+- Add a custom configuration file details to the params YAML file 
+- Apply multiple custom configuration files in workflow execution
+- Observe the heirarchy of parameter configuration in action
+:::
 
-</div>
+Using multiple configuration files allows you to customise nf-core pipelines to your specific needs. Depending on how you work, where you work, and what pipelines you run, you may have configuration files that handle distinct issues, can be applied to specific infrastructures, or shared by multiple nf-core pipelines. In this lesson we will be applying multiple configuration files to the one run command. 
 
+### **2.4.1. Apply multiple configurations**
+
+You may need to apply multiple configuration files at once to an nf-core pipeline run. A few scenarios in which you would need to do this include: 
+
+|Scenario |Why?|
+|------|---------------------------------|
+|Debugging and testing|If you are toubleshooting a particular process in the workflow, you may want to create a separate config file with process-specific modifications. |
+|Resource optimisation|Depending on the scale and complexity of your data, some steps of the pipeline may require different settings or resources to achieve optimal performance. By using different config files with different parameters or settings, you can fine-tune the pipeline run.|
+|MultiQC configuration|MultiQC allows users to specify configuration options in a YAML file called multiqc_config.yaml. This file allows users to customize the behavior and appearance of the MultiQC report.|
+
+#### **2.4.2. Customised resource tracing**{.unlisted}
+
+Remember we can use the `Nextflow log` command to show information about previous pipeline executions. We can customise which fields to print using the [`-fields` flag](https://www.nextflow.io/docs/latest/tracing.html#customizing-fields). This flag accepts options used by the [trace report](https://www.nextflow.io/docs/latest/tracing.html#trace-fields). 
+
+::: callout-tip
+### **Challenge**{.unlisted}
+
+Using the [trace report fields](https://www.nextflow.io/docs/latest/tracing.html#trace-fields), write a nextflow log command to query the following for a previous workflow run:
+
+* The name of the task
+* The exit status of the task
+* The number of CPUs requested for task execution
+* The disk space requested for the task execution
+* The memory requested for the task execution
+:::
+
+::: {.callout-caution collapse="true"}
+### Solution
+
+```default
+nextflow log <runName> -f name,exit,cpus,disk,memory
+```
+:::
+
+Let's make a portable configuration file for resource tracing called `trace-benchmark.config`. We can apply this config when we want to collect resource benchmarks. Because this config is not infrastructure- or pipeline-specific, we can share it with collaborators and use it across multiple pipelines:
+
+```default
+// Define timestamp, to avoid overwriting existing trace 
+def trace_timestamp = new java.util.Date().format('yyyy-MM-dd_HH-mm-ss')
+
+// Generate custom resource trace file 
+trace {
+  enabled = true 
+  file = "workshop-resource-trace-${trace_timestamp}.txt"
+  fields = 'name,status,realtime,cpus,%cpu,memory,%mem,rss'
+}
+```
+
+Rerun the workflow, adding `trace-benchmark.config` to the config flag and observe the extra file that is saved to our `session2` directory:
+
+```default
+nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
+  -profile workshop \
+  -c custom-nimbus.config,trace-benchmark.config \
+  -params-file workshop-params.yaml \
+  --outdir Lesson-4 \
+  -resume
+```
+
+Take a look at the launch log printed to the screen. You can see your profile, custom config, and parameters have all been applied successfully! Once the workflow has run, take a look at the `workshop-resource-trace-${trace_timestamp}.txt` file:
+
+  ```default
+  name    status  realtime        cpus    %cpu    memory  %mem    rss
+  NFCORE_RNASEQ:RNASEQ:INPUT_CHECK:SAMPLESHEET_CHECK (samplesheet.csv)    CACHED  1s      1       28.0%   6 GB    0.2%    16.1 MB
+  NFCORE_RNASEQ:RNASEQ:PREPARE_GENOME:GTF2BED (mm10_chr18.gtf)    CACHED  1s      2       51.3%   6 GB    0.3%    23.8 MB
+  NFCORE_RNASEQ:RNASEQ:PREPARE_GENOME:CUSTOM_GETCHROMSIZES (mm10_chr18.fa)        CACHED  1s      1       34.1%   6 GB    0.0%    4.7 MB
+  NFCORE_RNASEQ:RNASEQ:PREPARE_GENOME:GTF_GENE_FILTER (mm10_chr18.fa)     CACHED  1s      1       34.7%   6 GB    0.1%    13.9 MB
+  NFCORE_RNASEQ:RNASEQ:FASTQ_SUBSAMPLE_FQ_SALMON:FQ_SUBSAMPLE (SRR3473984)        CACHED  2s      1       43.7%   6 GB    0.0%    6.5 MB
+  NFCORE_RNASEQ:RNASEQ:PREPARE_GENOME:MAKE_TRANSCRIPTS_FASTA (rsem/mm10_chr18.fa) CACHED  4s      2       42.0%   6 GB    1.2%    94.4 MB
+  NFCORE_RNASEQ:RNASEQ:FASTQ_SUBSAMPLE_FQ_SALMON:FQ_SUBSAMPLE (SRR3473985)        CACHED  2s      1       44.1%   6 GB    0.0%    6.3 MB
+```
+
+::: {.callout-warning}
+### :skull_and_crossbones: **Don't confuse double and single quotes!** :skull_and_crossbones:
+
+**Double quotes (`""`) allow for variable interpolation**, which means that variables can be evaluated and their values are substituted within the string. 
+
+**Single quotes (`''`) denote a string literally**, which means that the string is treated as-is without any variable interpolation.
+
+Try swapping the double quoted file value in your custom config above for a single-quoted value, rerun the workflow and note the creation of a 
+```default
+file = 'workshop-resource-trace-${trace_timestamp}.txt'
+```
+:::
+
+### **2.4.2. Configure MultiQC reports**
+
+Many nf-core pipelines use [MultiQC](https://multiqc.info/docs/) to generate a summary report at the end of a workflow. MultiQC is a reporting tool that can aggregate results and statistics output by various bioinformatics tools. It helps to summarise experiments containing multiple samples and multiple analysis steps. In nf-core pipelines, MultiQC is used to summarise statistics and results output by processes in the workflow and its reports can be quite verbose. MultiQC can be configured using custom YAML files to [customise the outputs of reports](https://multiqc.info/docs/reports/customisation/). 
+
+We are going to configure MultiQC to aid interpretation of the [FastQC output it plots](https://multiqc.info/modules/fastqc/). Create a custom MultiQC configuration YAML file called `multiqc-config.yaml` and add the following:
+
+```yaml
+fastqc_config:
+  fastqc_theoretical_gc: "mm10_txome" 
+```
+
+Here, we're plotting the [theoretical GC content](https://multiqc.info/modules/fastqc/#theoretical-gc-content) for the mouse reference transcript. 
+
+To the `workshop-params.yaml` file, add:
+
+```yaml
+multiqc_config: "multiqc-config.yaml" 
+```
+
+Make sure both YAML files are saved, then re-run the workflow:
+
+```default
+nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
+  -profile workshop \
+  -c custom-nimbus.config \
+  -params-file workshop-params.yaml \
+  --outdir Lesson-4 \
+  -resume
+```
+
+The logging information printed to the screen shows us again that the `params.yaml` file with the output directory set to **Lesson-2** has been overridden by the use of the flag `--outdir Lesson-4` in the run command. As the workflow runs, notice all the completed processes that are pulled from the cache and not rerun. Our use of the `multiqc-config.yaml` file adjusted the MultiQC process, as such this process was repeated using the updated settings. 
+
+The changes we made above added the normal mouse transcriptome GC profile as a track to the fastQC per-sequence GC content plot. Take a look at the changes, open the Exercise4 `multiqc_report.html` file with Live Server as per previosuly (or use scp to take a copy to your local computer if you are not on VS Code). Compare this report with the MultiQC report from **lesson 1** by looking at the section **FastQC: Per Sequence GC Content**. Compare the two plots to observe the custom track has been successfully added. 
+
+![](../figs/2.4_MultiQC.png)
+
+::: callout-tip
+### **Challenge**{.unlisted}
+
+Given the normal mouse transcriptome GC profile indicated by the black dotted line, can you detect any GC bias in the input sequence data? 
+:::
+
+::: {.callout-caution collapse="true"}
+### Solution
+
+No, all samples' GC profiles follow a normal distribution. 
+:::
+
+Note that if we did detect GC bias, we could go back and correct for this by adding the custom salmon flag `--gcBias` to the nf-core parameter `--extra_salmon_quant_args`. If we were to do this, we would have to add the following line to our `workflow-params.yaml` file:
+
+```default
+extra_salmon_quant_args : '--writeUnmappedNames --gcBias'
+```
+
+::: {.callout-note}
+### **Key points**
+- takeaway 1
+- takeaway 2
+:::
+  

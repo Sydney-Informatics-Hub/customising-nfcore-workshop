@@ -1,10 +1,10 @@
 ---
-title: "**Using a parameter file**"
+title: "**2.2. How to use a parameters file**"
 output:
   html_document:
     toc: false
     toc_float: false
-  from: markdown+emoji
+from: markdown+emoji
 ---
 
 ::: callout-tip
@@ -16,27 +16,34 @@ output:
 - Understand the use of the params file for reproducible and transparent research
 :::
 
-In Nextflow, parameters are values that can be set by the user and used to control the behaviour of a workflow or process within the workflow. Parameters are used in nf-core workflows to specify input and output files and define other aspects of workflow execution. Each nf-core workflow comes with a default set of parameters that can be customised to suit specific requirements. In the previous lesson we supplied these parameters in our run command, on the command line. Specifying multiple parameters like this can be messy and hard to keep track of. 
+In Nextflow, [parameters](https://www.nextflow.io/docs/latest/config.html#scope-params) are values that can be set by the user and used to control the behaviour of a workflow or process within the workflow. They are defined by the `params` scope. Parameters are also used in nf-core workflows to specify input and output files and define other aspects of workflow execution. Each nf-core pipeline comes with a default set of parameters that can be customised to suit specific requirements. 
 
-Nextflow allows us to pass all parameters to a workflow's run command using the `-params-file` flag and a JSON or YAML file. Using a parameter file makes it easier to rerun and reproduce our code, we can also share these files with our collaborators and provide as supplementary file in a publication. In this lesson we're going to adjust our run command and rerun the workflow using a parameter file, rather than specifying all parameters on the command line.  
+In the previous lesson we supplied these parameters as flags in our run command. Nextflow also allows us to pass all parameters to a pipeline's run command using the `-params-file` flag and a JSON or YAML file. In this lesson we're going to adjust our run command and rerun the pipeline using a parameter file, rather than specifying all parameters as separate flags in the run command.  
 
-### **Revising the run command**
+### **2.3.1. Revise the run command**
 
-While our workflow completed successfully, all fastq files failed the strandedness check:
+While our pipeline completed successfully, there were a couple of warning messages that may be cause for concern:
 
 ```default
 -[nf-core/rnaseq] Pipeline completed successfully with skipped sampl(es)-
 -[nf-core/rnaseq] Please check MultiQC report: 6/6 samples failed strandedness check.-
-
-Completed at: 12-Apr-2023 04:13:09
-Duration    : 16m 18s
+Completed at: 21-Apr-2023 03:58:56
+Duration    : 13m 59s
 CPU hours   : 0.4
 Succeeded   : 200
 ```
-Let's take a look at the MultiQC report, as directed. You can find this report in the `results/` directory: 
+
+::: {.callout-warning}
+### Handling dodgy error messages :cursing_face:
+The first warning message isn't very descriptive (see this [pull request](https://github.com/nf-core/rnaseq/pull/963)). You might come across small but inconsequential issues like this when running nf-core pipelines, too. End user feedback is always helpful for software developers, so consider submitting a GitHub issue or starting a discussion in the relevant Slack channel so others are aware and it can be addressed by developers.
+:::
+
+Let's take a look at the MultiQC report, as directed by the second message. You can find this report in the `Lesson-1/` directory: 
+
 ```default
-ls -la Exercise1/multiqc/star_salmon
+ls -la Lesson-1/multiqc/star_salmon/
 ```
+
 ```default
 total 1468
 drwxrwxr-x 4 ubuntu ubuntu    4096 Apr 12 04:13 .
@@ -46,7 +53,7 @@ drwxrwxr-x 5 ubuntu ubuntu    4096 Apr 12 04:13 multiqc_plots
 -rw-rw-r-- 1 ubuntu ubuntu 1483297 Apr 12 04:13 multiqc_report.html
 ```
 
-Open the `multiqc_report.html` the file navigator panel on the left side of your VS code window by clicking on it. Then open the rendered html file using the Live Server extension:
+Open the `multiqc_report.html` the file navigator panel on the left side of your VS Code window by clicking on it. Then open the rendered html file using the Live Server extension:
 
 1. `Ctrl`+`Shift`+`P` to open the command palette 
 2. Select `Live Server: Open with Live Server` to open html file in your browser window.
@@ -55,9 +62,9 @@ Take a look a the section labelled **WARNING: Fail Strand Check**
 
 ![](https://user-images.githubusercontent.com/73086054/231065216-940fb01f-a7dc-416c-a481-27676bbcfff3.png)
 
-The issue here is **provided strandedness** that we specified in our `samplesheet.csv` and **inferred strandedness** do not match. Look's like we've incorrectly specified strandedness as forward, when our reads show an equal distribution of sense and antisense reads. Given our previous experience with using Salmon to perform transcript quantification, we know it has an option to automatically detect the library type from the data, rather than infer it from the strandedness metadata we provided. Let's check how the nf-core/rnaseq workflow ran the Salmon quantification process. 
+The issue here is **provided strandedness** that we specified in our `samplesheet.csv` and **inferred strandedness** identified by Salmon do not match. Look's like we've incorrectly specified strandedness as forward in the `samplesheet.csv` (my mistake! :expressionless:) when our raw reads actually show an equal distribution of sense and antisense reads. Let's check how the nf-core/rnaseq pipeline ran the Salmon quantification process so we can explore whether or not this will potentially have an impact on our results. 
 
-#### **How can we know what tool flags are applied by default?**
+### **2.3.2. Identify the run command for a process**
 
 To understand what command is being run for a process, you can attempt to infer this information from a process `main.nf` script in the `modules/` directory. However, given all the different parameters that may be applied, this may not be straight forward. To understand what Salmon is doing, we're going to use the `nextflow log` command and some custom bash code to track down the hidden `.command.sh` scripts for each Salmon quant process to find out how Salmon quant identified library type.  
 
@@ -69,21 +76,25 @@ nextflow log
 This will print a list of executed pipelines, by default: 
 
 ```default
-TIMESTAMP               DURATION        RUN NAME                STATUS  REVISION ID     SESSION ID                          COMMAND                                                                                                                                                                                                                                                                                                                                                               
-2023-04-12 03:56:51     16m 19s         irreverent_allen        OK      f421ddc35d      93c2078a-15b0-4882-a9b1-ac7435bdcc57nextflow run rnaseq/main.nf --input /home/ubuntu/session2/materials/samplesheet.csv -profile singularity --fasta /home/ubuntu/session2/materials/mm10_reference/mm10_chr18.fa --gtf /home/ubuntu/session2/materials/mm10_reference/mm10_chr18.gtf --star_index /home/ubuntu/session2/materials/mm10_reference/STAR --max_memory '6 GB' --max_cpus 2 --outdir Exercise1
+TIMESTAMP               DURATION        RUN NAME                STATUS  REVISION ID     SESSION ID                              COMMAND                                                                                                                                                                                                                                                                                                                                                    
+2023-04-21 00:30:30     -               friendly_montalcini     -       f421ddc35d      685266bb-b99b-4945-9a54-981e8f4b1b07    nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf --help                                                                                                                                                                                                                                                                                                 
+2023-04-21 00:40:58     15m 36s         nauseous_lamarck        OK      f421ddc35d      055e7b7f-c3ea-4fd9-a915-02343099939e    nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf --input samplesheet.csv -profile singularity --fasta /home/ubuntu/session2/materials/mm10_reference/mm10_chr18.fa --gtf /home/ubuntu/session2/materials/mm10_reference/mm10_chr18.gtf --star_index /home/ubuntu/session2/materials/mm10_reference/STAR --max_memory 6.GB --max_cpus 2 --outdir Lesson-1
 ```
 
-All recent runs will be listed, with the most recent last (i.e. closest to your returned command prompt). Let's query the logs for the previous lesson run. Run the command below after filling in your unique run name. For example: 
+All recent runs will be listed in this file, with the most recent at the top. Let's query the logs for the Lesson-1 run. Run the command below after filling in your unique run name. For example: 
 
 ```default
-nextflow log irreverent_allen
+nextflow log nauseous_lamarck
 ```
 
-That command listed out all the work sub-directories for all processes run.  Recall that the actual tool commands issued by the nexflow processes are all recorded in hidden script files called `.command.sh` within the execution process directory. One way of observing the actual run commands issued by the workflow is to view these comamnd scripts. But how to find them?! Let's add some custom bash code to query a Nextflow run with the run name from the previous lesson.  
+That command will list out all the work subdirectories for all processes run.  Recall that the actual tool commands issued by the nexflow processes are all recorded in hidden script files called `.command.sh` within the execution process directory. One way of observing the actual run commands issued by the workflow is to view these command scripts. 
 
-First, save your run name in a bash variable:
+But how to find them? :thinking: 
+
+Let's add some custom bash code to query a Nextflow run with the run name from the previous lesson. First, save your run name in a bash variable. For example:
+
 ```default
-run_name=<ENTER_YOUR_RUN_NAME>
+run_name=nauseous_lamarck
 ```
 
 And let's save the tool of interest (salmon) in another bash variable:
@@ -95,7 +106,7 @@ Next, run the following bash command:
 ```default
 nextflow log ${run_name} | while read line;
     do
-    cmd=$(ls ${line}/.command.sh 2>/dev/null);
+      cmd=$(ls ${line}/.command.sh 2>/dev/null);
       if grep -q $tool $cmd;
       then  
         echo $cmd;     
@@ -103,7 +114,7 @@ nextflow log ${run_name} | while read line;
     done 
 ```
 
-That will list all process `.command.sh` scripts containing 'salmon'. There are multiple salmon steps in the workflow, inlcuding index and an R script. We are looking for salmon quant which performs the read quantification. 
+That will list all process `.command.sh` scripts containing 'salmon'. There are multiple salmon steps in the workflow, inlcuding index and an R script. We are looking for salmon quant which performs the read quantification. For example: 
 
 ```default
 /home/ubuntu/session2/work/50/d4462ece237213ace901a779a45286/.command.sh
@@ -121,29 +132,34 @@ That will list all process `.command.sh` scripts containing 'salmon'. There are 
 /home/ubuntu/session2/work/57/a18fcea6a06565b14140ab06a3d077/.command.sh
 ```
 
-Compare the salmon quant command with the command run in the Salmon quant process script block:
+Compared with the salmon quant `main.nf` file, we get more information from the `.command.sh` process scripts: 
+
 ```default
 cat rnaseq/modules/nf-core/salmon/quant/main.nf
 ```
 
-Compared with the salmon quant `main.nf` file, we get more information from the `.command.sh` process scripts: 
+![](../figs/2.2_salmon-quant.png)
 
-![](../figs/2.2_salmon_quant.png)
+Looking at the nf-core/rnaseq documentation, we can see:
 
-Looking at the nf-core/rnaseq documentation, we can see library type is automatically inferred based on provided strandedness and this can be overridden using Salmon's `--libType=$strandedness` flag. Following the recommendations in the [Salmon documentation](https://salmon.readthedocs.io/en/latest/salmon.html#what-s-this-libtype), we're going to override this default with the nf-core/rnaseq workflow's `--salmon_quant_libtype A` [parameter](https://nf-co.re/rnaseq/3.11.1/parameters#salmon_quant_libtype). 
+*. Library type is automatically inferred based on the `$strandedness` variable
+*. Library type can be adjusted using Salmon's `--libType=` flag and the nf-core `$strandedness` variable. 
 
-::: {.callout-note}
-### **For those not familiar with Salmon**
-Salmon is a tool for transcript quantification using RNA-seq data. Library type is important for transcript quantification as it determines how reads are aligned to the reference transcriptome, how expression levels are estimated. Salmon can accurately determine library type based on alignment files. To avoid potential input errors in future runs, we'll allow Salmon to automatically detect the library type. You can read more about how Salmon performs library detection [here](https://salmon.readthedocs.io/en/latest/salmon.html#what-s-this-libtype). 
-:::
+Following the recommendations in the [Salmon documentation](https://salmon.readthedocs.io/en/latest/salmon.html#what-s-this-libtype), we're going to override this default with the nf-core/rnaseq pipeline's `--salmon_quant_libtype A` [parameter](https://nf-co.re/rnaseq/3.11.1/parameters#salmon_quant_libtype). 
 
-### **Writing a parameter file**
+### **2.3.3. Write a parameter file**
 
-Nextflow accepts either YAML or JSON formats for parameter files. YAML and JSON are formats for storing data objects and structures in a file and either is a valid choice for building your parameters file. We will create and apply a YAML file with our inputs for our second run, just because its easier to read. YAML files use a `.yml` and `.yaml` extension and follow these syntax rules: 
+Nextflow accepts either YAML or JSON formats for parameter files. YAML and JSON are formats for storing data objects and structures in a file and either is a valid choice for building your parameters file. We will create and apply a YAML file with our inputs for our second run, just because its easier to read. YAML files follow these syntax rules: 
 
-* Uses 3 dashes (-\-\-) to indicate the start of a document and 3 dots (...) to indicate the end
-* Uses an indentation heirarchy like Python to show a heirarchy in the data 
-* Key/value pairs are separated by a colon (:) 
+* Files use indentation to define nesting and heirarchy
+* Files can use comment lines prefaced by a `#` character 
+* Files consist of key-value pairs
+* Each key is followed by a colon (`:`) and a space
+* The value can be any valid YAML data type (i.e. string, number, boolean, list, or dictionary).
+* Strings can be specified using single quotes (`'`), double quotes (`"`), and plain text (boolean).
+* YAML is case sensitive 
+* Files should have a `.yaml` or `.yml` as the file extension 
+* YAML does not allow the use of tabs, only spaces
 * Lists begin with a hyphen 
 * Each key and value must be unique
 * The order of keys or values in a list doesn't matter
@@ -153,73 +169,191 @@ Nextflow accepts either YAML or JSON formats for parameter files. YAML and JSON 
 
 Using the syntax rules above: 
 
-1. Write a YAML file for the parameters run command that can be run by a collaborator working on a **different computational infrastructure** but the **same input and reference files**.
-2. Add a key for the `--salmon_quant_libtype A` flag, we have added to the workflow.
+1. Add the appropriate YAML fields from your previous run command to the params file below. You'll be sharing this file with a collaborator working on a **different computational infrastructure** but the **same input and reference files**.
 
-```default
-nextflow run rnaseq/main.nf \
-    --input $materials/samplesheet.csv \
-    -profile singularity \
-    --fasta $materials/mm10_reference/mm10_chr18.fa \
-    --gtf $materials/mm10_reference/mm10_chr18.gtf \
-    --star_index $materials/mm10_reference/STAR \
-    --max_memory '6 GB' \
-    --max_cpus 2 
-    --outdir Exercise1
+```yaml
+outdir: "Lesson-2"
+salmon_quant_libtype: "A"
+save_trimmed: true 
+save_unaligned: true 
+extra_salmon_quant_args: "--numBootstraps 10"
 ```
+
+:bulb: HINT: you will only need to specify nf-core/rnaseq parameters (i.e. `--` flags)
 :::
 
 ::: {.callout-caution collapse="true"}
 ### Solution
 
-Save this file as `params.yaml`:
+Save this file as `workshop-params.yaml`:
 
 ```yaml
-# experiment: WT vs KO mouse model
-# workflow: nf-core/rnaseq/3.11.1 
----
-input: "/home/ubuntu/session2/materials/samplesheet.csv" 
-outdir: "Exercise2"
+input: "samplesheet.csv" 
 gtf: "/home/ubuntu/session2/materials/mm10_reference/mm10_chr18.gtf"
 fasta: "/home/ubuntu/session2/materials/mm10_reference/mm10_chr18.fa"
 star_index: "/home/ubuntu/session2/materials/mm10_reference/STAR" 
-salmon_quant_libtype : A
-...
+outdir: "Lesson-2"
+salmon_quant_libtype: "A"
+save_trimmed: true 
+save_unaligned: true 
+extra_salmon_quant_args: "--numBootstraps 10"
 ```
 :::
 
-Any of the workflow [parameters](https://nf-co.re/rnaseq/3.11.1/parameters) can be added to the parameters file in this way.
+Any of the pipeline [parameters](https://nf-co.re/rnaseq/3.11.1/parameters) can be added to the parameters file in this way. 
 
-### **Passing an input parameter file**
+### **2.3.4. Pass the parameter file to the run command**
 
-Once your params file has been saved, run the following, observing how the command is now shorter thanks to offloading some parameters to the params file. Note the use of a single - for 'resume' and 'params-file' as these are Nextflow flags and not nf-core parmeters. Nextflow can use cached output! If we apply the `-resume` flag to the run, Nextflow will only compute what has not been changed. Rerun the workflow:
+Once your params file has been saved, run the following command. Observe:
+
+* The command is shorter thanks to offloading some parameters to the params file
+* The `-resume` flag. Nextflow has lots of [run options](https://www.nextflow.io/docs/latest/cli.html?highlight=resume#run) including the ability to use cached output!
 
 ```default
-nextflow run rnaseq/main.nf \
+nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
   --max_memory 6.GB \
   --max_cpus 2 \
   -profile singularity \
-  -resume \
-  -params-file params.yaml \
-  --outdir Exercise2                                 
+  -params-file workshop-params.yaml \
+  --outdir Lesson-2 \
+  -resume                        
 ```
 
-As we've used the `-resume` flag, the initial pre-processing stage and STAR alignments should to be restored from cache and the Salmon and downstream QC steps will be recomputed. The rerun workflow should complete in ~ minutes
+As we've used the `-resume` flag, the initial pre-processing stage and STAR alignments should to be restored from cache and only the Salmon and downstream QC steps will be recomputed. The rerun workflow should complete in a much shorter time and those warnings should have gone away!
 
 ```default
--[nf-core/rnaseq] Pipeline completed successfully with skipped sampl(es)-
--[nf-core/rnaseq] Please check MultiQC report: 6/6 samples failed strandedness check.-
-Completed at: 12-Apr-2023 04:29:39
-Duration    : 2m 5s
-CPU hours   : 0.4 (85% cached)
+-[nf-core/rnaseq] Pipeline completed successfully -
+Completed at: 21-Apr-2023 05:58:06
+Duration    : 2m 1s
+CPU hours   : 0.4 (85.9% cached)
 Succeeded   : 15
 Cached      : 185
 ```
+
+### **2.3.5. Manage parameters with nf-core schema**
+nf-core pipelines all have a `nextflow_schema.json` file in their root directory which explains all the parameters used by the workflow. You can use the [`nf-core schema` tool](https://nf-co.re/tools/#pipeline-schema) to validate pipeline parameters, build a pipeline schema, deploy the documentation for a pipeline schema, or add new parameters to a pipeline schema (take a look at [this nf-core bytesize talk!](https://www.youtube.com/watch?v=PU6vAj_7WRM) for a demonstration). Have a go at these bonus exercises, beware adjusting the `nextflow_schema.json` file will mean any subsequent workflow run will have to start from scratch again and prevent you applying the `-resume` function.  
+
+::: {.callout-tip collapse="true"}
+### **Bonus exercise: `nf-core schema build` to customise help command**
+
+Let's use this utility to simplify the workflow run process for our colleague who is new to nf-core pipelines and RNAseq data processing and works in the same compute environment as us. We'll customise our local copy of the `nextflow_schema.json` file to show only required paramerters for our experiment in the `--help` message to make it easier for them to write their own run command:
+
+1. Run the command below and follow the prompts to launch the schema web builder: 
+
+```default
+nf-core schema build -d nf-core-rnaseq-3.11.1/workflow/
+```
+
+![](../figs/2.2_nfcore-schema.png)
+
+2. For the **Input/output options** group, tick the **Required** box for the following and the **Hide** box for everything else:
+
+* :white_check_mark: input 
+* :white_check_mark: outdir 
+
+3. For the **UMI filtering options** group, tick the **Hide** box at the group level.
+
+4. For the **Read filtering options** group, tick the **Hide** box at the group level.
+
+5. For the **Reference genome options** group, tick the **Required** box for the following and the **Hide** box for everything else:
+
+* :white_check_mark: fasta 
+* :white_check_mark: gtf 
+* :white_check_mark: star_index 
+
+6. For the **Read trimming options** group, tick the **Required** box for the following and the **Hide** box for everything else:
+
+* :white_check_mark: save_trimmed
+
+7. For the **Alignment options** group, tick the **Required** box for the following and the **Hide** box for everything else:
+
+* :white_check_mark: aligner 
+* :white_check_mark: save_unaligned
+
+8. For the **Process skipping options** group, tick the **Hide** box at the group level.
+
+9. For the **Institutional config options** group, tick the **Hide** box at the group level.
+
+10. For the **Max job request options** group, tick the **Required** box for:
+
+* :white_check_mark: max_cpus 
+* :white_check_mark: max_memory
+
+11.  For the **Generic options** group, untick the **Required** and **Hide** boxes for:
+
+* :green_square: help 
+* :green_square: version
+* :green_square: multiqc_config
+
+Tick the **Hide** box for everything else. 
+
+12. Now re-build the schema by hitting the blue :ballot_box_with_check: **Finished** box in the top right of your browser. 
+
+13. Return to your terminal and look at your updated help message:
+
+```default
+nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf --help
+```
+
+![](../figs/2.2_nfcore-new-help.png)
+:::
+
+::: {.callout-tip collapse="true"}
+### **Bonus exercise: `nf-core schema docs` to customise documentation**
+
+The [schema docs](https://nf-co.re/tools/#display-the-documentation-for-a-pipeline-schema) utility can be used to output parameter documentation to html or markdown format that you could include in custom documentation. To print 
+
+```default
+nf-core schema docs \
+  nf-core-rnaseq-3.11.1/workflow/nextflow_schema.json --force \
+  > custom-params.md
+```
+:::
+
+
+::: {.callout-tip collapse="true"}
+### **Bonus exercise: `nf-core schema validate` to check params file**
+
+The [schema validate](https://nf-co.re/tools/#validate-pipeline-parameters) utility can be used to validate your specified parameters against the provided pipeline schema. Unfortunately, this won't work for your `workshop-params.yaml`, so we first need to convert this to a JSON file format. To do this, run the following from the `session2` directory: 
+
+1. [Convert](https://www.json2yaml.com/convert-yaml-to-json) the YAML file to JSON format and save this file as `workshop-params.json`
+
+```default 
+{
+    "input": "samplesheet.csv",
+    "gtf": "/home/ubuntu/session2/materials/mm10_reference/mm10_chr18.gtf",
+    "fasta": "/home/ubuntu/session2/materials/mm10_reference/mm10_chr18.fa",
+    "star_index": "/home/ubuntu/session2/materials/mm10_reference/STAR",
+    "outdir": "Lesson-2",
+    "salmon_quant_libtype": "A",
+    "save_trimmed": true,
+    "save_unaligned": true,
+    "extra_salmon_quant_args": "--numBootstraps 10"
+  }
+```
+
+2. Run the nf-core schema command to validate the specified parameters:
+
+```default
+nf-core schema validate rnaseq workshop-params.json
+```
+
+Note this only confirms your inputs match their specified type (i.e. boolean, string, number). 
+:::
+
+::: {.callout-tip collapse="true"}
+### **Bonus exercise: `nf-core schema build` to add new parameter**
+
+TODO create activity 
+https://nf-co.re/tools/#add-new-parameters-to-the-pipeline-schema
+
+:::
 
 ::: {.callout-note}
 ### **Key points**
 - A parameter file can be used to specify input parameters for any Nextflow workflow.
 - Specify parameter files in a workflow run command using the `-params-file` flag. 
-- Parameter files can be written in YAML or JSON file formats.  
+- Parameter files can be written in YAML or JSON file formats. 
+- The `nf-core schema` utilities can be used to aid parameter documentation and usage.   
 :::
 

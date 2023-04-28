@@ -1,0 +1,14 @@
+---
+title: "**Workshop wrap up**"
+output:
+  html_document:
+    toc: false
+    toc_float: false
+from: markdown+emoji
+---
+
+::: {.callout-note}
+### **Key points**
+- takeaway 1
+- takeaway 2
+:::

@@ -1,36 +1,31 @@
 ---
-title: "**Welcome to session 2**"
+title: "**2.0. Welcome to session 2**"
 output:
   html_document:
     toc: false
     toc_float: false
+from: markdown+emoji
 ---
 
-In this session we will be **writing, running, adjusting, and re-running the nf-core/rnaseq workflow as we step through various customisation scenarios**. While all activities in this session will be performed using the nf-core/rnaseq workflow, all customisation scenarios we explore are applicable to (most) other nf-core workflows and do not require an understanding of rnaseq data processing. Before starting this session, there are a few things you should keep in mind as you proceed through the lessons and apply these techniques to your own research. 
+This session builds on fundamental concepts learned in [Session 1]() and provide you with hands-on experience in nf-core workflow customisation. Throughout the session we will be working with a case study to apply an nf-core workflow. Each lesson will build on the previous one, so you can gain a deeper understanding of the customisation techniques and the impact they have on the workflow and your results. We will be exploring source code of the nf-core/rnaseq workflow and apply customisations using a parameter file and custom configuration files. 
 
-As with all open source bioinformatics resources, nf-core workflows may not suit all applications. It is important that you **understand the needs of your dataset and research questions before deciding on a workflow**. All nf-core workflows are provided with sensible default settings that have broad applicability and comprensive documentation that explains all available parameters. What is 'sensible' varies dramatically between different experiments, computing environments, and datasets, so these settings might not suit your needs.  
+You will be writing these files using **Nextflow** and **YAML** languages and also running some Nextflow commands and custom **Bash** code to efficiently extract information from the source code :nerd_face:. 
 
-### **Introducing the case study**{.unlisted}
+::: callout-note
+While all activities in this session will be performed using the nf-core/rnaseq workflow, all customisation scenarios we explore are applicable to other nf-core workflows and do not require an understanding of RNAseq data processing. 
+:::
 
-For the purposes of this session, we are working with a (subset) dataset from a knockout mouse model study by [Corley et al. (2016)](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-2801-4). The authors used the mouse model to simulate the role of a specific gene (*Gtf2ird1*) in Williams-Beuren Syndrome (WBS), a rare genetic disease in people. Today, we are performing the pre-processing steps in a slightly different way from the authors, to generate a set of files that can be analysed downstream. In deciding whether or not the nf-core/rnaseq workflow was suitable for reproducing the results presented in this study, we considered a number of factors, including: 
+### **2.0.1. How to approach open source software communities**
 
-|**Consideration**      |**Questions to ask of our experiment**                             |**Why**                                                                       |
-|-----------------------|-------------------------------------------------------------------|------------------------------------------------------------------------------|
-|**Size of dataset**        |Number of samples and data volume                                  |Scale of data impacts computational efficiency of the workflow                |
-|**Input data**             |Type of RNA sequenced, availability of reference files             |Determines if we meet input requirements of workflow                          |
-|**Research questions**     |Suitability of workflow outputs                                    |Need the right processed data for downstream analysis                         |
-|**Computational resources**|CPU, memory, RAM available and minimum requirements of the workflow|Determines if I have enough resources to run the workflow                     |
-|**Tool preferences**       |Suitability of each tool, required inputs and outputs              |Workflow offers multiple tools for some steps, determines which choices I make|
+As with all open source bioinformatics resources, nf-core workflows may not suit all applications. It is important that you **understand the needs of your dataset and research questions before deciding on a workflow**. nf-core is a community effort powered by life scientists and software developers, who volunteer their time to build, maintain, and support workflows. All nf-core workflows are provided with sensible default settings that have broad applicability and comprensive documentation that explains all available parameters. What is 'sensible' varies dramatically between different experiments, computing environments, and datasets, so these settings might not suit your needs. We recommend approaching the application and customisation of nf-core workflows with the following framework:
 
-We consulted the [nf-core/rnaseq documentation](https://nf-co.re/rnaseq) to confirm that nf-core/rnaseq is a suitable workflow for our application. W've sketched out our experimental design, those considerations, and our choices below. We will discuss these further, shortly. 
+**DIAGRAM OF NF-CORE COMMUNITY FEATURE - IMPLICATION FOR WORKFLOWS - Q TO ASK - OUR RECOMMENDATIONS**
 
-![](../figs/2.1_RNAseq_experiment.png)
+### **2.0.2. Log in to your instance**
 
-### **Log back in to your instance**{.unlisted}
+#### **Option 1: In Visual Studio Code** 
 
-#### **In Visual Studio Code** 
-
-Same as yesterday, connect to your instance using the command palatte:
+Follow the [VSCode set up instructions](../setup.qmd#login-via-visual-studio-code) or use the quick start instructions below to connect to your instance using the command palatte:
 
   * `Ctrl`+`Shift`+`P` to open command palette 
   * Select `Remote-SSH: Connect to Host` and select name of your host
@@ -40,20 +35,15 @@ Having successfully logged in, you should see a small green box in the bottom le
 
 ![](https://user-images.githubusercontent.com/73086054/228143085-20a5bdfc-f4e7-4472-b43f-2c975ae5eb4c.png)
 
-#### **In a terminal** 
-With a terminal application, run the following on the command-line: 
- ```default
- ssh training@###.###.###.###
- ```
-Enter the password provided at the beginning of the workshop. Ask one of the demonstrators if you’ve forgotten it.
-```default
-Enter password:
-```
+#### **Option 2: In a terminal** 
+Follow the [terminal set up instructions](../setup.qmd#login-via-terminal) or use the quick start instructions below to connect to your instance on the command-line: 
+
+  * Run: `ssh training@###.###.###.###`
+  * Enter the password provided at the beginning of the workshop. Ask one of the demonstrators if you’ve forgotten it.
 
 Having successfully logged in, your terminal should then display something like that shown in the figure below:
 
 ![](https://user-images.githubusercontent.com/73086054/228141686-a63a84c1-b714-4797-af8e-2b511421a7d8.png)
-
 
 ::: {.callout-note}
 ### **Key points**
