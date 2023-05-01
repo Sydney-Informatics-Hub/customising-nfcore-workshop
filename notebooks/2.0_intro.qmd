@@ -7,17 +7,22 @@ output:
 from: markdown+emoji
 ---
 
-This session builds on fundamental concepts learned in [Session 1]() and provide you with hands-on experience in nf-core workflow customisation. Throughout the session we will be working with a case study to apply an nf-core workflow. Each lesson will build on the previous one, so you can gain a deeper understanding of the customisation techniques and the impact they have on the workflow and your results. We will be exploring source code of the nf-core/rnaseq workflow and apply customisations using a parameter file and custom configuration files. 
+This session builds on fundamental concepts learned in [Session 1]() and provide you with hands-on experience in nf-core workflow customisation. Throughout the session we will be working with a case study to apply an nf-core workflow. Each lesson will build on the previous one, so you can gain a deeper understanding of the customisation techniques and the impact they have on the workflow and your results. 
 
-You will be writing these files using **Nextflow** and **YAML** languages and also running some Nextflow commands and custom **Bash** code to efficiently extract information from the source code :nerd_face:. 
+We will explore the source code of the nf-core/rnaseq workflow and apply customisations using a parameter file and custom configuration files. You will be writing these files using **Nextflow** and **YAML**. You will also be running Nextflow commands and writing some custom **Bash** code to efficiently extract information from the source code :nerd_face:. 
 
 ::: callout-note
+### Applying what you learn here to other nf-core workflows
 While all activities in this session will be performed using the nf-core/rnaseq workflow, all customisation scenarios we explore are applicable to other nf-core workflows and do not require an understanding of RNAseq data processing. 
 :::
 
 ### **2.0.1. How to approach open source software communities**
 
-As with all open source bioinformatics resources, nf-core workflows may not suit all applications. It is important that you **understand the needs of your dataset and research questions before deciding on a workflow**. nf-core is a community effort powered by life scientists and software developers, who volunteer their time to build, maintain, and support workflows. All nf-core workflows are provided with sensible default settings that have broad applicability and comprensive documentation that explains all available parameters. What is 'sensible' varies dramatically between different experiments, computing environments, and datasets, so these settings might not suit your needs. We recommend approaching the application and customisation of nf-core workflows with the following framework:
+As with all open source bioinformatics resources, nf-core workflows may not suit all applications. It is always important that you **understand the needs of your dataset and research questions before deciding on a workflow**. nf-core is a community effort powered by life scientists and software developers, who volunteer their time to build, maintain, and support workflows. All nf-core workflows are provided with 'sensible' default settings that have broad applicability. What is 'sensible' varies dramatically between different experiments, users, computing environments, and datasets, so these settings might not suit your needs. 
+
+We recommend approaching the application and customisation of nf-core workflows to your research with the following framework:
+
+
 
 **DIAGRAM OF NF-CORE COMMUNITY FEATURE - IMPLICATION FOR WORKFLOWS - Q TO ASK - OUR RECOMMENDATIONS**
 

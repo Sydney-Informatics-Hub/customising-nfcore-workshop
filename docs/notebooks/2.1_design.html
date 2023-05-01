@@ -624,10 +624,10 @@ No, help! <span class="emoji" data-emoji="cry">😢</span> <code>:cry:</code></p
 <p>Once your pipeline has completed, you should see this message printed to your terminal:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>-[nf-core/rnaseq] Pipeline completed successfully with skipped sampl(es)-</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>-[nf-core/rnaseq] Please check MultiQC report: 6/6 samples failed strandedness check.-</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>Completed at: 21-Apr-2023 03:58:56</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>Duration    : 13m 59s</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>Completed at: 01-May-2023 04:37:37</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>Duration    : 14m 18s</span>
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>CPU hours   : 0.4</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>Succeeded   : 200</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>Succeeded   : 170</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The pipeline ran successfully, however note the warning about all samples having failed the strandedness check. We’ll explore that in the next lesson. In the meantime, list (<code>ls -la</code>) the contents of your directory, you’ll see a few new directories (and a hidden directory and log file) have been created:</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>total 416</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x   7 ubuntu ubuntu 4.0K Apr 21 03:44 .</span>
@@ -635,17 +635,17 @@ No, help! <span class="emoji" data-emoji="cry">😢</span> <code>:cry:</code></p
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x   4 ubuntu ubuntu 4.0K Apr 21 03:58 .nextflow</span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>-rw-rw-r--   1 ubuntu ubuntu 371K Apr 21 03:58 .nextflow.log</span>
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>-rw-rw-r--   1 ubuntu ubuntu  17K Apr 21 03:50 .nextflow.log.1</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x   7 ubuntu ubuntu 4.0K Apr 21 03:58 Lesson-1</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x   7 ubuntu ubuntu 4.0K Apr 21 03:58 Lesson-2.1</span>
 <span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x   4 ubuntu ubuntu 4.0K Apr 21 02:08 nf-core-rnaseq-3.11.1</span>
 <span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>-rw-rw-r--   1 ubuntu ubuntu  563 Apr 21 03:14 samplesheet.csv</span>
 <span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 143 ubuntu ubuntu 4.0K Apr 21 03:58 work</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Nextflow has created 2 new output directories, <strong>work</strong> and <strong>Lesson-1</strong> in the current directory.</p>
+<p>Nextflow has created 2 new output directories, <strong>work</strong> and <strong>Lesson-2.1</strong> in the current directory.</p>
 <section id="the-work-directory" class="level4">
 <h4 class="anchored" data-anchor-id="the-work-directory">The <code>work</code> directory</h4>
 <p>As each job is run, a unique sub-directory is created in the <code>work</code> directory. These directories house temporary files and various command logs created by a process. We can find all information regarding this process that we need to troubleshoot a failed process.</p>
 </section>
-<section id="the-lesson-1-directory" class="level4">
-<h4 class="anchored" data-anchor-id="the-lesson-1-directory">The <code>Lesson-1</code> directory</h4>
+<section id="the-lesson-2.1-directory" class="level4">
+<h4 class="anchored" data-anchor-id="the-lesson-2.1-directory">The <code>Lesson-2.1</code> directory</h4>
 <p>All final outputs will be presented in a directory specified by the <code>--outdir</code> flag.</p>
 </section>
 <section id="the-.nextflow-directory" class="level4">
