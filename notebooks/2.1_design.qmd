@@ -61,14 +61,6 @@ nf-core download rnaseq \
   --singularity-cache-only
 ```
 
-By default the most recent version of a pipeline will be downloaded. We used:
-
-* `--revision/-r` to specify the pipeline version
-* `--outdir/-o` to download the pipeline to our current working directory
-* `--container/-c` to download software containers with Singularity
-* `--singularity-cache-only` to cache and not copy containers to our output directory
-* `--compress/-x none` to not compress downloaded files
-
 You will be prompted to define a Singularity cache directory to store container images (`$NXF_SINGULARITY_CACHEDIR`). Specify the path we used in Session 1:
 
 ```default
@@ -173,7 +165,7 @@ We need to customise the default run command, given the following considerations
 * We have chosen to use **STAR** to align reads 
 * We have chosen to use **Salmon** to estimate transcript abundance
 * We have access to **2 CPUs and 8 Gb** of RAM today 
-* We have **provided the requisite reference data** (fasta, gtf, STAR index) for our input dataset 
+* We have **provided the requisite reference data** (fasta, gtf, STAR index, Salmon index) for our input dataset 
 
 ::: callout-tip
 ### **Challenge**{.unlisted}
@@ -182,7 +174,7 @@ Can you use the [nf-core/rnaseq parameters documentation](https://nf-co.re/rnase
 
 1. What flag would we use to specify our chosen alignment and quantification method? 
 2. What flags would we use to specify maximum CPU and memory resources? 
-3. What flags would we use to specify the provided fasta, gtf, and STAR index files? 
+3. What flags would we use to specify the provided fasta, gtf, STAR index, and Salmon index files? 
 
 :bulb: HINT: You will need to look at the [reference genome](https://nf-co.re/rnaseq/3.11.1/parameters#reference-genome-options), [alignment](https://nf-co.re/rnaseq/3.11.1/parameters#alignment-options), and [max job request](https://nf-co.re/rnaseq/3.11.1/parameters#max-job-request-options) sections. 
 :::
@@ -206,10 +198,11 @@ Can you use the [nf-core/rnaseq parameters documentation](https://nf-co.re/rnase
 --fasta /path/to/mouse.fa  
 --gtf /path/to/mouse.gtf 
 --star_index /path/to/STAR
+--salmon_index /path/to/Salmon_index
 ```
 :::
 
-For the sake of expediency, we are using prepared subset data for this session. All the data (including fastqs, reference fasta, gtf, and STAR indexes) are already available on an external file system called CernVM-FS that we can access from our Nimbus instances. Take a look at the files: 
+All the data (including fastqs, reference fasta, gtf, Salmon and STAR indexes) are already available on an external file system called CernVM-FS that we can access from our Nimbus instances. Take a look at the files: 
 
 ```default
 #ls -l /path/to/aarnet-cvmfs/training/workshopMaterials
@@ -232,21 +225,7 @@ A [sample sheet](https://nf-co.re/rnaseq/3.11.1/usage#samplesheet-input) is a st
 * Relevant input files for each sample 
 * Other metadata for each sample
 
-::: callout-tip
-### **Challenge**{.unlisted}
-
-Now that we have the path to our raw sequence files, create the input sample sheet following the nf-core/rnaseq [documentation](https://nf-co.re/rnaseq/3.11.1/usage#samplesheet-input). Your input file will need to be comma-delimited and have the following columns:
-
-1. sample: custom sample name (use the SRR IDs)
-2. fastq1: full path to read 1 fastq.gz file
-3. fastq2: full path to read 2 fastq.gz file
-4. strandedness: for this lesson, all should be labelled as forward
-:::
-
-::: {.callout-caution collapse="true"}
-### Solution
-
-Save this file as `samplesheet.csv`:
+Copy and save the text below as `samplesheet.csv`:
 
 ```default
 sample,fastq_1,fastq_2,strandedness
@@ -257,7 +236,8 @@ SRR3473985,/home/ubuntu/session2/materials/fastqs/SRR3473985_selected.fastq.gz,,
 SRR3473986,/home/ubuntu/session2/materials/fastqs/SRR3473986_selected.fastq.gz,,forward
 SRR3473984,/home/ubuntu/session2/materials/fastqs/SRR3473984_selected.fastq.gz,,forward
 ```
-:::
+
+This file has a header and one row for each sample, as directed by the nf-core samplesheet specifications. Note we only have one single-end read file for each sample, as such we have left the 3rd column empty.
 
 ### **2.1.4. Run the pipeline**
 
@@ -307,6 +287,10 @@ Yes, move on :clap: `:clap:`
 No, help! :cry: `:cry:` 
 :::
 
+Take a look at the stdout printed to the screen:
+
+![](../figs/2.1_nf-core-stdout.png)
+
 ### **2.1.5. Examine the outputs**
 
 Once your pipeline has completed, you should see this message printed to your terminal:
@@ -314,7 +298,7 @@ Once your pipeline has completed, you should see this message printed to your te
 ```default
 -[nf-core/rnaseq] Pipeline completed successfully with skipped sampl(es)-
 -[nf-core/rnaseq] Please check MultiQC report: 6/6 samples failed strandedness check.-
-Completed at: 01-May-2023 04:37:37
+Completed at: 21-Apr-2023 03:58:56
 Duration    : 14m 18s
 CPU hours   : 0.4
 Succeeded   : 170

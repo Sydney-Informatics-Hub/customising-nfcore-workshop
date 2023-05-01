@@ -339,14 +339,6 @@ Objectives
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  --container singularity \</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  --compress none \</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  --singularity-cache-only</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>By default the most recent version of a pipeline will be downloaded. We used:</p>
-<ul>
-<li><code>--revision/-r</code> to specify the pipeline version</li>
-<li><code>--outdir/-o</code> to download the pipeline to our current working directory</li>
-<li><code>--container/-c</code> to download software containers with Singularity</li>
-<li><code>--singularity-cache-only</code> to cache and not copy containers to our output directory</li>
-<li><code>--compress/-x none</code> to not compress downloaded files</li>
-</ul>
 <p>You will be prompted to define a Singularity cache directory to store container images (<code>$NXF_SINGULARITY_CACHEDIR</code>). Specify the path we used in Session 1:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>export NXF_SINGULARITY_CACHEDIR=/home/training/singularity_cache</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The nf-core tools utility will download the pipeline files and centralised configs but not the containers, given they already exist in our specified cache.</p>
@@ -459,7 +451,7 @@ Objectives
 <li>We have chosen to use <strong>STAR</strong> to align reads</li>
 <li>We have chosen to use <strong>Salmon</strong> to estimate transcript abundance</li>
 <li>We have access to <strong>2 CPUs and 8 Gb</strong> of RAM today</li>
-<li>We have <strong>provided the requisite reference data</strong> (fasta, gtf, STAR index) for our input dataset</li>
+<li>We have <strong>provided the requisite reference data</strong> (fasta, gtf, STAR index, Salmon index) for our input dataset</li>
 </ul>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -475,7 +467,7 @@ Objectives
 <ol type="1">
 <li>What flag would we use to specify our chosen alignment and quantification method?</li>
 <li>What flags would we use to specify maximum CPU and memory resources?</li>
-<li>What flags would we use to specify the provided fasta, gtf, and STAR index files?</li>
+<li>What flags would we use to specify the provided fasta, gtf, STAR index, and Salmon index files?</li>
 </ol>
 <p><span class="emoji" data-emoji="bulb">💡</span> HINT: You will need to look at the <a href="https://nf-co.re/rnaseq/3.11.1/parameters#reference-genome-options">reference genome</a>, <a href="https://nf-co.re/rnaseq/3.11.1/parameters#alignment-options">alignment</a>, and <a href="https://nf-co.re/rnaseq/3.11.1/parameters#max-job-request-options">max job request</a> sections.</p>
 </div>
@@ -506,11 +498,12 @@ Solution
 </ol>
 <div class="sourceCode" id="cb15"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>--fasta /path/to/mouse.fa  </span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>--gtf /path/to/mouse.gtf </span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>--star_index /path/to/STAR</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>--star_index /path/to/STAR</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>--salmon_index /path/to/Salmon_index</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
-<p>For the sake of expediency, we are using prepared subset data for this session. All the data (including fastqs, reference fasta, gtf, and STAR indexes) are already available on an external file system called CernVM-FS that we can access from our Nimbus instances. Take a look at the files:</p>
+<p>All the data (including fastqs, reference fasta, gtf, Salmon and STAR indexes) are already available on an external file system called CernVM-FS that we can access from our Nimbus instances. Take a look at the files:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>#ls -l /path/to/aarnet-cvmfs/training/workshopMaterials</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>#Workaround for testing (data not yet on cvmfs)</span>
@@ -526,38 +519,7 @@ Solution
 <li>Relevant input files for each sample</li>
 <li>Other metadata for each sample</li>
 </ul>
-<div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-<strong>Challenge</strong>
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Now that we have the path to our raw sequence files, create the input sample sheet following the nf-core/rnaseq <a href="https://nf-co.re/rnaseq/3.11.1/usage#samplesheet-input">documentation</a>. Your input file will need to be comma-delimited and have the following columns:</p>
-<ol type="1">
-<li>sample: custom sample name (use the SRR IDs)</li>
-<li>fastq1: full path to read 1 fastq.gz file</li>
-<li>fastq2: full path to read 2 fastq.gz file</li>
-<li>strandedness: for this lesson, all should be labelled as forward</li>
-</ol>
-</div>
-</div>
-<div class="callout-caution callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Save this file as <code>samplesheet.csv</code>:</p>
+<p>Copy and save the text below as <code>samplesheet.csv</code>:</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>sample,fastq_1,fastq_2,strandedness</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>SRR3473989,/home/ubuntu/session2/materials/fastqs/SRR3473989_selected.fastq.gz,,forward</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>SRR3473988,/home/ubuntu/session2/materials/fastqs/SRR3473988_selected.fastq.gz,,forward</span>
@@ -565,9 +527,7 @@ Solution
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>SRR3473985,/home/ubuntu/session2/materials/fastqs/SRR3473985_selected.fastq.gz,,forward</span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>SRR3473986,/home/ubuntu/session2/materials/fastqs/SRR3473986_selected.fastq.gz,,forward</span>
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>SRR3473984,/home/ubuntu/session2/materials/fastqs/SRR3473984_selected.fastq.gz,,forward</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
+<p>This file has a header and one row for each sample, as directed by the nf-core samplesheet specifications. Note we only have one single-end read file for each sample, as such we have left the 3rd column empty.</p>
 </section>
 <section id="run-the-pipeline" class="level3">
 <h3 class="anchored" data-anchor-id="run-the-pipeline"><strong>2.1.4. Run the pipeline</strong></h3>
@@ -618,13 +578,15 @@ Nextflow has environmental variables!
 No, help! <span class="emoji" data-emoji="cry">😢</span> <code>:cry:</code></p>
 </div>
 </div>
+<p>Take a look at the stdout printed to the screen:</p>
+<p><img src="../figs/2.1_nf-core-stdout.png" class="img-fluid"></p>
 </section>
 <section id="examine-the-outputs" class="level3">
 <h3 class="anchored" data-anchor-id="examine-the-outputs"><strong>2.1.5. Examine the outputs</strong></h3>
 <p>Once your pipeline has completed, you should see this message printed to your terminal:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>-[nf-core/rnaseq] Pipeline completed successfully with skipped sampl(es)-</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>-[nf-core/rnaseq] Please check MultiQC report: 6/6 samples failed strandedness check.-</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>Completed at: 01-May-2023 04:37:37</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>Completed at: 21-Apr-2023 03:58:56</span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>Duration    : 14m 18s</span>
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>CPU hours   : 0.4</span>
 <span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>Succeeded   : 170</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
