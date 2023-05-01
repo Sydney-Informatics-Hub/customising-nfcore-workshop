@@ -13,8 +13,8 @@ This workshop will set you up with the foundational knowledge required to run an
 
 ### **Trainers**{.unlisted}
 
-* Georgie Samaha, Sydney Informatics Hub
-* Cali Willet, Sydney Informatics Hub
+* Georgie Samaha, Sydney Informatics Hub, University of Sydney
+* Cali Willet, Sydney Informatics Hub, University of Sydney
 * Chris Hakkaart, Seqera Labs
 
 ### **Target audience**{.unlisted}

@@ -16,7 +16,7 @@ from: markdown+emoji
 - Understand the use of the params file for reproducible and transparent research
 :::
 
-In Nextflow, [parameters](https://www.nextflow.io/docs/latest/config.html#scope-params) are values that can be set by the user and used to control the behaviour of a workflow or process within the workflow. They are defined by the `params` scope. Parameters are also used in nf-core workflows to specify input and output files and define other aspects of workflow execution. Each nf-core pipeline comes with a default set of parameters that can be customised to suit specific requirements. 
+In Nextflow, [parameters](https://www.nextflow.io/docs/latest/config.html#scope-params) are values that can be set by the user and used to control the behaviour of a workflow or process within the workflow. Within the Nextflow code base, they are defined by the `params{}` scope. Parameters are also used in nf-core workflows to specify input and output files and define other aspects of workflow execution. Each nf-core pipeline comes with a default set of parameters that can be customised to suit specific requirements. 
 
 In the previous lesson we supplied these parameters as flags in our run command. Nextflow also allows us to pass all parameters to a pipeline's run command using the `-params-file` flag and a JSON or YAML file. In this lesson we're going to adjust our run command and rerun the pipeline using a parameter file, rather than specifying all parameters as separate flags in the run command.  
 
@@ -28,9 +28,9 @@ While our pipeline completed successfully, there were a couple of warning messag
 -[nf-core/rnaseq] Pipeline completed successfully with skipped sampl(es)-
 -[nf-core/rnaseq] Please check MultiQC report: 6/6 samples failed strandedness check.-
 Completed at: 21-Apr-2023 03:58:56
-Duration    : 13m 59s
+Duration    : 14m 18s
 CPU hours   : 0.4
-Succeeded   : 200
+Succeeded   : 170
 ```
 
 ::: {.callout-warning}
