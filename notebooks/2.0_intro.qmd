@@ -1,5 +1,5 @@
 ---
-title: "**2.0. Welcome to session 2**"
+title: "**2.0. Introduction to session 2**"
 output:
   html_document:
     toc: false

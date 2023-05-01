@@ -20,7 +20,7 @@ In Nextflow, [parameters](https://www.nextflow.io/docs/latest/config.html#scope-
 
 In the previous lesson we supplied these parameters as flags in our run command. Nextflow also allows us to pass all parameters to a pipeline's run command using the `-params-file` flag and a JSON or YAML file. In this lesson we're going to adjust our run command and rerun the pipeline using a parameter file, rather than specifying all parameters as separate flags in the run command.  
 
-### **2.3.1. Revise the run command**
+### **2.2.1. Revise the run command**
 
 While our pipeline completed successfully, there were a couple of warning messages that may be cause for concern:
 
@@ -64,7 +64,7 @@ Take a look a the section labelled **WARNING: Fail Strand Check**
 
 The issue here is **provided strandedness** that we specified in our `samplesheet.csv` and **inferred strandedness** identified by Salmon do not match. Look's like we've incorrectly specified strandedness as forward in the `samplesheet.csv` (my mistake! :expressionless:) when our raw reads actually show an equal distribution of sense and antisense reads. Let's check how the nf-core/rnaseq pipeline ran the Salmon quantification process so we can explore whether or not this will potentially have an impact on our results. 
 
-### **2.3.2. Identify the run command for a process**
+### **2.2.2. Identify the run command for a process**
 
 To understand what command is being run for a process, you can attempt to infer this information from a process `main.nf` script in the `modules/` directory. However, given all the different parameters that may be applied, this may not be straight forward. To understand what Salmon is doing, we're going to use the `nextflow log` command and some custom bash code to track down the hidden `.command.sh` scripts for each Salmon quant process to find out how Salmon quant identified library type.  
 
@@ -147,7 +147,7 @@ Looking at the nf-core/rnaseq documentation, we can see:
 
 Following the recommendations in the [Salmon documentation](https://salmon.readthedocs.io/en/latest/salmon.html#what-s-this-libtype), we're going to override this default with the nf-core/rnaseq pipeline's `--salmon_quant_libtype A` [parameter](https://nf-co.re/rnaseq/3.11.1/parameters#salmon_quant_libtype). 
 
-### **2.3.3. Write a parameter file**
+### **2.2.3. Write a parameter file**
 
 Nextflow accepts either YAML or JSON formats for parameter files. YAML and JSON are formats for storing data objects and structures in a file and either is a valid choice for building your parameters file. We will create and apply a YAML file with our inputs for our second run, just because its easier to read. YAML files follow these syntax rules: 
 
@@ -172,7 +172,7 @@ Using the syntax rules above:
 1. Add the appropriate YAML fields from your previous run command to the params file below. You'll be sharing this file with a collaborator working on a **different computational infrastructure** but the **same input and reference files**.
 
 ```yaml
-outdir: "Lesson-2"
+outdir: "Lesson-2.2"
 salmon_quant_libtype: "A"
 save_trimmed: true 
 save_unaligned: true 
@@ -191,8 +191,7 @@ Save this file as `workshop-params.yaml`:
 input: "samplesheet.csv" 
 gtf: "/home/ubuntu/session2/materials/mm10_reference/mm10_chr18.gtf"
 fasta: "/home/ubuntu/session2/materials/mm10_reference/mm10_chr18.fa"
-star_index: "/home/ubuntu/session2/materials/mm10_reference/STAR" 
-outdir: "Lesson-2"
+star_index: "/home/ubuntu/session2/materials/mm10_reference/STAR"
 salmon_quant_libtype: "A"
 save_trimmed: true 
 save_unaligned: true 
@@ -202,7 +201,7 @@ extra_salmon_quant_args: "--numBootstraps 10"
 
 Any of the pipeline [parameters](https://nf-co.re/rnaseq/3.11.1/parameters) can be added to the parameters file in this way. 
 
-### **2.3.4. Pass the parameter file to the run command**
+### **2.2.4. Pass the parameter file to the run command**
 
 Once your params file has been saved, run the following command. Observe:
 
@@ -215,7 +214,7 @@ nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
   --max_cpus 2 \
   -profile singularity \
   -params-file workshop-params.yaml \
-  --outdir Lesson-2 \
+  --outdir Lesson-2.2 \
   -resume                        
 ```
 
@@ -230,7 +229,7 @@ Succeeded   : 15
 Cached      : 185
 ```
 
-### **2.3.5. Manage parameters with nf-core schema**
+### **2.2.5. Manage parameters with nf-core schema**
 nf-core pipelines all have a `nextflow_schema.json` file in their root directory which explains all the parameters used by the workflow. You can use the [`nf-core schema` tool](https://nf-co.re/tools/#pipeline-schema) to validate pipeline parameters, build a pipeline schema, deploy the documentation for a pipeline schema, or add new parameters to a pipeline schema (take a look at [this nf-core bytesize talk!](https://www.youtube.com/watch?v=PU6vAj_7WRM) for a demonstration). Have a go at these bonus exercises, beware adjusting the `nextflow_schema.json` file will mean any subsequent workflow run will have to start from scratch again and prevent you applying the `-resume` function.  
 
 ::: {.callout-tip collapse="true"}
@@ -309,7 +308,6 @@ nf-core schema docs \
   > custom-params.md
 ```
 :::
-
 
 ::: {.callout-tip collapse="true"}
 ### **Bonus exercise: `nf-core schema validate` to check params file**

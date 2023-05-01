@@ -279,7 +279,7 @@ Objectives
 <p>Nextflow’s portability is enabled by its ability to separate workflow implementation from the configuration settings required to execute it. In this lesson we will use configuration files to define specifications required to execute an nf-core pipeline on our compute environment. While nf-core workflows are designed to be portable and work out of the box, sometimes you will need to customise the workflow’s configuration so that it can run on your environment. The nf-core developer community currently offer a number of ways to <a href="https://nf-co.re/usage/configuration">configure nf-core workflows</a>.</p>
 <section id="default-nf-core-configuration" class="level3">
 <h3 class="anchored" data-anchor-id="default-nf-core-configuration"><strong>2.3.1. Default nf-core configuration</strong></h3>
-<p>Remember that when a <code>main.nf</code> file is run for any Nextflow workflow, Nextflow looks for <a href="https://www.nextflow.io/docs/latest/config.html#configuration-file">configuration files in multiple locations</a> to determine how to execute the workflow and its processes. One of the files Nextflow will always look for is <code>nextflow.config</code>. Currently, all nf-core workflows use a <code>nextflow.config</code> file and a <code>conf/base.config</code> file to define the default execution settings and parameters of a workflow.</p>
+<p>Recall that when a <code>main.nf</code> file is run for any Nextflow workflow, Nextflow looks for <a href="https://www.nextflow.io/docs/latest/config.html#configuration-file">configuration files in multiple locations</a> to determine how to execute the workflow and its processes. One of the files Nextflow will always look for is <code>nextflow.config</code>. Currently, all nf-core workflows use a <code>nextflow.config</code> file and a <code>conf/base.config</code> file to define the default execution settings and parameters of a workflow.</p>
 <p>Let’s take a look at the nf-core/rnaseq <code>nextflow.config</code> file:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>cat nf-core-rnaseq-3.11.1/workflow/nextflow.config</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout-tip callout callout-style-default callout-captioned">
@@ -339,7 +339,7 @@ Solution
 <li>To run a workflow on an HPC and interact with a job scheduler like PBSpro or SLURM</li>
 </ol>
 <p>Using a custom configuration file is good practice to ensure that your pipeline runs efficiently and reproducibly on your compute environment. It also allows you to easily share the pipeline with others who can use your custom config file to run it in the same computational environment.</p>
-<p>In this lesson, we are writing a custom configuration file to override the default configurations of the workflow with configurations that are suitable for our workshop instances. We’re going to replace 3 flags in our run command with this file:</p>
+<p>We will write a custom configuration file to override the default configurations of the workflow with those that are suitable for our Nimbus instances. We’re going to replace 3 flags in our run command with this file:</p>
 <ol type="1">
 <li><code>-profile singularity</code></li>
 <li><code>--max_memory 6.GB</code></li>

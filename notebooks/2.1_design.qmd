@@ -285,12 +285,17 @@ Now run the pipeline, with the necessary flags and the `samplesheet.csv` file yo
 nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
     --input samplesheet.csv \
     -profile singularity \
+    --skip_markduplicates \
     --fasta $materials/mm10_reference/mm10_chr18.fa \
     --gtf $materials/mm10_reference/mm10_chr18.gtf \
     --star_index $materials/mm10_reference/STAR \
+    --salmon_index $materials/mm10_reference/salmon-index \
+    --save_trimmed true \
+    --save_unaligned true \
+    --extra_salmon_quant_args '--numBootstraps 10' \
     --max_memory '6.GB' \
     --max_cpus 2 \
-    --outdir Lesson-1
+    --outdir Lesson-2.1
 ```
 
 ::: {.callout-important}
@@ -309,10 +314,10 @@ Once your pipeline has completed, you should see this message printed to your te
 ```default
 -[nf-core/rnaseq] Pipeline completed successfully with skipped sampl(es)-
 -[nf-core/rnaseq] Please check MultiQC report: 6/6 samples failed strandedness check.-
-Completed at: 21-Apr-2023 03:58:56
-Duration    : 13m 59s
+Completed at: 01-May-2023 04:37:37
+Duration    : 14m 18s
 CPU hours   : 0.4
-Succeeded   : 200
+Succeeded   : 170
 ```
 
 The pipeline ran successfully, however note the warning about all samples having failed the strandedness check. We'll explore that in the next lesson. In the meantime, list (`ls -la`) the contents of your directory, you'll see a few new directories (and a hidden directory and log file) have been created:
@@ -323,19 +328,19 @@ drwxr-x---  15 ubuntu ubuntu 4.0K Apr 21 01:56 ..
 drwxrwxr-x   4 ubuntu ubuntu 4.0K Apr 21 03:58 .nextflow
 -rw-rw-r--   1 ubuntu ubuntu 371K Apr 21 03:58 .nextflow.log
 -rw-rw-r--   1 ubuntu ubuntu  17K Apr 21 03:50 .nextflow.log.1
-drwxrwxr-x   7 ubuntu ubuntu 4.0K Apr 21 03:58 Lesson-1
+drwxrwxr-x   7 ubuntu ubuntu 4.0K Apr 21 03:58 Lesson-2.1
 drwxrwxr-x   4 ubuntu ubuntu 4.0K Apr 21 02:08 nf-core-rnaseq-3.11.1
 -rw-rw-r--   1 ubuntu ubuntu  563 Apr 21 03:14 samplesheet.csv
 drwxrwxr-x 143 ubuntu ubuntu 4.0K Apr 21 03:58 work
 ```
 
-Nextflow has created 2 new output directories, **work** and **Lesson-1** in the current directory. 
+Nextflow has created 2 new output directories, **work** and **Lesson-2.1** in the current directory. 
 
 #### The `work` directory
 
 As each job is run, a unique sub-directory is created in the `work` directory. These directories house temporary files and various command logs created by a process. We can find all information regarding this process that we need to troubleshoot a failed process. 
 
-#### The `Lesson-1` directory
+#### The `Lesson-2.1` directory
 
 All final outputs will be presented in a directory specified by the `--outdir` flag. 
 
