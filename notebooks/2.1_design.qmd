@@ -41,7 +41,7 @@ Start by creating a new directory for all of today's activities and move into it
 mkdir ~/session2 && cd $_
 ```
 
-We recommend that you keep a local copy of a pipeline's code for the sake of reproducibility and record keeping. There are a number of ways to download a nf-core pipeline to your machine. We recommend using either the [nf-core tools](https://nf-co.re/tools/) utility to [download a pipeline for offline use](https://nf-co.re/tools/#downloading-pipelines-for-offline-use) or git. Today, we will download most recent version (3.11.1) of the pipeline using the nf-core tools utility, like we did in Session 1. 
+We recommend that you keep a local copy of a pipeline's code for the sake of reproducibility and record keeping. There are a number of ways to download a nf-core pipeline to your machine. We recommend using either the [nf-core tools](https://nf-co.re/tools/) utility to [download a pipeline for offline use](https://nf-co.re/tools/#downloading-pipelines-for-offline-use) or git. 
 
 Take a look at the download options available to us: 
 
