@@ -155,15 +155,15 @@ We have created an nf-core config for Pawsey's Nimbus cloud and shared it at the
 cat nf-core-rnaseq-3.11.1/configs/conf/pawsey_nimbus.config
 ```
 
-This configuration file provides a few different profiles that match the [Nimbus instance flavours](https://support.pawsey.org.au/documentation/pages/viewpage.action?pageId=58000088#GetStartedwiththeNewNimbus-Flavours) currently available, as well as Docker and Singularity container engines. Take a look at the c2r8 scope, looks a lot like our custom config file doesn't it:
+This configuration file provides a few different profiles that match the [Nimbus instance flavours](https://support.pawsey.org.au/documentation/pages/viewpage.action?pageId=58000088#GetStartedwiththeNewNimbus-Flavours) currently available, as well as Docker and Singularity container engines. Take a look at the c2r8 scope, looks a lot like our `custom-nimbus.config`: 
 
 ```default
-c8r32 {
-  params {
-    max_cpus   = 8
-    max_memory = '30.GB'
+  c2r8 {
+    params {
+      max_cpus   = 2
+      max_memory = '6.GB'
+    }
   }
-}
 ```
 
 Let's rerun the workflow with the `-resume` function and the [institutional config parameters](https://nf-co.re/rnaseq/3.11.2/parameters#institutional-config-options), instead of our custom file and see if anything changes:

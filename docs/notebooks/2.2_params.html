@@ -366,7 +366,7 @@ Handling dodgy error messages <span class="emoji" data-emoji="cursing_face">🤬
 <li>Library type is automatically inferred based on the <code>$strandedness</code> variable</li>
 <li>Library type can be adjusted using Salmon’s <code>--libType=</code> flag and the nf-core <code>$strandedness</code> variable.</li>
 </ul>
-<p>Following the recommendations in the <a href="https://salmon.readthedocs.io/en/latest/salmon.html#what-s-this-libtype">Salmon documentation</a>, we’re going to override this default with the nf-core/rnaseq pipeline’s <code>--salmon_quant_libtype U</code> <a href="https://nf-co.re/rnaseq/3.11.1/parameters#salmon_quant_libtype">parameter</a> to indicate our data is a mix of both strands.</p>
+<p>Following the recommendations in the <a href="https://salmon.readthedocs.io/en/latest/salmon.html#what-s-this-libtype">Salmon documentation</a>, we’re going to override this default with the nf-core/rnaseq pipeline’s <code>--salmon_quant_libtype U</code> <a href="https://nf-co.re/rnaseq/3.11.1/parameters#salmon_quant_libtype">parameter</a> to indicate our data is a mix of both strands. If we want to get rid of the warning message <code>Please check MultiQC report: 6/6 samples failed strandedness check</code>, we’ll have to change the strandedness fields in our <code>samplesheet.csv</code>. Keep in mind, this will cause the pipeline to run from the beginning, without usin.</p>
 </section>
 <section id="write-a-parameter-file" class="level3">
 <h3 class="anchored" data-anchor-id="write-a-parameter-file"><strong>2.2.3. Write a parameter file</strong></h3>
@@ -466,21 +466,21 @@ Solution
 <li><a href="https://www.json2yaml.com/convert-yaml-to-json">Convert</a> the YAML file to JSON format and save this file as <code>workshop-params.json</code></li>
 </ol>
 <div class="sourceCode" id="cb16"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    "input": "samplesheet.csv",</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    "gtf": "/home/ubuntu/session2/materials/mm10_reference/mm10_chr18.gtf",</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    "fasta": "/home/ubuntu/session2/materials/mm10_reference/mm10_chr18.fa",</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    "star_index": "/home/ubuntu/session2/materials/mm10_reference/STAR",</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    "outdir": "Lesson-2",</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    "salmon_quant_libtype": "A",</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    "save_trimmed": true,</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    "save_unaligned": true,</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    "extra_salmon_quant_args": "--numBootstraps 10"</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  "input": "samplesheet.csv",</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  "gtf": "/home/ubuntu/session2/materials/mm10_reference/mm10_chr18.gtf",</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  "fasta": "/home/ubuntu/session2/materials/mm10_reference/mm10_chr18.fa",</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  "star_index": "/home/ubuntu/session2/materials/mm10_reference/STAR",</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  "salmon_index": "/home/ubuntu/session2/materials/mm10_reference/salmon-index",</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  "salmon_quant_libtype": "U",</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  "save_trimmed": true,</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  "save_unaligned": true,</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  "extra_salmon_quant_args": "--numBootstraps 10"</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="2" type="1">
 <li>Run the nf-core schema command to validate the specified parameters:</li>
 </ol>
 <div class="sourceCode" id="cb17"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>nf-core schema validate rnaseq workshop-params.json</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Note this only confirms your inputs match their specified type (i.e.&nbsp;boolean, string, number).</p>
+<p>Note this only confirms your inputs match their specified type (i.e.&nbsp;boolean, string, number). It cannot confirm that a file exists, or is formatted correctly, or if a string is the correct input for a parameter.</p>
 </div>
 </div>
 </div>
