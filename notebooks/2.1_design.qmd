@@ -41,7 +41,7 @@ Start by creating a new directory for all of today's activities and move into it
 mkdir ~/session2 && cd $_
 ```
 
-We recommend that you keep a local copy of a pipeline's code for the sake of reproducibility and record keeping. There are a number of ways to download a nf-core pipeline to your machine. We recommend using either the [nf-core tools](https://nf-co.re/tools/) utility to [download a pipeline for offline use](https://nf-co.re/tools/#downloading-pipelines-for-offline-use) or git. Today, we will download most recent version (3.11.1) of the pipeline using the nf-core tools utility, like we did in Session 1. 
+We recommend that you keep a local copy of a pipeline's code for the sake of reproducibility and record keeping. There are a number of ways to download a nf-core pipeline to your machine. We recommend using either the [nf-core tools](https://nf-co.re/tools/) utility to [download a pipeline for offline use](https://nf-co.re/tools/#downloading-pipelines-for-offline-use) or git. 
 
 Take a look at the download options available to us: 
 
@@ -60,14 +60,6 @@ nf-core download rnaseq \
   --compress none \
   --singularity-cache-only
 ```
-
-By default the most recent version of a pipeline will be downloaded. We used:
-
-* `--revision/-r` to specify the pipeline version
-* `--outdir/-o` to download the pipeline to our current working directory
-* `--container/-c` to download software containers with Singularity
-* `--singularity-cache-only` to cache and not copy containers to our output directory
-* `--compress/-x none` to not compress downloaded files
 
 You will be prompted to define a Singularity cache directory to store container images (`$NXF_SINGULARITY_CACHEDIR`). Specify the path we used in Session 1:
 
@@ -173,7 +165,7 @@ We need to customise the default run command, given the following considerations
 * We have chosen to use **STAR** to align reads 
 * We have chosen to use **Salmon** to estimate transcript abundance
 * We have access to **2 CPUs and 8 Gb** of RAM today 
-* We have **provided the requisite reference data** (fasta, gtf, STAR index) for our input dataset 
+* We have **provided the requisite reference data** (fasta, gtf, STAR index, Salmon index) for our input dataset 
 
 ::: callout-tip
 ### **Challenge**{.unlisted}
@@ -182,7 +174,7 @@ Can you use the [nf-core/rnaseq parameters documentation](https://nf-co.re/rnase
 
 1. What flag would we use to specify our chosen alignment and quantification method? 
 2. What flags would we use to specify maximum CPU and memory resources? 
-3. What flags would we use to specify the provided fasta, gtf, and STAR index files? 
+3. What flags would we use to specify the provided fasta, gtf, STAR index, and Salmon index files? 
 
 :bulb: HINT: You will need to look at the [reference genome](https://nf-co.re/rnaseq/3.11.1/parameters#reference-genome-options), [alignment](https://nf-co.re/rnaseq/3.11.1/parameters#alignment-options), and [max job request](https://nf-co.re/rnaseq/3.11.1/parameters#max-job-request-options) sections. 
 :::
@@ -206,13 +198,14 @@ Can you use the [nf-core/rnaseq parameters documentation](https://nf-co.re/rnase
 --fasta /path/to/mouse.fa  
 --gtf /path/to/mouse.gtf 
 --star_index /path/to/STAR
+--salmon_index /path/to/Salmon_index
 ```
 :::
 
-For the sake of expediency, we are using prepared subset data for this session. All the data (including fastqs, reference fasta, gtf, and STAR indexes) are already available on an external file system called CernVM-FS that we can access from our Nimbus instances. Take a look at the files: 
+All the data (including fastqs, reference fasta, gtf, Salmon and STAR indexes) are already available on an external file system called CernVM-FS that we can access from our Nimbus instances. Take a look at the files: 
 
 ```default
-#ls -l /path/to/aarnet-cvmfs/training/workshopMaterials
+ls -l /cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523/
 
 #Workaround for testing (data not yet on cvmfs)
 wget -O nfcore_materials.tar.gz https://cloudstor.aarnet.edu.au/plus/s/gIBdDhKEwfq2j58/download
@@ -232,21 +225,7 @@ A [sample sheet](https://nf-co.re/rnaseq/3.11.1/usage#samplesheet-input) is a st
 * Relevant input files for each sample 
 * Other metadata for each sample
 
-::: callout-tip
-### **Challenge**{.unlisted}
-
-Now that we have the path to our raw sequence files, create the input sample sheet following the nf-core/rnaseq [documentation](https://nf-co.re/rnaseq/3.11.1/usage#samplesheet-input). Your input file will need to be comma-delimited and have the following columns:
-
-1. sample: custom sample name (use the SRR IDs)
-2. fastq1: full path to read 1 fastq.gz file
-3. fastq2: full path to read 2 fastq.gz file
-4. strandedness: for this lesson, all should be labelled as forward
-:::
-
-::: {.callout-caution collapse="true"}
-### Solution
-
-Save this file as `samplesheet.csv`:
+Copy and save the text below as `samplesheet.csv`:
 
 ```default
 sample,fastq_1,fastq_2,strandedness
@@ -257,14 +236,16 @@ SRR3473985,/home/ubuntu/session2/materials/fastqs/SRR3473985_selected.fastq.gz,,
 SRR3473986,/home/ubuntu/session2/materials/fastqs/SRR3473986_selected.fastq.gz,,forward
 SRR3473984,/home/ubuntu/session2/materials/fastqs/SRR3473984_selected.fastq.gz,,forward
 ```
-:::
+
+This file has a header and one row for each sample, as directed by the nf-core samplesheet specifications. Note we only have one single-end read file for each sample, as such we have left the 3rd column empty.
 
 ### **2.1.4. Run the pipeline**
 
 We need to store the path to our input and reference data in a variable for our run command:
 
 ```default
-materials=/home/ubuntu/session2/materials
+materials=/home/ubuntu/session2/materials #for cloudstor
+materials=/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523 #for cvmfs
 ```
 
 Given we already downloaded the containers, we will point the pipeline to where it can find them so it doesn't waste time trying to download them all over again. We can do this by setting the [`NXF_SINGULARITY_CACHEDIR`](https://www.nextflow.io/docs/latest/singularity.html#singularity-docker-hub) environmental variable: 
@@ -285,12 +266,17 @@ Now run the pipeline, with the necessary flags and the `samplesheet.csv` file yo
 nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
     --input samplesheet.csv \
     -profile singularity \
+    --skip_markduplicates \
     --fasta $materials/mm10_reference/mm10_chr18.fa \
     --gtf $materials/mm10_reference/mm10_chr18.gtf \
     --star_index $materials/mm10_reference/STAR \
+    --salmon_index $materials/mm10_reference/salmon-index \
+    --save_trimmed true \
+    --save_unaligned true \
+    --extra_salmon_quant_args '--numBootstraps 10' \
     --max_memory '6.GB' \
     --max_cpus 2 \
-    --outdir Lesson-1
+    --outdir Lesson-2.1
 ```
 
 ::: {.callout-important}
@@ -302,6 +288,14 @@ Yes, move on :clap: `:clap:`
 No, help! :cry: `:cry:` 
 :::
 
+Take a look at the stdout printed to the screen. Your workflow configuration and parameter customisations are all documented here. You can use this to confirm if your parameters have been correctly passed to the run command: 
+
+![](../figs/2.1_nf-core-stdout.png)
+
+As the workflow starts, you will also see a number of processes spawn out underneath this. Recall from session 1 that processes are executed independently and can run in parallel. Nextflow manages the data dependencies between processes, ensuring that each process is executed only when its input data is available and all of its dependencies have been satisfied. Take a look at the image below which explains a workflow's process status output provided by Nextflow using the data dependencies for the STAR_ALIGN process as an example. 
+
+![](../figs/2.1-nfcore-processes.png)
+
 ### **2.1.5. Examine the outputs**
 
 Once your pipeline has completed, you should see this message printed to your terminal:
@@ -310,9 +304,9 @@ Once your pipeline has completed, you should see this message printed to your te
 -[nf-core/rnaseq] Pipeline completed successfully with skipped sampl(es)-
 -[nf-core/rnaseq] Please check MultiQC report: 6/6 samples failed strandedness check.-
 Completed at: 21-Apr-2023 03:58:56
-Duration    : 13m 59s
+Duration    : 14m 18s
 CPU hours   : 0.4
-Succeeded   : 200
+Succeeded   : 170
 ```
 
 The pipeline ran successfully, however note the warning about all samples having failed the strandedness check. We'll explore that in the next lesson. In the meantime, list (`ls -la`) the contents of your directory, you'll see a few new directories (and a hidden directory and log file) have been created:
@@ -323,19 +317,19 @@ drwxr-x---  15 ubuntu ubuntu 4.0K Apr 21 01:56 ..
 drwxrwxr-x   4 ubuntu ubuntu 4.0K Apr 21 03:58 .nextflow
 -rw-rw-r--   1 ubuntu ubuntu 371K Apr 21 03:58 .nextflow.log
 -rw-rw-r--   1 ubuntu ubuntu  17K Apr 21 03:50 .nextflow.log.1
-drwxrwxr-x   7 ubuntu ubuntu 4.0K Apr 21 03:58 Lesson-1
+drwxrwxr-x   7 ubuntu ubuntu 4.0K Apr 21 03:58 Lesson-2.1
 drwxrwxr-x   4 ubuntu ubuntu 4.0K Apr 21 02:08 nf-core-rnaseq-3.11.1
 -rw-rw-r--   1 ubuntu ubuntu  563 Apr 21 03:14 samplesheet.csv
 drwxrwxr-x 143 ubuntu ubuntu 4.0K Apr 21 03:58 work
 ```
 
-Nextflow has created 2 new output directories, **work** and **Lesson-1** in the current directory. 
+Nextflow has created 2 new output directories, **work** and **Lesson-2.1** in the current directory. 
 
 #### The `work` directory
 
 As each job is run, a unique sub-directory is created in the `work` directory. These directories house temporary files and various command logs created by a process. We can find all information regarding this process that we need to troubleshoot a failed process. 
 
-#### The `Lesson-1` directory
+#### The `Lesson-2.1` directory
 
 All final outputs will be presented in a directory specified by the `--outdir` flag. 
 
