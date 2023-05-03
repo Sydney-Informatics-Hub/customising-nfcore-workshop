@@ -278,66 +278,6 @@ Objectives
 <p>In this lesson, we will design our pipeline run command by selecting parameters suitable for our experiment and our computational environment. We will observe how a pipeline is deployed when we execute the run command.</p>
 <section id="download-the-pipeline-code" class="level3">
 <h3 class="anchored" data-anchor-id="download-the-pipeline-code"><strong>2.1.1. Download the pipeline code</strong></h3>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Experimental design plan
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>We are working with a subset dataset from a knockout mouse model study by <a href="https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-2801-4">Corley et al.&nbsp;(2016)</a>. The authors used the mouse model to simulate the role of a specific gene (<em>Gtf2ird1</em>) in Williams-Beuren Syndrome (WBS), a rare genetic disease in humans.</p>
-<p>In this session, we are performing the pre-processing steps to generate a set of files that can be used to perform differential expression analysis. In deciding whether or not the nf-core/rnaseq pipeline was suitable for reproducing the results presented in this study, we considered a number of factors, including:</p>
-<table class="table">
-<colgroup>
-<col style="width: 13%">
-<col style="width: 39%">
-<col style="width: 46%">
-</colgroup>
-<thead>
-<tr class="header">
-<th><strong>Consideration</strong></th>
-<th><strong>Questions to ask of our experiment</strong></th>
-<th><strong>Why</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Size of dataset</strong></td>
-<td>Number of samples and data volume</td>
-<td>Scale of data impacts computational efficiency of the pipeline</td>
-</tr>
-<tr class="even">
-<td><strong>Input data</strong></td>
-<td>Type of RNA sequenced, availability of reference files</td>
-<td>Determines if we meet input requirements of pipeline</td>
-</tr>
-<tr class="odd">
-<td><strong>Research questions</strong></td>
-<td>Suitability of pipeline outputs</td>
-<td>Need the right processed data for downstream analysis</td>
-</tr>
-<tr class="even">
-<td><strong>Computational resources</strong></td>
-<td>CPU, memory, RAM available and minimum requirements of the pipeline</td>
-<td>Determines if we have enough resources to run the pipeline</td>
-</tr>
-<tr class="odd">
-<td><strong>Tool preferences</strong></td>
-<td>Suitability of each tool, required inputs and outputs</td>
-<td>Pipeline offers multiple choices for some stages, determines which choices we make</td>
-</tr>
-</tbody>
-</table>
-<p>We consulted the <a href="https://nf-co.re/rnaseq">nf-core/rnaseq documentation</a> to confirm that nf-core/rnaseq is a suitable pipeline for our application. We have sketched out our experimental design, those considerations, and our choices below.</p>
-<p><img src="../figs/2.1_RNAseq_experiment.png" class="img-fluid"></p>
-</div>
-</div>
-</div>
 <p>Start by creating a new directory for all of today’s activities and move into it:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> ~/session2 <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> <span class="va">$_</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>We recommend that you keep a local copy of a pipeline’s code for the sake of reproducibility and record keeping. There are a number of ways to download a nf-core pipeline to your machine. We recommend using either the <a href="https://nf-co.re/tools/">nf-core tools</a> utility to <a href="https://nf-co.re/tools/#downloading-pipelines-for-offline-use">download a pipeline for offline use</a> or git.</p>
@@ -368,7 +308,7 @@ Nextflow has environmental variables!
 </div>
 <p>The nf-core tools utility will download the pipeline files and centralised configs but not the containers, given they already exist in our specified cache.</p>
 <div class="callout-caution callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -377,7 +317,7 @@ Nextflow has environmental variables!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>In situations where you might not wish to use the nf-core tools utility, download the nf-core/rnaseq source code from it’s <a href="https://github.com/nf-core/rnaseq">GitHub repository</a> with git.</p>
 <p>Clone the nf-core/rnaseq repository:</p>
