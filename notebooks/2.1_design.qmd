@@ -260,7 +260,7 @@ Take a look at the stdout printed to the screen. Your workflow configuration and
 
 As the workflow starts, you will also see a number of processes spawn out underneath this. Recall from session 1 that processes are executed independently and can run in parallel. Nextflow manages the data dependencies between processes, ensuring that each process is executed only when its input data is available and all of its dependencies have been satisfied. Take a look at the image below which explains a workflow's process status output provided by Nextflow using the data dependencies for the STAR_ALIGN process as an example. 
 
-![](../figs/2.1-nfcore-processes.png)
+![](../figs/2.1-nfcore-process.png)
 
 ### **2.1.4. Examine the outputs**
 
