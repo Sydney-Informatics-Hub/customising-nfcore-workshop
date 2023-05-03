@@ -3,6 +3,7 @@ project:
   output-dir: docs
 
 website:
+  page-navigation: true
   title: "Sydney Informatics Hub"
   navbar:
     background: primary
@@ -42,6 +43,7 @@ website:
       - text: "Tips & Tricks"
         href: tips_tricks.html
   body-footer: "All materials copyright Sydney Informatics Hub, University of Sydney"
+
           
 format:
   html:

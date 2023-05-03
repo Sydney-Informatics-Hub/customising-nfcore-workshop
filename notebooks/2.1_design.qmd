@@ -1,5 +1,7 @@
 ---
 title: "**2.1. Design a run command**"
+website:
+  page-navigation: true
 output:
   html_document:
     toc: false
@@ -15,7 +17,12 @@ from: markdown+emoji
 - Explore pipeline deployment and set up 
 :::
 
-### **2.1.1. Introducing the case study**
+In this lesson, we will design our pipeline run command by selecting parameters suitable for our experiment and our computational environment. We will observe how a pipeline is deployed when we execute the run command. 
+
+### **2.1.1. Download the pipeline code**
+
+::: {.callout-note collapse="true"}
+### Experimental design plan
 
 We are working with a subset dataset from a knockout mouse model study by [Corley et al. (2016)](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-2801-4). The authors used the mouse model to simulate the role of a specific gene (*Gtf2ird1*) in Williams-Beuren Syndrome (WBS), a rare genetic disease in humans. 
 
@@ -33,7 +40,7 @@ We consulted the [nf-core/rnaseq documentation](https://nf-co.re/rnaseq) to conf
 
 ![](../figs/2.1_RNAseq_experiment.png)
 
-### **2.1.2. Download the pipeline code**
+::: 
 
 Start by creating a new directory for all of today's activities and move into it: 
 
@@ -66,6 +73,12 @@ You will be prompted to define a Singularity cache directory to store container 
 ```default
 export NXF_SINGULARITY_CACHEDIR=/home/training/singularity_cache
 ```
+
+::: {.callout-tip}
+### Nextflow has environmental variables!
+
+Environmental variables are used to store information that can be accessed by different programs and scripts running on the system. Nextflow has a number of [environmental variables](https://www.nextflow.io/docs/latest/config.html#environment-variables) that can be used to override default Nextflow and pipeline behaviours. You can set them on the command line or by using [env scopes](https://www.nextflow.io/docs/latest/config.html#scope-env) when writing Nextflow.
+:::
 
 The nf-core tools utility will download the pipeline files and centralised configs but not the containers, given they already exist in our specified cache. 
 
@@ -134,14 +147,42 @@ We explored the standard nf-core workflow directory structure in Session 1. The 
 |`modules/`             |Contains Nextflow processes used by the workflow. They are called by the `main.nf` file|
 |`workflows/rnaseq.nf`  |All the modules, subworkflows, channels, workflow structure for running the rnaseq pipeline |
 
+### **2.1.2. Build your run command**
 
-### **2.1.3. Build your run command**
+All nf-core pipelines are provided with sensible default settings that have broad applicability and comprehensive documentation that explains [pipeline usage](https://nf-co.re/rnaseq/3.11.1/usage) and [available parameters](https://nf-co.re/rnaseq/3.11.1/parameters). Before we can decide which parameters to apply, we need to identify the default settings of the pipeline and where we can customise for our own needs, if desired. 
 
-All nf-core pipelines are provided with sensible default settings that have broad applicability and [comprensive documentation that explains all available parameters](https://nf-co.re/rnaseq/3.11.1/parameters). On the command line you can view these options by running:
+Pipeline structure and possible customisation options will vary between nf-core pipelines. Generally, pipelines can be customised at a few different levels:
+
+* The workflow structure: selecting which path to follow (i.e. the vaious method options below)
+* The process: choosing one tool over another to perform a process (i.e. TrimGalore! vs FastP below)  
+* Tool settings: applying specific thresholds or optional flags for a tool  
+* Compute resources: specifying CPU and memory thresholds or execution and software methods based on the infrastructure you're working on.    
+
+![](../figs/2.1_pipeline-choice.png)
+
+Looking at the nf-core/rnaseq pipeline structure above, we can see that the developers have organised the workflow into **5 stages** and given users **1 location where we can make workflow-level customisations** and **2 locations where we can make process-level customisations**. The default nf-core/rnaseq method uses STAR to perform read alignment and Salmon to perform quantification. To understand tool and resource customisations, we'll need to take a look at the parameter documentation. We will explore these in depth in the following lessons. 
+
+For now, take a look at all the options available for the pipeline by running:
 
 ```default
-nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf --help
+nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf --help 
 ```
+
+Notice the top of the print out, there is a 'typical' run command provided. In the diagram below, we can compare the typical run command with the run command we will be executing. Our command applies the default method of STAR and Salmons for alignment and quantification but we've also diverged from the typical command where we have:
+
+* Provided our own reference files via file specific parameters instead of using the iGenomes repository 
+* Added some optional flags to customise some processes 
+* Added some optional resource specifications suitable for our environment. 
+
+![](../figs/2.1_default-command.png)
+
+Underneath the typical run command suggestion, there are lots parameters, grouped under headings. 
+
+:::{.callout-important}
+### Overwhelmed by all the parameters?
+
+For larger nf-core pipelines it can be challenging to pick which parameters are applied at which of the levels mentioned above. nf-core pipeline parameters are grouped under specific headings that identify which level of customisation, stage of the pipeline, or tool they apply to. 
+::: 
 
 Notice at the bottom of the print out, there is:
 
@@ -150,6 +191,7 @@ Notice at the bottom of the print out, there is:
 ```
 
 Three additional parameter sections are hidden from view. This is because they are less commonly used. To view all the pipeline run options on the command line, run:
+
 ```default
 nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf --help --show_hidden_params
 ```
@@ -157,49 +199,6 @@ nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf --help --show_hidden_params
 ::: {.callout-warning}
 ### **Hyphens matter!**
 Hyphens matter when it comes to parameter flags in nf-core pipelines! Nextflow command-line parameters use one (`-`), whereas pipeline-specific parameters use two (`--`). For example: `-profile` is a **Nextflow** parameter, while `--input` is an **nf-core** parameter.
-:::
-
-We need to customise the default run command, given the following considerations based on our experiment plan above: 
-
-* We **don't** need to run the pseudo alignment step (Stage 3)
-* We have chosen to use **STAR** to align reads 
-* We have chosen to use **Salmon** to estimate transcript abundance
-* We have access to **2 CPUs and 8 Gb** of RAM today 
-* We have **provided the requisite reference data** (fasta, gtf, STAR index, Salmon index) for our input dataset 
-
-::: callout-tip
-### **Challenge**{.unlisted}
-
-Can you use the [nf-core/rnaseq parameters documentation](https://nf-co.re/rnaseq/3.11.1/parameters) (or the `--help` flag) and the important considerations above to identify flags we will need to apply to our first workflow run? Don't worry about the files required for these flags just yet. 
-
-1. What flag would we use to specify our chosen alignment and quantification method? 
-2. What flags would we use to specify maximum CPU and memory resources? 
-3. What flags would we use to specify the provided fasta, gtf, STAR index, and Salmon index files? 
-
-:bulb: HINT: You will need to look at the [reference genome](https://nf-co.re/rnaseq/3.11.1/parameters#reference-genome-options), [alignment](https://nf-co.re/rnaseq/3.11.1/parameters#alignment-options), and [max job request](https://nf-co.re/rnaseq/3.11.1/parameters#max-job-request-options) sections. 
-:::
-
-::: {.callout-caution collapse="true"}
-### Solution
-
-1. Given we are using STAR and Salmon as our aligner and quantification tool of choice (respectively) and it is the default choice of this pipeline we do not need to provide an `--aligner` flag. However, if you wanted to provide this for the sake of reproducibility in case things change in the future: 
-```default
---aligner 'star_salmon'
-```
-
-2. Given we have limited computing resources today, we will need to specify a ceiling for both memory and CPUs:
-```default
---max_memory '6.GB' 
---max_cpus 2 
-```
-
-3. Given we are providing our own subset data for this workshop, we will need to use:
-```default
---fasta /path/to/mouse.fa  
---gtf /path/to/mouse.gtf 
---star_index /path/to/STAR
---salmon_index /path/to/Salmon_index
-```
 :::
 
 All the data (including fastqs, reference fasta, gtf, Salmon and STAR indexes) are already available on an external file system called CernVM-FS that we can access from our Nimbus instances. Take a look at the files: 
@@ -239,7 +238,7 @@ SRR3473984,/home/ubuntu/session2/materials/fastqs/SRR3473984_selected.fastq.gz,,
 
 This file has a header and one row for each sample, as directed by the nf-core samplesheet specifications. Note we only have one single-end read file for each sample, as such we have left the 3rd column empty.
 
-### **2.1.4. Run the pipeline**
+### **2.1.3. Run the pipeline**
 
 We need to store the path to our input and reference data in a variable for our run command:
 
@@ -247,18 +246,6 @@ We need to store the path to our input and reference data in a variable for our 
 materials=/home/ubuntu/session2/materials #for cloudstor
 materials=/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523 #for cvmfs
 ```
-
-Given we already downloaded the containers, we will point the pipeline to where it can find them so it doesn't waste time trying to download them all over again. We can do this by setting the [`NXF_SINGULARITY_CACHEDIR`](https://www.nextflow.io/docs/latest/singularity.html#singularity-docker-hub) environmental variable: 
-
-```default
-export NXF_SINGULARITY_CACHEDIR=/home/ubuntu/singularity_cache/
-```
-::: {.callout-tip}
-
-### Nextflow has environmental variables!
-
-Environmental variables are used to store information that can be accessed by different programs and scripts running on the system. Nextflow has a number of [environmental variables](https://www.nextflow.io/docs/latest/config.html#environment-variables) that can be used to override default Nextflow and pipeline behaviours. You can set them on the command line or by using [env scopes](https://www.nextflow.io/docs/latest/config.html#scope-env) when writing Nextflow.
-:::
 
 Now run the pipeline, with the necessary flags and the `samplesheet.csv` file you just created: 
 
@@ -296,7 +283,7 @@ As the workflow starts, you will also see a number of processes spawn out undern
 
 ![](../figs/2.1-nfcore-processes.png)
 
-### **2.1.5. Examine the outputs**
+### **2.1.4. Examine the outputs**
 
 Once your pipeline has completed, you should see this message printed to your terminal:
 
