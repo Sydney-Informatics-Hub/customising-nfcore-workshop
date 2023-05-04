@@ -9,7 +9,7 @@ from: markdown+emoji
 
 This session builds on fundamental concepts learned in [Session 1](1.0_intro.md) and provide you with hands-on experience in nf-core workflow customisation. Throughout the session we will be working with a case study to apply an nf-core workflow. Each lesson will build on the previous one, so you can gain a deeper understanding of the customisation techniques and the impact they have on the workflow and your results. 
 
-We will explore the source code of the nf-core/rnaseq workflow and apply customisations using a parameter file and custom configuration files. You will be writing these files using **Nextflow** and **YAML**. You will also be running Nextflow commands and writing some custom **Bash** code to efficiently extract information from the source code :nerd_face:. 
+We will explore the source code of the nf-core/rnaseq workflow and apply customisations using a parameter file and custom configuration files. You will create these files and run Nextflow commands and some custom **bash** code to efficiently extract information from the source code :nerd_face:. 
 
 ::: callout-note
 ### Applying what you learn here to other nf-core workflows
@@ -20,7 +20,7 @@ While all activities in this session will be performed using the nf-core/rnaseq 
 
 #### **Option 1: In Visual Studio Code** 
 
-Follow the [VSCode set up instructions](../setup.qmd#login-via-visual-studio-code) or use the quick start instructions below to connect to your instance using the command palatte:
+Follow the [VS Code set up instructions](../setup.qmd#login-via-visual-studio-code) or use the instructions below to connect to your instance using the command palatte:
 
   * `Ctrl`+`Shift`+`P` to open command palette 
   * Select `Remote-SSH: Connect to Host` and select name of your host
@@ -39,3 +39,5 @@ Follow the [terminal set up instructions](../setup.qmd#login-via-terminal) or us
 Having successfully logged in, your terminal should then display something like that shown in the figure below:
 
 ![](https://user-images.githubusercontent.com/73086054/228141686-a63a84c1-b714-4797-af8e-2b511421a7d8.png)
+
+</br>

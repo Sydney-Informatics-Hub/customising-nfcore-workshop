@@ -14,20 +14,20 @@ from: markdown+emoji
 
 - Use the nf-core documentation to select appropriate parameters for a run command 
 - Write and run a nf-core rnaseq command on the command line 
-- Explore pipeline deployment and set up 
+- Explore pipeline deployment and outputs 
 :::
 
-In this lesson, we will design a customised run command for the nf-core/rnaseq pipeline. We will be using the typical (default) run command as a base, additing some optional parameters. While some parameters are standard across nf-core pipelines, such as `--input` and `--genome`, most parameters are 
+The nf-core community values flexibility and has built this into their pipelines by allowing users to customise various aspects of a workflow run using parameters. While nf-core pipelines are designed to run with 'sensible' default settings, these may not always suit the needs of your experiment of compute environment. In this lesson, we will design a run command and execute an nf-core pipeline using parameters to provide required inputs and customise various aspects of the workflow.
 
 ### **2.1.1. Download the pipeline code**
 
-Start by creating a new directory for all of today's activities and move into it: 
+Create a new directory for all session 2 activities and move into it: 
 
 ```default
 mkdir ~/session2 && cd $_
 ```
 
-We recommend that you keep a local copy of a pipeline's code for the sake of reproducibility and record keeping. There are a number of ways to download a nf-core pipeline to your machine. We recommend using either the [nf-core tools](https://nf-co.re/tools/) utility to [download a pipeline for offline use](https://nf-co.re/tools/#downloading-pipelines-for-offline-use) or git. 
+We recommend that you keep a local copy of a pipeline's code for the sake of reproducibility and good record keeping. There are a number of ways to download a nf-core pipeline. We recommend using either the [nf-core tools](https://nf-co.re/tools/) utility to [download a pipeline](https://nf-co.re/tools/#downloading-pipelines-for-offline-use) for offline use. 
 
 Take a look at the download options available to us:
 
@@ -47,32 +47,21 @@ nf-core download rnaseq \
   --singularity-cache-only
 ```
 
-You will be prompted to define a Singularity cache directory to store container images (`$NXF_SINGULARITY_CACHEDIR`). Specify the path we used in Session 1:
+Note that we've chosen to download a specific pipeline version by applying the `--revision` flag. If you would like to download the most recent version of an nf-core pipeline, you can exclude this flag. 
+
+We have also chosen to store all containers in a specified Singularity cache directory and not store an additional copy of these in the output directory. You will be prompted to define an existing directory as your Singularity cache. Specify:
 
 ```default
-export NXF_SINGULARITY_CACHEDIR=/home/training/singularity_cache
+NXF_SINGULARITY_CACHEDIR=/home/training/singularity_cache
 ```
 
 ::: {.callout-tip}
 ### Nextflow has environmental variables!
 
-Environmental variables are used to store information that can be accessed by different programs and scripts running on the system. Nextflow has a number of [environmental variables](https://www.nextflow.io/docs/latest/config.html#environment-variables) that can be used to override default Nextflow and pipeline behaviours. You can set them on the command line or by using [env scopes](https://www.nextflow.io/docs/latest/config.html#scope-env) when writing Nextflow.
+`$NXF_SINGULARITY_CACHEDIR` is a Nextflow [environmental variable](https://www.nextflow.io/docs/latest/config.html#environment-variables) that can be used to override default Nextflow and pipeline behaviours. You can set these environmental variables on the command line or by using [env scopes](https://www.nextflow.io/docs/latest/config.html#scope-env) when writing Nextflow.
 :::
 
-The nf-core tools utility will download the pipeline files and centralised configs but not the containers, given they already exist in our specified cache. 
-
-::: {.callout-caution collapse="true"}
-### **Alternate installation method**{.unlisted}
-In situations where you might not wish to use the nf-core tools utility, download the nf-core/rnaseq source code from it's [GitHub repository](https://github.com/nf-core/rnaseq) with git. 
-
-Clone the nf-core/rnaseq repository:
-```default
-git clone https://github.com/nf-core/rnaseq.git
-```
-> :no_entry: **BEWARE** :no_entry: this method will download a copy of the pipeline with a different directory name and slightly different structure. If you choose to use this method, you will need to adjust some paths specified in the upcoming lessons accordingly. 
-::: 
-
-Inside your `nf-core-rnaseq-3.11.1` workflow directory, you should see 2 subdirectories: 
+The nf-core tools utility will download the pipeline files and institutional configuration files available at the [nf-core/configs](https://github.com/nf-core/configs) repository. Inside your `nf-core-rnaseq-3.11.1` workflow directory, you should see 2 subdirectories: 
 
 ```default
 ls -l nf-core-rnaseq-3.11.1
@@ -84,11 +73,7 @@ drwxrwxr-x  7 ubuntu ubuntu 4096 Apr 21 02:08 configs
 drwxrwxr-x 12 ubuntu ubuntu 4096 Apr 21 02:08 workflow
 ```
 
-Remember, as we ran the download command, a number of `INFO` logs were printed to the screen. The **workflow files from GitHub** were downloaded to the `workflow` directory and the **centralised configs from GitHub** were downloaded to the `configs` directory: 
-
-![](../figs/2.1_nfcore-info.png)
-
-For this session we will be working with the `workflow` directory:
+The public [institutional configs](https://github.com/nf-core/configs) were downloaded to the `configs` directory. The code base for our pipeline will be stored in the `workflow` directory:
 
 ```default
 ls -l nf-core-rnaseq-3.11.1/workflow
@@ -117,7 +102,7 @@ drwxrwxr-x 4 ubuntu ubuntu  4096 Apr 21 02:08 subworkflows
 drwxrwxr-x 2 ubuntu ubuntu  4096 Apr 21 02:08 workflows
 ```
 
-We explored the standard nf-core workflow directory structure in Session 1. The most important files and directories for this session are:
+The files and directories we will be working with in this session are:
 
 |Feature                |Importance                                                         |
 |-----------------------|-------------------------------------------------------------------|
@@ -126,69 +111,83 @@ We explored the standard nf-core workflow directory structure in Session 1. The 
 |`modules/`             |Contains Nextflow processes used by the workflow. They are called by the `main.nf` file|
 |`workflows/rnaseq.nf`  |All the modules, subworkflows, channels, workflow structure for running the rnaseq pipeline |
 
-### **2.1.2. Build your run command**
+::: {.callout-caution collapse="true"}
+### **Git installation method**{.unlisted}
+In situations where you might not wish to use the nf-core tools utility, download the nf-core/rnaseq source code from it's [GitHub repository](https://github.com/nf-core/rnaseq) with git. 
 
-All nf-core pipelines are provided with sensible default settings that have broad applicability and comprehensive documentation that explains [pipeline usage](https://nf-co.re/rnaseq/3.11.1/usage) and [available parameters](https://nf-co.re/rnaseq/3.11.1/parameters). Before we can decide which parameters to apply, we need to identify the default settings of the pipeline and where we can customise for our own needs, if desired. 
+Clone the nf-core/rnaseq repository:
+```default
+git clone https://github.com/nf-core/rnaseq.git
+```
+:no_entry: **BEWARE** :no_entry: this method will download a copy of the pipeline with a different directory name and slightly different structure. If you choose to use this method, you will need to adjust some paths specified in the upcoming lessons accordingly. 
+::: 
 
-Pipeline structure and possible customisation options will vary between nf-core pipelines. Generally, pipelines can be customised at a few different levels:
+### **2.1.2. Design your run command**
 
-* The workflow structure: selecting which path to follow (i.e. the vaious method options below)
-* The process: choosing one tool over another to perform a process (i.e. TrimGalore! vs FastP below)  
-* Tool settings: applying specific thresholds or optional flags for a tool  
-* Compute resources: specifying CPU and memory thresholds or execution and software methods based on the infrastructure you're working on.    
+All nf-core pipelines are provided with comprehensive documentation that explains [pipeline usage](https://nf-co.re/rnaseq/3.11.1/usage) and [available parameters](https://nf-co.re/rnaseq/3.11.1/parameters). All nf-core pipelines can be run using a single command with required input parameters. 
+
+Pipeline structure and our ability to customise the workflow vary between nf-core pipelines but generally, pipelines can be customised at a few different levels:
+
+|Level of effect   |Customisation feature                                                      |
+|---------------------|-----------------------------------------------------------------------------|
+|The workflow      |Where diverging workflows are available for a pipeline, you may choose a path to follow |
+|A process         |Where more than one tool is available for a single process, you may choose which to use |
+|The tool          |Apply specific thresholds or optional flags for a tool on top of the default run command |
+|Compute resources |Specify resource thresholds or software execution methods for the workflow or a process |
+
+Looking at the nf-core/rnaseq pipeline structure below, we can see that the developers have:
+
+1. Organised the workflow into 5 stages based on the type of work that is being done
+2. Provided multiple workflow options and specified which is the default
+3. Provided multiple tool options for some processes
 
 ![](../figs/2.1_pipeline-choice.png)
 
-Looking at the nf-core/rnaseq pipeline structure above, we can see that the developers have organised the workflow into **5 stages** and given users **1 location where we can make workflow-level customisations** and **2 locations where we can make process-level customisations**. The default nf-core/rnaseq method uses STAR to perform read alignment and Salmon to perform quantification. To understand tool and resource customisations, we'll need to take a look at the parameter documentation. We will explore these in depth in the following lessons. 
+The number and type of default and optional parameters an nf-core pipeline accepts is at the discretion of it's developers. However at a minimum, pipelines typically:
 
-For now, take a look at all the options available for the pipeline by running:
+* Require users to specify a [sample sheet](https://nf-co.re/rnaseq/3.11.1/usage#samplesheet-input)  (`--input`) detailing sample data and relevant metadata
+* Autogenerate or acquire missing reference files from [iGenomes](https://github.com/nf-core/rnaseq/blob/master/conf/igenomes.config) (`--genome`) if not provided by the user.
+
+You can see the recommended (typical) run command and all the parameters available for the nf-core/rnaseq pipeline by running:
 
 ```default
 nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf --help 
 ```
+The typical or recommended run command for this pipeline is provided at the top of the screen. 
 
-Notice the top of the print out, there is a 'typical' run command provided. In the diagram below, we can compare the typical run command with the run command we will be executing. Our command applies the default method of STAR and Salmons for alignment and quantification but we've also diverged from the typical command where we have:
+```default
+nextflow run nf-core/rnaseq --input samplesheet.csv --outdir <OUTDIR> --genome GRCh37 -profile docker
+```
 
-* Provided our own reference files via file specific parameters instead of using the iGenomes repository 
-* Added some optional flags to customise some processes 
-* Added some optional resource specifications suitable for our environment. 
+It outlines a requirement for a few basic things: 
+
+* An input file 
+* A location to store outputs 
+* Relevant reference data 
+* A software management method 
+
+::: {.callout-warning}
+### **Hyphens matter in Nextflow!**
+Nextflow-specific parameters use one (`-`) hyphen, whereas pipeline-specific parameters use two (`--`). In the typical run command above `-profile` is a **Nextflow** parameter, while `--input` is an **nf-core** parameter.
+::: 
+
+Most of us will need to adjust the command a little more for our experiments though. Today we'll be adjusting the recommending run command by: 
+
+1. Providing our own reference files
+2. Using the Singularity profile, instead of Docker 
+3. Customising some processes 
+4. Specifying the computing resource limitations of our instances 
+
+You can see how we've customised the typical run command in the diagram below: 
 
 ![](../figs/2.1_default-command.png)
 
-Underneath the typical run command suggestion, there are lots parameters, grouped under headings. 
+### **2.1.3. Run the pipeline**
 
-:::{.callout-important}
-### Overwhelmed by all the parameters?
-
-For larger nf-core pipelines it can be challenging to pick which parameters are applied at which of the levels mentioned above. nf-core pipeline parameters are grouped under specific headings that identify which level of customisation, stage of the pipeline, or tool they apply to. 
-::: 
-
-Notice at the bottom of the print out, there is:
+Our input fastq files, reference data, and sample sheet are already available on an external file system called CernVM-FS that we can access from our Nimbus instances. Take a look at the files: 
 
 ```default
-!! Hiding 24 params, use --show_hidden_params to show them !!
-```
-
-Three additional parameter sections are hidden from view. This is because they are less commonly used. To view all the pipeline run options on the command line, run:
-
-```default
-nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf --help --show_hidden_params
-```
-
-::: {.callout-warning}
-### **Hyphens matter!**
-Hyphens matter when it comes to parameter flags in nf-core pipelines! Nextflow command-line parameters use one (`-`), whereas pipeline-specific parameters use two (`--`). For example: `-profile` is a **Nextflow** parameter, while `--input` is an **nf-core** parameter.
-:::
-
-All the data (including fastqs, reference fasta, gtf, Salmon and STAR indexes) are already available on an external file system called CernVM-FS that we can access from our Nimbus instances. Take a look at the files: 
-
-```default
-ls -l /cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523/
-
-#Workaround for testing (data not yet on cvmfs)
-wget -O nfcore_materials.tar.gz https://cloudstor.aarnet.edu.au/plus/s/gIBdDhKEwfq2j58/download
-tar -zxvf nfcore_materials.tar.gz
-ls -l ~/session2/materials
+ls -l /cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523
 ```
 
 ```default
@@ -197,62 +196,41 @@ drwxrwxr-x 3 ubuntu ubuntu 4096 Feb 14 05:46 mm10_reference
 -rw-rw-r-- 1 ubuntu ubuntu  641 Feb 16 05:57 samplesheet.csv
 ```
 
-A [sample sheet](https://nf-co.re/rnaseq/3.11.1/usage#samplesheet-input) is a standard input requirement for nf-core pipelines. This sheet specifies:
-
-* The sample name
-* Relevant input files for each sample 
-* Other metadata for each sample
-
-Copy and save the text below as `samplesheet.csv`:
+Copy the following into a file called `samplesheet.csv`:
 
 ```default
 sample,fastq_1,fastq_2,strandedness
-SRR3473989,/home/ubuntu/session2/materials/fastqs/SRR3473989_selected.fastq.gz,,forward
-SRR3473988,/home/ubuntu/session2/materials/fastqs/SRR3473988_selected.fastq.gz,,forward
-SRR3473987,/home/ubuntu/session2/materials/fastqs/SRR3473987_selected.fastq.gz,,forward
-SRR3473985,/home/ubuntu/session2/materials/fastqs/SRR3473985_selected.fastq.gz,,forward
-SRR3473986,/home/ubuntu/session2/materials/fastqs/SRR3473986_selected.fastq.gz,,forward
-SRR3473984,/home/ubuntu/session2/materials/fastqs/SRR3473984_selected.fastq.gz,,forward
+SRR3473989,/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523/fastqs/SRR3473989_selected.fastq.gz,,forward
+SRR3473988,/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523/fastqs/SRR3473988_selected.fastq.gz,,forward
+SRR3473987,/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523/fastqs/SRR3473987_selected.fastq.gz,,forward
+SRR3473985,/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523/fastqs/SRR3473985_selected.fastq.gz,,forward
+SRR3473986,/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523/fastqs/SRR3473986_selected.fastq.gz,,forward
+SRR3473984,/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523/fastqs/SRR3473984_selected.fastq.gz,,forward
 ```
 
-This file has a header and one row for each sample, as directed by the nf-core samplesheet specifications. Note we only have one single-end read file for each sample, as such we have left the 3rd column empty.
-
-### **2.1.3. Run the pipeline**
-
-We need to store the path to our input and reference data in a variable for our run command:
+Store the path to our prepared data to in a variable for our run command:
 
 ```default
-materials=/home/ubuntu/session2/materials #for cloudstor
-materials=/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523 #for cvmfs
+materials=/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523
 ```
 
-Now run the pipeline, with the necessary flags and the `samplesheet.csv` file you just created: 
+Now run the pipeline: 
 
 ```default
 nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
     --input samplesheet.csv \
-    -profile singularity \
-    --skip_markduplicates \
+    --outdir Lesson-2.1 \
     --fasta $materials/mm10_reference/mm10_chr18.fa \
     --gtf $materials/mm10_reference/mm10_chr18.gtf \
     --star_index $materials/mm10_reference/STAR \
     --salmon_index $materials/mm10_reference/salmon-index \
+    -profile singularity \
+    --skip_markduplicates \
     --save_trimmed true \
     --save_unaligned true \
-    --extra_salmon_quant_args '--numBootstraps 10' \
     --max_memory '6.GB' \
-    --max_cpus 2 \
-    --outdir Lesson-2.1
+    --max_cpus 2
 ```
-
-::: {.callout-important}
-## :shrug: Zoom check-in! :shrug:
-
-Is everyone ok? 
-
-Yes, move on :clap: `:clap:`   
-No, help! :cry: `:cry:` 
-:::
 
 Take a look at the stdout printed to the screen. Your workflow configuration and parameter customisations are all documented here. You can use this to confirm if your parameters have been correctly passed to the run command: 
 
