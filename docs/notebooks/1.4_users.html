@@ -206,8 +206,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#nf-core-tools-for-users" id="toc-nf-core-tools-for-users" class="nav-link active" data-scroll-target="#nf-core-tools-for-users"><strong>1.4.1 nf-core tools for users</strong></a></li>
   <li><a href="#nf-core-list" id="toc-nf-core-list" class="nav-link" data-scroll-target="#nf-core-list"><strong>1.4.2 <code>nf-core list</code></strong></a></li>
-  <li><a href="#nf-core-launch" id="toc-nf-core-launch" class="nav-link" data-scroll-target="#nf-core-launch"><strong>1.4.2 <code>nf-core launch</code></strong></a></li>
-  <li><a href="#nf-core-download" id="toc-nf-core-download" class="nav-link" data-scroll-target="#nf-core-download"><strong>1.4.3 nf-core download</strong></a></li>
+  <li><a href="#nf-core-download" id="toc-nf-core-download" class="nav-link" data-scroll-target="#nf-core-download"><strong>1.4.2 <code>nf-core download</code></strong></a></li>
+  <li><a href="#nf-core-launch" id="toc-nf-core-launch" class="nav-link" data-scroll-target="#nf-core-launch"><strong>1.4.3 <code>nf-core launch</code></strong></a></li>
   </ul>
 </nav>
     </div>
@@ -244,23 +244,22 @@ Objectives
 <ul>
 <li>Learn more about nf-core tooling for users.</li>
 <li>Use <code>nf-core list</code> to view information about nf-core workflows.</li>
+<li>Use <code>nf-core download</code> to download a workflow and it’s singularity images.</li>
 <li>Use <code>nf-core launch</code> to create a parameters file.</li>
-<li>Use <code>nf-core download</code> to download a workflow and it’s software.</li>
 </ul>
 </div>
 </div>
 <section id="nf-core-tools-for-users" class="level3">
 <h3 class="anchored" data-anchor-id="nf-core-tools-for-users"><strong>1.4.1 nf-core tools for users</strong></h3>
 <p>nf-core tools has additional commands to help <strong>users</strong> execute workflows. Although you do not need to use these commands to execute the nf-core workflows, they can greatly assist and improve and simplify your experience.</p>
-<p>There are also nf-core tools for <strong>developers</strong>. However, these will not be covered as a part of this workshop. If you are curious to learn more about these tools you can find more information on the <a href="https://nf-co.re/tools/">tools page</a> on the nf-core website.</p>
+<p>There are also nf-core tools for <strong>developers</strong>. However, these will not be covered as a part of this workshop. If you are curious to learn more about these tools you can find more information on the nf-core websites <a href="https://nf-co.re/tools/">tools page</a>.</p>
 </section>
 <section id="nf-core-list" class="level3">
 <h3 class="anchored" data-anchor-id="nf-core-list"><strong>1.4.2 <code>nf-core list</code></strong></h3>
-<p>The nf-core <code>list</code> command can used to print a list of remote nf-core workflows along with your local information.</p>
+<p>The nf-core <code>list</code> command can be used to print a list of remote nf-core workflows along with your local workflow information.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="../figs/1.4_nf-corelist.svg" class="quarto-discovered-preview-image img-fluid" style="width:100.0%"></p>
-<p>The output shows the latest workflow version number and when it was released. You will also be shown if and when a workflow was pulled locally and whether you have the latest version.</p>
-<p>Keywords can be supplied to help filter the workflows based on matches in titles, descriptions, or topics:</p>
+<p>The output shows the latest workflow version number and when it was released. You will also be shown if and when a workflow was pulled locally and whether you have the latest version. Keywords can also be supplied to help filter the workflows based on matches in titles, descriptions, or topics:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> list dna</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="../figs/1.4_nf-corelist-dna.svg" class="img-fluid" style="width:100.0%"></p>
 <p>Options can also be used to sort the workflows by latest release (<code>-s release</code>, default), when you last pulled a workflow locally (<code>-s pulled</code>), alphabetically (<code>-s name</code>), or number by the number of GitHub stars (<code>-s stars</code>).</p>
@@ -295,17 +294,33 @@ Solution
 </div>
 </div>
 </section>
-<section id="nf-core-launch" class="level3">
-<h3 class="anchored" data-anchor-id="nf-core-launch"><strong>1.4.2 <code>nf-core launch</code></strong></h3>
-<p>Nextflow workflows can have a considerable number of optional command line flags. To help manage these, you can use the <code>nf-core launch</code> command.</p>
-<p>The command takes one argument - either the name of an nf-core workflow which will be pulled automatically or the path to a directory containing a Nextflow workflow:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> launch nf-core/<span class="op">&lt;</span>workflow<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>When running this command, you will first be asked about which version of a workflow you would like to execute. Next, you will be given the choice between a web-based graphical interface or an interactive command-line wizard tool to enter the workflow parameters for your execute. Both interfaces show documentation alongside each parameter, will generate a run ID, and will validate your inputs.</p>
-<p><img src="../figs/1.4_wizard.excalidraw.png" class="img-fluid" style="width:100.0%"></p>
-<p>The <code>launch</code> tool uses the <code>nextflow_schema.json</code> file from a workflow to give parameter descriptions, defaults, and grouping. If no file for the workflow is found, one will be automatically generated at runtime.</p>
-<p>The <code>launch</code> tool will save your parameter variables as a JSON file called <code>nf-params.json</code> and will suggest an execution command that includes the <code>-params-file</code> flag and your new <code>nf-params.json</code> file.</p>
-<p>The wizard will ask if you want to launch the Nextflow run. You will also be given the <code>run</code> command and a copy of the JSON file for you to copy and paste if you wish.</p>
-<p>Any profiles or Nextflow options that are set using the wizard will also be included in your <code>run</code> command.</p>
+<section id="nf-core-download" class="level3">
+<h3 class="anchored" data-anchor-id="nf-core-download"><strong>1.4.2 <code>nf-core download</code></strong></h3>
+<p>Sometimes you may need to execute an nf-core workflow on a server or HPC system that has no internet connection. In this case, you will need to fetch the workflow files and manually transfer them to your system. To make this process easier and ensure accurate retrieval of correctly versioned code and software containers, nf-core has the <code>download</code> helper tool.</p>
+<p>The nf-core <code>download</code> command will download both the workflow code and the institutional nf-core/configs files. It can also optionally download singularity image file.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> download</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If run without any arguments, the download tool will interactively prompt you for the required information. Each prompt option has a flag and if all flags are supplied then it will run without a request for any additional user input:</p>
+<ul>
+<li><strong>Pipeline name</strong>
+<ul>
+<li>Name of workflow you would like to download.</li>
+</ul></li>
+<li><strong>Pipeline revision</strong>
+<ul>
+<li>Select the revision you would like to download.</li>
+</ul></li>
+<li><strong>Pull containers</strong>
+<ul>
+<li>Choose if you would like to download Singularity images.</li>
+<li>You will be asked for a path to a folder where you would like to store these images if you have not set your <code>NXF_SINGULARITY_CACHEDIR</code>.</li>
+</ul></li>
+<li><strong>Choose compression type</strong>
+<ul>
+<li>Choose compression type for Singularity images.</li>
+</ul></li>
+</ul>
+<p>Alternatively, you could build your own execution command with the command line options.</p>
+<p><img src="../figs/1.4_downloadhelp.svg" class="img-fluid" style="width:100.0%"></p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -316,7 +331,7 @@ Solution
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Execute the nf-core/rnaseq workflow with the nf-core <code>launch</code> command. Use the latest version of the workflow with the the <code>test</code> and <code>singularity</code> profiles, and name your output directory <code>results</code>:</p>
+<p>Use the nf-core <code>download</code> command to download revision <code>3.11.1</code> of the <code>nf-core/rnaseq</code> workflow <strong>with</strong> it’s <strong>uncompressed</strong> Singularity images. You can use either the command line options or prompts.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -331,44 +346,56 @@ Solution
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Use the nf-core <code>launch</code> command for the <code>nf-core/rnaseq</code> workflow and follow the prompts:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> launch nf-core/rnaseq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Your final <code>run</code> command should look like this:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/rnaseq <span class="at">-r</span> 3.11.1 <span class="at">-profile</span> test,singularity <span class="at">-params-file</span> nf-params.json</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Your <code>nf-params.json</code> file should look like this:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"outdir"</span><span class="ex">:</span> <span class="st">"results"</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Use the nf-core <code>launch</code> command for the <code>nf-core/rnaseq</code> workflow and follow the prompts. If you were to write your own command and options it would look like this:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> download nf-core/rnaseq <span class="at">--revision</span> 3.11.1 <span class="at">--container</span> singularity <span class="at">--compress</span> none </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="nf-core-download" class="level3">
-<h3 class="anchored" data-anchor-id="nf-core-download"><strong>1.4.3 nf-core download</strong></h3>
-<p>Sometimes you may need to execute an nf-core workflow on a server or HPC system that has no internet connection. In this case, you will need to fetch the workflow files and manually transfer them to your system.</p>
-<p>To make this process easier and ensure accurate retrieval of correctly versioned code and software containers, nf-core has the <code>download</code> helper tool.</p>
-<p>The nf-core <code>download</code> command will download both the workflow code and the institutional nf-core/configs files. It can also optionally download singularity image file.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> download</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>If run without any arguments, the download tool will interactively prompt you for the required information. Each prompt option has a flag and if all flags are supplied then it will run without a request for any additional user input:</p>
-<ul>
-<li><strong>Pipeline name</strong>
-<ul>
-<li>Name of workflow you would like to download.</li>
-</ul></li>
-<li><strong>Pipeline revision</strong>
-<ul>
-<li>Select the revision you would like to download.</li>
-</ul></li>
-<li><strong>Pull containers</strong>
-<ul>
-<li>Choose if you would like to download Singularity images.</li>
-<li>This will only work if you have Singularity installed.</li>
-</ul></li>
-<li><strong>Choose compression type</strong>
-<ul>
-<li>Choose compression type for Singularity images.</li>
-</ul></li>
-</ul>
+<section id="nf-core-launch" class="level3">
+<h3 class="anchored" data-anchor-id="nf-core-launch"><strong>1.4.3 <code>nf-core launch</code></strong></h3>
+<p>Nextflow workflows can have a large number of optional parameters. The <code>nf-core launch</code> command is designed to help you write parameter files for when you launch your workflow.</p>
+<p>The nf-core <code>launch</code> command takes one argument - either the name of an nf-core workflow which will be pulled automatically <strong>or</strong> the path to a directory containing a Nextflow workflow:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> launch nf-core/<span class="op">&lt;</span>workflow<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>When running this command, you will first be asked about which version of a workflow you would like to execute. Next, you will be given the choice between a web-based graphical interface or an interactive command-line wizard tool to enter the workflow parameters. Both interfaces show documentation alongside each parameter, will generate a run ID, and will validate your inputs.</p>
+<p><img src="../figs/1.4_wizard.excalidraw.png" class="img-fluid" style="width:100.0%"></p>
+<p>The nf-core <code>launch</code> tool uses the <code>nextflow_schema.json</code> file from a workflow to give parameter descriptions, defaults, and grouping. If no file for the workflow is found, one will be automatically generated at runtime.</p>
+<p>The <code>launch</code> tool will save your parameter variables as a <code>.json</code> file called <code>nf-params.json</code> and will suggest an execution command that includes the <code>-params-file</code> flag and your new <code>nf-params.json</code> file. The command line wizard will finish by asking if you want to launch the workflow. Any profiles or options that were set using the wizard will be included in your <code>run</code> command.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Challenge</strong>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Generate a schema and run command for revision <code>3.11.1</code> of the <code>nf-core/rnaseq</code> workflow using the nf-core <code>launch</code> command. Use the <code>test</code> and <code>singularity</code> profiles and name your output folder <code>my_test_output</code>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Use the nf-core <code>launch</code> command for the <code>nf-core/rnaseq</code> workflow and follow the prompts:</p>
+<p>Your final <code>run</code> command should look like this:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/rnaseq <span class="at">-r</span> 3.11.1 <span class="at">-profile</span> test,singularity <span class="at">-params-file</span> nf-params.json</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Your <code>nf-params.json</code> file should look like this:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"outdir"</span><span class="ex">:</span> <span class="st">"my_test_output"</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -380,9 +407,9 @@ Solution
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>Point 1</li>
-<li>Point 2</li>
-<li>Point 3</li>
+<li>The nf-core <code>list</code> command can be used to view local and remote information about nf-core workflows.</li>
+<li>The nf-core <code>download</code> command is a powerful way to download a workflow and its Singularity images.</li>
+<li>The nf-core <code>launch</code> command can be a useful tool for writing parameter files.</li>
 </ul>
 </div>
 </div>
