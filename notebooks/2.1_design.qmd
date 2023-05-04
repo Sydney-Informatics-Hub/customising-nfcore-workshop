@@ -12,12 +12,13 @@ from: markdown+emoji
 ::: callout-tip
 ### Objectives{.unlisted}
 
+- Understand the levels of customisation available for nf-core pipelines
 - Use the nf-core documentation to select appropriate parameters for a run command 
 - Write and run a nf-core rnaseq command on the command line 
 - Explore pipeline deployment and outputs 
 :::
 
-The nf-core community values flexibility and has built this into their pipelines by allowing users to customise various aspects of a workflow run using parameters. While nf-core pipelines are designed to run with 'sensible' default settings, these may not always suit the needs of your experiment of compute environment. In this lesson, we will design a run command and execute an nf-core pipeline using parameters to provide required inputs and customise various aspects of the workflow.
+The nf-core community values flexibility and has built this into their pipelines by allowing users to customise various aspects of a workflow run using [parameters](https://www.nextflow.io/docs/latest/config.html#scope-params). While nf-core pipelines are designed to run with 'sensible' default settings, these may not always suit the needs of your experiment of compute environment. In this lesson, we will design and execute a customised run command using different types of parameters.
 
 ### **2.1.1. Download the pipeline code**
 
@@ -27,9 +28,7 @@ Create a new directory for all session 2 activities and move into it:
 mkdir ~/session2 && cd $_
 ```
 
-We recommend that you keep a local copy of a pipeline's code for the sake of reproducibility and good record keeping. There are a number of ways to download a nf-core pipeline. We recommend using either the [nf-core tools](https://nf-co.re/tools/) utility to [download a pipeline](https://nf-co.re/tools/#downloading-pipelines-for-offline-use) for offline use. 
-
-Take a look at the download options available to us:
+We recommend that you keep a local copy of a pipeline's code for the sake of reproducibility and good record keeping. There are a number of ways to download a nf-core pipeline. Using the [nf-core tools](https://nf-co.re/tools/) [download tool](https://nf-co.re/tools/#downloading-pipelines-for-offline-use), take a look at the download options available to us:
 
 ```default
 nf-core download --help
@@ -79,29 +78,6 @@ The public [institutional configs](https://github.com/nf-core/configs) were down
 ls -l nf-core-rnaseq-3.11.1/workflow
 ```
 
-```default
-total 216
--rwxrwxr-x 1 ubuntu ubuntu 58889 Apr 21 02:08 CHANGELOG.md
--rwxrwxr-x 1 ubuntu ubuntu  9681 Apr 21 02:08 CITATIONS.md
--rwxrwxr-x 1 ubuntu ubuntu  9078 Apr 21 02:08 CODE_OF_CONDUCT.md
--rwxrwxr-x 1 ubuntu ubuntu  1096 Apr 21 02:08 LICENSE
--rwxrwxr-x 1 ubuntu ubuntu 10002 Apr 21 02:08 README.md
-drwxrwxr-x 3 ubuntu ubuntu  4096 Apr 21 02:08 assets
-drwxrwxr-x 2 ubuntu ubuntu  4096 Apr 21 02:08 bin
-drwxrwxr-x 2 ubuntu ubuntu  4096 Apr 21 02:08 conf
-drwxrwxr-x 3 ubuntu ubuntu  4096 Apr 21 02:08 docs
-drwxrwxr-x 2 ubuntu ubuntu  4096 Apr 21 02:08 lib
--rwxrwxr-x 1 ubuntu ubuntu  2736 Apr 21 02:08 main.nf
-drwxrwxr-x 4 ubuntu ubuntu  4096 Apr 21 02:08 modules
--rwxrwxr-x 1 ubuntu ubuntu 13970 Apr 21 02:08 modules.json
--rwxrwxr-x 1 ubuntu ubuntu 10847 Apr 21 02:08 nextflow.config
--rwxrwxr-x 1 ubuntu ubuntu 42576 Apr 21 02:08 nextflow_schema.json
--rwxrwxr-x 1 ubuntu ubuntu   359 Apr 21 02:08 pyproject.toml
-drwxrwxr-x 4 ubuntu ubuntu  4096 Apr 21 02:08 subworkflows
--rwxrwxr-x 1 ubuntu ubuntu  1684 Apr 21 02:08 tower.yml
-drwxrwxr-x 2 ubuntu ubuntu  4096 Apr 21 02:08 workflows
-```
-
 The files and directories we will be working with in this session are:
 
 |Feature                |Importance                                                         |
@@ -124,15 +100,13 @@ git clone https://github.com/nf-core/rnaseq.git
 
 ### **2.1.2. Design your run command**
 
-All nf-core pipelines are provided with comprehensive documentation that explains [pipeline usage](https://nf-co.re/rnaseq/3.11.1/usage) and [available parameters](https://nf-co.re/rnaseq/3.11.1/parameters). All nf-core pipelines can be run using a single command with required input parameters. 
-
-Pipeline structure and our ability to customise the workflow vary between nf-core pipelines but generally, pipelines can be customised at a few different levels:
+All nf-core pipelines are provided with comprehensive documentation that explains [pipeline usage](https://nf-co.re/rnaseq/3.11.1/usage) and [available parameters](https://nf-co.re/rnaseq/3.11.1/parameters). All nf-core pipelines can be run using a single command but the types and number of parameters will vary between pipelines. Generally, pipelines can be customised at a few different levels:
 
 |Level of effect   |Customisation feature                                                      |
 |---------------------|-----------------------------------------------------------------------------|
 |The workflow      |Where diverging workflows are available for a pipeline, you may choose a path to follow |
 |A process         |Where more than one tool is available for a single process, you may choose which to use |
-|The tool          |Apply specific thresholds or optional flags for a tool on top of the default run command |
+|A tool          |Apply specific thresholds or optional flags for a tool on top of the default run command |
 |Compute resources |Specify resource thresholds or software execution methods for the workflow or a process |
 
 Looking at the nf-core/rnaseq pipeline structure below, we can see that the developers have:
@@ -171,7 +145,7 @@ It outlines a requirement for a few basic things:
 Nextflow-specific parameters use one (`-`) hyphen, whereas pipeline-specific parameters use two (`--`). In the typical run command above `-profile` is a **Nextflow** parameter, while `--input` is an **nf-core** parameter.
 ::: 
 
-Most of us will need to adjust the command a little more for our experiments though. Today we'll be adjusting the recommending run command by: 
+Most of us will need to adjust the command a little more for our experiments though. Today we'll be adjusting the typical nf-core/rnaseq run command by: 
 
 1. Providing our own reference files
 2. Using the Singularity profile, instead of Docker 
@@ -288,7 +262,8 @@ This file is created by Nextflow during the execution of a pipeline and contains
 
 ::: {.callout-note}
 ### **Key points**
-- nf-core pipelines are provided with sensible defaults. You can adjust some settings as required by applying flags to your run command.
-- nf-core pipelines are all built from a template that means they have a standard structure to their code bases  
+- nf-core pipelines are provided with sensible default settings and required inputs. 
+- Customising a pipeline's run command can be achieved by applying parameters.
+- Parameters can be used to customise the workflow, some processes, some tools, and compute resources. 
+- The number of hyphens indicate if a parameter flag is specific to Nextflow or the pipeline. 
 :::
-

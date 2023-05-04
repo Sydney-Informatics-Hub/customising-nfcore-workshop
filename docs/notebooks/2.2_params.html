@@ -234,8 +234,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#revise-the-run-command" id="toc-revise-the-run-command" class="nav-link active" data-scroll-target="#revise-the-run-command"><strong>2.2.1. Revise the run command</strong></a></li>
   <li><a href="#identify-the-run-command-for-a-process" id="toc-identify-the-run-command-for-a-process" class="nav-link" data-scroll-target="#identify-the-run-command-for-a-process"><strong>2.2.2. Identify the run command for a process</strong></a></li>
   <li><a href="#write-a-parameter-file" id="toc-write-a-parameter-file" class="nav-link" data-scroll-target="#write-a-parameter-file"><strong>2.2.3. Write a parameter file</strong></a></li>
-  <li><a href="#pass-the-parameter-file-to-the-run-command" id="toc-pass-the-parameter-file-to-the-run-command" class="nav-link" data-scroll-target="#pass-the-parameter-file-to-the-run-command"><strong>2.2.4. Pass the parameter file to the run command</strong></a></li>
-  <li><a href="#manage-parameters-with-nf-core-schema" id="toc-manage-parameters-with-nf-core-schema" class="nav-link" data-scroll-target="#manage-parameters-with-nf-core-schema"><strong>2.2.5. Manage parameters with nf-core schema</strong></a></li>
+  <li><a href="#use-a-parameter-file-in-a-pipeline-run" id="toc-use-a-parameter-file-in-a-pipeline-run" class="nav-link" data-scroll-target="#use-a-parameter-file-in-a-pipeline-run"><strong>2.2.4. Use a parameter file in a pipeline run</strong></a></li>
   </ul>
 </nav>
     </div>
@@ -270,15 +269,16 @@ Objectives
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>Write a parameter file</li>
-<li>Understand the YAML file format</li>
-<li>Rerun the workflow using a params file</li>
-<li>Understand the use of the params file for reproducible and transparent research</li>
+<li>Investigate a warning message provided by an nf-core pipeline run</li>
+<li>Use the <code>nextflow log</code> command to trace processes cached in the work directory</li>
+<li>Observe how a process is implemented at the task level</li>
+<li>Rerun a workflow using a parameter file to specify pipeline-specific parameters</li>
+<li>Understand the use of the parameter file for reproducible and transparent research</li>
 </ul>
 </div>
 </div>
-<p>In Nextflow, <a href="https://www.nextflow.io/docs/latest/config.html#scope-params">parameters</a> are values that can be set by the user and used to control the behaviour of a workflow or process within the workflow. Within the Nextflow code base, they are defined by the <code>params{}</code> scope. Parameters are also used in nf-core workflows to specify input and output files and define other aspects of workflow execution. Each nf-core pipeline comes with a default set of parameters that can be customised to suit specific requirements.</p>
-<p>In the previous lesson we supplied these parameters as flags in our run command. Nextflow also allows us to pass all parameters to a pipeline’s run command using the <code>-params-file</code> flag and a JSON or YAML file. In this lesson we’re going to adjust our run command and rerun the pipeline using a parameter file, rather than specifying all parameters as separate flags in the run command.</p>
+<p>In Nextflow, <a href="https://www.nextflow.io/docs/latest/config.html#scope-params">parameters</a> are values that can be set by the user and used to control the behaviour of a workflow or process within the workflow. Within the Nextflow code base, they are defined by the <code>params{}</code> scope.</p>
+<p>In the previous lesson we supplied parameters as flags in our run command. Alternatively, we can pass pipeline-specific parameters to any pipeline using Nextflow’s <code>-params-file</code> flag and a JSON or YAML file. This feature has been implemented by nf-core developers and it can enable reproducibility and collaboration. In this lesson we will adjust our run command and rerun the pipeline using a parameter file, rather than specifying all parameters as separate flags in the run command.</p>
 <section id="revise-the-run-command" class="level3">
 <h3 class="anchored" data-anchor-id="revise-the-run-command"><strong>2.2.1. Revise the run command</strong></h3>
 <p>While our pipeline completed successfully, there were a couple of warning messages that may be cause for concern:</p>
@@ -298,10 +298,10 @@ Handling dodgy error messages <span class="emoji" data-emoji="cursing_face">🤬
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The first warning message isn’t very descriptive (see this <a href="https://github.com/nf-core/rnaseq/pull/963">pull request</a>). You might come across small but inconsequential issues like this when running nf-core pipelines, too. End user feedback is always helpful, so consider submitting a GitHub issue or starting a discussion in the relevant nf-core Slack channel so others are aware and it can be addressed by the pipeline’s developers.</p>
+<p>The first warning message isn’t very descriptive (see this <a href="https://github.com/nf-core/rnaseq/pull/963">pull request</a>). You might come across issues like this when running nf-core pipelines, too. Bug reports and user feedback is very important to open source software communities like nf-core. If you come across any issues submit a GitHub issue or start a discussion in the relevant nf-core Slack channel so others are aware and it can be addressed by the pipeline’s developers.</p>
 </div>
 </div>
-<p>Let’s take a look at the MultiQC report, as directed by the second message. You can find the MultiQC report in the <code>Lesson-2.1/</code> directory:</p>
+<p>Take a look at the MultiQC report, as directed by the second message. You can find the MultiQC report in the <code>Lesson-2.1/</code> directory:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ls -la Lesson-2.1/multiqc/star_salmon/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>total 1468</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 4 ubuntu ubuntu    4096 Apr 12 04:13 .</span>
@@ -316,24 +316,26 @@ Handling dodgy error messages <span class="emoji" data-emoji="cursing_face">🤬
 </ol>
 <p>Take a look a the section labelled <strong>WARNING: Fail Strand Check</strong></p>
 <p><img src="https://user-images.githubusercontent.com/73086054/231065216-940fb01f-a7dc-416c-a481-27676bbcfff3.png" class="img-fluid"></p>
-<p>The issue here is <strong>provided strandedness</strong> that we specified in our <code>samplesheet.csv</code> and <strong>inferred strandedness</strong> identified by Salmon do not match. Look’s like we’ve incorrectly specified strandedness as forward in the <code>samplesheet.csv</code> when our raw reads actually show an equal distribution of sense and antisense reads (my mistake! <span class="emoji" data-emoji="expressionless">😑</span>). Let’s check how the nf-core/rnaseq pipeline ran the Salmon quantification process so we can explore whether or not this will potentially have an impact on our results.</p>
+<p>The warning we have received is indicating that the read strandedness we specified in our <code>samplesheet.csv</code> and <strong>inferred strandedness</strong> identified by the pipeline do not match. Look’s like I have incorrectly specified strandedness as forward in the <code>samplesheet.csv</code> when our raw reads actually show an equal distribution of sense and antisense reads (my mistake! <span class="emoji" data-emoji="expressionless">😑</span>).</p>
+<p>For those not familiar with RNAseq data, this could have a big impact on our results at the read quantification step (Salmon quant). So, let’s clarify what the Salmon quant process is doing and find a way to address this with the parameters provided by the nf-core/rnaseq pipeline.</p>
 </section>
 <section id="identify-the-run-command-for-a-process" class="level3">
 <h3 class="anchored" data-anchor-id="identify-the-run-command-for-a-process"><strong>2.2.2. Identify the run command for a process</strong></h3>
-<p>To understand what command is being run for a process, you can attempt to infer this information from a process <code>main.nf</code> script in the <code>modules/</code> directory. However, given all the different parameters that may be applied, this may not be straight forward. To understand what Salmon is doing, we’re going to use the <code>nextflow log</code> command and some custom bash code to track down the hidden <code>.command.sh</code> scripts for each Salmon quant process to find out how Salmon quant identified library type.</p>
+<p>To understand what command is being run for a process, we can attempt to infer this information from a process <code>main.nf</code> script in the <code>modules/</code> directory. However, given all the different parameters that may be applied at the process level, this may not be very clear.</p>
+<p>To understand what Salmon is doing, we’re going to use the <code>nextflow log</code> command and some custom bash code to track down the hidden <code>.command.sh</code> scripts for each Salmon quant process to find out how Salmon quant handles strandedness and if there is a way for us to override this.</p>
 <p>Use the <a href="https://www.nextflow.io/docs/latest/tracing.html#execution-log">Nextflow log</a> command to reveal information about executed pipelines in our working directory:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>nextflow log</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This will print a list of executed pipelines, by default:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>TIMESTAMP               DURATION        RUN NAME                STATUS  REVISION ID     SESSION ID                              COMMAND                                                                                                                                                                                                                                                                                                                                                    </span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>2023-04-21 00:30:30     -               friendly_montalcini     -       f421ddc35d      685266bb-b99b-4945-9a54-981e8f4b1b07    nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf --help                                                                                                                                                                                                                                                                                                 </span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>2023-04-21 00:40:58     14m 18s         mighty_swanson        OK      f421ddc35d      055e7b7f-c3ea-4fd9-a915-02343099939e    nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf --input samplesheet.csv -profile singularity --fasta /home/ubuntu/session2/materials/mm10_reference/mm10_chr18.fa --gtf /home/ubuntu/session2/materials/mm10_reference/mm10_chr18.gtf --star_index /home/ubuntu/session2/materials/mm10_reference/STAR --max_memory 6.GB --max_cpus 2 --outdir Lesson-1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>All recent runs will be listed in this file, with the most recent at the top. Let’s query the logs for the Lesson-1 run. Run the command below after filling in your unique run name. For example:</p>
+<p>All recent runs will be listed in this file, with the most recent at the bottom. Run the command below after filling in your unique run name for our previous lesson. For example:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>nextflow log mighty_swanson</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>That command will list out all the work subdirectories for all processes run. Recall that the actual tool commands issued by the nexflow processes are all recorded in hidden script files called <code>.command.sh</code> within the execution process directory. One way of observing the actual run commands issued by the workflow is to view these command scripts.</p>
+<p>That command will list out all the work subdirectories for all processes run. Recall from Session 1 that the actual tool commands issued by the nexflow processes are all recorded in hidden script files called <code>.command.sh</code> within the execution process directory. One way of observing the actual run commands issued by the workflow is to view these command scripts.</p>
 <p>But how to find them? <span class="emoji" data-emoji="thinking">🤔</span></p>
 <p>Let’s add some custom bash code to query a Nextflow run with the run name from the previous lesson. First, save your run name in a bash variable. For example:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>run_name=mighty_swanson</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>And let’s save the tool of interest (salmon) in another bash variable:</p>
+<p>And let’s save the tool of interest (salmon) in another bash variable to pull it from a run command:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>tool=salmon</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Next, run the following bash command:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>nextflow log ${run_name} | while read line;</span>
@@ -344,7 +346,7 @@ Handling dodgy error messages <span class="emoji" data-emoji="cursing_face">🤬
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        echo $cmd;     </span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>      fi; </span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    done </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>That will list all process <code>.command.sh</code> scripts containing ‘salmon’. There are multiple salmon steps in the workflow, inlcuding index and an R script. We are looking for salmon quant which performs the read quantification. For example:</p>
+<p>That will list all process <code>.command.sh</code> scripts containing ‘salmon’. There are a few different processes that run Salmon in the workflow. We are looking for Salmon quant which performs the read quantification. For example:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>/home/ubuntu/session2/work/50/d4462ece237213ace901a779a45286/.command.sh</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>/home/ubuntu/session2/work/2f/11774c859f9f55f816b754a65290a7/.command.sh</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>/home/ubuntu/session2/work/bc/0478d8de4d1c6df1413c50f4bffcb1/.command.sh</span>
@@ -366,11 +368,12 @@ Handling dodgy error messages <span class="emoji" data-emoji="cursing_face">🤬
 <li>Library type is automatically inferred based on the <code>$strandedness</code> variable</li>
 <li>Library type can be adjusted using Salmon’s <code>--libType=</code> flag and the nf-core <code>$strandedness</code> variable.</li>
 </ul>
-<p>Following the recommendations in the <a href="https://salmon.readthedocs.io/en/latest/salmon.html#what-s-this-libtype">Salmon documentation</a>, we’re going to override this default with the nf-core/rnaseq pipeline’s <code>--salmon_quant_libtype U</code> <a href="https://nf-co.re/rnaseq/3.11.1/parameters#salmon_quant_libtype">parameter</a> to indicate our data is a mix of both strands. If we want to get rid of the warning message <code>Please check MultiQC report: 6/6 samples failed strandedness check</code>, we’ll have to change the strandedness fields in our <code>samplesheet.csv</code>. Keep in mind, this will cause the pipeline to run from the beginning, without usin.</p>
+<p>Following the <a href="https://salmon.readthedocs.io/en/latest/salmon.html#what-s-this-libtype">Salmon documentation</a>, we can override this default with the nf-core/rnaseq pipeline’s <code>--salmon_quant_libtype U</code> <a href="https://nf-co.re/rnaseq/3.11.1/parameters#salmon_quant_libtype">parameter</a> to indicate our data is unstrands.</p>
+<p>If we want to get rid of the warning message <code>Please check MultiQC report: 6/6 samples failed strandedness check</code>, we’ll have to change the strandedness fields in our <code>samplesheet.csv</code>. Keep in mind, this will cause the pipeline to run from the beginning.</p>
 </section>
 <section id="write-a-parameter-file" class="level3">
 <h3 class="anchored" data-anchor-id="write-a-parameter-file"><strong>2.2.3. Write a parameter file</strong></h3>
-<p>Nextflow accepts either YAML or JSON formats for parameter files. YAML and JSON are formats for storing data objects and structures in a file and either is a valid choice for building your parameters file. We will create and apply a YAML file with our inputs for our second run, just because its easier to read.</p>
+<p>Nextflow accepts either YAML or JSON formats for parameter files. Any of the pipeline-specific <a href="https://nf-co.re/rnaseq/3.11.1/parameters">parameters</a> can be supplied to a pipeline run command in this way.</p>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -384,17 +387,17 @@ Handling dodgy error messages <span class="emoji" data-emoji="cursing_face">🤬
 <ol type="1">
 <li>Add the appropriate fields from your previous run command to the params file below. You’ll be sharing this file with a collaborator working on a <strong>different computational infrastructure</strong> but the <strong>same input and reference files</strong>.</li>
 </ol>
-<div class="sourceCode" id="cb12"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">input</span><span class="kw">:</span><span class="at"> </span><span class="st">""</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gtf</span><span class="kw">:</span><span class="at"> </span><span class="st">""</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">fasta</span><span class="kw">:</span><span class="at"> </span><span class="st">""</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">star_index</span><span class="kw">:</span><span class="at"> </span><span class="st">""</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">salmon_index</span><span class="kw">:</span><span class="at"> </span><span class="st">""</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">salmon_quant_libtype</span><span class="kw">:</span><span class="at"> </span><span class="st">"U"</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">save_trimmed</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">save_unaligned</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="fu">extra_salmon_quant_args</span><span class="kw">:</span><span class="at"> </span><span class="st">"--numBootstraps 10"</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="fu">outdir</span><span class="kw">:</span><span class="at"> </span><span class="st">"Lesson-2.2"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><span class="emoji" data-emoji="bulb">💡</span> HINT: you will only need to specify nf-core/rnaseq parameters (i.e.&nbsp;<code>--</code> flags)</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">input</span><span class="kw">:</span><span class="at"> </span><span class="st">"samplesheet.csv"</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">outdir</span><span class="kw">:</span><span class="at"> </span><span class="st">"Lesson-2.2"</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">fasta</span><span class="kw">:</span><span class="at"> </span><span class="st">"/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523/mm10_reference/mm10_chr18.fa"</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">gtf</span><span class="kw">:</span><span class="at"> </span><span class="st">"/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523/mm10_reference/mm10_chr18.gtf"</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">star_index</span><span class="kw">:</span><span class="at"> </span><span class="st">"/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523/mm10_reference/STAR"</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">salmon_index</span><span class="kw">:</span><span class="at"> </span><span class="st">"/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523/mm10_reference/salmon-index"</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">salmon_quant_libtype</span><span class="kw">:</span><span class="at"> </span><span class="st">"U"</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="at">skip_markduplicates</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="fu">save_trimmed</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="fu">save_unaligned</span><span class="kw">:</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="emoji" data-emoji="bulb">💡</span> You only need to specify pipeline-specific parameters (i.e.&nbsp;<code>--</code> flags)</p>
 </div>
 </div>
 <div class="callout-caution callout callout-style-default callout-captioned">
@@ -411,79 +414,44 @@ Solution
 <div class="callout-body-container callout-body">
 <p>Save this file as <code>workshop-params.yaml</code>:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">input</span><span class="kw">:</span><span class="at"> </span><span class="st">"samplesheet.csv"</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gtf</span><span class="kw">:</span><span class="at"> </span><span class="st">"/home/ubuntu/session2/materials/mm10_reference/mm10_chr18.gtf"</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">fasta</span><span class="kw">:</span><span class="at"> </span><span class="st">"/home/ubuntu/session2/materials/mm10_reference/mm10_chr18.fa"</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">star_index</span><span class="kw">:</span><span class="at"> </span><span class="st">"/home/ubuntu/session2/materials/mm10_reference/STAR"</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">salmon_index</span><span class="kw">:</span><span class="at"> </span><span class="st">"/home/ubuntu/session2/materials/mm10_reference/salmon-index"</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">salmon_quant_libtype</span><span class="kw">:</span><span class="at"> </span><span class="st">"U"</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">save_trimmed</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">save_unaligned</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="fu">extra_salmon_quant_args</span><span class="kw">:</span><span class="at"> </span><span class="st">"--numBootstraps 10"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">outdir</span><span class="kw">:</span><span class="at"> </span><span class="st">"Lesson-2.2"</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">fasta</span><span class="kw">:</span><span class="at"> </span><span class="st">"/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523/mm10_reference/mm10_chr18.fa"</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">gtf</span><span class="kw">:</span><span class="at"> </span><span class="st">"/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523/mm10_reference/mm10_chr18.gtf"</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">star_index</span><span class="kw">:</span><span class="at"> </span><span class="st">"/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523/mm10_reference/STAR"</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">salmon_index</span><span class="kw">:</span><span class="at"> </span><span class="st">"/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523/mm10_reference/salmon-index"</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">salmon_quant_libtype</span><span class="kw">:</span><span class="at"> </span><span class="st">"U"</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="at">skip_markduplicates</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="fu">save_trimmed</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="fu">save_unaligned</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
-<p>Any of the pipeline <a href="https://nf-co.re/rnaseq/3.11.1/parameters">parameters</a> can be added to the parameters file in this way.</p>
 </section>
-<section id="pass-the-parameter-file-to-the-run-command" class="level3">
-<h3 class="anchored" data-anchor-id="pass-the-parameter-file-to-the-run-command"><strong>2.2.4. Pass the parameter file to the run command</strong></h3>
-<p>Once your params file has been saved, run the following command. Observe:</p>
-<ul>
-<li>The command is shorter thanks to offloading some parameters to the params file</li>
-<li>The <code>-resume</code> flag. Nextflow has lots of <a href="https://www.nextflow.io/docs/latest/cli.html?highlight=resume#run">run options</a> including the ability to use cached output!</li>
-</ul>
+<section id="use-a-parameter-file-in-a-pipeline-run" class="level3">
+<h3 class="anchored" data-anchor-id="use-a-parameter-file-in-a-pipeline-run"><strong>2.2.4. Use a parameter file in a pipeline run</strong></h3>
+<p>Once your params file has been saved, run:</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  --max_memory 6.GB \</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  --max_cpus 2 \</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  -profile singularity \</span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  -params-file workshop-params.yaml \</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  --outdir Lesson-2.2 \</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  -resume                        </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>As we’ve used the <code>-resume</code> flag, the initial pre-processing stage and STAR alignments should to be restored from cache and only the Salmon and downstream QC steps will be recomputed. The rerun workflow should complete in a much shorter time and those warnings should have gone away!</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>-[nf-core/rnaseq] Pipeline completed successfully -</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>Completed at: 21-Apr-2023 05:58:06</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>Duration    : 8m 8s</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>CPU hours   : 0.4 (57.2% cached)</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>Succeeded   : 147</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>Cached      : 53</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="manage-parameters-with-nf-core-schema" class="level3">
-<h3 class="anchored" data-anchor-id="manage-parameters-with-nf-core-schema"><strong>2.2.5. Manage parameters with nf-core schema</strong></h3>
-<p>nf-core pipelines all have a <code>nextflow_schema.json</code> file in their root directory which explains all the parameters used by the workflow. You can use the <a href="https://nf-co.re/tools/#pipeline-schema"><code>nf-core schema</code> tool</a> to validate pipeline parameters, build a pipeline schema, deploy the documentation for a pipeline schema, or add new parameters to a pipeline schema (take a look at <a href="https://www.youtube.com/watch?v=PU6vAj_7WRM">this nf-core bytesize talk!</a> for a demonstration). Have a go at these bonus exercises, beware adjusting the <code>nextflow_schema.json</code> file will mean any subsequent workflow run will have to start from scratch again and prevent you applying the <code>-resume</code> function.</p>
-<div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-<strong>Bonus exercise: <code>nf-core schema validate</code> to check params file</strong>
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>The <a href="https://nf-co.re/tools/#validate-pipeline-parameters">schema validate</a> utility can be used to validate your specified parameters against the provided pipeline schema. Unfortunately, this won’t work for your <code>workshop-params.yaml</code>, so we first need to convert this to a JSON file format. To do this, run the following from the <code>session2</code> directory:</p>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  -resume                        </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The number of pipeline-specific parameters we’ve added to our run command has been significantly reduced. The only <code>--</code> parameters we’ve provided to the run command relate to how the pipeline is executed on our instances. These resource limits won’t be applicable to our imaginary collaborator who will run the pipeline on a different infrastructure.</p>
+<p>As the workflow runs a second time, you will notice 4 things:</p>
 <ol type="1">
-<li><a href="https://www.json2yaml.com/convert-yaml-to-json">Convert</a> the YAML file to JSON format and save this file as <code>workshop-params.json</code></li>
+<li>The command is much tidier thanks to offloading some parameters to the params file</li>
+<li>The <code>-resume</code> flag. Nextflow has lots of <a href="https://www.nextflow.io/docs/latest/cli.html?highlight=resume#run">run options</a> including the ability to use cached output!</li>
+<li>Some processes will be pulled from the cache. These processes remain unaffected by our addition of a new parameter.<br>
+</li>
+<li>This run of the pipline will complete in a much shorter time.</li>
 </ol>
-<div class="sourceCode" id="cb16"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  "input": "samplesheet.csv",</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  "gtf": "/home/ubuntu/session2/materials/mm10_reference/mm10_chr18.gtf",</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  "fasta": "/home/ubuntu/session2/materials/mm10_reference/mm10_chr18.fa",</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  "star_index": "/home/ubuntu/session2/materials/mm10_reference/STAR",</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  "salmon_index": "/home/ubuntu/session2/materials/mm10_reference/salmon-index",</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  "salmon_quant_libtype": "U",</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  "save_trimmed": true,</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  "save_unaligned": true,</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  "extra_salmon_quant_args": "--numBootstraps 10"</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<ol start="2" type="1">
-<li>Run the nf-core schema command to validate the specified parameters:</li>
-</ol>
-<div class="sourceCode" id="cb17"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>nf-core schema validate rnaseq workshop-params.json</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Note this only confirms your inputs match their specified type (i.e.&nbsp;boolean, string, number). It cannot confirm that a file exists, or is formatted correctly, or if a string is the correct input for a parameter.</p>
-</div>
-</div>
-</div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>-[nf-core/rnaseq] Pipeline completed successfully with skipped sampl(es)-</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>-[nf-core/rnaseq] Please check MultiQC report: 6/6 samples failed strandedness check.-</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>Completed at: 21-Apr-2023 05:58:06</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>Duration    : 8m 8s</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>CPU hours   : 0.4 (57.2% cached)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>Succeeded   : 147</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>Cached      : 53</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -497,8 +465,7 @@ Solution
 <ul>
 <li>A parameter file can be used to specify input parameters for any Nextflow workflow.</li>
 <li>Specify parameter files in a workflow run command using the <code>-params-file</code> flag.</li>
-<li>Parameter files can be written in YAML or JSON file formats.</li>
-<li>The <code>nf-core schema</code> utilities can be used to aid parameter documentation and usage.<br>
+<li>Parameter files can be written in YAML or JSON file formats.<br>
 </li>
 </ul>
 </div>
