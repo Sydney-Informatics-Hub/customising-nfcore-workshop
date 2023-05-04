@@ -168,8 +168,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#how-to-approach-open-source-software-communities" id="toc-how-to-approach-open-source-software-communities" class="nav-link active" data-scroll-target="#how-to-approach-open-source-software-communities"><strong>2.0.1. How to approach open source software communities</strong></a></li>
-  <li><a href="#log-in-to-your-instance" id="toc-log-in-to-your-instance" class="nav-link" data-scroll-target="#log-in-to-your-instance"><strong>2.0.2. Log in to your instance</strong></a></li>
+  <li><a href="#log-back-in-to-your-instance" id="toc-log-back-in-to-your-instance" class="nav-link active" data-scroll-target="#log-back-in-to-your-instance"><strong>2.0.1. Log back in to your instance</strong></a></li>
   </ul>
 </nav>
     </div>
@@ -193,7 +192,7 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>This session builds on fundamental concepts learned in <a href="">Session 1</a> and provide you with hands-on experience in nf-core workflow customisation. Throughout the session we will be working with a case study to apply an nf-core workflow. Each lesson will build on the previous one, so you can gain a deeper understanding of the customisation techniques and the impact they have on the workflow and your results.</p>
+<p>This session builds on fundamental concepts learned in <a href="../notebooks/1.0_intro.html">Session 1</a> and provide you with hands-on experience in nf-core workflow customisation. Throughout the session we will be working with a case study to apply an nf-core workflow. Each lesson will build on the previous one, so you can gain a deeper understanding of the customisation techniques and the impact they have on the workflow and your results.</p>
 <p>We will explore the source code of the nf-core/rnaseq workflow and apply customisations using a parameter file and custom configuration files. You will be writing these files using <strong>Nextflow</strong> and <strong>YAML</strong>. You will also be running Nextflow commands and writing some custom <strong>Bash</strong> code to efficiently extract information from the source code <span class="emoji" data-emoji="nerd_face">🤓</span>.</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -208,14 +207,8 @@ Applying what you learn here to other nf-core workflows
 <p>While all activities in this session will be performed using the nf-core/rnaseq workflow, all customisation scenarios we explore are applicable to other nf-core workflows and do not require an understanding of RNAseq data processing.</p>
 </div>
 </div>
-<section id="how-to-approach-open-source-software-communities" class="level3">
-<h3 class="anchored" data-anchor-id="how-to-approach-open-source-software-communities"><strong>2.0.1. How to approach open source software communities</strong></h3>
-<p>As with all open source bioinformatics resources, nf-core workflows may not suit all applications. It is always important that you <strong>understand the needs of your dataset and research questions before deciding on a workflow</strong>. nf-core is a community effort powered by life scientists and software developers, who volunteer their time to build, maintain, and support workflows. All nf-core workflows are provided with ‘sensible’ default settings that have broad applicability. What is ‘sensible’ varies dramatically between different experiments, users, computing environments, and datasets, so these settings might not suit your needs.</p>
-<p>We recommend approaching the application and customisation of nf-core workflows to your research with the following framework:</p>
-<p><strong>DIAGRAM OF NF-CORE COMMUNITY FEATURE - IMPLICATION FOR WORKFLOWS - Q TO ASK - OUR RECOMMENDATIONS</strong></p>
-</section>
-<section id="log-in-to-your-instance" class="level3">
-<h3 class="anchored" data-anchor-id="log-in-to-your-instance"><strong>2.0.2. Log in to your instance</strong></h3>
+<section id="log-back-in-to-your-instance" class="level3">
+<h3 class="anchored" data-anchor-id="log-back-in-to-your-instance"><strong>2.0.1. Log back in to your instance</strong></h3>
 <section id="option-1-in-visual-studio-code" class="level4">
 <h4 class="anchored" data-anchor-id="option-1-in-visual-studio-code"><strong>Option 1: In Visual Studio Code</strong></h4>
 <p>Follow the <a href="../setup.html#login-via-visual-studio-code">VSCode set up instructions</a> or use the quick start instructions below to connect to your instance using the command palatte:</p>
@@ -236,23 +229,6 @@ Applying what you learn here to other nf-core workflows
 </ul>
 <p>Having successfully logged in, your terminal should then display something like that shown in the figure below:</p>
 <p><img src="https://user-images.githubusercontent.com/73086054/228141686-a63a84c1-b714-4797-af8e-2b511421a7d8.png" class="img-fluid"></p>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-<strong>Key points</strong>
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>nf-core workflows are provided with sensible defaults. These may not always suit your needs.</li>
-<li>To decide whether an nf-core workflow is the right choice for your experiment you need to understand the needs of your dataset and research questions.</li>
-<li>Use the workflow documentation to understand the requirements for running a workflow.</li>
-</ul>
-</div>
-</div>
 
 
 </section>

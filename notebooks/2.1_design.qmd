@@ -17,19 +17,19 @@ from: markdown+emoji
 - Explore pipeline deployment and set up 
 :::
 
-In this lesson, we will design our pipeline run command by selecting parameters suitable for our experiment and our computational environment. We will observe how a pipeline is deployed when we execute the run command. 
+In this lesson, we will design a customised run command for the nf-core/rnaseq pipeline. We will be using the typical (default) run command as a base, additing some optional parameters. While some parameters are standard across nf-core pipelines, such as `--input` and `--genome`, most parameters are 
 
 ### **2.1.1. Download the pipeline code**
 
 Start by creating a new directory for all of today's activities and move into it: 
 
-```bash
+```default
 mkdir ~/session2 && cd $_
 ```
 
 We recommend that you keep a local copy of a pipeline's code for the sake of reproducibility and record keeping. There are a number of ways to download a nf-core pipeline to your machine. We recommend using either the [nf-core tools](https://nf-co.re/tools/) utility to [download a pipeline for offline use](https://nf-co.re/tools/#downloading-pipelines-for-offline-use) or git. 
 
-Take a look at the download options available to us: 
+Take a look at the download options available to us:
 
 ```default
 nf-core download --help
@@ -276,6 +276,7 @@ Succeeded   : 170
 ```
 
 The pipeline ran successfully, however note the warning about all samples having failed the strandedness check. We'll explore that in the next lesson. In the meantime, list (`ls -la`) the contents of your directory, you'll see a few new directories (and a hidden directory and log file) have been created:
+
 ```default
 total 416
 drwxrwxr-x   7 ubuntu ubuntu 4.0K Apr 21 03:44 .
