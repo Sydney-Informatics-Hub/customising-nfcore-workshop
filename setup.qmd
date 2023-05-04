@@ -7,7 +7,7 @@ output:
 from: markdown+emoji
 ---
 
-In this workshop series, we will be using Pawsey’s Nimbus cloud. The [Pawsey Supercomputing Research Centre](https://pawsey.org.au/about-us/about-pawsey/) is one of two, Tier-1, High Performance Computing facilities in Australia. Their Nimbus cloud platform is an accessible and flexible solution for bioinformatics applications that may not be suitable for large-scale HPC machines including:
+In this workshop series, we will be using Pawsey’s Nimbus cloud. The [Pawsey Supercomputing Research Centre](https://pawsey.org.au/about-us/about-pawsey/) is one of two, Tier-1, High Performance Computing facilities in Australia. Their Nimbus cloud platform is an accessible and flexible solution for bioinformatics applications that may not be suitable for large-scale hgih performance computing (HPC) machines including:
 
 * Developing and refining scalable workflows in prepration for HPC allocation applications.
 * Workflows with long runtimes that excede wall time queue limits on HPC facilities.
@@ -16,7 +16,7 @@ In this workshop series, we will be using Pawsey’s Nimbus cloud. The [Pawsey S
 The main requirements for this workshop are a personal computer with:
 
 * A web broswer 
-* Terminal or IDE application 
+* Terminal or integrated development environment (IDE) application 
 
 On this page you will find instructions on how to set up a terminal application and web browser on your computer and how to connect to Nimbus. Each participant will be provided with their instance’s IP address at the beginning of the workshop.
 
