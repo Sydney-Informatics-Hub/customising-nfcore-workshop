@@ -207,7 +207,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#what-is-nf-core" id="toc-what-is-nf-core" class="nav-link active" data-scroll-target="#what-is-nf-core"><strong>1.2.1. What is nf-core?</strong></a></li>
   <li><a href="#events" id="toc-events" class="nav-link" data-scroll-target="#events"><strong>1.2.2. Events</strong></a></li>
   <li><a href="#join-the-community" id="toc-join-the-community" class="nav-link" data-scroll-target="#join-the-community"><strong>1.2.3. Join the community!</strong></a></li>
-  <li><a href="#nf-core-tooling" id="toc-nf-core-tooling" class="nav-link" data-scroll-target="#nf-core-tooling"><strong>1.2.4. nf-core tooling</strong></a></li>
+  <li><a href="#nf-core-tools" id="toc-nf-core-tools" class="nav-link" data-scroll-target="#nf-core-tools"><strong>1.2.4. nf-core tools</strong></a></li>
   <li><a href="#running-an-nf-core-workflow" id="toc-running-an-nf-core-workflow" class="nav-link" data-scroll-target="#running-an-nf-core-workflow"><strong>1.2.5. Running an nf-core workflow</strong></a></li>
   </ul>
 </nav>
@@ -243,19 +243,19 @@ Objectives
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>Point 1</li>
-<li>Point 2</li>
-<li>Point 3</li>
+<li>Learn about the core features of nf-core.</li>
+<li>Learn how to use nf-core tooling.</li>
+<li>Use Nextflow to pull the <code>nf-core/rnaseq</code> workflow</li>
 </ul>
 </div>
 </div>
 <section id="what-is-nf-core" class="level3">
 <h3 class="anchored" data-anchor-id="what-is-nf-core"><strong>1.2.1. What is nf-core?</strong></h3>
 <p><img src="../figs/1.2_nf-core.png" class="quarto-discovered-preview-image img-fluid" style="width:100.0%"></p>
-<p>nf-core is a community effort to collect a curated set of analysis workflows built using Nextflow.</p>
-<p>nf-core provides a standardized set of best practices, guidelines, and templates for building and sharing bioinformatics workflows. These workflows are designed to be modular, scalable, and portable, allowing researchers to easily adapt and run them using their own data and compute resources.</p>
-<p>The nf-core community comprises a diverse group of bioinformaticians, developers, and researchers from around the world who collaborate on developing and maintaining a growing collection of high-quality workflows. These workflows cover a range of applications, including transcriptomics, proteomics, and metagenomics.</p>
-<p>One of the key benefits of nf-core is that it promotes open development, testing, and peer review, ensuring that the workflows are robust, well-documented, and validated against real-world datasets. This helps to increase the reliability and reproducibility of bioinformatics analyses and ultimately enables researchers to accelerate their scientific discoveries.</p>
+<p>nf-core is a <strong>community</strong> effort to collect a curated set of <strong>analysis workflows</strong> built using Nextflow.</p>
+<p>nf-core provides a standardized set of <strong>best practices</strong>, <strong>guidelines</strong>, and <strong>templates</strong> for building and sharing bioinformatics workflows. These workflows are designed to be <strong>modular</strong>, <strong>scalable</strong>, and <strong>portable</strong>, allowing researchers to easily adapt and run them using their own data and compute resources.</p>
+<p>The community is a diverse group of bioinformaticians, developers, and researchers from around the world who collaborate on <strong>developing</strong> and <strong>maintaining</strong> a growing collection of high-quality workflows. These workflows cover a range of applications, including transcriptomics, proteomics, and metagenomics.</p>
+<p>One of the key benefits of nf-core is that it promotes <strong>open development</strong>, <strong>testing</strong>, and <strong>peer review</strong>, ensuring that the workflows are robust, well-documented, and validated against real-world datasets. This helps to increase the reliability and reproducibility of bioinformatics analyses and ultimately enables researchers to accelerate their scientific discoveries.</p>
 <p>nf-core is published in Nature Biotechnology: <a href="https://www.nature.com/articles/s41587-020-0439-x">Nat Biotechnol 38, 276–278 (2020). Nature Biotechnology</a></p>
 <p><strong>Key Features of nf-core workflows</strong></p>
 <ul>
@@ -284,11 +284,11 @@ Objectives
 <li>nf-core workflows are tested on AWS after every major release. You can even browse results live on the website and use outputs for your own benchmarking.</li>
 </ul></li>
 </ul>
-<p>It is important to remember all nf-core workflows are open-source and community driven. Most pipelines are under active community development and are regularly updated with fixes and other improvements. Even though the pipelines and tools undergo repeated community review and testing - it is important to check your results.</p>
+<p>It is important to remember all nf-core workflows are <strong>open-source</strong> and <strong>community driven</strong>. Most pipelines are under active community development and are regularly updated with fixes and other improvements. Even though the pipelines and tools undergo repeated community review and testing - it is important to check your results*.</p>
 </section>
 <section id="events" class="level3">
 <h3 class="anchored" data-anchor-id="events"><strong>1.2.2. Events</strong></h3>
-<p>nf-core events are community-driven gatherings that provide a platform to discuss the latest developments in Nextflow and nf-core workflows. These events include community seminars, trainings, and hackathons, and are open to anyone who is interested in using and developing nf-core and its applications. Most events are held virtually, making them accessible to a global audience.</p>
+<p>nf-core events are community-driven gatherings that provide a platform to discuss the latest developments in Nextflow and nf-core workflows. These events include community <strong>seminars</strong>, <strong>trainings</strong>, and <strong>hackathons</strong>, and are open to anyone who is interested in using and developing nf-core and its applications. Most events are held virtually, making them accessible to a global audience.</p>
 <p>Upcoming events are listed on the <a href="https://nf-co.re/events">nf-core event page</a> and announced on <a href="https://nf-co.re/join/slack">Slack</a> and <a href="https://twitter.com/nf_core">Twitter</a>.</p>
 </section>
 <section id="join-the-community" class="level3">
@@ -324,19 +324,42 @@ Objectives
 </div>
 </div>
 <p>Joining the nf-core Slack can be especially useful for users. There are dedicated channels for all workflows as well as channels for common topics. If you are unsure of where to ask you questions - the <code>#help</code> and <code>#nostupidquestions</code> channels are a great place to start.</p>
-<p><span class="emoji" data-emoji="wave">👋</span> If you are joining the nf-core Slack for the first time make sure you drop a message in <code>#say-hello</code> to introduce yourself!</p>
-<blockquote class="blockquote">
+<p>If you are joining the nf-core Slack for the first time make sure you drop a message in <code>#say-hello</code> to introduce yourself!</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Questions about Nextflow
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>If you have questions about Nextflow and deployments that are not related to nf-core you can ask them on the <a href="https://www.nextflow.io/blog/2022/nextflow-is-moving-to-slack.html">Nextflow Slack</a>. It’s worthwhile joining both Slack groups and browsing the channels to get an idea of what types of questions are being asked on each channel. Searching channels can also be a great source of information as your question may have been asked before.</p>
-</blockquote>
+</div>
+</div>
+<p>The <a href="https://www.youtube.com/c/nf-core">nf-core YouTube channel</a> is also especially helpful. There are lots of great workshops and ByteSize seminars for developers and users.</p>
 </section>
-<section id="nf-core-tooling" class="level3">
-<h3 class="anchored" data-anchor-id="nf-core-tooling"><strong>1.2.4. nf-core tooling</strong></h3>
-<p>This workshop will make use of nf-core tools, a set of helper tools for use with Nextflow workflows. These tools have been developed to provide a range of additional functionality using, developing, and testing workflows.</p>
+<section id="nf-core-tools" class="level3">
+<h3 class="anchored" data-anchor-id="nf-core-tools"><strong>1.2.4. nf-core tools</strong></h3>
+<p>This workshop will make use of nf-core tools, a set of helper tools for use with Nextflow workflows. These tools have been developed to provide a range of additional functionality for <strong>using</strong>, <strong>developing</strong>, and <strong>testing</strong> workflows.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+How to download nf-core tools
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>nf-core tools is written in Python and is available from the <a href="https://pypi.org/project/nf-core/">Python Package Index (PyPI)</a>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install nf-core</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Alternatively, nf-core tools can be installed from <a href="https://anaconda.org/bioconda/nf-core">Bioconda</a>:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> install <span class="at">-c</span> bioconda nf-core</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>You can nf-core <code>--version</code> options can be used to print your version of nf-core tools:</p>
+</div>
+</div>
+<p>The nf-core <code>--version</code> option can be used to print your version of nf-core tools:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -352,38 +375,6 @@ Objectives
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Use the nf-core <code>--version</code> option to print the nf-core tools version:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><img src="../figs/1.2_nf-core-version.svg" class="img-fluid"></p>
-</div>
-</div>
-</div>
-<p>nf-core tools is for everyone and has commands to help both users and developers. For users, the tools make it easier to run workflows. For developers, the tools make it easier to develop and test your workflows using best practices.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<strong>Challenge</strong>
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Find out what other nf-core tools options and commands are available using the <code>--help</code> option:</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -395,12 +386,45 @@ Solution
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
+<p>Use the nf-core <code>--version</code> option to print your nf-core tools version:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="../figs/1.2_nf-core-version.svg" class="img-fluid"></p>
+</div>
+</div>
+</div>
+<p>nf-core tools are for everyone and has commands to help both users and developers. For users, the tools make it easier to run workflows. For developers, the tools make it easier to develop and test your workflows using best practices. You can read about the nf-core commands on the <a href="https://nf-co.re/tools/">tools page</a> of the nf-core website or using the command line.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Challenge</strong>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Find out what nf-core tools commands and options are available using the <code>--help</code> option:</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <p>Run the <code>--help</code> option to list the options, tools for users, and tools for developers</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> <span class="at">--help</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="../figs/1.2_nf-core-help.svg" class="img-fluid"></p>
 </div>
 </div>
 </div>
+<p>nf-core tools is updated with new features and fixes regularly so it’s best to keep your version of nf-core tools up-to-date.</p>
 </section>
 <section id="running-an-nf-core-workflow" class="level3">
 <h3 class="anchored" data-anchor-id="running-an-nf-core-workflow"><strong>1.2.5. Running an nf-core workflow</strong></h3>
@@ -408,32 +432,32 @@ Solution
 <p>The <a href="https://nf-co.re/">nf-core website</a> has a full list of workflows, as well as their documentation, which can be explored.</p>
 <p>Each workflow has a dedicated page that includes expansive documentation that is split into 7 sections:</p>
 <ul>
-<li>Introduction
+<li><strong>Introduction</strong>
 <ul>
 <li>An introduction and overview of the workflow</li>
 </ul></li>
-<li>Results
+<li><strong>Results</strong>
 <ul>
 <li>Example output files generated from the full test dataset</li>
 </ul></li>
-<li>Usage docs
+<li><strong>Usage docs</strong>
 <ul>
 <li>Descriptions of how to run the workflow</li>
 </ul></li>
-<li>Parameters
+<li><strong>Parameters</strong>
 <ul>
 <li>Grouped workflow parameters with descriptions</li>
 </ul></li>
-<li>Output docs
+<li><strong>Output docs</strong>
 <ul>
 <li>Descriptions and examples of the expected output files</li>
 </ul></li>
-<li>Releases &amp; Statistics
+<li><strong>Releases &amp; Statistics</strong>
 <ul>
 <li>Workflow version history and statistics</li>
 </ul></li>
 </ul>
-<p>Unless you are actively developing workflow code, you do not need to clone the workflow code from GitHub and can use Nextflow’s built-in functionality to <code>pull</code> and a workflow. As shown in the <a href="../notebooks/1.1_nextflow.html#executing-a-workflow">Introduction to Nextflow</a>, the Nextflow <code>pull</code> command can download and cache nf-core workflows from the <a href="https://github.com/nf-core/">nf-core GitHub</a> repository:</p>
+<p>Unless you are actively developing workflow code, you don’t need to clone the workflow code from GitHub and can use Nextflow’s built-in functionality to <code>pull</code> and a workflow. As shown in the <a href="../notebooks/1.1_nextflow.html#1.1.7.-executing-a-workflow">introduction to Nextflow</a>, the Nextflow <code>pull</code> command can download and cache workflows from <a href="https://github.com/nf-core/">GitHub</a> repositories:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> pull nf-core/<span class="op">&lt;</span>pipeline<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Nextflow <code>run</code> will also automatically <code>pull</code> the workflow if it was not already available locally:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/<span class="op">&lt;</span>pipeline<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -448,11 +472,11 @@ Solution
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Try to <code>pull</code> the latest version of the <code>nf-core/rnaseq</code> workflow directly from GitHub using Nextflow:</p>
+<p>Use Nextflow to <code>pull</code> the latest version of the <code>nf-core/rnaseq</code> workflow directly from GitHub:</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -461,7 +485,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Use the Nextlfow <code>pull</code> command to download the <code>rnaseq</code> workflow from the <code>nf-core</code> GitHub repository.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> pull nf-core/rnaseq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -480,9 +504,10 @@ Solution
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>Point 1</li>
-<li>Point 2</li>
-<li>Point 3</li>
+<li>nf-core is a community effort to collect a curated set of analysis workflows built using Nextflow.</li>
+<li>You can join/follow nf-core on multiple different social channels (Slack, YouTube, Twitter…)</li>
+<li>nf-core has its own tooling that can be used by users and developers.</li>
+<li>Nextflow can be used to <code>pull</code> nf-core workflows.</li>
 </ul>
 </div>
 </div>
