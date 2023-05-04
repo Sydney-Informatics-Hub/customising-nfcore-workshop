@@ -279,8 +279,8 @@ Objectives
 </section>
 <section id="execution-abstraction" class="level3">
 <h3 class="anchored" data-anchor-id="execution-abstraction"><strong>1.1.3. Execution abstraction</strong></h3>
-<p>While a process defines what command or script is executed, the <strong>executor</strong> determines how and where the script is run.</p>
-<p>Nextflow provides an abstraction between the workflow’s functional logic and the underlying execution system. This abstraction allows users to define a workflow once and run it on different computing platforms without having to modify the workflow definition. Nextflow provides a variety of built-in execution options, such as local execution, HPC cluster execution, and cloud-based execution, and allows users to easily switch between these options using command-line arguments.</p>
+<p>While a process defines what command or script is executed, the <strong>executor</strong> determines how and where the script is executed.</p>
+<p>Nextflow provides an abstraction between the workflow’s functional logic and the underlying execution system. This abstraction allows users to define a workflow once and execute it on different computing platforms without having to modify the workflow definition. Nextflow provides a variety of built-in execution options, such as local execution, HPC cluster execution, and cloud-based execution, and allows users to easily switch between these options using command-line arguments.</p>
 <p><img src="../figs/1.1_abstraction.excalidraw.png" class="img-fluid"></p>
 <p>If not specified, processes are executed on your local computer. The local executor is useful for workflow development and testing purposes. However, for real-world computational workflows, a high-performance computing (HPC) or cloud platform is often required.</p>
 <p>You can find a full list of supported executors as well as how to configure them <a href="https://www.nextflow.io/docs/latest/executor.html">here</a>.</p>
@@ -401,7 +401,7 @@ Solution
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Create a new folder with the path <code>/home/training/singularity_cache</code> to store your singularity images and export its location using the <code>NXF_SINGULARITY_CACHEDIR</code> environmental variable:</p>
+<p>Create a new folder with the path <code>/home/ubuntu/singularity_cache</code> to store your singularity images and export its location using the <code>NXF_SINGULARITY_CACHEDIR</code> environmental variable:</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -417,7 +417,7 @@ Solution
 <div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Make a new folder for your singularity images:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> /home/training/singularity_cache</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> /home/ubuntu/singularity_cache</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Export your new folder as your cache directory for singularity images using the <code>NXF_SINGULARITY_CACHEDIR</code> environmental variable:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">NXF_SINGULARITY_CACHEDIR</span><span class="op">=</span>/home/training/singularity_cache</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Singularity images downloaded by workflow executions will now be stored in this directory.</p>
@@ -449,7 +449,7 @@ Solution
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Run the <code>hello</code> workflow directly from <code>nextflow-io</code> <a href="https://github.com/nextflow-io/hello">GitHub</a> repository.</p>
+<p>Execute the <code>hello</code> workflow directly from <code>nextflow-io</code> <a href="https://github.com/nextflow-io/hello">GitHub</a> repository.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -464,7 +464,7 @@ Solution
 </div>
 <div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Run the <a href="https://github.com/nextflow-io/hello">nextflow-io/hello</a> workflow:</p>
+<p>Execute the <a href="https://github.com/nextflow-io/hello">nextflow-io/hello</a> workflow:</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nextflow-io/hello</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="../figs/1.1_runhello.png" class="img-fluid"></p>
 </div>
@@ -490,7 +490,7 @@ Solution
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Run the <code>hello</code> workflow directly from <code>nextflow-io</code> GitHub using the <code>v1.1</code> revision tag.</p>
+<p>Execute the <code>hello</code> workflow directly from <code>nextflow-io</code> GitHub using the <code>v1.1</code> revision tag.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -505,7 +505,7 @@ Solution
 </div>
 <div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Run the <code>nextflow-io/hello</code> workflow with the revision <code>-r</code> option:</p>
+<p>Execute the <code>nextflow-io/hello</code> workflow with the revision <code>-r</code> option:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nextflow-io/hello <span class="at">-r</span> v1.1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="../figs/1.1_runhello1.1.png" class="img-fluid"></p>
 <p>The warning shown above is expected. The warning is shown because the <code>v1.1</code> workflow revision was written using an older version of Nextflow that uses the depreciated <code>echo</code> method.</p>
@@ -585,7 +585,7 @@ Solution
 <div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run Sydney-Informatics-Hub/nf-core-demo <span class="at">-profile</span> test,singularity</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The command line output will print something like this:</p>
 <p><img src="../figs/1.1_demo.excalidraw.png" class="img-fluid"></p>
-<p>Running this workflow will create a <code>work</code> directory and a <code>my_results</code> directory with selected results files.</p>
+<p>Executing this workflow will create a <code>work</code> directory and a <code>my_results</code> directory with selected results files.</p>
 <p>In this example, the hexadecimal numbers, such as <code>ff/21abfa</code>, identify the unique task execution. These numbers are also the prefix of the <code>work</code> directories where each task is executed. You can inspect the files produced by a task by looking inside the <code>work</code> directory and using these numbers to find the task-specific execution path:</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-la</span> work/ff/21abfa87cc7cdec037ce4f36807d32/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The files that have been selected for publication in the <code>my_results</code> folder can also be explored:</p>
@@ -596,7 +596,7 @@ Solution
 <div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run Sydney-Informatics-Hub/nf-core-demo <span class="at">-profile</span> test,singularity <span class="at">-ansi-log</span> false</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>It’s very likely you will execute a workflow multiple times as you are finding the parameters that best suit your data. As such, you can save a lot of spaces (and time) by <strong>resuming</strong> a workflow from the last step that was completed successfully and/or unmodified after your changes. By adding the <code>-resume</code> option to your <code>run</code> command you can use the cache rather than re-running tasks:</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run Sydney-Informatics-Hub/nf-core-demo <span class="at">-profile</span> test,singularity <span class="at">-resume</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>If you run the Sydney-Informatics-Hub/nf-core-demo workflow again without any changes you will see that the workflow will use the cache rather than executing tasks again:</p>
+<p>If you <code>run</code> the Sydney-Informatics-Hub/nf-core-demo workflow again without any changes you will see that the workflow will use the cache rather than executing tasks again:</p>
 <p><img src="../figs/1.1_demoresume.excalidraw.png" class="img-fluid"></p>
 <p>In practical terms, the workflow is executed from the beginning. However, before launching the execution of a process, Nextflow uses the task unique ID to check if the work directory already exists and that it contains a valid command exit state with the expected output files. If this condition is satisfied, the task execution is skipped and previously computed results are used as the process results.</p>
 <p>Notably, the <code>-resume</code> functionality is very sensitive. Even touching a file in the work directory can invalidate the cache.</p>
@@ -610,7 +610,7 @@ Solution
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Invalidate the cache by touching a <code>.fastq.gz</code> file in a <code>FASTQC</code> task work directory. Run the workflow again with the <code>-resume</code> option to show that the cache has been invalidated.</p>
+<p>Invalidate the cache by touching a <code>.fastq.gz</code> file in a <code>FASTQC</code> task work directory. Execute the workflow again with the <code>-resume</code> option to show that the cache has been invalidated.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">

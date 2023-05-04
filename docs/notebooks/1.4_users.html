@@ -274,7 +274,7 @@ Objectives
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Try to filter the list of nf-core workflows for those that are for <code>rna</code> and sort them by stars.</p>
+<p>Filter the list of nf-core workflows for those that are for <code>rna</code> and sort them by stars.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -289,7 +289,7 @@ Solution
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Run the <code>list</code> command, filter it for <code>rna</code>, and sort by <code>stars</code>:</p>
+<p>Execute the <code>list</code> command, filter it for <code>rna</code>, and sort by <code>stars</code>:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> list rna <span class="at">-s</span> stars</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
@@ -300,12 +300,12 @@ Solution
 <p>Nextflow workflows can have a considerable number of optional command line flags. To help manage these, you can use the <code>nf-core launch</code> command.</p>
 <p>The command takes one argument - either the name of an nf-core workflow which will be pulled automatically or the path to a directory containing a Nextflow workflow:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> launch nf-core/<span class="op">&lt;</span>workflow<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>When running this command, you will first be asked about which version of a workflow you would like to run. Next, you will be given the choice between a web-based graphical interface or an interactive command-line wizard tool to enter the workflow parameters for your run. Both interfaces show documentation alongside each parameter, will generate a run ID, and will validate your inputs.</p>
+<p>When running this command, you will first be asked about which version of a workflow you would like to execute. Next, you will be given the choice between a web-based graphical interface or an interactive command-line wizard tool to enter the workflow parameters for your execute. Both interfaces show documentation alongside each parameter, will generate a run ID, and will validate your inputs.</p>
 <p><img src="../figs/1.4_wizard.excalidraw.png" class="img-fluid" style="width:100.0%"></p>
 <p>The <code>launch</code> tool uses the <code>nextflow_schema.json</code> file from a workflow to give parameter descriptions, defaults, and grouping. If no file for the workflow is found, one will be automatically generated at runtime.</p>
 <p>The <code>launch</code> tool will save your parameter variables as a JSON file called <code>nf-params.json</code> and will suggest an execution command that includes the <code>-params-file</code> flag and your new <code>nf-params.json</code> file.</p>
-<p>The wizard will ask if you want to launch the Nextflow run. You will also be given the run command and a copy of the JSON file for you to copy and paste if you wish.</p>
-<p>Any profiles or Nextflow options that are set using the wizard will also be included in your run command.</p>
+<p>The wizard will ask if you want to launch the Nextflow run. You will also be given the <code>run</code> command and a copy of the JSON file for you to copy and paste if you wish.</p>
+<p>Any profiles or Nextflow options that are set using the wizard will also be included in your <code>run</code> command.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -316,7 +316,7 @@ Solution
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Try to run the nf-core/rnaseq workflow with the nf-core <code>launch</code> command. Use the latest version of the workflow with the the <code>test</code> and <code>singularity</code> profiles, and name your output directory <code>results</code>:</p>
+<p>Execute the nf-core/rnaseq workflow with the nf-core <code>launch</code> command. Use the latest version of the workflow with the the <code>test</code> and <code>singularity</code> profiles, and name your output directory <code>results</code>:</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -333,7 +333,7 @@ Solution
 <div class="callout-body-container callout-body">
 <p>Use the nf-core <code>launch</code> command for the <code>nf-core/rnaseq</code> workflow and follow the prompts:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> launch nf-core/rnaseq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Your final run command should look like this:</p>
+<p>Your final <code>run</code> command should look like this:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/rnaseq <span class="at">-r</span> 3.11.1 <span class="at">-profile</span> test,singularity <span class="at">-params-file</span> nf-params.json</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Your <code>nf-params.json</code> file should look like this:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span></span>
@@ -345,7 +345,7 @@ Solution
 </section>
 <section id="nf-core-download" class="level3">
 <h3 class="anchored" data-anchor-id="nf-core-download"><strong>1.4.3 nf-core download</strong></h3>
-<p>Sometimes you may need to run an nf-core workflow on a server or HPC system that has no internet connection. In this case, you will need to fetch the workflow files and manually transfer them to your system.</p>
+<p>Sometimes you may need to execute an nf-core workflow on a server or HPC system that has no internet connection. In this case, you will need to fetch the workflow files and manually transfer them to your system.</p>
 <p>To make this process easier and ensure accurate retrieval of correctly versioned code and software containers, nf-core has the <code>download</code> helper tool.</p>
 <p>The nf-core <code>download</code> command will download both the workflow code and the institutional nf-core/configs files. It can also optionally download singularity image file.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> download</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
