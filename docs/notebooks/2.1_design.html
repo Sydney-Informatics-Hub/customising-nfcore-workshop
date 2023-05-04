@@ -256,7 +256,7 @@ Objectives
 <p>We recommend that you keep a local copy of a pipeline’s code for the sake of reproducibility and record keeping. There are a number of ways to download a nf-core pipeline to your machine. We recommend using either the <a href="https://nf-co.re/tools/">nf-core tools</a> utility to <a href="https://nf-co.re/tools/#downloading-pipelines-for-offline-use">download a pipeline for offline use</a> or git.</p>
 <p>Take a look at the download options available to us:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>nf-core download --help</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><img src="../figs/2.1_nfcore-download.png" class="img-fluid"></p>
+<p><img src="../figs/2.1_nfcore-download.png" class="quarto-discovered-preview-image img-fluid"></p>
 <p>Run the following command:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nf-core download rnaseq \</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  --revision 3.11.1 \</span>
@@ -266,12 +266,12 @@ Objectives
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  --singularity-cache-only</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You will be prompted to define a Singularity cache directory to store container images (<code>$NXF_SINGULARITY_CACHEDIR</code>). Specify the path we used in Session 1:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>export NXF_SINGULARITY_CACHEDIR=/home/training/singularity_cache</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Nextflow has environmental variables!
 </div>
 </div>
@@ -280,7 +280,7 @@ Nextflow has environmental variables!
 </div>
 </div>
 <p>The nf-core tools utility will download the pipeline files and centralised configs but not the containers, given they already exist in our specified cache.</p>
-<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -386,12 +386,12 @@ Nextflow has environmental variables!
 </ul>
 <p><img src="../figs/2.1_default-command.png" class="img-fluid"></p>
 <p>Underneath the typical run command suggestion, there are lots parameters, grouped under headings.</p>
-<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Overwhelmed by all the parameters?
 </div>
 </div>
@@ -403,12 +403,12 @@ Overwhelmed by all the parameters?
 <div class="sourceCode" id="cb11"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>!! Hiding 24 params, use --show_hidden_params to show them !!</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Three additional parameter sections are hidden from view. This is because they are less commonly used. To view all the pipeline run options on the command line, run:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf --help --show_hidden_params</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 <strong>Hyphens matter!</strong>
 </div>
 </div>
@@ -462,7 +462,7 @@ Overwhelmed by all the parameters?
 <span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    --max_memory '6.GB' \</span>
 <span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    --max_cpus 2 \</span>
 <span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    --outdir Lesson-2.1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -480,7 +480,7 @@ No, help! <span class="emoji" data-emoji="cry">😢</span> <code>:cry:</code></p
 <p>Take a look at the stdout printed to the screen. Your workflow configuration and parameter customisations are all documented here. You can use this to confirm if your parameters have been correctly passed to the run command:</p>
 <p><img src="../figs/2.1_nf-core-stdout.png" class="img-fluid"></p>
 <p>As the workflow starts, you will also see a number of processes spawn out underneath this. Recall from session 1 that processes are executed independently and can run in parallel. Nextflow manages the data dependencies between processes, ensuring that each process is executed only when its input data is available and all of its dependencies have been satisfied. Take a look at the image below which explains a workflow’s process status output provided by Nextflow using the data dependencies for the STAR_ALIGN process as an example.</p>
-<p><img src="../figs/2.1-nf-core-process.png" class="img-fluid"></p>
+<p><img src="../figs/2.1_nf-core-process.png" class="img-fluid"></p>
 </section>
 <section id="examine-the-outputs" class="level3">
 <h3 class="anchored" data-anchor-id="examine-the-outputs"><strong>2.1.4. Examine the outputs</strong></h3>
