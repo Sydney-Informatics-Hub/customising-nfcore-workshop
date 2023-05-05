@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.262">
+<meta name="generator" content="quarto-1.3.296">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,9 +17,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -46,43 +47,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -137,87 +108,89 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <span class="navbar-title">Sydney Informatics Hub</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html">
+    <a class="nav-link" href="../index.html" rel="" target="">
  <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../setup.html">
+    <a class="nav-link" href="../setup.html" rel="" target="">
  <span class="menu-text">Setup</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-session-1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-session-1" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">Session 1</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-session-1">    
         <li>
-    <a class="dropdown-item" href="../notebooks/1.0_intro.html">
+    <a class="dropdown-item" href="../notebooks/1.0_intro.html" rel="" target="">
  <span class="dropdown-text">Session 1 kick-off</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/1.1_nextflow.html">
+    <a class="dropdown-item" href="../notebooks/1.1_nextflow.html" rel="" target="">
  <span class="dropdown-text">Introduction to Nextflow</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/1.2_nfcore.html">
+    <a class="dropdown-item" href="../notebooks/1.2_nfcore.html" rel="" target="">
  <span class="dropdown-text">Introduction to nf-core</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/1.3_configure.html">
+    <a class="dropdown-item" href="../notebooks/1.3_configure.html" rel="" target="">
  <span class="dropdown-text">Configuring nf-core workflows</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/1.4_users.html">
+    <a class="dropdown-item" href="../notebooks/1.4_users.html" rel="" target="">
  <span class="dropdown-text">Commands for users</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-session-2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-session-2" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">Session 2</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-session-2">    
         <li>
-    <a class="dropdown-item" href="../notebooks/2.0_intro.html">
+    <a class="dropdown-item" href="../notebooks/2.0_intro.html" rel="" target="">
  <span class="dropdown-text">2.0 Intro to session 2</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/2.1_design.html">
+    <a class="dropdown-item" href="../notebooks/2.1_design.html" rel="" target="">
  <span class="dropdown-text">2.1 Design a run command</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/2.2_params.html">
+    <a class="dropdown-item" href="../notebooks/2.2_params.html" rel="" target="">
  <span class="dropdown-text">2.2 Use a parameters file</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/2.3_configEnv.html">
+    <a class="dropdown-item" href="../notebooks/2.3_configEnv.html" rel="" target="">
  <span class="dropdown-text">2.3 Configure resources</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/2.4_multiConfig.html">
+    <a class="dropdown-item" href="../notebooks/2.4_multiConfig.html" rel="" target="">
  <span class="dropdown-text">2.4 Apply multiple configurations</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/2.5_extArgs.html">
+    <a class="dropdown-item" href="../notebooks/2.5_extArgs.html" rel="" target="">
  <span class="dropdown-text">2.5 Apply external arguments</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/2.6_launch.html">
+    <a class="dropdown-item" href="../notebooks/2.6_launch.html" rel="" target="">
  <span class="dropdown-text">2.6 Use nf-core launch</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../tips_tricks.html">
+    <a class="nav-link" href="../tips_tricks.html" rel="" target="">
  <span class="menu-text">Tips &amp; Tricks</span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
+            <div class="quarto-navbar-tools ms-auto">
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -258,12 +231,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Objectives
 </div>
 </div>
@@ -288,12 +261,12 @@ Objectives
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>Duration    : 14m 18s</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>CPU hours   : 0.4</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>Succeeded   : 170</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Handling dodgy error messages <span class="emoji" data-emoji="cursing_face">🤬</span>
 </div>
 </div>
@@ -315,9 +288,14 @@ Handling dodgy error messages <span class="emoji" data-emoji="cursing_face">🤬
 <li>Select <code>Live Server: Open with Live Server</code> to open html file in your browser window.</li>
 </ol>
 <p>Take a look a the section labelled <strong>WARNING: Fail Strand Check</strong></p>
+<<<<<<< HEAD
 <p><img src="https://user-images.githubusercontent.com/73086054/231065216-940fb01f-a7dc-416c-a481-27676bbcfff3.png" class="img-fluid"></p>
 <p>The warning we have received is indicating that the read strandedness we specified in our <code>samplesheet.csv</code> and <strong>inferred strandedness</strong> identified by the pipeline do not match. Look’s like I have incorrectly specified strandedness as forward in the <code>samplesheet.csv</code> when our raw reads actually show an equal distribution of sense and antisense reads (my mistake! <span class="emoji" data-emoji="expressionless">😑</span>).</p>
 <p>For those not familiar with RNAseq data, this could have a big impact on our results at the read quantification step (Salmon quant). So, let’s clarify what the Salmon quant process is doing and find a way to address this with the parameters provided by the nf-core/rnaseq pipeline.</p>
+=======
+<p><img src="https://user-images.githubusercontent.com/73086054/231065216-940fb01f-a7dc-416c-a481-27676bbcfff3.png" class="quarto-discovered-preview-image img-fluid"></p>
+<p>The issue here is <strong>provided strandedness</strong> that we specified in our <code>samplesheet.csv</code> and <strong>inferred strandedness</strong> identified by Salmon do not match. Look’s like we’ve incorrectly specified strandedness as forward in the <code>samplesheet.csv</code> when our raw reads actually show an equal distribution of sense and antisense reads (my mistake! <span class="emoji" data-emoji="expressionless">😑</span>). Let’s check how the nf-core/rnaseq pipeline ran the Salmon quantification process so we can explore whether or not this will potentially have an impact on our results.</p>
+>>>>>>> 1ae1edc83e39752e438c379a3d8d853f0acda3e1
 </section>
 <section id="identify-the-run-command-for-a-process" class="level3">
 <h3 class="anchored" data-anchor-id="identify-the-run-command-for-a-process"><strong>2.2.2. Identify the run command for a process</strong></h3>
@@ -373,13 +351,18 @@ Handling dodgy error messages <span class="emoji" data-emoji="cursing_face">🤬
 </section>
 <section id="write-a-parameter-file" class="level3">
 <h3 class="anchored" data-anchor-id="write-a-parameter-file"><strong>2.2.3. Write a parameter file</strong></h3>
+<<<<<<< HEAD
 <p>Nextflow accepts either YAML or JSON formats for parameter files. Any of the pipeline-specific <a href="https://nf-co.re/rnaseq/3.11.1/parameters">parameters</a> can be supplied to a pipeline run command in this way.</p>
 <div class="callout-tip callout callout-style-default callout-captioned">
+=======
+<p>Nextflow accepts either YAML or JSON formats for parameter files. YAML and JSON are formats for storing data objects and structures in a file and either is a valid choice for building your parameters file. We will create and apply a YAML file with our inputs for our second run, just because its easier to read.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+>>>>>>> 1ae1edc83e39752e438c379a3d8d853f0acda3e1
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 <strong>Challenge</strong>
 </div>
 </div>
@@ -400,12 +383,12 @@ Handling dodgy error messages <span class="emoji" data-emoji="cursing_face">🤬
 <p><span class="emoji" data-emoji="bulb">💡</span> You only need to specify pipeline-specific parameters (i.e.&nbsp;<code>--</code> flags)</p>
 </div>
 </div>
-<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
@@ -435,9 +418,38 @@ Solution
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  --max_cpus 2 \</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  -profile singularity \</span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  -params-file workshop-params.yaml \</span>
+<<<<<<< HEAD
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  -resume                        </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The number of pipeline-specific parameters we’ve added to our run command has been significantly reduced. The only <code>--</code> parameters we’ve provided to the run command relate to how the pipeline is executed on our instances. These resource limits won’t be applicable to our imaginary collaborator who will run the pipeline on a different infrastructure.</p>
 <p>As the workflow runs a second time, you will notice 4 things:</p>
+=======
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  --outdir Lesson-2.2 \</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  -resume                        </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>As we’ve used the <code>-resume</code> flag, the initial pre-processing stage and STAR alignments should to be restored from cache and only the Salmon and downstream QC steps will be recomputed. The rerun workflow should complete in a much shorter time and those warnings should have gone away!</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>-[nf-core/rnaseq] Pipeline completed successfully -</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>Completed at: 21-Apr-2023 05:58:06</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>Duration    : 8m 8s</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>CPU hours   : 0.4 (57.2% cached)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>Succeeded   : 147</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>Cached      : 53</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="manage-parameters-with-nf-core-schema" class="level3">
+<h3 class="anchored" data-anchor-id="manage-parameters-with-nf-core-schema"><strong>2.2.5. Manage parameters with nf-core schema</strong></h3>
+<p>nf-core pipelines all have a <code>nextflow_schema.json</code> file in their root directory which explains all the parameters used by the workflow. You can use the <a href="https://nf-co.re/tools/#pipeline-schema"><code>nf-core schema</code> tool</a> to validate pipeline parameters, build a pipeline schema, deploy the documentation for a pipeline schema, or add new parameters to a pipeline schema (take a look at <a href="https://www.youtube.com/watch?v=PU6vAj_7WRM">this nf-core bytesize talk!</a> for a demonstration). Have a go at these bonus exercises, beware adjusting the <code>nextflow_schema.json</code> file will mean any subsequent workflow run will have to start from scratch again and prevent you applying the <code>-resume</code> function.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Bonus exercise: <code>nf-core schema validate</code> to check params file</strong>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The <a href="https://nf-co.re/tools/#validate-pipeline-parameters">schema validate</a> utility can be used to validate your specified parameters against the provided pipeline schema. Unfortunately, this won’t work for your <code>workshop-params.yaml</code>, so we first need to convert this to a JSON file format. To do this, run the following from the <code>session2</code> directory:</p>
+>>>>>>> 1ae1edc83e39752e438c379a3d8d853f0acda3e1
 <ol type="1">
 <li>The command is much tidier thanks to offloading some parameters to the params file</li>
 <li>The <code>-resume</code> flag. Nextflow has lots of <a href="https://www.nextflow.io/docs/latest/cli.html?highlight=resume#run">run options</a> including the ability to use cached output!</li>
@@ -445,6 +457,7 @@ Solution
 </li>
 <li>This run of the pipline will complete in a much shorter time.</li>
 </ol>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb15"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>-[nf-core/rnaseq] Pipeline completed successfully with skipped sampl(es)-</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>-[nf-core/rnaseq] Please check MultiQC report: 6/6 samples failed strandedness check.-</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>Completed at: 21-Apr-2023 05:58:06</span>
@@ -453,11 +466,19 @@ Solution
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>Succeeded   : 147</span>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>Cached      : 53</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout-note callout callout-style-default callout-captioned">
+=======
+<div class="sourceCode" id="cb17"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>nf-core schema validate rnaseq workshop-params.json</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note this only confirms your inputs match their specified type (i.e.&nbsp;boolean, string, number). It cannot confirm that a file exists, or is formatted correctly, or if a string is the correct input for a parameter.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+>>>>>>> 1ae1edc83e39752e438c379a3d8d853f0acda3e1
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 <strong>Key points</strong>
 </div>
 </div>
@@ -502,9 +523,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -569,6 +604,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
