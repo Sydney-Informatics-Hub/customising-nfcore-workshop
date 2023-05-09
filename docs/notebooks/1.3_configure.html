@@ -285,12 +285,12 @@ Objectives
 <p>Nextflow DSL2 <strong>workflows</strong> are built up of <strong>subworkflows</strong> and <strong>modules</strong> that are stored as separate <code>.nf</code> files.</p>
 <p><img src="../figs/1.3_worksubmod.excalidraw.png" class="img-fluid"></p>
 <p>Most nf-core workflows consist of a single <strong>workflow</strong> file (there are a few exceptions). This is the main <code>&lt;workflow&gt;.nf</code> file that is used to bring everything else together. Instead of having one large monolithic script, it is broken up into a combination of <strong>subworkflows</strong> and <strong>modules</strong>.</p>
-<p>A <strong>subworkflow</strong> is a groups of modules that are used in combination with each other and have a common purpose. For example, the <a href="https://github.com/nf-core/modules/blob/master/modules/nf-core/samtools/stats/main.nf"><code>SAMTOOLS_STATS</code></a>, <a href="https://github.com/nf-core/modules/blob/master/modules/nf-core/samtools/faidx/main.nf"><code>SAMTOOLS_IDXSTATS</code></a>, and <a href="https://github.com/nf-core/modules/blob/master/modules/nf-core/samtools/flagstat/main.nf"><code>SAMTOOLS_FLAGSTAT</code></a> modules are all included in the <a href="https://github.com/nf-core/modules/blob/master/subworkflows/nf-core/bam_stats_samtools/main.nf"><code>BAM_STATS_SAMTOOLS</code></a> subworkflow. Subworkflows improve workflow readability and help with the reuse of modules within a workflow. Within a nf-core workflow, a subworkflow can be an nf-core subworkflow or as a local subworkflow. Like an nf-core workflow, an nf-core subworkflow is developed by the community and are shared in the <a href="https://github.com/nf-core/modules/tree/master/subworkflows/nf-core">nf-core subworkflows GitHub repository</a>. Local subworkflows are workflow specific that are not shared in the nf-core subworkflows repository.</p>
-<p>A <strong>module</strong> is a wrapper for a process, the basic processing primitive to execute a user script. It can specify <a href="https://www.nextflow.io/docs/latest/process.html#directives">directives</a>, <a href="https://www.nextflow.io/docs/latest/process.html#inputs">inputs</a>, <a href="https://www.nextflow.io/docs/latest/process.html#outputs">outputs</a>, <a href="https://www.nextflow.io/docs/latest/process.html#when">when statements</a>, and a <a href="https://www.nextflow.io/docs/latest/process.html#script">script</a> block. Most modules will execute a single tool in the script block and will make use of the directives, inputs, outputs, and when statements dynamically. Like subworkflows, modules can also be developed and shared in the <a href="https://github.com/nf-core/modules/tree/master/modules/nf-core">nf-core modules GitHub repository</a> or stored as a local module. All modules from the nf-core repository are version controlled and tested to ensure reproducibility and best practices. Local modules are workflow specific that are not shared in the nf-core modules repository.</p>
+<p>A <strong>subworkflow</strong> is a groups of modules that are used in combination with each other and have a common purpose. For example, the <a href="https://github.com/nf-core/modules/blob/master/modules/nf-core/samtools/stats/main.nf"><code>SAMTOOLS_STATS</code></a>, <a href="https://github.com/nf-core/modules/blob/master/modules/nf-core/samtools/faidx/main.nf"><code>SAMTOOLS_IDXSTATS</code></a>, and <a href="https://github.com/nf-core/modules/blob/master/modules/nf-core/samtools/flagstat/main.nf"><code>SAMTOOLS_FLAGSTAT</code></a> modules are all included in the <a href="https://github.com/nf-core/modules/blob/master/subworkflows/nf-core/bam_stats_samtools/main.nf"><code>BAM_STATS_SAMTOOLS</code></a> subworkflow. Subworkflows improve workflow readability and help with the reuse of modules within a workflow. Within a nf-core workflow, a subworkflow can be an nf-core subworkflow or as a local subworkflow. Like an nf-core workflow, an nf-core subworkflow is developed by the community is shared in the <a href="https://github.com/nf-core/modules/tree/master/subworkflows/nf-core">nf-core subworkflows GitHub repository</a>. Local subworkflows are workflow specific that are not shared in the nf-core subworkflows repository.</p>
+<p>A <strong>module</strong> is a wrapper for a process, the basic processing primitive to execute a user script. It can specify <a href="https://www.nextflow.io/docs/latest/process.html#directives">directives</a>, <a href="https://www.nextflow.io/docs/latest/process.html#inputs">inputs</a>, <a href="https://www.nextflow.io/docs/latest/process.html#outputs">outputs</a>, <a href="https://www.nextflow.io/docs/latest/process.html#when">when statements</a>, and a <a href="https://www.nextflow.io/docs/latest/process.html#script">script</a> block. Most modules will execute a single tool in the script block and will make use of the directives, inputs, outputs, and when statements dynamically. Like subworkflows, modules can also be developed and shared in the <a href="https://github.com/nf-core/modules/tree/master/modules/nf-core">nf-core modules GitHub repository</a> or stored as a local module. All modules from the nf-core repository are version controlled and tested to ensure reproducibility. Local modules are workflow specific that are not shared in the nf-core modules repository.</p>
 </section>
 <section id="configuration" class="level3">
 <h3 class="anchored" data-anchor-id="configuration"><strong>1.3.2. Configuration</strong></h3>
-<p>Each nf-core workflow has its own configuration and parameter defaults. These default parameters are required for tests to pass as the workflow is being developed and when it is pushed to GitHub. While the workflow configuration defaults are a great place to start, you will almost certainly want to modify these to fit your own purposes and system requirements.</p>
+<p>Each nf-core workflow has its own <strong>configuration</strong> and <strong>parameter</strong> defaults. These default parameters are required for testing as the workflow is being developed and when it is pushed to GitHub. While the workflow configuration defaults are a great place to start, you will almost certainly want to modify these to fit your own purposes and system requirements.</p>
 <p>When a workflow is launched, Nextflow will look for configuration files in several locations. As each configuration file can contain conflicting settings, the sources are ranked to decide which settings to apply. Configuration sources are reported below and listed in order of priority:</p>
 <ol type="1">
 <li>Parameters specified on the command line (<code>--parameter</code>)</li>
@@ -311,14 +311,14 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>⚠️ Workflow parameters must be passed via the command line (<code>--&lt;parameter&gt;</code>) or Nextflow <code>-params-file</code> option. Custom config files, including those provided by the <code>-c</code> option, can be used to provide any configuration <strong>except</strong> for parameters.</p>
+<p>Workflow parameters must be passed via the command line (<code>--&lt;parameter&gt;</code>) or Nextflow <code>-params-file</code> option. Custom config files, including those provided by the <code>-c</code> option, can be used to provide any configuration <strong>except</strong> for parameters.</p>
 </div>
 </div>
 <p>Notably, while some of these files are already included in the nf-core workflow repository (e.g., the <code>nextflow.config</code> file in the nf-core workflow repository), others are automatically identified on your local system (e.g., the <code>nextflow.config</code> in the launch directory), and others are only included if they are specified using <code>run</code> options (e.g., <code>-params-file</code>, and <code>-c</code>). Understanding how and when these files are interpreted by Nextflow is critical for the accurate configuration of it’s execution.</p>
 </section>
 <section id="viewing-parameters" class="level3">
 <h3 class="anchored" data-anchor-id="viewing-parameters"><strong>1.3.3. Viewing parameters</strong></h3>
-<p>Every nf-core workflow has a full list of parameters on the nf-core website. When viewing these parameters online, you will also be shown a description and the type of the parameter. Some parameters will also have additional text to help you understand when and how a parameter should be used.</p>
+<p>Every nf-core workflow has a full list of <strong>parameters</strong> on the nf-core website. When viewing these parameters online, you will also be shown a description and the type of the parameter. Some parameters will also have additional text to help you understand when and how a parameter should be used.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><a href="https://nf-co.re/rnaseq/3.11.1/parameters"><img src="../figs/1.3_params.excalidraw.png" class="img-fluid figure-img" style="width:80.0%"></a></p>
@@ -351,7 +351,7 @@ Solution
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Parameters for the <code>Sydney-Informatics-Hub/nf-core-demo</code> workflow can be printed using the <code>run</code> command and the <code>--help</code> option:</p>
+<p>The <code>Sydney-Informatics-Hub/nf-core-demo</code> workflow parameters can be printed using the <code>run</code> command and the <code>--help</code> option:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run Sydney-Informatics-Hub/nf-core-demo <span class="at">--help</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
@@ -374,9 +374,15 @@ Tip
 <p>While Nextflow options are prefixed with a single dash (<code>-</code>) all workflow parameters are prefixed with a double dash (<code>--</code>).</p>
 </div>
 </div>
+<<<<<<< HEAD
 <p>Depending on the parameter type you may be required to add additional information. For example, for a string parameter, you would add the string in quotes after the parameter flag:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> nf-core/<span class="op">&lt;</span>workflow<span class="op">&gt;</span> --<span class="op">&lt;</span>parameter<span class="op">&gt;</span> <span class="st">"string"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout-tip callout callout-style-default callout-captioned">
+=======
+<p>Depending on the parameter type you may be required to add additional information. For example, for a string parameter, you would add the string after the parameter flag:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> nf-core/<span class="op">&lt;</span>workflow<span class="op">&gt;</span> --<span class="op">&lt;</span>parameter<span class="op">&gt;</span> string</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-tip callout-titled">
+>>>>>>> my-backup-branch
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -386,7 +392,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Give the MultiQC report for the <code>Sydney-Informatics-Hub/nf-core-demo</code> workflow the name of your favorite animal using the <a href="https://github.com/Sydney-Informatics-Hub/nf-core-demo/blob/master/nextflow.config#L27"><code>multiqc_title</code></a> parameter in the command line:</p>
+<p>Give the MultiQC report for the <code>Sydney-Informatics-Hub/nf-core-demo</code> workflow the name of your <strong>favorite animal</strong> using the <a href="https://github.com/Sydney-Informatics-Hub/nf-core-demo/blob/master/nextflow.config#L27"><code>multiqc_title</code></a> parameter using a command line flag:</p>
 </div>
 </div>
 <div class="callout-caution callout callout-style-default callout-captioned">
@@ -402,7 +408,7 @@ Solution
 <div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Add the <code>--multiqc_title</code> flag to your command and execute it. You can also add the <code>-resume</code> option to save time:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run Sydney-Informatics-Hub/nf-core-demo <span class="at">--multiqc_title</span> <span class="st">"koala"</span> <span class="at">-resume</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run Sydney-Informatics-Hub/nf-core-demo <span class="at">--multiqc_title</span> koala <span class="at">-resume</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>In this example, you can check your parameter has been applied by listing the files created in your results folder (<code>my_results</code>):</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> my_results/multiqc/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This is a very practical example that directly impacts a result file. For parameters that are not as obvious, you may need to check your logs to ensure your changes have been applied. You <strong>can not</strong> rely on the changes to parameters printed to the command line when you execute you run.</p>
@@ -419,18 +425,18 @@ Solution
 <ul>
 <li><code>base.config</code>
 <ul>
-<li>Included by default.</li>
+<li>Included in the workflow by default.</li>
 <li>Generous resource allocations using labels.</li>
 <li>Does not specify any method for software management and expects software to be available (or specified elsewhere).</li>
 </ul></li>
 <li><code>igenomes.config</code>
 <ul>
-<li>Included by default.</li>
+<li>Included in the workflow by default.</li>
 <li>Default configuration to access reference files stored on AWS iGenomes.</li>
 </ul></li>
 <li><code>modules.config</code>
 <ul>
-<li>Included by default.</li>
+<li>Included in the workflow by default.</li>
 <li>Module-specific configuration options (both mandatory and optional).</li>
 </ul></li>
 <li><code>test.config</code>
@@ -459,8 +465,13 @@ Solution
 </ul>
 <p>Multiple profiles can be specified in a comma-separated (<code>,</code>) list when you execute your command. The order of profiles is important as they will be read from left to right:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/<span class="op">&lt;</span>workflow<span class="op">&gt;</span> -profile test,singularity</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<<<<<<< HEAD
 <p>nf-core workflows are required to define software containers and conda environments that can be activated using profiles. Although it is possible to run the workflows with software installed by other methods (e.g., environment modules or manual installation), most users find that Docker and Singularity are most convenient and reproducible.</p>
 <div class="callout-tip callout callout-style-default callout-captioned">
+=======
+<p>nf-core workflows are required to define <strong>software containers</strong> and <strong>conda environments</strong> that can be activated using profiles. Although it is possible to run the workflows with software installed by other methods (e.g., environment modules or manual installation), using Docker or Singularity is more convenient and more reproducible.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+>>>>>>> my-backup-branch
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -470,13 +481,13 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>If you’re computer has internet access and one of Conda, Singularity, or Docker installed, you should be able to run any nf-core workflow with the <code>test</code> profile and the respective software management profile ‘out of the box’. The <code>test</code> data profile will pull test data directly from the <code>nf-core/test-data</code> GitHub repository and run it on your local system without you needing to set up your own test data. The <code>test</code> profile is an important control to check the workflow is working as expected. Some workflows have multiple test <code>profiles</code> for you to test.</p>
+<p>If you’re computer has internet access and one of Conda, Singularity, or Docker installed, you should be able to run any nf-core workflow with the <code>test</code> profile and the respective software management profile ‘out of the box’. The <code>test</code> data profile will pull small test files directly from the <code>nf-core/test-data</code> GitHub repository and run it on your local system. The <code>test</code> profile is an important control to check the workflow is working as expected and is a great way to trial a workflow. Some workflows have multiple test <code>profiles</code> for you to test.</p>
 </div>
 </div>
 </section>
 <section id="shared-configuration-files" class="level3">
 <h3 class="anchored" data-anchor-id="shared-configuration-files"><strong>1.3.6. Shared configuration files</strong></h3>
-<p>An <code>includeConfig</code> statement in the <code>nextflow.config</code> file is also used to include custom institutional profiles that have been submitted to the nf-core <a href="https://github.com/nf-core/configs">config repository</a>. At run time, nf-core workflows will fetch these configuration profiles from the remote configs repository and make them available.</p>
+<p>An <code>includeConfig</code> statement in the <code>nextflow.config</code> file is also used to include custom institutional profiles that have been submitted to the nf-core <a href="https://github.com/nf-core/configs">config repository</a>. At run time, nf-core workflows will fetch these configuration profiles from the <a href="https://github.com/nf-core/configs">nf-core config repository</a> and make them available.</p>
 <p>For shared resources such as an HPC cluster, you may consider developing a shared institutional profile. You can follow <a href="https://nf-co.re/docs/usage/tutorials/step_by_step_institutional_profile">this tutorial</a> for more help.</p>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -488,7 +499,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Pawsey already has a <a href="https://github.com/nf-core/configs/blob/master/docs/pawsey_nimbus.md">shared profile</a> that can be used to run workflows.</p>
+<p>Pawsey has a <a href="https://github.com/nf-core/configs/blob/master/docs/pawsey_nimbus.md">shared profile</a> that can be used to run workflows.</p>
 </div>
 </div>
 </section>
@@ -497,13 +508,14 @@ Tip
 <p>Nextflow will also look for custom configuration files that are external to the workflow project directory. These files include:</p>
 <ul>
 <li>The config file <code>$HOME/.nextflow/config</code></li>
-<li>A config file named <code>nextflow.config</code> in the current directory</li>
+<li>A config file named <code>nextflow.config</code> in your current directory</li>
 <li>Custom files specified using the command line
 <ul>
 <li>A parameter file that is provided using the <code>-params-file</code> option</li>
 <li>A config file that are provided using the <code>-c</code> option</li>
 </ul></li>
 </ul>
+<p>You don’t need to use all of these files to execute your workflow.</p>
 <p><strong>Parameter files</strong></p>
 <p>Parameter files are <code>.json</code> files that can contain an unlimited number of parameters:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span></span>
@@ -538,7 +550,7 @@ Solution
 </div>
 <div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Create a custom <code>.json</code> file that contains:</p>
+<p>Create a custom <code>.json</code> file that contains your favourite food, e.g., cheese:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>   <span class="st">"multiqc_title"</span><span class="ex">:</span> <span class="st">"cheese"</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -587,45 +599,47 @@ Solution
 </div>
 <div id="callout-13" class="callout-13-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Create a custom <code>.config</code> file that contains:</p>
+<p>Create a custom <code>.config</code> file that contains your favourite colour, e.g., blue:</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">params.multiqc_title</span> = <span class="st">"blue"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Include the custom <code>.config</code> file in your execution command with the <code>-c</code> option:</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run Sydney-Informatics-Hub/nf-core-demo <span class="at">-resume</span> <span class="at">-c</span> my_custom_config.config</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Check that it has been applied:</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> my_results/multiqc/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>Why did this fail?</strong></p>
-<p>You <strong>can not</strong> use the <code>params</code> scope in custom configuration files. Parameters can only be configured using the <code>-params-file</code> option and the command line.</p>
+<p>You <strong>can not</strong> use the <code>params</code> scope in custom configuration files. Parameters can only be configured using the <code>-params-file</code> option and the command line. While it parameter is listed as a parameter on the <code>STDOUT</code>, it <strong>was not</strong> applied to the executed command:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> log</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> log <span class="op">&lt;</span>run name<span class="op">&gt;</span> -f <span class="st">"process,script"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 <p>The <code>process</code> scope allows you to configure workflow processes and is used extensively to define resources and additional arguments for modules.</p>
 <p>By default, process resources are allocated in the <code>conf/base.config</code> file using the <code>withLabel</code> selector:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">process</span> {</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">withLabel:</span> BIG_MEM {</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>        <span class="ex">cpus</span> = 16</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>        <span class="ex">memory</span> = 64.GB</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="er">}</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Similarly, the <code>withName</code> selector enables the configuration of a process by name. By default, module parameters are defined in the <code>conf/modules.config</code> file:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">process</span> {</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">withName:</span> MYPROCESS {</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>        <span class="ex">cpus</span> = 4</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>        <span class="ex">memory</span> = 8.GB</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">withLabel:</span> BIG_JOB {</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>        <span class="ex">cpus</span> = 16</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>        <span class="ex">memory</span> = 64.GB</span>
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="er">}</span></span>
 <span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>While some tool arguments are included as a part of a module. To make modules sharable across workflows, most tool arguments are defined in the <code>conf/modules.conf</code> file in the workflow code under the <code>ext.args</code> entry.</p>
-<p>For example, if you were trying to overwrite arguments in the <code>MULTIQC</code> process in the <code>Sydney-Informatics-Hub/nf-core-demo</code> workflow, you could use the process scope:</p>
+<p>Similarly, the <code>withName</code> selector enables the configuration of a process by name. By default, module parameters are defined in the <code>conf/modules.config</code> file:</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">process</span> {</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">withName</span> : <span class="st">".*:MULTIQC"</span> {</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>        <span class="ex">ext.args</span>   = { <span class="st">"&lt;your custom parameter&gt;"</span> }</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="er">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>However, if a process is used multiple times in the same workflow, an extended execution path of the module may be required to make it more specific:</p>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">withName:</span> MYPROCESS {</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>        <span class="ex">cpus</span> = 4</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>        <span class="ex">memory</span> = 8.GB</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="er">}</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>While some tool arguments are included as a part of a module. To make modules sharable across workflows, most tool arguments are defined in the <code>conf/modules.conf</code> file in the workflow code under the <code>ext.args</code> entry.</p>
+<p>For example, if you were trying to add arguments in the <code>MULTIQC</code> process in the <code>Sydney-Informatics-Hub/nf-core-demo</code> workflow, you could use the process scope:</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">process</span> {</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">withName:</span> <span class="st">"NFCORE_DEMO:DEMO:MULTIQC"</span> {</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>        <span class="ex">ext.args</span> = <span class="st">"&lt;your custom parameter&gt;"</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="er">}</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">withName</span> : <span class="st">".*:MULTIQC"</span> {</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>        <span class="ex">ext.args</span>   = { <span class="st">"&lt;your custom parameter&gt;"</span> }</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="er">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>However, if a process is used multiple times in the same workflow, an extended execution path of the module may be required to make it more specific:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">process</span> {</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">withName:</span> <span class="st">"NFCORE_DEMO:DEMO:MULTIQC"</span> {</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>        <span class="ex">ext.args</span> = <span class="st">"&lt;your custom parameter&gt;"</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="er">}</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The extended execution path is built from the workflows, subworkflows, and modules used to execute the process.</p>
 <p>In the example above, the nf-core <a href="https://github.com/Sydney-Informatics-Hub/nf-core-demo/blob/master/modules/nf-core/multiqc/main.nf"><code>MULTIQC</code></a> module, was called by the <a href="https://github.com/Sydney-Informatics-Hub/nf-core-demo/blob/master/workflows/demo.nf"><code>DEMO</code></a> workflow, which was called by the <a href="https://github.com/Sydney-Informatics-Hub/nf-core-demo/blob/master/main.nf"><code>NFCORE_DEMO</code></a> workflow in the <code>main.nf</code> file.</p>
 <div class="callout-tip callout callout-style-default callout-captioned">
@@ -638,7 +652,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>It can be tricky to evaluate the path used to execute a module. If you are unsure of how to build the path you can copy it from the <code>conf/modules.conf</code> file.</p>
+<p>It can be tricky to evaluate the path used to execute a module. If you are unsure of how to build the path you can copy it from the <code>conf/modules.conf</code> file. How arguments are added to a process can also vary. Be vigilant when you are modifying parameters.</p>
 </div>
 </div>
 <div class="callout-tip callout callout-style-default callout-captioned">
@@ -651,7 +665,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Create a new <code>.config</code> file that uses the <code>process</code> scope to overwrite the <code>args</code> for the <code>MULTIQC</code> process. Change the <code>args</code> to <code>"--title \"process_scope\""</code></p>
+<p>Create a new <code>.config</code> file that uses the <code>process</code> scope to overwrite the <code>args</code> for the <code>MULTIQC</code> process. Change the <code>args</code> to your favourite <strong>month</strong>, e.g, <code>"--title \"october\""</code>.</p>
 </div>
 </div>
 <div class="callout-caution callout callout-style-default callout-captioned">
@@ -667,15 +681,15 @@ Solution
 <div id="callout-16" class="callout-16-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Make a custom config file that uses the <code>process</code> scope to overwrite the <code>args</code> for the <code>MULTIQC</code> process:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">process</span> {</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">withName:</span> <span class="st">"NFCORE_DEMO:DEMO:MULTIQC"</span> {</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>        <span class="ex">ext.args</span> = <span class="st">"--title </span><span class="dt">\"</span><span class="st">process_scope</span><span class="dt">\"</span><span class="st">"</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="er">}</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">process</span> {</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">withName:</span> <span class="st">"NFCORE_DEMO:DEMO:MULTIQC"</span> {</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>        <span class="ex">ext.args</span> = <span class="st">"--title </span><span class="dt">\"</span><span class="st">october</span><span class="dt">\"</span><span class="st">"</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="er">}</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Execute your run command again with the custom configuration file:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run Sydney-Informatics-Hub/nf-core-demo <span class="at">-c</span> my_custom_config.config <span class="at">-resume</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run Sydney-Informatics-Hub/nf-core-demo <span class="at">-c</span> my_custom_config.config <span class="at">-resume</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Check that it has been applied:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> my_results/multiqc/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> my_results/multiqc/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -689,7 +703,7 @@ Solution
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Demonstrate the configuration hierarchy using the <code>Sydney-Informatics-Hub/nf-core-demo</code> workflow by adding a params file (<code>-params-file</code>), and a command line flag (<code>--multiqc_title</code>) to your execution. You can use the files you have already created:</p>
+<p>Demonstrate the configuration hierarchy using the <code>Sydney-Informatics-Hub/nf-core-demo</code> workflow by adding a params file (<code>-params-file</code>), and a command line flag (<code>--multiqc_title</code>) to your execution. You can use the files you have already created.</p>
 </div>
 </div>
 <div class="callout-caution callout callout-style-default callout-captioned">
@@ -705,11 +719,11 @@ Solution
 <div id="callout-18" class="callout-18-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Use the <code>.json</code> file you created previously:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>   <span class="st">"multiqc_title"</span><span class="ex">:</span> <span class="st">"cheese"</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>   <span class="st">"multiqc_title"</span><span class="ex">:</span> <span class="st">"cheese"</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Execute your command with your params file (<code>-params-file</code>) and a command line flag (<code>--multiqc_title</code>):</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run Sydney-Informatics-Hub/nf-core-demo <span class="at">-resume</span> <span class="at">-params-file</span> my_custom_params.json <span class="at">--multiqc_title</span> <span class="st">"koala"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run Sydney-Informatics-Hub/nf-core-demo <span class="at">-resume</span> <span class="at">-params-file</span> my_custom_params.json <span class="at">--multiqc_title</span> <span class="st">"koala"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>In this example, as the command line is at the top of the hierarchy, the <code>multiqc_title</code> will be “koala”.</p>
 </div>
 </div>
@@ -725,9 +739,10 @@ Solution
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>Point 1</li>
-<li>Point 2</li>
-<li>Point 3</li>
+<li>nf-core workflows follow a similar structure.</li>
+<li>nf-core workflows are configured using multiple configuration sources.</li>
+<li>Configuration sources are ranked to decide which settings to apply.</li>
+<li>Workflow parameters must be passed via the command line (<code>--&lt;parameter&gt;</code>) or Nextflow <code>-params-file</code> option.</li>
 </ul>
 </div>
 </div>
