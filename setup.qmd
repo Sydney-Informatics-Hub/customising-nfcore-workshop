@@ -7,24 +7,18 @@ output:
 from: markdown+emoji
 ---
 
-In this workshop series, we will be using Pawsey’s Nimbus cloud. The [Pawsey Supercomputing Research Centre](https://pawsey.org.au/about-us/about-pawsey/) is one of two, Tier-1, High Performance Computing facilities in Australia. Their Nimbus cloud platform is an accessible and flexible solution for bioinformatics applications that may not be suitable for large-scale HPC machines including:
-
-* Developing and refining scalable workflows in prepration for HPC allocation applications.
-* Workflows with long runtimes that excede wall time queue limits on HPC facilities.
-* Complex data-bound workflows with variable compute resource profiles that are common in bioinformatics pipelines.
+In this workshop series, we will be using Pawsey’s Nimbus cloud. The [Pawsey Supercomputing Research Centre](https://pawsey.org.au/about-us/about-pawsey/) is one of two, Tier-1, High Performance Computing facilities in Australia. 
 
 The main requirements for this workshop are a personal computer with:
 
 * A web broswer 
-* Terminal or IDE application 
+* Visual Studio Code or a terminal application 
 
-On this page you will find instructions on how to set up a terminal application and web browser on your computer and how to connect to Nimbus. Each participant will be provided with their instance’s IP address at the beginning of the workshop.
-
-To connect to your Nimbus instance, you will need either a terminal or integrated development environment (IDE) application installed on your computer. While we recommend you use the Visual Studio Code IDE for this workshop, we have also provided directions for installing and using a terminal applications below. 
+Below, you will find instructions on how to set up a terminal application and web browser on your computer and how to connect to Nimbus. Each participant will be provided with their instance’s IP address at the beginning of the workshop.
 
 ### **Option 1: Install and set up Visual Studio Code**
 
-Visual Studio Code is a lightweight and powerful source code editor available for Windows, macOS and Linux computers. 
+Visual Studio Code (VS Code) is a lightweight and powerful source code editor available for Windows, macOS and Linux computers. 
 
 1. Download Visual Studio Code for your system from [here](https://code.visualstudio.com/download) and follow the instructions for:
     * [macOS](https://code.visualstudio.com/docs/setup/mac)
@@ -43,6 +37,10 @@ Visual Studio Code is a lightweight and powerful source code editor available fo
 
 ![](https://user-images.githubusercontent.com/73086054/231062539-6a4fc78f-da2e-40a6-9d94-00b702930b67.png)
 
+5. Install the Nextflow extension. Click on the blue `install` button. 
+
+![](https://user-images.githubusercontent.com/73086054/236149551-1703e56c-680b-4733-8613-c3409f43b6f2.png)
+
 #### **Login via Visual Studio Code**
 
 1. Connect to your instance with VS code by adding the host details to your ssh config file. 
@@ -58,6 +56,10 @@ Host nfcoreWorkshop
     * `Ctrl`+`Shift`+`P` to open command palette 
     * Select `Remote-SSH: Connect to Host` and select name of your host
     * Select `Linux` from dropdown menu and then `continue` 
+
+Having successfully logged in, you should see a small green box in the bottom left corner of your screen:
+
+![](https://user-images.githubusercontent.com/73086054/228143085-20a5bdfc-f4e7-4472-b43f-2c975ae5eb4c.png)
 
 ### **Option 2: Install and set up a terminal application**
 
@@ -123,5 +125,7 @@ Enter the password provided at the beginning of the workshop. Ask one of the dem
 When you type a password on the terminal, there will not be any indication the password is being entered. You'll not see a moving cursor, or even any asterisks, or bullets. That is an intentional security mechanism used by all terminal applications and can trip us up sometimes, so be careful when typing or copying your password in.  
 :::
 
-
 Having successfully logged in, your terminal should then display something like that shown in the figure below:
+
+![](https://user-images.githubusercontent.com/73086054/228141686-a63a84c1-b714-4797-af8e-2b511421a7d8.png)
+

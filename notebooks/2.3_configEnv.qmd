@@ -147,10 +147,38 @@ nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
   -resume
 ```
 
-::: {.callout-tip collapse="true"}
-### **Bonus exercise: applying an institutional config**
+### **2.3.4. Apply an institutional config file**
 
-:::
+We have created an nf-core config for Pawsey's Nimbus cloud and shared it at the [nf-core/configs repository](https://github.com/nf-core/configs/blob/master/docs/pawsey_nimbus.md). This config file was downloaded with the workflow code. Take a look:
+
+```default
+cat nf-core-rnaseq-3.11.1/configs/conf/pawsey_nimbus.config
+```
+
+This configuration file provides a few different profiles that match the [Nimbus instance flavours](https://support.pawsey.org.au/documentation/pages/viewpage.action?pageId=58000088#GetStartedwiththeNewNimbus-Flavours) currently available, as well as Docker and Singularity container engines. Take a look at the c2r8 scope, looks a lot like our `custom-nimbus.config`: 
+
+```default
+  c2r8 {
+    params {
+      max_cpus   = 2
+      max_memory = '6.GB'
+    }
+  }
+```
+
+Let's rerun the workflow with the `-resume` function and the [institutional config parameters](https://nf-co.re/rnaseq/3.11.2/parameters#institutional-config-options), instead of our custom file and see if anything changes:
+
+```default
+nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
+  -profile pawsey_nimbus,singularity,c2r8 \
+  -params-file workshop-params.yaml \
+  --outdir Lesson-3 \
+  -resume
+```
+
+In the nf-core/rnaseq pipeline's configuration message printed to the screen at run time, we can see the institutional config has been picked up and our resource parameters are correctly being applied. 
+
+![](../figs/2.3_institutional_config.png)
 
 ::: {.callout-note}
 ### **Key points**
