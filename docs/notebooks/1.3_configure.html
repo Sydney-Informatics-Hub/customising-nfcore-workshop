@@ -253,7 +253,7 @@ Objectives
 </div>
 <section id="workflow-structure" class="level3">
 <h3 class="anchored" data-anchor-id="workflow-structure"><strong>1.3.1. Workflow structure</strong></h3>
-<p>nf-core workflows follow a set of best practices and standardized conventions. nf-core workflows start from a common template and follow the same structure. Although you won’t need to edit code in the workflow project directory, having a basic understanding of the project structure and some core terminology will help you understand how to configure its execution.</p>
+<p>nf-core workflows follow a set of best practices and standardized conventions. nf-core workflows start from a <strong>common template</strong> and follow the same structure. Although you won’t need to edit code in the workflow project directory, having a basic understanding of the project structure and some core terminology will help you understand how to configure its execution.</p>
 <p><img src="../figs/1.3_structure.excalidraw.png" class="quarto-discovered-preview-image img-fluid" style="width:50.0%"></p>
 <p>Nextflow DSL2 <strong>workflows</strong> are built up of <strong>subworkflows</strong> and <strong>modules</strong> that are stored as separate <code>.nf</code> files.</p>
 <p><img src="../figs/1.3_worksubmod.excalidraw.png" class="img-fluid"></p>
@@ -263,7 +263,7 @@ Objectives
 </section>
 <section id="configuration" class="level3">
 <h3 class="anchored" data-anchor-id="configuration"><strong>1.3.2. Configuration</strong></h3>
-<p>Each nf-core workflow has its own <strong>configuration</strong> and <strong>parameter</strong> defaults. These default parameters are required for testing as the workflow is being developed and when it is pushed to GitHub. While the workflow configuration defaults are a great place to start, you will almost certainly want to modify these to fit your own purposes and system requirements.</p>
+<p>Each nf-core workflow has its own <strong>configuration</strong> and <strong>parameter</strong> defaults. The default parameters are required for testing as the workflow is being developed and when it is pushed to GitHub. While the workflow configuration defaults are a great place to start, you will almost certainly want to modify these to fit your own purposes and system requirements.</p>
 <p>When a workflow is launched, Nextflow will look for configuration files in several locations. As each configuration file can contain conflicting settings, the sources are ranked to decide which settings to apply. Configuration sources are reported below and listed in order of priority:</p>
 <ol type="1">
 <li>Parameters specified on the command line (<code>--parameter</code>)</li>
@@ -284,14 +284,14 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Workflow parameters must be passed via the command line (<code>--&lt;parameter&gt;</code>) or Nextflow <code>-params-file</code> option. Custom config files, including those provided by the <code>-c</code> option, can be used to provide any configuration <strong>except</strong> for parameters.</p>
+<p>nf-core workflow parameters must be passed via the command line (<code>--&lt;parameter&gt;</code>) or Nextflow <code>-params-file</code> option. Custom config files, including those provided by the <code>-c</code> option, can be used to provide any configuration <strong>except</strong> for parameters.</p>
 </div>
 </div>
-<p>Notably, while some of these files are already included in the nf-core workflow repository (e.g., the <code>nextflow.config</code> file in the nf-core workflow repository), others are automatically identified on your local system (e.g., the <code>nextflow.config</code> in the launch directory), and others are only included if they are specified using <code>run</code> options (e.g., <code>-params-file</code>, and <code>-c</code>). Understanding how and when these files are interpreted by Nextflow is critical for the accurate configuration of it’s execution.</p>
+<p>Notably, while some of these files are already included in the nf-core workflow repository (e.g., the <code>nextflow.config</code> file in the nf-core workflow repository), others are automatically identified on your local system (e.g., the <code>nextflow.config</code> in the launch directory), and others are only included if they are specified using <code>run</code> options (e.g., <code>-params-file</code>, and <code>-c</code>). Understanding how and when these files are interpreted by Nextflow is critical for the accurate configuration of a workflows execution.</p>
 </section>
 <section id="viewing-parameters" class="level3">
 <h3 class="anchored" data-anchor-id="viewing-parameters"><strong>1.3.3. Viewing parameters</strong></h3>
-<p>Every nf-core workflow has a full list of <strong>parameters</strong> on the nf-core website. When viewing these parameters online, you will also be shown a description and the type of the parameter. Some parameters will also have additional text to help you understand when and how a parameter should be used.</p>
+<p>Every nf-core workflow has a full list of <strong>parameters</strong> on the nf-core website. When viewing these parameters online, you will also be shown a description and the type of the parameter. Some parameters will have additional text to help you understand when and how a parameter should be used.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><a href="https://nf-co.re/rnaseq/3.11.1/parameters"><img src="../figs/1.3_params.excalidraw.png" class="img-fluid figure-img" style="width:80.0%"></a></p>
@@ -332,7 +332,7 @@ Solution
 </section>
 <section id="parameters-in-the-command-line" class="level3">
 <h3 class="anchored" data-anchor-id="parameters-in-the-command-line"><strong>1.3.4. Parameters in the command line</strong></h3>
-<p>At the highest level, parameters can be customized at execution using the command line. Any parameter can be specified on the command line by prefixing the parameter name with a double dash (<code>--</code>):</p>
+<p>At the highest level, parameters can be customized at execution using the command line. Any parameter can be configured on the command line by prefixing the parameter name with a double dash (<code>--</code>):</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> nf-core/<span class="op">&lt;</span>workflow<span class="op">&gt;</span> --<span class="op">&lt;</span>parameter<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -344,10 +344,10 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>While Nextflow options are prefixed with a single dash (<code>-</code>) all workflow parameters are prefixed with a double dash (<code>--</code>).</p>
+<p>Nextflow options are prefixed with a single dash (<code>-</code>) and workflow parameters are prefixed with a double dash (<code>--</code>).</p>
 </div>
 </div>
-<p>Depending on the parameter type you may be required to add additional information. For example, for a string parameter, you would add the string after the parameter flag:</p>
+<p>Depending on the parameter type, you may be required to add additional information after your parameter flag. For example, for a string parameter, you would add the string after the parameter flag:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> nf-core/<span class="op">&lt;</span>workflow<span class="op">&gt;</span> --<span class="op">&lt;</span>parameter<span class="op">&gt;</span> string</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -374,11 +374,11 @@ Solution
 </div>
 <div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Add the <code>--multiqc_title</code> flag to your command and execute it. You can also add the <code>-resume</code> option to save time:</p>
+<p>Add the <code>--multiqc_title</code> flag to your command and execute it. Use the <code>-resume</code> option to save time:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run Sydney-Informatics-Hub/nf-core-demo <span class="at">--multiqc_title</span> koala <span class="at">-resume</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>In this example, you can check your parameter has been applied by listing the files created in your results folder (<code>my_results</code>):</p>
+<p>In this example, you can check your parameter has been applied by listing the files created in the results folder (<code>my_results</code>):</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> my_results/multiqc/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This is a very practical example that directly impacts a result file. For parameters that are not as obvious, you may need to check your logs to ensure your changes have been applied. You <strong>can not</strong> rely on the changes to parameters printed to the command line when you execute you run.</p>
+<p><code>--multiqc_title</code> is a parameter that directly impacts a result file. For parameters that are not as obvious, you may need to check your <code>log</code> to ensure your changes have been applied. You <strong>can not</strong> rely on the changes to parameters printed to the command line when you execute your run:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> log</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> log <span class="op">&lt;</span>run name<span class="op">&gt;</span> -f <span class="st">"process,script"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
