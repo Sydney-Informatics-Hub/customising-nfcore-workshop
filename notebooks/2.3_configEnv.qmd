@@ -16,17 +16,62 @@ from: markdown+emoji
 - Use an alternative container source for a workflow process  
 :::
 
-Nextflow's portability is enabled by its ability to separate workflow implementation from the configuration settings required to execute it. In this lesson we will use configuration files to define specifications required to execute an nf-core pipeline on our compute environment. While nf-core workflows are designed to be portable and work out of the box, sometimes you will need to customise the workflow's configuration so that it can run on your environment. The nf-core developer community currently offer a number of ways to [configure nf-core workflows](https://nf-co.re/usage/configuration). 
+In the previous exercises, we have explored how to customise a run with **workflow parameters** on the command line or within a parameters file. We will now look at **configuration settings**, which manage **how the workflow is implemented on your system**. 
+
+A key feature of Nextflow is its ease of portability across different computational infrastructures. It achieves this by separating workflow implementation from the configuration settings required to execute it. This enables **reproducibility**, as simply sharing the parameters applied to a run (eg via your params file) is sufficient to enable any other researcher to replicate your results on any other computational platform. They would just need to adjust the configurations of their run to suit their infrastructure, and the results would be the same. 
+
+In this lesson we will use configuration files to define specifications required to execute an nf-core pipeline on our compute environment. While nf-core workflows are designed to be portable and work out of the box, sometimes you will need to customise the workflow's configuration so that it can run on your environment. The nf-core developer community currently offer a number of ways to [configure nf-core workflows](https://nf-co.re/usage/configuration). 
+
+
 
 ### **2.3.1. Default nf-core configuration**
 
-Recall that when a `main.nf` file is run for any Nextflow workflow, Nextflow looks for [configuration files in multiple locations](https://www.nextflow.io/docs/latest/config.html#configuration-file) to determine how to execute the workflow and its processes. One of the files Nextflow will always look for is `nextflow.config`. Currently, all nf-core workflows use a `nextflow.config` file and a `conf/base.config` file to define the default execution settings and parameters of a workflow.  
+Recall that when a `main.nf` file is run for any Nextflow workflow, Nextflow looks for [configuration files in multiple locations](https://www.nextflow.io/docs/latest/config.html#configuration-file) to determine how to execute the workflow and its processes. 
 
-Let's take a look at the nf-core/rnaseq `nextflow.config` file:
+Currently, all nf-core workflows use a `nextflow.config` file and a `conf/base.config` file to define the default execution settings and parameters of a workflow.   
 
-```default
-cat nf-core-rnaseq-3.11.1/workflow/nextflow.config
+The critical configuration aspects can be grouped into 3 key areas:
+
+1. Parameters
+2. Compute resources
+3. Software/tool access
+
+Let's take a look at these two configuration files to gain an undertsanding of how defaults are applied.
+
+Using the `more` command, take a few moments to scroll through both the `nextflow.config` and `base.config` files:
 ```
+more nf-core-rnaseq-3.11.1/workflow/conf/base.config
+more nf-core-rnaseq-3.11.1/workflow/nextflow.config
+```
+
+The `base.config` file applies default compute resource settings to be used by the processes in the nf-core workflow. It uses process labels to enable different sets of resources to be applied to groups of processes that require similar compute. These labels are specified within the main.nf file for a process.  
+
+The `nextflow.config` file is more workflow-specific, and sets the defaults for the workflow parameters, as well as defines profiles to change the default software access from $PATH to the specified access method. 
+
+
+Thinking of the compute resource and software configuration settings we have applied to our rnaseq runs so far (`-profile singularity`, `--max_cpus`, `--max_memory`), if we were to run the nf-core/rnaseq workflow without these custom configurations, do you think the run would complete successfully? If not, why?
+
+Answer: 
+- The tools required by the different processes eg STAR, salmon, would not be accessible, as they are not installed locally and saved to $PATH (we have been accessing them via the 'singularity' profile and using the saved images from our $NXF_SINGULARITY_CACHEDIR directory
+- The first process to use more than 2 CPUs or 8 GB RAM would fail and cause the pipeline to exit with a fatal error 
+
+The parameters --max_cpus, --max_memory and --max_time are applied as a cap for a workflow, to ensure that the processes do not attempt to use more resources than you have available on your platform. Thus, they are critical customisations that should be checked and where required, adjusted, depending on where you are running the pipeline. 
+
+Within `base.config`, the `check_max()` function over-rides the process resources *if the max setting is lower than the default for the group of processes with that label* 
+
+Challenge:
+
+- What are the default settings for CPU, memory and walltime for the STAR align process?
+- Have these defaults been changed from our applied customisations in the previous runs?
+
+To uncover these answers, we need to understand what process label has been assigned to the STAR align process. 
+```
+more workflow/modules/nf-core/star/align/main.nf 
+```
+
+STAR align has the label `process_high` which has the settings 12 CPUs, 72 GB mem, 16 hrs walltime applied from within `base.config`. We have previosuly applied --max_cpus 2 and --max_memory 6, so the `check_max()`  function would have reduced the resources given to the STAR align process to 2 CPUs and 6 GB RAM. 
+
+Just as we can reduce the maximum resources to the workflow, we can increase the resources through custom configuration, by utilising these process labels or isolating specific processes int he workflow using the 'withName' process selector (coming soon)
 
 ::: callout-tip
 ### **Challenge**{.unlisted}
@@ -56,6 +101,7 @@ max_time   = '240.h'
 includeConfig 'conf/base.config'
 ```
 :::
+
 
 ### **2.3.2. When to use a custom config file**
 
