@@ -129,23 +129,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="dropdown-menu" aria-labelledby="nav-menu-session-1">    
         <li>
     <a class="dropdown-item" href="../notebooks/1.0_intro.html" rel="" target="">
- <span class="dropdown-text">Session 1 kick-off</span></a>
+ <span class="dropdown-text">1.0 Session 1 kick-off</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../notebooks/1.1_nextflow.html" rel="" target="">
- <span class="dropdown-text">Introduction to Nextflow</span></a>
+ <span class="dropdown-text">1.1 Introduction to Nextflow</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../notebooks/1.2_nfcore.html" rel="" target="">
- <span class="dropdown-text">Introduction to nf-core</span></a>
+ <span class="dropdown-text">1.2 Introduction to nf-core</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../notebooks/1.3_configure.html" rel="" target="">
- <span class="dropdown-text">Configuring nf-core workflows</span></a>
+ <span class="dropdown-text">1.3 Configuring nf-core workflows</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../notebooks/1.4_users.html" rel="" target="">
- <span class="dropdown-text">Commands for users</span></a>
+ <span class="dropdown-text">1.4 Commands for users</span></a>
   </li>  
     </ul>
   </li>
@@ -296,7 +296,7 @@ Solution
 </section>
 <section id="nf-core-download" class="level3">
 <h3 class="anchored" data-anchor-id="nf-core-download"><strong>1.4.2 <code>nf-core download</code></strong></h3>
-<p>Sometimes you may need to execute an nf-core workflow on a server or HPC system that has no internet connection. In this case, you will need to fetch the workflow files and manually transfer them to your offline system. To make this process easier and ensure accurate retrieval of correctly versioned code and software containers, nf-core has the <code>download</code> helper tool.</p>
+<p>Sometimes you may need to execute an nf-core workflow on a server or HPC system that has no internet connection. In this case, you will need to fetch the workflow files and manually transfer them to your offline system. To make this process easier and ensure accurate retrieval of correctly versioned code and software containers, nf-core has the <code>download</code> command.</p>
 <p>The nf-core <code>download</code> command will download both the workflow code and the institutional nf-core/configs files. It can also optionally download singularity image file.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> download</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If run without any arguments, the download tool will interactively prompt you for the required information. Each prompt option has a flag and if all flags are supplied then it will run without a request for any additional user input:</p>
@@ -307,16 +307,16 @@ Solution
 </ul></li>
 <li><strong>Pipeline revision</strong>
 <ul>
-<li>Select the revision you would like to download.</li>
+<li>The revision you would like to download.</li>
 </ul></li>
 <li><strong>Pull containers</strong>
 <ul>
-<li>Choose if you would like to download Singularity images.</li>
-<li>You will be asked for a path to a folder where you would like to store these images if you have not set your <code>NXF_SINGULARITY_CACHEDIR</code>.</li>
+<li>If you would like to download Singularity images.</li>
+<li>The path to a folder where you would like to store these images if you have not set your <code>NXF_SINGULARITY_CACHEDIR</code>.</li>
 </ul></li>
 <li><strong>Choose compression type</strong>
 <ul>
-<li>Choose compression type for Singularity images.</li>
+<li>The compression type for Singularity images.</li>
 </ul></li>
 </ul>
 <p>Alternatively, you could build your own execution command with the command line options.</p>
@@ -346,9 +346,10 @@ Solution
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Use the nf-core <code>launch</code> command for the <code>nf-core/rnaseq</code> workflow and follow the prompts.</p>
+<p>Use the nf-core <code>download</code> command for the <code>nf-core/rnaseq</code> workflow and follow the prompts.</p>
 <p>If you were to write your own command and options it would look like this:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> download nf-core/rnaseq <span class="at">--revision</span> 3.11.1 <span class="at">--container</span> singularity <span class="at">--compress</span> none</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Let the singularity images download (you will use the during Session 2).</p>
 </div>
 </div>
 </div>
@@ -397,7 +398,8 @@ Solution
 </div>
 </div>
 </div>
-<p>You can also use the launch command directly from the nf-core website. In this case, you can copy the run</p>
+<p>You can also use the launch command directly from the <a href="https://nf-co.re/launch">nf-core launch website</a>. In this case, you can configure your workflow using the wizard and then copy the outputs to your terminal or use the run id generated by the wizard. You will need to be connected to the internet to use the run id.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> launch <span class="at">--id</span> <span class="op">&lt;</span>run_id<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
