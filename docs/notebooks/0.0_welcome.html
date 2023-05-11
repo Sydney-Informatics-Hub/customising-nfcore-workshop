@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Sydney Informatics Hub - 2.0. Introduction to session 2</title>
+<title>Sydney Informatics Hub training - Welcome to the workshop!</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -71,7 +71,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Sydney Informatics Hub</span>
+    <span class="navbar-title">Sydney Informatics Hub training</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -86,6 +86,10 @@ ul.task-list li input[type="checkbox"] {
   <li class="nav-item">
     <a class="nav-link" href="../setup.html">
  <span class="menu-text">Setup</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../notebooks/0.0_welcome.html" aria-current="page">
+ <span class="menu-text">Lesson plan</span></a>
   </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-session-1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -143,10 +147,6 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="../notebooks/2.5_extArgs.html">
  <span class="dropdown-text">2.5 Apply external arguments</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="../notebooks/2.6_launch.html">
- <span class="dropdown-text">2.6 Use nf-core launch</span></a>
-  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -163,21 +163,15 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#log-back-in-to-your-instance" id="toc-log-back-in-to-your-instance" class="nav-link active" data-scroll-target="#log-back-in-to-your-instance"><strong>2.0.1. Log back in to your instance</strong></a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
+<main class="content column-page" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><strong>2.0. Introduction to session 2</strong></h1>
+<h1 class="title"><strong>Welcome to the workshop!</strong></h1>
 </div>
 
 
@@ -192,48 +186,72 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>This session builds on fundamental concepts learned in <a href="../notebooks/1.0_intro.html">Session 1</a> and provide you with hands-on experience in nf-core workflow customisation. Throughout the session we will be working with a case study to apply an nf-core workflow. Each lesson will build on the previous one, so you can gain a deeper understanding of the customisation techniques and the impact they have on the workflow and your results.</p>
-<p>We will explore the source code of the nf-core/rnaseq workflow and apply customisations using a parameter file and custom configuration files. You will create these files and run Nextflow commands and some custom <strong>bash</strong> code to efficiently extract information from the source code <span class="emoji" data-emoji="nerd_face">🤓</span>.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Applying what you learn here to other nf-core workflows
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>While all activities in this session will be performed using the nf-core/rnaseq workflow, all customisation scenarios we explore are applicable to other nf-core workflows and do not require an understanding of RNAseq data processing.</p>
-</div>
-</div>
-<section id="log-back-in-to-your-instance" class="level3">
-<h3 class="anchored" data-anchor-id="log-back-in-to-your-instance"><strong>2.0.1. Log back in to your instance</strong></h3>
-<section id="option-1-in-visual-studio-code" class="level4">
-<h4 class="anchored" data-anchor-id="option-1-in-visual-studio-code"><strong>Option 1: In Visual Studio Code</strong></h4>
-<p>Follow the <a href="../setup.html#login-via-visual-studio-code">VS Code set up instructions</a> or use the instructions below to connect to your instance using the command palatte:</p>
-<ul>
-<li><code>Ctrl</code>+<code>Shift</code>+<code>P</code> to open command palette</li>
-<li>Select <code>Remote-SSH: Connect to Host</code> and select name of your host</li>
-<li>Select <code>Linux</code> from dropdown menu and then <code>continue</code></li>
-</ul>
-<p>Having successfully logged in, you should see a small green box in the bottom left corner of your screen:</p>
-<p><img src="https://user-images.githubusercontent.com/73086054/228143085-20a5bdfc-f4e7-4472-b43f-2c975ae5eb4c.png" class="img-fluid"></p>
-</section>
-<section id="option-2-in-a-terminal" class="level4">
-<h4 class="anchored" data-anchor-id="option-2-in-a-terminal"><strong>Option 2: In a terminal</strong></h4>
-<p>Follow the <a href="../setup.html#login-via-terminal">terminal set up instructions</a> or use the quick start instructions below to connect to your instance on the command-line:</p>
-<ul>
-<li>Run: <code>ssh training@###.###.###.###</code></li>
-<li>Enter the password provided at the beginning of the workshop. Ask one of the demonstrators if you’ve forgotten it.</li>
-</ul>
-<p>Having successfully logged in, your terminal should then display something like that shown in the figure below:</p>
-<p><img src="https://user-images.githubusercontent.com/73086054/228141686-a63a84c1-b714-4797-af8e-2b511421a7d8.png" class="img-fluid"></p>
-<p><br></p>
+<p>In this workshop, we explore Nextflow and nf-core as powerful tools for bioinformatics data processing pipelines. Our goal for this workshop is to provide you with foundational knowledge so that you can understand the code base of any nf-core pipeline and responsibly apply and customise an nf-core pipelines for your own research applications.</p>
+<p>These sessions will be a challenging but rewarding experience that will provide you with an opportunity to develop your skills and get exposure to key concepts in Nextflow. Even if you are already familiar with Nextflow and have some experience with nf-core pipelines, it will take you time and practice beyond this workshop to fully understand the concepts and terminology laid out here.</p>
+<p>The plan below explains the learning outcomes we aim to achieve for each lesson:</p>
+<table class="table">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 33%">
+<col style="width: 59%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Session</th>
+<th>Lesson</th>
+<th>Outcomes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1.</td>
+<td>1. Introduction to Nextflow</td>
+<td>Understand core features of Nextflow and learn fundamental Nextflow options and features.</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>2. Introduction to nf-core</td>
+<td>Understand core features of nf-core and learn how to use <code>nf-core tools</code> utility.</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>3. Configuring nf-core workflows</td>
+<td>Understand the structure of an nf-core pipeline and the use of customisation options.</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>4. Commands for users</td>
+<td>Apply the <code>nf-core tools</code> utility’s <code>list</code>, <code>download</code>, and <code>launch</code> commands.</td>
+</tr>
+<tr class="odd">
+<td>2.</td>
+<td>1. Design and execute a run command</td>
+<td>Design and run an nf-core pipeline and learn how to select the right parameters for your application.</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>2. Manage and trace parameters</td>
+<td>Trace and adjust parameters for a process and rerun the pipeline using a parameters file.</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>3. Use a custom config file</td>
+<td>Write and rerun the pipeline with a custom configuration file for resource management.</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>4. Apply multiple configurations</td>
+<td>Apply multiple configuration files to customise various pipeline settings for the same run.</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>5. Apply additional arguments to a process</td>
+<td>Use Nextflow’s <code>ext.args</code> and a custom configuration file to apply additional parameters not provided by the pipeline.</td>
+</tr>
+</tbody>
+</table>
 
 
-</section>
-</section>
 
 <p>All materials copyright Sydney Informatics Hub, University of Sydney</p></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
