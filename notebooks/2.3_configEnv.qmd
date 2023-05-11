@@ -10,9 +10,9 @@ from: markdown+emoji
 ::: callout-tip
 ### Objectives{.unlisted}
 
-- Understand formatting requirements of a config file 
-- Write a custom config file for your local environment that overwrites default workflow settings 
-- Run a workflow using the custom config file and appropriate Nextflow flag 
+- Learn how to check the default configurations that are applied to nf-core workflows
+- Understand how to over-ride default configurations with custom configuration files
+- Write a custom config file for your local environment and apply this configuration to your run  
 - Use an alternative container source for a workflow process  
 :::
 
@@ -21,8 +21,7 @@ In the previous exercises, we have explored how to customise a run with **workfl
 A key feature of Nextflow is its ease of portability across different computational infrastructures. It achieves this by separating workflow implementation from the configuration settings required to execute it. This enables **reproducibility**, as simply sharing the parameters applied to a run (eg via your params file) is sufficient to enable any other researcher to replicate your results on any other computational platform. They would just need to adjust the configurations of their run to suit their infrastructure, and the results would be the same. 
 
 In this lesson we will use configuration files to define specifications required to execute an nf-core pipeline on our compute environment. While nf-core workflows are designed to be portable and work out of the box, sometimes you will need to customise the workflow's configuration so that it can run on your environment. The nf-core developer community currently offer a number of ways to [configure nf-core workflows](https://nf-co.re/usage/configuration). 
-
-
+<br/><br/>
 
 ### **2.3.1. Default nf-core configuration**
 
@@ -35,29 +34,42 @@ The critical configuration aspects can be grouped into 3 key areas:
 1. Parameters
 2. Compute resources
 3. Software/tool access
+<br/><br/>
 
-Let's take a look at these two configuration files to gain an undertsanding of how defaults are applied.
+&#x27A4; Let's take a look at these two configuration files to gain an undertsanding of how defaults are applied.
 
 Using the `more` command, take a few moments to scroll through both the `nextflow.config` and `base.config` files:
-```
+``` bash
 more nf-core-rnaseq-3.11.1/workflow/conf/base.config
 more nf-core-rnaseq-3.11.1/workflow/nextflow.config
 ```
+<br/>
 
-The `base.config` file applies default compute resource settings to be used by the processes in the nf-core workflow. It uses process labels to enable different sets of resources to be applied to groups of processes that require similar compute. These labels are specified within the main.nf file for a process.  
+The `base.config` sets the default compute resource settings to be used by the processes in the nf-core workflow. It uses **process labels** to enable different sets of resources to be applied to groups of processes that require similar compute. These labels are specified within the `main.nf` file for a process. <span style="color:#000080;"> We can over-ride these default compute resources using a custom configuration file.</span>
 
-The `nextflow.config` file is more workflow-specific, and sets the defaults for the workflow parameters, as well as defines profiles to change the default software access from $PATH to the specified access method. 
+The `nextflow.config` file is more workflow-specific, and sets the defaults for the workflow parameters, as well as defines profiles to change the default software access from `$PATH` to the specified access method, eg Singularity. <span style="color:#000080;"> We can over-ride these parameters on the command line or with a parameters file, and over-ride the default behaviour of searching for tools on `$PATH` by specifying a `-profile`.</span>  
+<br/><br/>
 
+::: callout-tip
+### **Challenge**{.unlisted}
+Thinking of the resource configuration settings we have applied to our rnaseq runs so far (`-profile singularity`, `--max_cpus`, `--max_memory`), if we were to run the nf-core/rnaseq workflow now without these custom configurations, do you think the run would complete successfully? 
 
-Thinking of the compute resource and software configuration settings we have applied to our rnaseq runs so far (`-profile singularity`, `--max_cpus`, `--max_memory`), if we were to run the nf-core/rnaseq workflow without these custom configurations, do you think the run would complete successfully? If not, why?
+If not, why?
+:::
 
-Answer: 
-- The tools required by the different processes eg STAR, salmon, would not be accessible, as they are not installed locally and saved to $PATH (we have been accessing them via the 'singularity' profile and using the saved images from our $NXF_SINGULARITY_CACHEDIR directory
+::: {.callout-caution collapse="true"}
+### Solution
+- The tools required by the different processes (eg STAR, salmon) would not be accessible, as they are not installed locally and saved to `$PATH` (we have been accessing them via the 'singularity' profile and using the saved images from our `$NXF_SINGULARITY_CACHEDIR` directory
 - The first process to use more than 2 CPUs or 8 GB RAM would fail and cause the pipeline to exit with a fatal error 
+:::
+<br/>
 
-The parameters --max_cpus, --max_memory and --max_time are applied as a cap for a workflow, to ensure that the processes do not attempt to use more resources than you have available on your platform. Thus, they are critical customisations that should be checked and where required, adjusted, depending on where you are running the pipeline. 
+The parameters `--max_cpus`, `--max_memory` and `--max_time` are applied as a cap for a workflow, to ensure that no single process attempts to use more resources than you have available on your platform. <span style="color:#000080;"> Setting these values to the maximum or near-maximum on your machine/node is an important customisation to prevent uneccessary failed runs.</span>  
 
-Within `base.config`, the `check_max()` function over-rides the process resources *if the max setting is lower than the default for the group of processes with that label* 
+Within `base.config`, the `check_max()` function over-rides the process resources *if the max setting is lower than the default setting for that process* 
+
+![](../figs/2.3_check_max.png)
+
 
 Challenge:
 
