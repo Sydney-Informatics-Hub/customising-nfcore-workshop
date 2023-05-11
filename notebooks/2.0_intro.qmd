@@ -7,37 +7,31 @@ output:
 from: markdown+emoji
 ---
 
-This session builds on fundamental concepts learned in [Session 1](1.0_intro.md) and provide you with hands-on experience in nf-core workflow customisation. Throughout the session we will be working with a case study to apply an nf-core workflow. Each lesson will build on the previous one, so you can gain a deeper understanding of the customisation techniques and the impact they have on the workflow and your results. 
-
-We will explore the source code of the nf-core/rnaseq workflow and apply customisations using a parameter file and custom configuration files. You will create these files and run Nextflow commands and some custom **bash** code to efficiently extract information from the source code :nerd_face:. 
+This session builds on fundamental concepts learned in [Session 1](1.0_intro.md) and provides you with hands-on experience in nf-core workflow customisation. Throughout the session we will be working with a case study and the nf-core/rnaseq pipeline. We will explore the pipeline source code and apply customisations using a parameter file and custom configuration files. You will create these files, use the nf-core tools utility, run Nextflow commands and some custom **bash** code to efficiently extract information from the source code :nerd_face:. 
 
 ::: callout-note
 ### Applying what you learn here to other nf-core workflows
 While all activities in this session will be performed using the nf-core/rnaseq workflow, all customisation scenarios we explore are applicable to other nf-core workflows and do not require an understanding of RNAseq data processing. 
 :::
 
-### **2.0.1. Log back in to your instance**
+### **2.0.1. Session 2 lesson plan**
 
-#### **Option 1: In Visual Studio Code** 
+Each lesson in this session will build on the previous lessons, so you can gain a deeper understanding of the customisation techniques and the impact they have on the workflow and your results. There are many different ways to customise a pipeline and we will learn to:
 
-Follow the [VS Code set up instructions](../setup.qmd#login-via-visual-studio-code) or use the instructions below to connect to your instance using the command palatte:
+* Session 2.1: Build a run command for the nf-core/rnaseq pipeline using required and optional parameters   
+* Session 2.2: Troubleshoot a pipeline warning message and apply a params file to track our parameters 
+* Session 2.3: Configure compute resources for the workflow using custom and institutional configuration files 
+* Session 2.4: Apply multiple configurations to the workflow for the same run
+* Session 2.5: Supply external arguments to a process that are not preset as pipeline parameters 
 
-  * `Ctrl`+`Shift`+`P` to open command palette 
-  * Select `Remote-SSH: Connect to Host` and select name of your host
-  * Select `Linux` from dropdown menu and then `continue` 
+### **2.0.2. Log back in to your instance**
 
-Having successfully logged in, you should see a small green box in the bottom left corner of your screen:
+Follow [set up instructions](../setup.html) to log back into your instance. 
 
-![](https://user-images.githubusercontent.com/73086054/228143085-20a5bdfc-f4e7-4472-b43f-2c975ae5eb4c.png)
+### **2.0.3. Create a new work directory**
 
-#### **Option 2: In a terminal** 
-Follow the [terminal set up instructions](../setup.qmd#login-via-terminal) or use the quick start instructions below to connect to your instance on the command-line: 
+Create a new directory for all session 2 activities and move into it: 
 
-  * Run: `ssh training@###.###.###.###`
-  * Enter the password provided at the beginning of the workshop. Ask one of the demonstrators if you’ve forgotten it.
-
-Having successfully logged in, your terminal should then display something like that shown in the figure below:
-
-![](https://user-images.githubusercontent.com/73086054/228141686-a63a84c1-b714-4797-af8e-2b511421a7d8.png)
-
-</br>
+```default
+mkdir ~/session2 && cd $_
+```
