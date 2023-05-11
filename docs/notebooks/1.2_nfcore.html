@@ -129,23 +129,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="dropdown-menu" aria-labelledby="nav-menu-session-1">    
         <li>
     <a class="dropdown-item" href="../notebooks/1.0_intro.html" rel="" target="">
- <span class="dropdown-text">Session 1 kick-off</span></a>
+ <span class="dropdown-text">1.0 Session 1 kick-off</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../notebooks/1.1_nextflow.html" rel="" target="">
- <span class="dropdown-text">Introduction to Nextflow</span></a>
+ <span class="dropdown-text">1.1 Introduction to Nextflow</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../notebooks/1.2_nfcore.html" rel="" target="">
- <span class="dropdown-text">Introduction to nf-core</span></a>
+ <span class="dropdown-text">1.2 Introduction to nf-core</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../notebooks/1.3_configure.html" rel="" target="">
- <span class="dropdown-text">Configuring nf-core workflows</span></a>
+ <span class="dropdown-text">1.3 Configuring nf-core workflows</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../notebooks/1.4_users.html" rel="" target="">
- <span class="dropdown-text">Commands for users</span></a>
+ <span class="dropdown-text">1.4 Commands for users</span></a>
   </li>  
     </ul>
   </li>
@@ -399,7 +399,7 @@ How to download nf-core tools
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Find out what version of nf-core tools you have available using the nf-core <code>--version</code> option:</p>
+<p>Find out what version of nf-core tools you have available using the nf-core <code>--version</code> option. If nf-core tools is not installed then install it using the commands above:</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -416,7 +416,11 @@ Solution
 <div class="callout-body-container callout-body">
 <p>Use the nf-core <code>--version</code> option to print your nf-core tools version:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><img src="../figs/1.2_nf-core-version.svg" class="img-fluid"></p>
+<p>If you get a message saying <code>nf-core: command not found</code> - install it using the commands above:</p>
+<p>Add the PATH to the installed scripts and tools to your path:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="va">$PATH</span>:/home/ubuntu/.local/bin</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Use the nf-core <code>--version</code> option to print your nf-core tools version:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -447,7 +451,7 @@ Solution
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Execute the <code>--help</code> option to list the options, commands for users, and commands for developers:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> <span class="at">--help</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nf-core</span> <span class="at">--help</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="../figs/1.2_nf-core-help.svg" class="img-fluid"></p>
 </div>
 </div>
@@ -486,9 +490,9 @@ Solution
 </ul></li>
 </ul>
 <p>Unless you are actively developing workflow code, you don’t need to clone the workflow code from GitHub and can use Nextflow’s built-in functionality to <code>pull</code> and a workflow. As shown in the <a href="../notebooks/1.1_nextflow.html#1.1.7.-executing-a-workflow">introduction to Nextflow</a>, the Nextflow <code>pull</code> command can download and cache workflows from <a href="https://github.com/nf-core/">GitHub</a> repositories:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> pull nf-core/<span class="op">&lt;</span>pipeline<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> pull nf-core/<span class="op">&lt;</span>pipeline<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Nextflow <code>run</code> will also automatically <code>pull</code> the workflow if it was not already available locally:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/<span class="op">&lt;</span>pipeline<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/<span class="op">&lt;</span>pipeline<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Nextflow will <code>pull</code> the default git branch if a workflow version is not specified. This will be the master branch for nf-core workflows with a stable release. nf-core workflows use GitHub releases to tag stable versions of the code and software. You will always be able to execute a previous version of a workflow once it is released using the <code>-revision</code> or <code>-r</code> flag.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -516,7 +520,7 @@ Solution
 <div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Use Nextlfow to <code>pull</code> the <code>rnaseq</code> workflow from the <code>nf-core</code> GitHub repository:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> pull nf-core/rnaseq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> pull nf-core/rnaseq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="../figs/1.2_nf-core-pullrna.svg" class="img-fluid"></p>
 </div>
 </div>
