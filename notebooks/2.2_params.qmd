@@ -48,7 +48,7 @@ Succeeded   : 66
 The first warning message isn't very descriptive (see this [pull request](https://github.com/nf-core/rnaseq/pull/963)). You might come across issues like this when running nf-core pipelines, too. Bug reports and user feedback is very important to open source software communities like nf-core. If you come across any issues submit a GitHub issue or start a discussion in the relevant nf-core Slack channel so others are aware and it can be addressed by the pipeline's developers.
 :::
 
-Take a look at the MultiQC report, as directed by the second message. You can find the MultiQC report in the `Lesson-2.1/` directory: 
+&#x27A4; Take a look at the MultiQC report, as directed by the second message. You can find the MultiQC report in the `Lesson-2.1/` directory: 
 
 ```default
 ls -la Lesson-2.1/multiqc/star_salmon/
@@ -78,7 +78,9 @@ For those not familiar with RNAseq data, incorrectly specified strandedness may 
 
 ### **2.2.3. Identify the run command for a process**
 
-To observe exactly what command is being run for a process, we can attempt to infer this information from a process `main.nf` script in the `modules/` directory. However, given all the different parameters that may be applied at the process level, this may not be very clear. Take a look at the Salmon quant `main.nf` file: 
+To observe exactly what command is being run for a process, we can attempt to infer this information from a process `main.nf` script in the `modules/` directory. However, given all the different parameters that may be applied at the process level, this may not be very clear. 
+
+&#x27A4; Take a look at the Salmon quant `main.nf` file: 
 
 ```default
 cat nf-core-rnaseq-3.11.1/workflow/modules/nf-core/salmon/quant/main.nf
@@ -90,7 +92,7 @@ Recall from [lesson 1.1.9](1.1_nextflow.html#nextflow-log) that the `nextflow lo
 
 To understand how Salmon quant is interpreting strandedness, we're going to use this command to track down the hidden `.command.sh` scripts for each Salmon quant task that was run. This will allow us to find out how Salmon quant handles strandedness and if there is a way for us to override this. 
 
-Use the [Nextflow log](https://www.nextflow.io/docs/latest/tracing.html#execution-log) command to reveal information about previously executed pipelines: 
+&#x27A4; Use the [Nextflow log](https://www.nextflow.io/docs/latest/tracing.html#execution-log) command to reveal information about previously executed pipelines: 
 
 ```default
 nextflow log
@@ -103,7 +105,7 @@ TIMESTAMP               DURATION        RUN NAME                STATUS  REVISION
 2023-04-21 00:40:58     9m 16s         mighty_swanson        OK      f421ddc35d      055e7b7f-c3ea-4fd9-a915-02343099939e    nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf --input samplesheet.csv -profile singularity --fasta /home/ubuntu/session2/materials/mm10_reference/mm10_chr18.fa --gtf /home/ubuntu/session2/materials/mm10_reference/mm10_chr18.gtf --star_index /home/ubuntu/session2/materials/mm10_reference/STAR --max_memory 6.GB --max_cpus 2 --outdir Lesson-1
 ```
 
-All recent runs will be listed in this file, with the most recent at the bottom. Run the command below after filling in your unique run name for our previous lesson. For example: 
+&#x27A4; All recent runs will be listed in this file, with the most recent at the bottom. Run the command below after filling in your unique run name for our previous lesson. For example: 
 
 ```default
 nextflow log mighty_swanson
@@ -113,18 +115,18 @@ That command will list out all the work subdirectories for all processes run.  R
 
 But how to find them? :thinking: 
 
-Let's add some custom bash code to query a Nextflow run with the run name from the previous lesson. First, save your run name in a bash variable. For example:
+&#x27A4; Let's add some custom bash code to query a Nextflow run with the run name from the previous lesson. First, save your run name in a bash variable. For example:
 
 ```default
 run_name=mighty_swanson
 ```
 
-And let's save the tool of interest (salmon) in another bash variable to pull it from a run command:
+&#x27A4; And let's save the tool of interest (salmon) in another bash variable to pull it from a run command:
 ```default
 tool=salmon
 ```
 
-Next, run the following bash command:
+&#x27A4; Next, run the following bash command:
 ```default
 nextflow log ${run_name} | while read line;
     do
@@ -158,23 +160,27 @@ Compared with the salmon quant `main.nf` file, we get a lot more fine scale deta
 
 ![](../figs/2.2_salmon-quant.png)
 
-Looking at the nf-core/rnaseq documentation, we can see:
+Looking at the nf-core/rnaseq Parameter documentation and Salmon documentation, we found that we can override this default using the `--salmon_quant_libtype U` [parameter](https://nf-co.re/rnaseq/3.11.1/parameters#salmon_quant_libtype) to indicate our data is unstranded and override `samplesheet.csv` input. 
 
-* Library type is automatically inferred based on the `$strandedness` variable
-* Library type can be adjusted using Salmon's `--libType=` flag and the nf-core `$strandedness` variable. 
+::: callout-note
 
-Following the [Salmon documentation](https://salmon.readthedocs.io/en/latest/salmon.html#what-s-this-libtype), we can override this default with the nf-core/rnaseq pipeline's `--salmon_quant_libtype U` [parameter](https://nf-co.re/rnaseq/3.11.1/parameters#salmon_quant_libtype) to indicate our data is unstrands. 
-
-If we want to get rid of the warning message `Please check MultiQC report: 2/2 samples failed strandedness check`, we'll have to change the strandedness fields in our `samplesheet.csv`. Keep in mind, this will cause the pipeline to run from the beginning.  
+### **How do I get rid of the strandedness check warning message?**
+If we want to get rid of the warning message `Please check MultiQC report: 2/2 samples failed strandedness check`, we'll have to change the strandedness fields in our `samplesheet.csv`. Keep in mind, doing this will invalidate the pipeline's cache and cause the pipeline to run from the beginning.  
+:::
 
 ### **2.2.4. Write a parameter file**
 
-Nextflow accepts either YAML or JSON formats for parameter files. Any of the pipeline-specific [parameters](https://nf-co.re/rnaseq/3.11.1/parameters) can be supplied to a pipeline run command in this way. 
+Nextflow accepts either YAML or JSON formats for parameter files. Any of the pipeline-specific [parameters](https://nf-co.re/rnaseq/3.11.1/parameters) can be supplied to a Nextflow pipeline in this way. 
 
 ::: callout-tip
 ### **Challenge**{.unlisted}
 
-Fill in the parameters file below and save as `workshop-params.yaml`:
+Fill in the parameters file below and save as `workshop-params.yaml`. 
+
+:light_bulb: YAML formatting tips!
+
+* strings need to be inside double quotes 
+* booleans represented as true/false do not require quotes 
 
 ```yaml
 input: ""
@@ -183,10 +189,10 @@ fasta: ""
 gtf: ""
 star_index: ""
 salmon_index: ""
-salmon_quant_libtype: ""
 skip_markduplicates: 
 save_trimmed: 
 save_unaligned: 
+salmon_quant_libtype: "" 
 ```
 :::
 
@@ -200,16 +206,16 @@ fasta: "/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/Unl
 gtf: "/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523/mm10_reference/mm10_chr18.gtf"
 star_index: "/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523/mm10_reference/STAR"
 salmon_index: "/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523/mm10_reference/salmon-index"
-salmon_quant_libtype: "U"
 skip_markduplicates: true
 save_trimmed: true
 save_unaligned: true
+salmon_quant_libtype: "U"
 ```
 :::
 
 ### **2.2.5. Use a parameter file in a pipeline run**
 
-Once your params file has been saved, run:
+&#x27A4; Once your params file has been saved, run:
 
 ```default
 nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \

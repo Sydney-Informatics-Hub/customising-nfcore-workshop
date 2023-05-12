@@ -1,7 +1,50 @@
 ---
-title: "**Some tips and tricks**"
+title: "**Nextflow tips and tricks**"
 output:
   html_document:
     toc: false
     toc_float: false
 ---
+
+### **Query specific pipeline executions**
+
+```default
+nextflow log <run_name> -f  
+```
+
+### **Run Nextflow in the background**
+
+The [Nextflow config](https://www.nextflow.io/docs/latest/cli.html#config) command is useful for understanding the resolved profiles and parameters that Nextflow will use run a pipeline. 
+
+```default 
+nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf -bg > workshop_tip.log
+```
+
+### **Capture a Nextflow pipeline's configuration**
+
+```default
+nextflow config nf-core-rnaseq-3.11.1/workflow
+```
+
+### **Clean Nextflow cache and work directories**
+
+Examples of dry run and remove features for [clean](https://www.nextflow.io/docs/latest/cli.html#clean)
+
+### **Access private GitHub repositories**
+
+To interact with private repositories on GitHub or when running into GitHub API rate limits for public repositories (i.e. when using Nextflow Tower), you can [provide Nextflow with access to GitHub](https://www.nextflow.io/docs/latest/sharing.html#github-credentials) by specifying your GitHub user name and a [Personal Access Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) in the [`scm` configuration file](https://www.nextflow.io/docs/latest/sharing.html#scm-configuration-file) inside your specified `.nextflow/` directory.
+
+```default
+providers {
+
+  github {
+    user = 'georgiesamaha'
+    password = 'my-personal-access-token'
+  }
+
+}
+```
+
+### **Send processes to a job scheduler on HPC**
+
+Write a custom configuration file for your HPCs job scheduler: specify for all processes, withName {}, withLabel {}. 

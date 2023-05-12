@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Sydney Informatics Hub training - Some tips and tricks</title>
+<title>Sydney Informatics Hub training - Nextflow tips and tricks</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -163,15 +226,26 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#query-specific-pipeline-executions" id="toc-query-specific-pipeline-executions" class="nav-link active" data-scroll-target="#query-specific-pipeline-executions"><strong>Query specific pipeline executions</strong></a></li>
+  <li><a href="#run-nextflow-in-the-background" id="toc-run-nextflow-in-the-background" class="nav-link" data-scroll-target="#run-nextflow-in-the-background"><strong>Run Nextflow in the background</strong></a></li>
+  <li><a href="#capture-a-nextflow-pipelines-configuration" id="toc-capture-a-nextflow-pipelines-configuration" class="nav-link" data-scroll-target="#capture-a-nextflow-pipelines-configuration"><strong>Capture a Nextflow pipeline’s configuration</strong></a></li>
+  <li><a href="#clean-nextflow-cache-and-work-directories" id="toc-clean-nextflow-cache-and-work-directories" class="nav-link" data-scroll-target="#clean-nextflow-cache-and-work-directories"><strong>Clean Nextflow cache and work directories</strong></a></li>
+  <li><a href="#access-nextflow-pipelines-in-private-github-repositories" id="toc-access-nextflow-pipelines-in-private-github-repositories" class="nav-link" data-scroll-target="#access-nextflow-pipelines-in-private-github-repositories"><strong>Access Nextflow pipelines in private GitHub repositories</strong></a></li>
+  <li><a href="#send-processes-to-a-job-scheduler-on-hpc" id="toc-send-processes-to-a-job-scheduler-on-hpc" class="nav-link" data-scroll-target="#send-processes-to-a-job-scheduler-on-hpc"><strong>Send processes to a job scheduler on HPC</strong></a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><strong>Some tips and tricks</strong></h1>
+<h1 class="title"><strong>Nextflow tips and tricks</strong></h1>
 </div>
 
 
@@ -186,8 +260,41 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<section id="query-specific-pipeline-executions" class="level3">
+<h3 class="anchored" data-anchor-id="query-specific-pipeline-executions"><strong>Query specific pipeline executions</strong></h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>nextflow log &lt;run_name&gt; -f  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="run-nextflow-in-the-background" class="level3">
+<h3 class="anchored" data-anchor-id="run-nextflow-in-the-background"><strong>Run Nextflow in the background</strong></h3>
+<p>The <a href="https://www.nextflow.io/docs/latest/cli.html#config">Nextflow config</a> command is useful for understanding the resolved profiles and parameters that Nextflow will use run a pipeline.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf -bg &gt; workshop_tip.log</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="capture-a-nextflow-pipelines-configuration" class="level3">
+<h3 class="anchored" data-anchor-id="capture-a-nextflow-pipelines-configuration"><strong>Capture a Nextflow pipeline’s configuration</strong></h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nextflow config nf-core-rnaseq-3.11.1/workflow</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="clean-nextflow-cache-and-work-directories" class="level3">
+<h3 class="anchored" data-anchor-id="clean-nextflow-cache-and-work-directories"><strong>Clean Nextflow cache and work directories</strong></h3>
+<p>Examples of dry run and remove features for <a href="https://www.nextflow.io/docs/latest/cli.html#clean">clean</a></p>
+</section>
+<section id="access-nextflow-pipelines-in-private-github-repositories" class="level3">
+<h3 class="anchored" data-anchor-id="access-nextflow-pipelines-in-private-github-repositories"><strong>Access Nextflow pipelines in private GitHub repositories</strong></h3>
+<p>To interact with private repositories on GitHub or when running into GitHub API rate limits for public repositories (i.e.&nbsp;when using Nextflow Tower), you can <a href="https://www.nextflow.io/docs/latest/sharing.html#github-credentials">provide Nextflow with access to GitHub</a> by specifying your GitHub user name and a <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token">Personal Access Token</a> in the <a href="https://www.nextflow.io/docs/latest/sharing.html#scm-configuration-file"><code>scm</code> configuration file</a> inside your specified <code>.nextflow/</code> directory.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>providers {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  github {</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    user = 'georgiesamaha'</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    password = 'my-personal-access-token'</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="send-processes-to-a-job-scheduler-on-hpc" class="level3">
+<h3 class="anchored" data-anchor-id="send-processes-to-a-job-scheduler-on-hpc"><strong>Send processes to a job scheduler on HPC</strong></h3>
+<p>Write a custom configuration file for your HPCs job scheduler: specify for all processes, withName {}, withLabel {}.</p>
 
 
+</section>
 
 <p>All materials copyright Sydney Informatics Hub, University of Sydney</p></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
