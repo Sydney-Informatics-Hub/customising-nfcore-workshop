@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Sydney Informatics Hub - 2.1. Design a run command</title>
+<title>Sydney Informatics Hub training - 2.1. Design and execute an nf-core run command</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -134,7 +134,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Sydney Informatics Hub</span>
+    <span class="navbar-title">Sydney Informatics Hub training</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -150,6 +150,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <a class="nav-link" href="../setup.html">
  <span class="menu-text">Setup</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../notebooks/0.0_welcome.html">
+ <span class="menu-text">Lesson plan</span></a>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-session-1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Session 1</span>
@@ -157,23 +161,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <ul class="dropdown-menu" aria-labelledby="nav-menu-session-1">    
         <li>
     <a class="dropdown-item" href="../notebooks/1.0_intro.html">
- <span class="dropdown-text">Session 1 kick-off</span></a>
+ <span class="dropdown-text">1.0 Session 1 kick-off</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../notebooks/1.1_nextflow.html">
- <span class="dropdown-text">Introduction to Nextflow</span></a>
+ <span class="dropdown-text">1.1 Introduction to Nextflow</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../notebooks/1.2_nfcore.html">
- <span class="dropdown-text">Introduction to nf-core</span></a>
+ <span class="dropdown-text">1.2 Introduction to nf-core</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../notebooks/1.3_configure.html">
- <span class="dropdown-text">Configuring nf-core workflows</span></a>
+ <span class="dropdown-text">1.3 Configuring nf-core workflows</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../notebooks/1.4_users.html">
- <span class="dropdown-text">Commands for users</span></a>
+ <span class="dropdown-text">1.4 Commands for users</span></a>
   </li>  
     </ul>
   </li>
@@ -184,7 +188,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <ul class="dropdown-menu" aria-labelledby="nav-menu-session-2">    
         <li>
     <a class="dropdown-item" href="../notebooks/2.0_intro.html">
- <span class="dropdown-text">2.0 Intro to session 2</span></a>
+ <span class="dropdown-text">2.0 Session 2 kick-off</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../notebooks/2.1_design.html">
@@ -205,10 +209,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         <li>
     <a class="dropdown-item" href="../notebooks/2.5_extArgs.html">
  <span class="dropdown-text">2.5 Apply external arguments</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../notebooks/2.6_launch.html">
- <span class="dropdown-text">2.6 Use nf-core launch</span></a>
   </li>  
     </ul>
   </li>
@@ -243,7 +243,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><strong>2.1. Design a run command</strong></h1>
+<h1 class="title"><strong>2.1. Design and execute an nf-core run command</strong></h1>
 </div>
 
 
@@ -276,45 +276,94 @@ Objectives
 </ul>
 </div>
 </div>
-<p>The nf-core community values flexibility and has built this into their pipelines by allowing users to customise various aspects of a workflow run using <a href="https://www.nextflow.io/docs/latest/config.html#scope-params">parameters</a>. While nf-core pipelines are designed to run with ‘sensible’ default settings, these may not always suit the needs of your experiment of compute environment. In this lesson, we will design and execute a customised run command using different types of parameters.</p>
+<p>Before scaling the nf-core/rnaseq pipeline up to a full dataset, we’ll explore the functionality of the workflow and identify processes that may need to be adjusted or customised. While nf-core pipelines are designed to run with ‘sensible’ default settings, these may not always suit the needs of your experiment of compute environment. Designing a custom run command requires you to identify which parameters you need to specify to suit your circumstances and experimental design. In this lesson, we will download an nf-core pipeline, then design and execute a customised run command using various <a href="https://www.nextflow.io/docs/latest/config.html#scope-params">parameters</a>.</p>
 <section id="download-the-pipeline-code" class="level3">
 <h3 class="anchored" data-anchor-id="download-the-pipeline-code"><strong>2.1.1. Download the pipeline code</strong></h3>
-<p>Create a new directory for all session 2 activities and move into it:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>mkdir ~/session2 &amp;&amp; cd $_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>We recommend that you keep a local copy of a pipeline’s code for the sake of reproducibility and good record keeping. There are a number of ways to download a nf-core pipeline. Using the <a href="https://nf-co.re/tools/">nf-core tools</a> <a href="https://nf-co.re/tools/#downloading-pipelines-for-offline-use">download tool</a>, take a look at the download options available to us:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>nf-core download --help</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><img src="../figs/2.1_nfcore-download.png" class="img-fluid"></p>
-<p>Run the following command:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nf-core download rnaseq \</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  --revision 3.11.1 \</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  --outdir ~/session2/nf-core-rnaseq-3.11.1 \</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  --container singularity \</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  --compress none \</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  --singularity-cache-only</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Note that we’ve chosen to download a specific pipeline version by applying the <code>--revision</code> flag. If you would like to download the most recent version of an nf-core pipeline, you can exclude this flag.</p>
-<p>We have also chosen to store all containers in a specified Singularity cache directory and not store an additional copy of these in the output directory. You will be prompted to define an existing directory as your Singularity cache. Specify:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>NXF_SINGULARITY_CACHEDIR=/home/training/singularity_cache</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We recommend that you keep a local copy of a pipeline’s code for the sake of reproducibility and good record keeping.</p>
+<p>➤ In this session we are using Singularity containers to manage software installation for all nf-core/rnaseq tools. Confirm the Singularity cache directory we set in the previous session using the <code>$NXF_SINGULARITY_CACHEDIR</code> <a href="https://www.nextflow.io/docs/latest/config.html#environment-variables">Nextflow environmental variable</a>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>echo $NXF_SINGULARITY_CACHEDIR</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This should match the directory you set in the previous session:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>/home/ubuntu/singularity_cache</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Nextflow has environmental variables!
+<strong>Challenge</strong>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><code>$NXF_SINGULARITY_CACHEDIR</code> is a Nextflow <a href="https://www.nextflow.io/docs/latest/config.html#environment-variables">environmental variable</a> that can be used to override default Nextflow and pipeline behaviours. You can set these environmental variables on the command line or by using <a href="https://www.nextflow.io/docs/latest/config.html#scope-env">env scopes</a> when writing Nextflow.</p>
+<p>Use the <code>nf-core download</code> command to download a local copy of the nf-core/rnaseq workflow that:</p>
+<ul>
+<li>Downloads pipeline version 3.11.1<br>
+</li>
+<li>Outputs the code base to <code>~/session2/nf-core-rnaseq-3.11.1/</code></li>
+<li>Downloads Singularity containers</li>
+<li>Uses the preset Singluarity cache and does not copy images to the output directory</li>
+</ul>
 </div>
 </div>
-<p>The nf-core tools utility will download the pipeline files and institutional configuration files available at the <a href="https://github.com/nf-core/configs">nf-core/configs</a> repository. Inside your <code>nf-core-rnaseq-3.11.1</code> workflow directory, you should see 2 subdirectories:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ls -l nf-core-rnaseq-3.11.1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>total 8</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x  7 ubuntu ubuntu 4096 Apr 21 02:08 configs</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 12 ubuntu ubuntu 4096 Apr 21 02:08 workflow</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The public <a href="https://github.com/nf-core/configs">institutional configs</a> were downloaded to the <code>configs</code> directory. The code base for our pipeline will be stored in the <code>workflow</code> directory:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ls -l nf-core-rnaseq-3.11.1/workflow</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The files and directories we will be working with in this session are:</p>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>As we explored in <a href="1.4_users.html#nf-core-download">Lesson 1.4.2</a> we can fetch the workflow code base with the following command:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nf-core download rnaseq \</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  --revision 3.11.1 \</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  --outdir ~/session2/nf-core-rnaseq-3.11.1 \</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  --container singularity \</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  --compress none \</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  --singularity-cache-only</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<p>The pipeline files and institutional configuration files from <a href="https://github.com/nf-core/configs">nf-core/configs</a> will be downloaded to <code>~/session2/nf-core-rnaseq-3.11.1</code>. Inside this directory you will see 2 subdirectories.</p>
+<p>➤ Take a look at the directory structure:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ls -l nf-core-rnaseq-3.11.1/*</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>nf-core-rnaseq-3.11.1/configs:</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>total 64</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu  1562 Apr  21 09:17 CITATION.cff</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu  1064 Apr  21 09:17 LICENSE</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu 17476 Apr  21 09:17 README.md</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 2 ubuntu ubuntu  4096 Apr  21 09:17 bin</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 3 ubuntu ubuntu  4096 Apr  21 09:17 conf</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu   204 Apr  21 09:17 configtest.nf</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 4 ubuntu ubuntu  4096 Apr  21 09:17 docs</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu    70 Apr  21 09:17 nextflow.config</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu  8249 Apr  21 09:17 nfcore_custom.config</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 2 ubuntu ubuntu  4096 Apr  21 09:17 pipeline</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>nf-core-rnaseq-3.11.1/workflow:</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>total 216</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu 58889 Apr  21 09:17 CHANGELOG.md</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu  9681 Apr  21 09:17 CITATIONS.md</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu  9078 Apr  21 09:17 CODE_OF_CONDUCT.md</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu  1096 Apr  21 09:17 LICENSE</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu 10002 Apr  21 09:17 README.md</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 3 ubuntu ubuntu  4096 Apr  21 09:17 assets</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 2 ubuntu ubuntu  4096 Apr  21 09:17 bin</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 2 ubuntu ubuntu  4096 Apr  21 09:17 conf</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 3 ubuntu ubuntu  4096 Apr  21 09:17 docs</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 2 ubuntu ubuntu  4096 Apr  21 09:17 lib</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu  2736 Apr  21 09:17 main.nf</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 4 ubuntu ubuntu  4096 Apr  21 09:17 modules</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu 13970 Apr  21 09:17 modules.json</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu 10847 Apr  21 09:17 nextflow.config</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu 42576 Apr  21 09:17 nextflow_schema.json</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu   359 Apr  21 09:17 pyproject.toml</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 4 ubuntu ubuntu  4096 Apr  21 09:17 subworkflows</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu  1684 Apr  21 09:17 tower.yml</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 2 ubuntu ubuntu  4096 Apr  21 09:17 workflows</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The public <a href="https://github.com/nf-core/configs">institutional configs</a> were downloaded to the <code>configs</code> directory. The code base for our pipeline will be stored in the <code>workflow</code> directory. The files and directories we will be working with in this session are:</p>
 <table class="table">
 <colgroup>
 <col style="width: 25%">
@@ -346,20 +395,20 @@ Nextflow has environmental variables!
 </tbody>
 </table>
 <div class="callout-caution callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-<strong>Git installation method</strong>
+<strong>Alternate installation method</strong>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>In situations where you might not wish to use the nf-core tools utility, download the nf-core/rnaseq source code from it’s <a href="https://github.com/nf-core/rnaseq">GitHub repository</a> with git.</p>
 <p>Clone the nf-core/rnaseq repository:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>git clone https://github.com/nf-core/rnaseq.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>git clone https://github.com/nf-core/rnaseq.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><span class="emoji" data-emoji="no_entry">⛔</span> <strong>BEWARE</strong> <span class="emoji" data-emoji="no_entry">⛔</span> this method will download a copy of the pipeline with a different directory name and slightly different structure. If you choose to use this method, you will need to adjust some paths specified in the upcoming lessons accordingly.</p>
 </div>
 </div>
@@ -367,7 +416,7 @@ Nextflow has environmental variables!
 </section>
 <section id="design-your-run-command" class="level3">
 <h3 class="anchored" data-anchor-id="design-your-run-command"><strong>2.1.2. Design your run command</strong></h3>
-<p>All nf-core pipelines are provided with comprehensive documentation that explains <a href="https://nf-co.re/rnaseq/3.11.1/usage">pipeline usage</a> and <a href="https://nf-co.re/rnaseq/3.11.1/parameters">available parameters</a>. All nf-core pipelines can be run using a single command but the types and number of parameters will vary between pipelines. Generally, pipelines can be customised at a few different levels:</p>
+<p>As we learned in <a href="1.3_configure.html#viewing-parameters">lesson 1.3.3</a>, all nf-core pipelines have a unique set of pipeline-specific parameters that can be used in conjunction with Nextflow parameters to configure the workflow. Generally, nf-core pipelines can be customised at a few different levels:</p>
 <table class="table">
 <colgroup>
 <col style="width: 21%">
@@ -398,21 +447,107 @@ Nextflow has environmental variables!
 </tr>
 </tbody>
 </table>
-<p>Looking at the nf-core/rnaseq pipeline structure below, we can see that the developers have:</p>
+<p>Looking at the nf-core/rnaseq pipeline structure provided in the below, we can see that the developers have:</p>
 <ol type="1">
 <li>Organised the workflow into 5 stages based on the type of work that is being done</li>
-<li>Provided multiple workflow options and specified which is the default</li>
-<li>Provided multiple tool options for some processes</li>
+<li>Provided a choice of multiple workflows different methods and specified which is the default</li>
+<li>Provided a choice of tool for some processes</li>
 </ol>
+<p>The structure of the pipeline gives us a sense of the high-level customisation options available to us.</p>
 <p><img src="../figs/2.1_pipeline-choice.png" class="img-fluid"></p>
-<p>The number and type of default and optional parameters an nf-core pipeline accepts is at the discretion of it’s developers. However at a minimum, pipelines typically:</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<strong>Challenge</strong>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Observing the diagram above, which statement is true regarding the choice of alignment and quantification methods provided by the nf-core/rnaseq pipeline?</p>
+<p><strong>A.</strong> The pipeline uses a fixed method for read alignment and quantification.<br>
+<strong>B.</strong> Users can choose between several different methods for read alignment and quantification.<br>
+<strong>C.</strong> The pipeline always performs read alignment and quantification.<br>
+<strong>D.</strong> The choice of alignment and quantification method is determined automatically based on the input data.</p>
+</div>
+</div>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The correct answer is B. The nf-core/rnaseq pipeline allows users to choose between pseudo-alignment and quantification or several different methods for genome-based read alignment and quantification.</p>
+<ul>
+<li>A is incorrect because the pipeline is not limited to a single method.<br>
+</li>
+<li>C is incorrect because while read alignment and quantification using STAR and Salmon are the default method, users can choose other methods if desired.</li>
+<li>D is also incorrect, as the pipeline only accepts fastq files as input and the choice of alignment and quantification method must be specified by the user.</li>
+</ul>
+</div>
+</div>
+</div>
+<p>Users can apply parameters to customise their run command in 3 different ways:</p>
+<ol type="1">
+<li>Provided pipeline-specific parameters (i.e.&nbsp;<code>--param_name</code>)</li>
+<li>Nextflow parameters (i.e.&nbsp;<code>-profile</code>)</li>
+<li>Additional process-specific parameters using the <code>ext.args</code> variable (See lesson 2.5)</li>
+</ol>
+<p>While all nf-core pipelines are provided with comprehensive documentation that explains workflow structure, process outputs, and available parameters it can be challenging to piece these different sources of information together to determine which parameters you should be using.</p>
+<p>We recommend the following approach to deciding on which parameters to use:</p>
+<ol type="1">
+<li>Read the pipeline’s <a href="https://nf-co.re/rnaseq/3.11.1/usage">Usage docs</a> to understand required inputs, workflow structure, and available customisation options.</li>
+<li>Read the pipeline’s <a href="https://nf-co.re/rnaseq/3.11.1/output">Output docs</a> to understand which processes are run and which files are output for each process.</li>
+<li>Read the pipeline’s <a href="https://nf-co.re/rnaseq/3.11.1/parameters">Parameter docs</a> to understand all provided parameters for the pipeline.</li>
+<li>Check the original documentation of any tools you wish to customise for any additional parameters you may wish to apply.</li>
+<li>Ask yourself the following questions:</li>
+</ol>
+<p><img src="../figs/2.1_chooseParams.png" class="img-fluid"></p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+How do I know if <code>ext.args</code> is used by a process?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The inclusion of <code>ext.args</code> is currently standard practice for all DSL2 <a href="https://nf-co.re/developers/modules">nf-core modules</a> where additional parameters may be required to run a process. However, this may not be implemented for all processes. Depending on the pipeline, these process modules may not have defined the <code>ext.args</code> variable.</p>
+<p>Take a look at what is available for the nf-core/rnaseq pipeline:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>grep -r "ext.args" nf-core-rnaseq-3.11.1/workflow/modules/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>The number and type of default and optional parameters an nf-core pipeline accepts is at the discretion of it’s developers. However at a minimum, nf-core pipelines typically:</p>
 <ul>
 <li>Require users to specify a <a href="https://nf-co.re/rnaseq/3.11.1/usage#samplesheet-input">sample sheet</a> (<code>--input</code>) detailing sample data and relevant metadata</li>
 <li>Autogenerate or acquire missing reference files from <a href="https://github.com/nf-core/rnaseq/blob/master/conf/igenomes.config">iGenomes</a> (<code>--genome</code>) if not provided by the user.</li>
 </ul>
-<p>You can see the recommended (typical) run command and all the parameters available for the nf-core/rnaseq pipeline by running:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf --help </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The typical or recommended run command for this pipeline is provided at the top of the screen.</p>
+<p>➤ You can see the recommended (typical) run command and all the parameters available for the nf-core/rnaseq pipeline by running:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf --help </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<strong>Beware the hidden parameters!</strong>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Notice the message at the bottom of the screen:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>!! Hiding 24 params, use --show_hidden_params to show them !!</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Keep in mind that both this help command and the nf-core parameters documentation hides less common parameters.</p>
+</div>
+</div>
+<p>The typical or recommended run command for this pipeline is provided at the top of the screen:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core/rnaseq --input samplesheet.csv --outdir &lt;OUTDIR&gt; --genome GRCh37 -profile docker</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>It outlines a requirement for a few basic things:</p>
 <ul>
@@ -421,13 +556,13 @@ Nextflow has environmental variables!
 <li>Relevant reference data</li>
 <li>A software management method</li>
 </ul>
-<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-important callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-<strong>Hyphens matter in Nextflow!</strong>
+<strong>Reminder: hyphens matter in Nextflow!</strong>
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -441,65 +576,118 @@ Nextflow has environmental variables!
 <li>Customising some processes</li>
 <li>Specifying the computing resource limitations of our instances</li>
 </ol>
+<p>➤ Our input fastq files (<code>fastqs/</code>), reference data (<code>mm10_reference/</code>), and full sample sheet are already available on an external file system called CernVM-FS that we can access from our Nimbus instances. Take a look at the files:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ls -l /cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 2 ubuntu ubuntu 4096 Feb 14 05:36 fastqs</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 3 ubuntu ubuntu 4096 Feb 14 05:46 mm10_reference</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>-rw-rw-r-- 1 ubuntu ubuntu  641 Feb 16 05:57 samplesheet.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>➤ Our CVMFS path is very long, for the sake of tidiness, store the CVMFS path in a variable for our run command:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>materials=/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<strong>Challenge</strong>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Using the <code>nextflow run</code> command, identify which parameters and files we will need to use to provide our prepared fasta and gtf files, as well as STAR and Salmon index directories to the pipeline.</p>
+</div>
+</div>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Run the following command:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf --help</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In the reference genome options section are the following flags:</p>
+<ul>
+<li><code>--fasta $materials/mm10_reference/mm10_chr18.fa</code><br>
+</li>
+<li><code>--gtf $materials/mm10_reference/mm10_chr18.gtf</code></li>
+<li><code>--star_index $materials/mm10_reference/STAR</code></li>
+<li><code>--salmon_index $materials/mm10_reference/salmon-index</code></li>
+</ul>
+</div>
+</div>
+</div>
+<p>➤ Given we are only testing the pipeline in this session, we only need to work with a couple of samples. Copy the first two samples from the full prepared sample sheet to a local version of the file:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>head -n 3 $materials/samplesheet.csv &gt; samplesheet.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>sample,fastq_1,fastq_2,strandedness</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>SRR3473989,/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523/fastqs/SRR3473989_selected.fastq.gz,,forward</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>SRR3473988,/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523/fastqs/SRR3473988_selected.fastq.gz,,forward</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now that we have prepared our input data, we will customise the typical run command by:</p>
+<ol type="1">
+<li>Providing our own reference fasta, index files, and gtf using <a href="https://nf-co.re/rnaseq/3.11.1/parameters#reference-genome-options">file-specific parameters</a> instead of using the Illumina AWS iGenomes database parameter <code>--genomes</code></li>
+<li>Using Nextflow’s <code>-profile</code> parameter to specify that we will be running the Singularity profile as <a href="https://github.com/nf-core/rnaseq/blob/3.11.1/nextflow.config#L144">specified in <code>nextflow.config</code></a> instead of Docker</li>
+<li>Adding additional process-specific flags to <a href="https://nf-co.re/rnaseq/3.11.1/parameters#skip_markduplicates">skip duplicate read marking</a>, <a href="https://nf-co.re/rnaseq/3.11.1/parameters#save_trimmed">save trimmed reads</a> and <a href="https://nf-co.re/rnaseq/3.11.1/parameters#save_unaligned">save unaligned reads</a></li>
+<li>Adding additional max resource flags to specify the <a href="https://nf-co.re/rnaseq/3.11.1/parameters#max_cpus">number of CPUs</a> and <a href="https://nf-co.re/rnaseq/3.11.1/parameters#max_memory">amount of memory</a> available to the pipeline</li>
+</ol>
 <p>You can see how we’ve customised the typical run command in the diagram below:</p>
 <p><img src="../figs/2.1_default-command.png" class="img-fluid"></p>
 </section>
 <section id="run-the-pipeline" class="level3">
 <h3 class="anchored" data-anchor-id="run-the-pipeline"><strong>2.1.3. Run the pipeline</strong></h3>
-<p>Our input fastq files, reference data, and sample sheet are already available on an external file system called CernVM-FS that we can access from our Nimbus instances. Take a look at the files:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ls -l /cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb12"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 2 ubuntu ubuntu 4096 Feb 14 05:36 fastqs</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 3 ubuntu ubuntu 4096 Feb 14 05:46 mm10_reference</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>-rw-rw-r-- 1 ubuntu ubuntu  641 Feb 16 05:57 samplesheet.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Copy the following into a file called <code>samplesheet.csv</code>:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>sample,fastq_1,fastq_2,strandedness</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>SRR3473989,/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523/fastqs/SRR3473989_selected.fastq.gz,,forward</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>SRR3473988,/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523/fastqs/SRR3473988_selected.fastq.gz,,forward</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>SRR3473987,/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523/fastqs/SRR3473987_selected.fastq.gz,,forward</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>SRR3473985,/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523/fastqs/SRR3473985_selected.fastq.gz,,forward</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>SRR3473986,/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523/fastqs/SRR3473986_selected.fastq.gz,,forward</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>SRR3473984,/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523/fastqs/SRR3473984_selected.fastq.gz,,forward</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Store the path to our prepared data to in a variable for our run command:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>materials=/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Now run the pipeline:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    --input samplesheet.csv \</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    --outdir Lesson-2.1 \</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    --fasta $materials/mm10_reference/mm10_chr18.fa \</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    --gtf $materials/mm10_reference/mm10_chr18.gtf \</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    --star_index $materials/mm10_reference/STAR \</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    --salmon_index $materials/mm10_reference/salmon-index \</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    -profile singularity \</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    --skip_markduplicates \</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    --save_trimmed true \</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    --save_unaligned true \</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    --max_memory '6.GB' \</span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    --max_cpus 2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>➤ Now that we have prepared our data and chosen which parameters to apply, run the pipeline:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    --input samplesheet.csv \</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    --outdir Lesson-2.1 \</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    --fasta $materials/mm10_reference/mm10_chr18.fa \</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    --gtf $materials/mm10_reference/mm10_chr18.gtf \</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    --star_index $materials/mm10_reference/STAR \</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    --salmon_index $materials/mm10_reference/salmon-index \</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    -profile singularity \</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    --skip_markduplicates \</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    --save_trimmed true \</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    --save_unaligned true \</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    --max_memory '6.GB' \</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    --max_cpus 2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Take a look at the stdout printed to the screen. Your workflow configuration and parameter customisations are all documented here. You can use this to confirm if your parameters have been correctly passed to the run command:</p>
 <p><img src="../figs/2.1_nf-core-stdout.png" class="img-fluid"></p>
-<p>As the workflow starts, you will also see a number of processes spawn out underneath this. Recall from session 1 that processes are executed independently and can run in parallel. Nextflow manages the data dependencies between processes, ensuring that each process is executed only when its input data is available and all of its dependencies have been satisfied. Take a look at the image below which explains a workflow’s process status output provided by Nextflow using the data dependencies for the STAR_ALIGN process as an example.</p>
-<p><img src="../figs/2.1_nf-core-process.png" class="img-fluid"></p>
+<p>As the workflow starts, you will also see a number of processes spawn out underneath this. Recall from lesson 1 that processes are executed independently and can run in parallel. Nextflow manages the data dependencies between processes, ensuring that each process is executed only when its input data is available and all of its dependencies have been satisfied.</p>
+<p>To understand how this is coordinated, consider the STAR_ALIGN process that is being run. You’ll notice a few things:</p>
+<ul>
+<li>We can see which inputs are being worked on by a process by looking at the round brackets at the end of the process name</li>
+<li>When a process starts it progressively spawns tasks for all inputs. For some processes this is a single input, for others it is multiple inputs (i.e.&nbsp;samples)</li>
+<li>A number of processes involving reference files and the samplesheet are completed before STAR_ALIGN begins<br>
+</li>
+<li>A single TRIMGALORE process is run across both samples in our <code>samplesheet.csv</code> before STAR_ALIGN begins</li>
+<li>Once a TRIMGALORE task is completed for a sample, the STAR_ALIGN task for that sample begins</li>
+<li>When the STAR_ALIGN process starts, it spawns 2 tasks. Take a look at the image below which explains a workflow’s process status output provided by Nextflow using the data dependencies for the STAR_ALIGN process as an example.</li>
+</ul>
+<p><img src="../figs/2.1_nf-core_processes.png" class="img-fluid"></p>
 </section>
 <section id="examine-the-outputs" class="level3">
 <h3 class="anchored" data-anchor-id="examine-the-outputs"><strong>2.1.4. Examine the outputs</strong></h3>
 <p>Once your pipeline has completed, you should see this message printed to your terminal:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>-[nf-core/rnaseq] Pipeline completed successfully with skipped sampl(es)-</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>-[nf-core/rnaseq] Please check MultiQC report: 6/6 samples failed strandedness check.-</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>Completed at: 21-Apr-2023 03:58:56</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>Duration    : 14m 18s</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>CPU hours   : 0.4</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>Succeeded   : 170</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The pipeline ran successfully, however note the warning about all samples having failed the strandedness check. We’ll explore that in the next lesson. In the meantime, list (<code>ls -la</code>) the contents of your directory, you’ll see a few new directories (and a hidden directory and log file) have been created:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>total 416</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x   7 ubuntu ubuntu 4.0K Apr 21 03:44 .</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>drwxr-x---  15 ubuntu ubuntu 4.0K Apr 21 01:56 ..</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x   4 ubuntu ubuntu 4.0K Apr 21 03:58 .nextflow</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>-rw-rw-r--   1 ubuntu ubuntu 371K Apr 21 03:58 .nextflow.log</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>-rw-rw-r--   1 ubuntu ubuntu  17K Apr 21 03:50 .nextflow.log.1</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x   7 ubuntu ubuntu 4.0K Apr 21 03:58 Lesson-2.1</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x   4 ubuntu ubuntu 4.0K Apr 21 02:08 nf-core-rnaseq-3.11.1</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>-rw-rw-r--   1 ubuntu ubuntu  563 Apr 21 03:14 samplesheet.csv</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 143 ubuntu ubuntu 4.0K Apr 21 03:58 work</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>-[nf-core/rnaseq] Pipeline completed successfully with skipped sampl(es)-</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>-[nf-core/rnaseq] Please check MultiQC report: 2/2 samples failed strandedness check.-</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>Completed at: 21-Apr-2023 03:58:56</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>Duration    : 9m 16s</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>CPU hours   : 0.3</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>Succeeded   : 66</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The pipeline ran successfully, however note the warning about all samples having failed the strandedness check. We’ll explore that in the next lesson.</p>
+<p>➤ In the meantime, list (<code>ls -la</code>) the contents of your directory, you’ll see a few new directories (and a hidden directory and log file) have been created:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>total 416</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x   7 ubuntu ubuntu 4.0K Apr 21 03:44 .</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>drwxr-x---  15 ubuntu ubuntu 4.0K Apr 21 01:56 ..</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x   4 ubuntu ubuntu 4.0K Apr 21 03:58 .nextflow</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>-rw-rw-r--   1 ubuntu ubuntu 371K Apr 21 03:58 .nextflow.log</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>-rw-rw-r--   1 ubuntu ubuntu  17K Apr 21 03:50 .nextflow.log.1</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x   7 ubuntu ubuntu 4.0K Apr 21 03:58 Lesson-2.1</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x   4 ubuntu ubuntu 4.0K Apr 21 02:08 nf-core-rnaseq-3.11.1</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>-rw-rw-r--   1 ubuntu ubuntu  563 Apr 21 03:14 samplesheet.csv</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 143 ubuntu ubuntu 4.0K Apr 21 03:58 work</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Nextflow has created 2 new output directories, <strong>work</strong> and <strong>Lesson-2.1</strong> in the current directory.</p>
 <section id="the-work-directory" class="level4">
 <h4 class="anchored" data-anchor-id="the-work-directory">The <code>work</code> directory</h4>
@@ -516,6 +704,40 @@ Nextflow has environmental variables!
 <section id="the-.nextflow.log-file" class="level4">
 <h4 class="anchored" data-anchor-id="the-.nextflow.log-file">The <code>.nextflow.log</code> file</h4>
 <p>This file is created by Nextflow during the execution of a pipeline and contains information about all processes and any warnings or errors that occurred during execution.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<strong>Challenge</strong>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Was the runtime for the STAR_ALIGN process comparable for samples SRR3473988 and SRR3473989?</p>
+<p><span class="emoji" data-emoji="bulb">💡</span> Hint: use the <code>nextflow log &lt;run_name&gt; -f</code> command and Nextflow <a href="https://www.nextflow.io/docs/latest/tracing.html#trace-report">trace fields</a>.</p>
+</div>
+</div>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Run the following:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>nextflow log &lt;run_name&gt; -f name,realtime | grep "STAR_ALIGN" </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Read alignment was comparable for both samples:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>NFCORE_RNASEQ:RNASEQ:ALIGN_STAR:STAR_ALIGN (SRR3473989) 2m 37s</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>NFCORE_RNASEQ:RNASEQ:ALIGN_STAR:STAR_ALIGN (SRR3473988) 2m 17s</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -528,9 +750,9 @@ Nextflow has environmental variables!
 <div class="callout-body-container callout-body">
 <ul>
 <li>nf-core pipelines are provided with sensible default settings and required inputs.</li>
-<li>Customising a pipeline’s run command can be achieved by applying parameters.</li>
-<li>Parameters can be used to customise the workflow, some processes, some tools, and compute resources.</li>
-<li>The number of hyphens indicate if a parameter flag is specific to Nextflow or the pipeline.</li>
+<li>An nf-core pipeline’s Usage, Output, and Parameters documentation can be used to design a suitable run command.</li>
+<li>Parameters can be used to customise the workflow, processes, tools, and compute resources.<br>
+</li>
 </ul>
 </div>
 </div>
