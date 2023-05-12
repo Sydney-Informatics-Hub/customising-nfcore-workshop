@@ -293,7 +293,7 @@ nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
 
 :eyes: We can see that our custom resource parameters have been applied
 
-![](../figs/2.3_run_stdout.png)
+![](../figs/2.3_run_stdout_.png)
 <br/><br/>
 
 
