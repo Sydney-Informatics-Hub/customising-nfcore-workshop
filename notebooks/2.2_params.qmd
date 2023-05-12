@@ -17,20 +17,20 @@ from: markdown+emoji
 - Understand the use of the parameter file for reproducible and transparent research
 :::
 
-In Nextflow, [parameters](https://www.nextflow.io/docs/latest/config.html#scope-params) are values that can be set by the user and used to control the behaviour of a workflow or process within the workflow. Within the Nextflow code base, they are defined by the `params{}` scope. 
+In [Lesson 1.3.7](1.3_configure.html#custom-configuration-files), we learned that [parameters](https://www.nextflow.io/docs/latest/config.html#scope-params) are values that can be set by the user and used to control the behaviour of a workflow or process within the workflow. Within the Nextflow code base, they are defined by the `params{}` scope. They can be suppled as either a `--parameter` flag to the run command or inside a parameter file. 
 
-In the previous lesson we supplied pipeline parameters as flags in our run command (`--`). We can also pass pipeline-specific parameters to any pipeline using Nextflow's `-params-file` flag and a JSON or YAML file. You can imagine our run command can quickly become very difficult to read if we were to provide a few more additional parameters. In this lesson we will add another parameter and rerun the pipeline using a parameter file, rather than specifying all parameters as separate flags in the run command. 
+In the previous lesson we supplied pipeline parameters as flags in our run command (`--`). In this lesson we will add another parameter to our run command and rerun the pipeline using a parameter file. 
 
 ### **2.2.1. Why should I use a parameters file?**
 
-You saw how many parameters the nf-core/rnaseq pipeline offers in the previous lesson! Can you imagine what your run command would look like if you needed to use a lot more of these parameters. Using a parameters file can offer several advantages over specifying mulitple flags for an nf-core run command: 
+Using a parameter file is advantageous in a number of ways:
 
-1. Code readability: By using a params file, you can ensure your run command is readable by storing all your parameters customisations in one place and easily make changes or additions as needed.
-2. Reproducibility: You can save the exact parameters used for a particular run of the pipeline in a parameters file. This makes it easier to reproduce the same results later, or to share your pipeline parameters with collaborators.
-3. Flexibility: If you need to run the same nf-core pipeline with slightly different settings, using a parameters file makes it easier to make those changes without modifying the run command each time. 
-4. Version control: Using version controlled parameter files allows you to track changes to your pipeline configuration over time and revert to previous versions if needed.
+1. **Code readability**: By using a params file, you can ensure your run command is readable by storing all your parameters customisations in one place and easily make changes or additions as needed.
+2. **Reproducibility**: You can save the exact parameters used for a particular run of the pipeline in a parameters file. This makes it easier to reproduce the same results and share your pipeline parameters with collaborators.
+3. **Flexibility**: If you need to run the same nf-core pipeline with slightly different settings, using a parameters file makes it easier to make those changes without modifying the run command each time. 
+4. **Version control**: Using version controlled parameter files allows you to track changes to your pipeline configuration over time and revert to previous versions if needed.
 
-### **2.2.2. Revise the run command**
+### **2.2.2. Troubleshoot the warning message**
 
 While our pipeline completed successfully, there were a couple of warning messages that may be cause for concern:
 
@@ -86,7 +86,21 @@ To observe exactly what command is being run for a process, we can attempt to in
 cat nf-core-rnaseq-3.11.1/workflow/modules/nf-core/salmon/quant/main.nf
 ```
 
-It is very hard to see what is actually happening, given all the different variables, conditional arguments, and loops inside this script. 
+It is very hard to see what is actually happening, given all the different variables, conditional arguments, and loops inside this script. Above the script block we can see strandedness is being applied using a few different conditional arguments. Instead of trying to infer how the `$strandedness` variable is being defined and applied to the process, let's use the hidden process files saved to the `work/` directory.   
+
+::: callout-tip
+### **Hidden files in the work directory!**
+
+Remember that the pipeline's results are cached in the `work` directory. In addition to the cached files, each task execution directories inside the work directory contains a number of hidden files:
+
+* `.command.sh`: The command script run for the task. 
+* `.command.run`: The command wrapped used to run the task. 
+* `.command.out`: The task's standard output log.
+* `.command.err`: The task's standard error log.
+* `.command.log`: The wrapper execution output.
+* `.command.begin`: A file created as soon as the job is launched.
+* `.exitcode`: A file containing the task exit code (0 if successful)
+:::
 
 Recall from [lesson 1.1.9](1.1_nextflow.html#nextflow-log) that the `nextflow log` command has multiple options to facilitate the queries and is especially useful while debugging a pipeline and while inspecting pipeline execution metadata. 
 
@@ -170,17 +184,17 @@ If we want to get rid of the warning message `Please check MultiQC report: 2/2 s
 
 ### **2.2.4. Write a parameter file**
 
-Nextflow accepts either YAML or JSON formats for parameter files. Any of the pipeline-specific [parameters](https://nf-co.re/rnaseq/3.11.1/parameters) can be supplied to a Nextflow pipeline in this way. 
+Nextflow accepts either `yaml` or `json` formats for parameter files. Any of the pipeline-specific [parameters](https://nf-co.re/rnaseq/3.11.1/parameters) can be supplied to a Nextflow pipeline in this way. We wrote a parameter file in `json` format in lesson 1.3.7, let's use `yaml` format this time. 
 
 ::: callout-tip
 ### **Challenge**{.unlisted}
 
-Fill in the parameters file below and save as `workshop-params.yaml`. 
+Fill in the parameters file below and save as `workshop-params.yaml`. This time, include the `--salmon_quant_libtype U` parameter. 
 
-:light_bulb: YAML formatting tips!
+:bulb: YAML formatting tips!
 
 * strings need to be inside double quotes 
-* booleans represented as true/false do not require quotes 
+* booleans (true/false) and numbers do not require quotes 
 
 ```yaml
 input: ""
@@ -213,7 +227,7 @@ salmon_quant_libtype: "U"
 ```
 :::
 
-### **2.2.5. Use a parameter file in a pipeline run**
+### **2.2.5. Apply the parameter file**
 
 &#x27A4; Once your params file has been saved, run:
 

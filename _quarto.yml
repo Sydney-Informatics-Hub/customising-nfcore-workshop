@@ -28,7 +28,7 @@ website:
           href: notebooks/1.4_users.html
       - text: "Session 2"
         menu:
-        - text: "2.0 Session 1 kick-off"
+        - text: "2.0 Session 2 kick-off"
           href: notebooks/2.0_intro.html
         - text: "2.1 Design a run command"
           href: notebooks/2.1_design.html
