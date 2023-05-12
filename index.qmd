@@ -42,19 +42,19 @@ In order to foster a positive and professional learning environment we encourage
 * Focus on what is best for the community
 * Show courtesy and respect towards other community members
 
-Our full CoC, with incident reporting guidelines, is available [here](https://sydney-informatics-hub.github.io/codeofconduct/).
+Our full code of conduct, with incident reporting guidelines, is available [here](https://sydney-informatics-hub.github.io/codeofconduct/).
 
 ### **Workshop schedule**{.unlisted}
 
 | Lesson     | Overview |
 |------------|----------|
 | [Set up your computer](setup.html)| Follow these instructions to install VSCode and login to your Nimbus instance. |
-| [Day 1: Introduction to nf-core](notebooks/1.0_intro.html)|  |
+| [Day 1: Introduction to nf-core](notebooks/1.0_intro.html)| Learn fundamental ideas and skills that are essential for using Nextflow and nf-core workflows. |
 | [Day 2: Customising nf-core](notebooks/2.0_intro.html)| Write, run, adjust, and re-run an nf-core workflow as we step through various customisation scenarios. |
 
 ### **Course survey**{.unlisted}
 
-Please fill out our [course survey]() before you leave. Help us help you! 😁
+Please fill out our [course survey](https://www.surveymonkey.com/r/custom-nfcore) before you leave. Help us help you! 😁
 
 ### **Credits and acknowledgements**{.unlisted}
 
