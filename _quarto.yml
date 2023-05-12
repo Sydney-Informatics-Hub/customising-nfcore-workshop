@@ -4,7 +4,7 @@ project:
 
 website:
   page-navigation: true
-  title: "Sydney Informatics Hub"
+  title: "Sydney Informatics Hub training"
   navbar:
     background: primary
     left:
@@ -12,6 +12,8 @@ website:
         text: Home
       - href: setup.html
         text: "Setup"
+      - href: notebooks/0.0_welcome.html
+        text: "Lesson plan"      
       - text: "Session 1"
         menu:
         - text: "1.0 Session 1 kick-off"
@@ -26,7 +28,7 @@ website:
           href: notebooks/1.4_users.html
       - text: "Session 2"
         menu:
-        - text: "2.0 Intro to session 2"
+        - text: "2.0 Session 1 kick-off"
           href: notebooks/2.0_intro.html
         - text: "2.1 Design a run command"
           href: notebooks/2.1_design.html
@@ -38,8 +40,6 @@ website:
           href: notebooks/2.4_multiConfig.html
         - text: "2.5 Apply external arguments"
           href: notebooks/2.5_extArgs.html
-        - text: "2.6 Use nf-core launch"
-          href: notebooks/2.6_launch.html
       - text: "Tips & Tricks"
         href: tips_tricks.html
   body-footer: "All materials copyright Sydney Informatics Hub, University of Sydney"
