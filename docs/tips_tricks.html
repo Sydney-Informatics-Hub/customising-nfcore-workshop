@@ -161,23 +161,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <ul class="dropdown-menu" aria-labelledby="nav-menu-session-1">    
         <li>
     <a class="dropdown-item" href="./notebooks/1.0_intro.html">
- <span class="dropdown-text">Session 1 kick-off</span></a>
+ <span class="dropdown-text">1.0 Session 1 kick-off</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./notebooks/1.1_nextflow.html">
- <span class="dropdown-text">Introduction to Nextflow</span></a>
+ <span class="dropdown-text">1.1 Introduction to Nextflow</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./notebooks/1.2_nfcore.html">
- <span class="dropdown-text">Introduction to nf-core</span></a>
+ <span class="dropdown-text">1.2 Introduction to nf-core</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./notebooks/1.3_configure.html">
- <span class="dropdown-text">Configuring nf-core workflows</span></a>
+ <span class="dropdown-text">1.3 Configuring nf-core workflows</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./notebooks/1.4_users.html">
- <span class="dropdown-text">Commands for users</span></a>
+ <span class="dropdown-text">1.4 Commands for users</span></a>
   </li>  
     </ul>
   </li>
@@ -188,7 +188,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <ul class="dropdown-menu" aria-labelledby="nav-menu-session-2">    
         <li>
     <a class="dropdown-item" href="./notebooks/2.0_intro.html">
- <span class="dropdown-text">2.0 Session 1 kick-off</span></a>
+ <span class="dropdown-text">2.0 Session 2 kick-off</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./notebooks/2.1_design.html">
@@ -235,7 +235,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#run-nextflow-in-the-background" id="toc-run-nextflow-in-the-background" class="nav-link" data-scroll-target="#run-nextflow-in-the-background"><strong>Run Nextflow in the background</strong></a></li>
   <li><a href="#capture-a-nextflow-pipelines-configuration" id="toc-capture-a-nextflow-pipelines-configuration" class="nav-link" data-scroll-target="#capture-a-nextflow-pipelines-configuration"><strong>Capture a Nextflow pipeline’s configuration</strong></a></li>
   <li><a href="#clean-nextflow-cache-and-work-directories" id="toc-clean-nextflow-cache-and-work-directories" class="nav-link" data-scroll-target="#clean-nextflow-cache-and-work-directories"><strong>Clean Nextflow cache and work directories</strong></a></li>
-  <li><a href="#access-nextflow-pipelines-in-private-github-repositories" id="toc-access-nextflow-pipelines-in-private-github-repositories" class="nav-link" data-scroll-target="#access-nextflow-pipelines-in-private-github-repositories"><strong>Access Nextflow pipelines in private GitHub repositories</strong></a></li>
+  <li><a href="#access-private-github-repositories" id="toc-access-private-github-repositories" class="nav-link" data-scroll-target="#access-private-github-repositories"><strong>Access private GitHub repositories</strong></a></li>
   <li><a href="#send-processes-to-a-job-scheduler-on-hpc" id="toc-send-processes-to-a-job-scheduler-on-hpc" class="nav-link" data-scroll-target="#send-processes-to-a-job-scheduler-on-hpc"><strong>Send processes to a job scheduler on HPC</strong></a></li>
   </ul>
 </nav>
@@ -277,8 +277,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3 class="anchored" data-anchor-id="clean-nextflow-cache-and-work-directories"><strong>Clean Nextflow cache and work directories</strong></h3>
 <p>Examples of dry run and remove features for <a href="https://www.nextflow.io/docs/latest/cli.html#clean">clean</a></p>
 </section>
-<section id="access-nextflow-pipelines-in-private-github-repositories" class="level3">
-<h3 class="anchored" data-anchor-id="access-nextflow-pipelines-in-private-github-repositories"><strong>Access Nextflow pipelines in private GitHub repositories</strong></h3>
+<section id="access-private-github-repositories" class="level3">
+<h3 class="anchored" data-anchor-id="access-private-github-repositories"><strong>Access private GitHub repositories</strong></h3>
 <p>To interact with private repositories on GitHub or when running into GitHub API rate limits for public repositories (i.e.&nbsp;when using Nextflow Tower), you can <a href="https://www.nextflow.io/docs/latest/sharing.html#github-credentials">provide Nextflow with access to GitHub</a> by specifying your GitHub user name and a <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token">Personal Access Token</a> in the <a href="https://www.nextflow.io/docs/latest/sharing.html#scm-configuration-file"><code>scm</code> configuration file</a> inside your specified <code>.nextflow/</code> directory.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>providers {</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>

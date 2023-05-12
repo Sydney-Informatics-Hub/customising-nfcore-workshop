@@ -161,23 +161,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <ul class="dropdown-menu" aria-labelledby="nav-menu-session-1">    
         <li>
     <a class="dropdown-item" href="../notebooks/1.0_intro.html">
- <span class="dropdown-text">Session 1 kick-off</span></a>
+ <span class="dropdown-text">1.0 Session 1 kick-off</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../notebooks/1.1_nextflow.html">
- <span class="dropdown-text">Introduction to Nextflow</span></a>
+ <span class="dropdown-text">1.1 Introduction to Nextflow</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../notebooks/1.2_nfcore.html">
- <span class="dropdown-text">Introduction to nf-core</span></a>
+ <span class="dropdown-text">1.2 Introduction to nf-core</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../notebooks/1.3_configure.html">
- <span class="dropdown-text">Configuring nf-core workflows</span></a>
+ <span class="dropdown-text">1.3 Configuring nf-core workflows</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../notebooks/1.4_users.html">
- <span class="dropdown-text">Commands for users</span></a>
+ <span class="dropdown-text">1.4 Commands for users</span></a>
   </li>  
     </ul>
   </li>
@@ -188,7 +188,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <ul class="dropdown-menu" aria-labelledby="nav-menu-session-2">    
         <li>
     <a class="dropdown-item" href="../notebooks/2.0_intro.html">
- <span class="dropdown-text">2.0 Session 1 kick-off</span></a>
+ <span class="dropdown-text">2.0 Session 2 kick-off</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../notebooks/2.1_design.html">
@@ -232,10 +232,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
    
   <ul>
   <li><a href="#why-should-i-use-a-parameters-file" id="toc-why-should-i-use-a-parameters-file" class="nav-link active" data-scroll-target="#why-should-i-use-a-parameters-file"><strong>2.2.1. Why should I use a parameters file?</strong></a></li>
-  <li><a href="#revise-the-run-command" id="toc-revise-the-run-command" class="nav-link" data-scroll-target="#revise-the-run-command"><strong>2.2.2. Revise the run command</strong></a></li>
+  <li><a href="#troubleshoot-the-warning-message" id="toc-troubleshoot-the-warning-message" class="nav-link" data-scroll-target="#troubleshoot-the-warning-message"><strong>2.2.2. Troubleshoot the warning message</strong></a></li>
   <li><a href="#identify-the-run-command-for-a-process" id="toc-identify-the-run-command-for-a-process" class="nav-link" data-scroll-target="#identify-the-run-command-for-a-process"><strong>2.2.3. Identify the run command for a process</strong></a></li>
   <li><a href="#write-a-parameter-file" id="toc-write-a-parameter-file" class="nav-link" data-scroll-target="#write-a-parameter-file"><strong>2.2.4. Write a parameter file</strong></a></li>
-  <li><a href="#use-a-parameter-file-in-a-pipeline-run" id="toc-use-a-parameter-file-in-a-pipeline-run" class="nav-link" data-scroll-target="#use-a-parameter-file-in-a-pipeline-run"><strong>2.2.5. Use a parameter file in a pipeline run</strong></a></li>
+  <li><a href="#apply-the-parameter-file" id="toc-apply-the-parameter-file" class="nav-link" data-scroll-target="#apply-the-parameter-file"><strong>2.2.5. Apply the parameter file</strong></a></li>
   </ul>
 </nav>
     </div>
@@ -278,20 +278,20 @@ Objectives
 </ul>
 </div>
 </div>
-<p>In Nextflow, <a href="https://www.nextflow.io/docs/latest/config.html#scope-params">parameters</a> are values that can be set by the user and used to control the behaviour of a workflow or process within the workflow. Within the Nextflow code base, they are defined by the <code>params{}</code> scope.</p>
-<p>In the previous lesson we supplied pipeline parameters as flags in our run command (<code>--</code>). We can also pass pipeline-specific parameters to any pipeline using Nextflow’s <code>-params-file</code> flag and a JSON or YAML file. You can imagine our run command can quickly become very difficult to read if we were to provide a few more additional parameters. In this lesson we will add another parameter and rerun the pipeline using a parameter file, rather than specifying all parameters as separate flags in the run command.</p>
+<p>In <a href="1.3_configure.html#custom-configuration-files">Lesson 1.3.7</a>, we learned that <a href="https://www.nextflow.io/docs/latest/config.html#scope-params">parameters</a> are values that can be set by the user and used to control the behaviour of a workflow or process within the workflow. Within the Nextflow code base, they are defined by the <code>params{}</code> scope. They can be suppled as either a <code>--parameter</code> flag to the run command or inside a parameter file.</p>
+<p>In the previous lesson we supplied pipeline parameters as flags in our run command (<code>--</code>). In this lesson we will add another parameter to our run command and rerun the pipeline using a parameter file.</p>
 <section id="why-should-i-use-a-parameters-file" class="level3">
 <h3 class="anchored" data-anchor-id="why-should-i-use-a-parameters-file"><strong>2.2.1. Why should I use a parameters file?</strong></h3>
-<p>You saw how many parameters the nf-core/rnaseq pipeline offers in the previous lesson! Can you imagine what your run command would look like if you needed to use a lot more of these parameters. Using a parameters file can offer several advantages over specifying mulitple flags for an nf-core run command:</p>
+<p>Using a parameter file is advantageous in a number of ways:</p>
 <ol type="1">
-<li>Code readability: By using a params file, you can ensure your run command is readable by storing all your parameters customisations in one place and easily make changes or additions as needed.</li>
-<li>Reproducibility: You can save the exact parameters used for a particular run of the pipeline in a parameters file. This makes it easier to reproduce the same results later, or to share your pipeline parameters with collaborators.</li>
-<li>Flexibility: If you need to run the same nf-core pipeline with slightly different settings, using a parameters file makes it easier to make those changes without modifying the run command each time.</li>
-<li>Version control: Using version controlled parameter files allows you to track changes to your pipeline configuration over time and revert to previous versions if needed.</li>
+<li><strong>Code readability</strong>: By using a params file, you can ensure your run command is readable by storing all your parameters customisations in one place and easily make changes or additions as needed.</li>
+<li><strong>Reproducibility</strong>: You can save the exact parameters used for a particular run of the pipeline in a parameters file. This makes it easier to reproduce the same results and share your pipeline parameters with collaborators.</li>
+<li><strong>Flexibility</strong>: If you need to run the same nf-core pipeline with slightly different settings, using a parameters file makes it easier to make those changes without modifying the run command each time.</li>
+<li><strong>Version control</strong>: Using version controlled parameter files allows you to track changes to your pipeline configuration over time and revert to previous versions if needed.</li>
 </ol>
 </section>
-<section id="revise-the-run-command" class="level3">
-<h3 class="anchored" data-anchor-id="revise-the-run-command"><strong>2.2.2. Revise the run command</strong></h3>
+<section id="troubleshoot-the-warning-message" class="level3">
+<h3 class="anchored" data-anchor-id="troubleshoot-the-warning-message"><strong>2.2.2. Troubleshoot the warning message</strong></h3>
 <p>While our pipeline completed successfully, there were a couple of warning messages that may be cause for concern:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>-[nf-core/rnaseq] Pipeline completed successfully with skipped sampl(es)-</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>-[nf-core/rnaseq] Please check MultiQC report: 2/2 samples failed strandedness check.-</span>
@@ -335,7 +335,29 @@ drwxrwxr-x 5 ubuntu ubuntu    4096 Apr 12 04:13 multiqc_plots
 <p>To observe exactly what command is being run for a process, we can attempt to infer this information from a process <code>main.nf</code> script in the <code>modules/</code> directory. However, given all the different parameters that may be applied at the process level, this may not be very clear.</p>
 <p>➤ Take a look at the Salmon quant <code>main.nf</code> file:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cat nf-core-rnaseq-3.11.1/workflow/modules/nf-core/salmon/quant/main.nf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>It is very hard to see what is actually happening, given all the different variables, conditional arguments, and loops inside this script.</p>
+<p>It is very hard to see what is actually happening, given all the different variables, conditional arguments, and loops inside this script. Above the script block we can see strandedness is being applied using a few different conditional arguments. Instead of trying to infer how the <code>$strandedness</code> variable is being defined and applied to the process, let’s use the hidden process files saved to the <code>work/</code> directory.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<strong>Hidden files in the work directory!</strong>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Remember that the pipeline’s results are cached in the <code>work</code> directory. In addition to the cached files, each task execution directories inside the work directory contains a number of hidden files:</p>
+<ul>
+<li><code>.command.sh</code>: The command script run for the task.</li>
+<li><code>.command.run</code>: The command wrapped used to run the task.</li>
+<li><code>.command.out</code>: The task’s standard output log.</li>
+<li><code>.command.err</code>: The task’s standard error log.</li>
+<li><code>.command.log</code>: The wrapper execution output.</li>
+<li><code>.command.begin</code>: A file created as soon as the job is launched.</li>
+<li><code>.exitcode</code>: A file containing the task exit code (0 if successful)</li>
+</ul>
+</div>
+</div>
 <p>Recall from <a href="1.1_nextflow.html#nextflow-log">lesson 1.1.9</a> that the <code>nextflow log</code> command has multiple options to facilitate the queries and is especially useful while debugging a pipeline and while inspecting pipeline execution metadata.</p>
 <p>To understand how Salmon quant is interpreting strandedness, we’re going to use this command to track down the hidden <code>.command.sh</code> scripts for each Salmon quant task that was run. This will allow us to find out how Salmon quant handles strandedness and if there is a way for us to override this.</p>
 <p>➤ Use the <a href="https://www.nextflow.io/docs/latest/tracing.html#execution-log">Nextflow log</a> command to reveal information about previously executed pipelines:</p>
@@ -394,7 +416,7 @@ drwxrwxr-x 5 ubuntu ubuntu    4096 Apr 12 04:13 multiqc_plots
 </section>
 <section id="write-a-parameter-file" class="level3">
 <h3 class="anchored" data-anchor-id="write-a-parameter-file"><strong>2.2.4. Write a parameter file</strong></h3>
-<p>Nextflow accepts either YAML or JSON formats for parameter files. Any of the pipeline-specific <a href="https://nf-co.re/rnaseq/3.11.1/parameters">parameters</a> can be supplied to a Nextflow pipeline in this way.</p>
+<p>Nextflow accepts either <code>yaml</code> or <code>json</code> formats for parameter files. Any of the pipeline-specific <a href="https://nf-co.re/rnaseq/3.11.1/parameters">parameters</a> can be supplied to a Nextflow pipeline in this way. We wrote a parameter file in <code>json</code> format in lesson 1.3.7, let’s use <code>yaml</code> format this time.</p>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -405,11 +427,11 @@ drwxrwxr-x 5 ubuntu ubuntu    4096 Apr 12 04:13 multiqc_plots
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Fill in the parameters file below and save as <code>workshop-params.yaml</code>.</p>
-<p>:light_bulb: YAML formatting tips!</p>
+<p>Fill in the parameters file below and save as <code>workshop-params.yaml</code>. This time, include the <code>--salmon_quant_libtype U</code> parameter.</p>
+<p><span class="emoji" data-emoji="bulb">💡</span> YAML formatting tips!</p>
 <ul>
 <li>strings need to be inside double quotes</li>
-<li>booleans represented as true/false do not require quotes</li>
+<li>booleans (true/false) and numbers do not require quotes</li>
 </ul>
 <div class="sourceCode" id="cb12"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">input</span><span class="kw">:</span><span class="at"> </span><span class="st">""</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">outdir</span><span class="kw">:</span><span class="at"> </span><span class="st">""</span></span>
@@ -424,7 +446,7 @@ drwxrwxr-x 5 ubuntu ubuntu    4096 Apr 12 04:13 multiqc_plots
 </div>
 </div>
 <div class="callout-caution callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -433,7 +455,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="sourceCode" id="cb13"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">input</span><span class="kw">:</span><span class="at"> </span><span class="st">"samplesheet.csv"</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">outdir</span><span class="kw">:</span><span class="at"> </span><span class="st">"Lesson-2.2"</span></span>
@@ -449,8 +471,8 @@ Solution
 </div>
 </div>
 </section>
-<section id="use-a-parameter-file-in-a-pipeline-run" class="level3">
-<h3 class="anchored" data-anchor-id="use-a-parameter-file-in-a-pipeline-run"><strong>2.2.5. Use a parameter file in a pipeline run</strong></h3>
+<section id="apply-the-parameter-file" class="level3">
+<h3 class="anchored" data-anchor-id="apply-the-parameter-file"><strong>2.2.5. Apply the parameter file</strong></h3>
 <p>➤ Once your params file has been saved, run:</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  --max_memory 6.GB \</span>

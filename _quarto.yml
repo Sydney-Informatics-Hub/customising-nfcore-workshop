@@ -16,19 +16,19 @@ website:
         text: "Lesson plan"      
       - text: "Session 1"
         menu:
-        - text: "Session 1 kick-off"
+        - text: "1.0 Session 1 kick-off"
           href: notebooks/1.0_intro.html
-        - text: "Introduction to Nextflow"
+        - text: "1.1 Introduction to Nextflow"
           href: notebooks/1.1_nextflow.html
-        - text: "Introduction to nf-core"
+        - text: "1.2 Introduction to nf-core"
           href: notebooks/1.2_nfcore.html 
-        - text: "Configuring nf-core workflows"
+        - text: "1.3 Configuring nf-core workflows"
           href: notebooks/1.3_configure.html
-        - text: "Commands for users"
+        - text: "1.4 Commands for users"
           href: notebooks/1.4_users.html
       - text: "Session 2"
         menu:
-        - text: "2.0 Session 1 kick-off"
+        - text: "2.0 Session 2 kick-off"
           href: notebooks/2.0_intro.html
         - text: "2.1 Design a run command"
           href: notebooks/2.1_design.html
