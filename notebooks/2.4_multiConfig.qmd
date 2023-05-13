@@ -38,7 +38,7 @@ We can easily view the versions of all tools used from the `software_versions.ym
 
 &#x27A4; Identify the version of Trim Galore that has been used in our runs so far from the `software_versions.yml` file. 
 
-You might view the file by opening it from the VS Code explorer pane, using `more` command, or `grep` for the tool name.
+>You might view the file by opening it from the VS Code explorer pane, using `more` command, or `grep` for the tool name.
 
 ```default
 more Lesson-2.3.4/pipeline_info/software_versions.yml
@@ -214,12 +214,13 @@ nextflow log <run_name> -f name,status,exit,realtime,cpus,pcpu,memory,pmem,rss
 :::
 <br/>
 
-If there is a specific combination of fields you would like to regularly capture for your pipeline runs, perhaps for [resource benchmarking](https://www.nature.com/articles/s41467-019-09406-4), it would be useful to have a custom configuration file that can be optionally applied to any run. Let's make a portable configuration file for resource tracing called `custom-trace.config`.
+If there is a specific combination of fields you would like to regularly capture for your pipeline runs, perhaps for [resource benchmarking](https://www.nature.com/articles/s41467-019-09406-4), it would be useful to have a custom configuration file that can be optionally applied to any run. 
 
-Because this config is not infrastructure or pipeline specific, we can share it with collaborators and use it across multiple pipelines. 
+Let's make a portable configuration file for resource tracing. Because this config is not infrastructure or pipeline specific, we can share it with collaborators and use it across multiple pipelines. 
 <br/>
 
 &#x27A4;  Open a file for editing called `custom-trace.config` and add the following content:
+
 > Note that we need to use `%cpu` and `%mem`, as per the [Nextflow documentation](https://www.nextflow.io/docs/latest/tracing.html#trace-fields) and not `pcpu` and `pmem` as we applied on the command line according to this [issue](https://github.com/nextflow-io/nextflow/issues/3893#event-9076291921).
 
 ```default
@@ -247,7 +248,8 @@ nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
 ```
 <br/>
 
-:eyes: Notice that your multiple custom configurations are listed under **Core Nextflow options** on the launch log printed to the screen
+:eyes: Notice that your multiple custom configurations are listed under **Core Nextflow options** on the launch log printed to the screen:
+<br/><br/>
 ![](../figs/2.4_screenshot_config_list.png)
 <br/><br/>
 
@@ -280,6 +282,7 @@ We are going to configure MultiQC to:
 &#x27A4;  Open a file for editing named `custom-multiqc-config.yaml` and add the following content:
 
 ::: {.callout-note}
+### Tip
 You can add any fields under the `report_header_info` section, as long as you follow the required formatting
 :::
 
@@ -366,7 +369,7 @@ extra_salmon_quant_args : '--gcBias'
 
  We will cover this in the next lesson! :sunglasses:
 
-<br/><br/>
+<br/>
 
 ### **2.4.4. Apply external arguments**
 
@@ -376,7 +379,8 @@ Optional arguments for a tool that are commonly changed are usually included as 
 
 As we are all aware, bioinformatics tools can have a *lot* of optional arguments. It is not feasible for nf-core to paramaterise all of these arguments...
 
-![](../figs/2.4_args_pie_chart.png)
+![](../figs/2.4_args_pie_chart.png){width=50%}
+
 <br/>
 
 
@@ -395,7 +399,7 @@ In this lesson, we will learn how to apply any argument for a tool that is not e
   - This configuration file gives the tool argument `--flag1` to `ext.args`
 - On the **right** of the diagram we see how the tool command is executed if `-c example-custom.config` was applied
   - `--flag1` is interpolated by the `$args` variable 
-<br/>
+<br/><br/>
 
 ![](../figs/2.5_ext-args.png)
 <br/><br/><br/>
@@ -418,8 +422,8 @@ This is a good reminder that:
 
 For the sake of the lesson, let's assume we want to apply a very stringent minimum Phred score of 40. 
 
->:exclamation: This is overly stringent! Bear with us... :blush:
-<br/>
+:exclamation: *This is overly stringent! Bear with us...* :blush:
+<br/><br/>
 
 &#x27A4;  Follow the decision tree to answer some key questions we need to answer to apply this workflow customisation:
 
@@ -442,7 +446,6 @@ Following the above exploration, we have learnt that:
 <br/>
 
  
-
 ::: callout-tip
 ### **Challenge**{.unlisted}
 Write a custom configuration file named `custom-args.config` that adds `--quality 40` to the script block of the TRIM_GALORE module. 
@@ -484,25 +487,25 @@ nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
 
 &#x27A4;  Investigate the source of the failure:
 
-- Following the advice of the warning message, check the MultiQC report by opening the file `Lesson-2.4.4/multiqc/star_salmon/multiqc_report.html`
+Following the advice of the warning message, check the MultiQC report by opening the file `Lesson-2.4.4/multiqc/star_salmon/multiqc_report.html`
+
   - Click on the 'WARNING: Fail Trimming Check' on the navigation headings on the left
   - Both of our samples '*failed the minimum trimmed reads threshold specified via the `--min_trimmed_reads` parameter, and hence were ignored for the downstream processing steps*'
   - Looking at the [`--min_trimmed_reads`](https://nf-co.re/rnaseq/3.11.1/parameters#min_trimmed_reads) parameter documentation, the default 10,000 and our samples both had < 5,000 
 
 ![](../figs/2.4_min_trim_param.png)
-<br/>
+<br/><br/>
 
 
-&#x27A4; Confirm that the external arguments were applied to the run:
+&#x27A4; Confirm that the external argument was applied to the run:
 
 ::: {.callout-warning}
 ###
 In this example, it is clear that our `ext.args` customisation was successfully applied because of the catastrophic failure it produced. But in less dramatic cases, how can we confirm that the external argument was actually applied?
 :::
 
-On your `multiqc_report.html` file, navigate to the section 'nf-core/rnaseq Workflow Summary'. 
-
-Unlike our custom **options**, **profiles**, and **configs**, the custom quality parameter is **not documented!**
+- On your `multiqc_report.html` file, navigate to the section 'nf-core/rnaseq Workflow Summary'. 
+- Unlike our custom **options**, **profiles**, and **configs**, the custom quality parameter is **not documented!**
 <br/><br/>
 
 Some tools write a handy log, in which case you might view the applied parameters from that file: 

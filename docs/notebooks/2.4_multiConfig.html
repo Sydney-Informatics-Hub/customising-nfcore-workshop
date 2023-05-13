@@ -298,7 +298,9 @@ Objectives
 <p>We can easily view the versions of all tools used from the <code>software_versions.yml</code> file created by default in the <code>&lt;outdir&gt;/pipeline_info</code> directory by nf-core workflows <em>OR</em> by viewing the same information from the ‘nf-core/rnaseq Software Versions’ section of the MultiQC html report.<br>
 <br></p>
 <p>➤ Identify the version of Trim Galore that has been used in our runs so far from the <code>software_versions.yml</code> file.</p>
+<blockquote class="blockquote">
 <p>You might view the file by opening it from the VS Code explorer pane, using <code>more</code> command, or <code>grep</code> for the tool name.</p>
+</blockquote>
 <div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>more Lesson-2.3.4/pipeline_info/software_versions.yml</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>##</span>
@@ -469,9 +471,12 @@ Solution
 </div>
 </div>
 <p><br></p>
-<p>If there is a specific combination of fields you would like to regularly capture for your pipeline runs, perhaps for <a href="https://www.nature.com/articles/s41467-019-09406-4">resource benchmarking</a>, it would be useful to have a custom configuration file that can be optionally applied to any run. Let’s make a portable configuration file for resource tracing called <code>custom-trace.config</code>.</p>
-<p>Because this config is not infrastructure or pipeline specific, we can share it with collaborators and use it across multiple pipelines. <br></p>
-<p>➤ Open a file for editing called <code>custom-trace.config</code> and add the following content: &gt; Note that we need to use <code>%cpu</code> and <code>%mem</code>, as per the <a href="https://www.nextflow.io/docs/latest/tracing.html#trace-fields">Nextflow documentation</a> and not <code>pcpu</code> and <code>pmem</code> as we applied on the command line according to this <a href="https://github.com/nextflow-io/nextflow/issues/3893#event-9076291921">issue</a>.</p>
+<p>If there is a specific combination of fields you would like to regularly capture for your pipeline runs, perhaps for <a href="https://www.nature.com/articles/s41467-019-09406-4">resource benchmarking</a>, it would be useful to have a custom configuration file that can be optionally applied to any run.</p>
+<p>Let’s make a portable configuration file for resource tracing. Because this config is not infrastructure or pipeline specific, we can share it with collaborators and use it across multiple pipelines. <br></p>
+<p>➤ Open a file for editing called <code>custom-trace.config</code> and add the following content:</p>
+<blockquote class="blockquote">
+<p>Note that we need to use <code>%cpu</code> and <code>%mem</code>, as per the <a href="https://www.nextflow.io/docs/latest/tracing.html#trace-fields">Nextflow documentation</a> and not <code>pcpu</code> and <code>pmem</code> as we applied on the command line according to this <a href="https://github.com/nextflow-io/nextflow/issues/3893#event-9076291921">issue</a>.</p>
+</blockquote>
 <div class="sourceCode" id="cb10"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>// Define timestamp, to avoid overwriting existing trace </span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>def trace_timestamp = new java.util.Date().format('yyyy-MM-dd_HH-mm-ss')</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -490,7 +495,7 @@ Solution
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  --outdir Lesson-2.4.2 \</span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  -resume </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br></p>
-<p><span class="emoji" data-emoji="eyes">👀</span> Notice that your multiple custom configurations are listed under <strong>Core Nextflow options</strong> on the launch log printed to the screen <img src="../figs/2.4_screenshot_config_list.png" class="img-fluid"> <br><br></p>
+<p><span class="emoji" data-emoji="eyes">👀</span> Notice that your multiple custom configurations are listed under <strong>Core Nextflow options</strong> on the launch log printed to the screen: <br><br> <img src="../figs/2.4_screenshot_config_list.png" class="img-fluid"> <br><br></p>
 <p>➤ Once the workflow has run, take a look at the <code>&lt;outdir&gt;/custom-resource-trace-${trace_timestamp}.txt</code> file:</p>
 <p><img src="../figs/2.4_screenshot_custom_trace.png" class="img-fluid"> <br><br></p>
 </section>
@@ -525,7 +530,7 @@ Important
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Note
+Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -631,14 +636,15 @@ Solution
 <p><br><br></p>
 <p><span class="emoji" data-emoji="scream">😱</span> <span style="color:#8b0000;"><strong>What would we do if the above solution was not available within our chosen nf-core pipeline?</strong></span></p>
 <p>We will cover this in the next lesson! <span class="emoji" data-emoji="sunglasses">😎</span></p>
-<p><br><br></p>
+<p><br></p>
 </section>
 <section id="apply-external-arguments" class="level3">
 <h3 class="anchored" data-anchor-id="apply-external-arguments"><strong>2.4.4. Apply external arguments</strong></h3>
 <p>All nf-core modules are currently required to include the mandatory arguments that a tool needs to run within the <code>main.nf</code> file of the process running that tool.</p>
 <p>Optional arguments for a tool that are commonly changed are usually included as nf-core workflow parameters, so they can be easily customised on the command line or supplied within a parameters file.</p>
 <p>As we are all aware, bioinformatics tools can have a <em>lot</em> of optional arguments. It is not feasible for nf-core to paramaterise all of these arguments…</p>
-<p><img src="../figs/2.4_args_pie_chart.png" class="img-fluid"> <br></p>
+<p><img src="../figs/2.4_args_pie_chart.png" class="img-fluid" style="width:50.0%"></p>
+<p><br></p>
 <p>In this lesson, we will learn how to apply any argument for a tool that is not explicitly covered by an nf-core workflow parameter using Nextflow’s <a href="https://www.nextflow.io/docs/latest/process.html#ext"><code>ext</code> directive</a>. <br><br></p>
 <p>➤ Consider the diagram below:</p>
 <ul>
@@ -655,7 +661,7 @@ Solution
 </ul></li>
 <li>On the <strong>right</strong> of the diagram we see how the tool command is executed if <code>-c example-custom.config</code> was applied
 <ul>
-<li><code>--flag1</code> is interpolated by the <code>$args</code> variable <br></li>
+<li><code>--flag1</code> is interpolated by the <code>$args</code> variable <br><br></li>
 </ul></li>
 </ul>
 <p><img src="../figs/2.5_ext-args.png" class="img-fluid"> <br><br><br></p>
@@ -682,9 +688,7 @@ Solution
 </div>
 <p><br><br></p>
 <p>For the sake of the lesson, let’s assume we want to apply a very stringent minimum Phred score of 40.</p>
-<blockquote class="blockquote">
-<p><span class="emoji" data-emoji="exclamation">❗</span> This is overly stringent! Bear with us… <span class="emoji" data-emoji="blush">😊</span> <br></p>
-</blockquote>
+<p><span class="emoji" data-emoji="exclamation">❗</span> <em>This is overly stringent! Bear with us…</em> <span class="emoji" data-emoji="blush">😊</span> <br><br></p>
 <p>➤ Follow the decision tree to answer some key questions we need to answer to apply this workflow customisation:</p>
 <p><img src="../figs/2.4_trimgalore_qual_decision_chart.png" class="img-fluid"> <br><br><br></p>
 <div class="callout-note callout callout-style-default callout-captioned">
@@ -756,16 +760,14 @@ Solution
 <p><span class="emoji" data-emoji="astonished">😲</span> Pipeline <strong>completed successfully</strong> but <span style="color:#8b0000;"> 2/2 samples failed!</span></p>
 <p><img src="../figs/2.4_failed_star.png" class="img-fluid"> <br><br></p>
 <p>➤ Investigate the source of the failure:</p>
-<ul>
-<li>Following the advice of the warning message, check the MultiQC report by opening the file <code>Lesson-2.4.4/multiqc/star_salmon/multiqc_report.html</code>
+<p>Following the advice of the warning message, check the MultiQC report by opening the file <code>Lesson-2.4.4/multiqc/star_salmon/multiqc_report.html</code></p>
 <ul>
 <li>Click on the ‘WARNING: Fail Trimming Check’ on the navigation headings on the left</li>
 <li>Both of our samples ‘<em>failed the minimum trimmed reads threshold specified via the <code>--min_trimmed_reads</code> parameter, and hence were ignored for the downstream processing steps</em>’</li>
 <li>Looking at the <a href="https://nf-co.re/rnaseq/3.11.1/parameters#min_trimmed_reads"><code>--min_trimmed_reads</code></a> parameter documentation, the default 10,000 and our samples both had &lt; 5,000</li>
-</ul></li>
 </ul>
-<p><img src="../figs/2.4_min_trim_param.png" class="img-fluid"> <br></p>
-<p>➤ Confirm that the external arguments were applied to the run:</p>
+<p><img src="../figs/2.4_min_trim_param.png" class="img-fluid"> <br><br></p>
+<p>➤ Confirm that the external argument was applied to the run:</p>
 <div class="callout-warning callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -779,8 +781,10 @@ Solution
 <p>In this example, it is clear that our <code>ext.args</code> customisation was successfully applied because of the catastrophic failure it produced. But in less dramatic cases, how can we confirm that the external argument was actually applied?</p>
 </div>
 </div>
-<p>On your <code>multiqc_report.html</code> file, navigate to the section ‘nf-core/rnaseq Workflow Summary’.</p>
-<p>Unlike our custom <strong>options</strong>, <strong>profiles</strong>, and <strong>configs</strong>, the custom quality parameter is <strong>not documented!</strong> <br><br></p>
+<ul>
+<li>On your <code>multiqc_report.html</code> file, navigate to the section ‘nf-core/rnaseq Workflow Summary’.</li>
+<li>Unlike our custom <strong>options</strong>, <strong>profiles</strong>, and <strong>configs</strong>, the custom quality parameter is <strong>not documented!</strong> <br><br></li>
+</ul>
 <p>Some tools write a handy log, in which case you might view the applied parameters from that file:</p>
 <p><img src="../figs/2.4_trimgalore_log.png" class="img-fluid"> <br><br></p>
 <p>In the absence of an informative tool log, you can always rely on <code>nextflow log</code>:</p>
