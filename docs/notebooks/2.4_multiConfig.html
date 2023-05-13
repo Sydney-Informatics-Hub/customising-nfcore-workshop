@@ -231,7 +231,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#apply-multiple-configurations" id="toc-apply-multiple-configurations" class="nav-link active" data-scroll-target="#apply-multiple-configurations"><strong>2.4.1. Apply multiple configurations</strong></a></li>
+  <li><a href="#configure-your-run-to-use-a-non-default-container" id="toc-configure-your-run-to-use-a-non-default-container" class="nav-link active" data-scroll-target="#configure-your-run-to-use-a-non-default-container"><strong>2.4.1. Configure your run to use a non-default container</strong></a></li>
+  <li><a href="#customised-resource-tracing" id="toc-customised-resource-tracing" class="nav-link" data-scroll-target="#customised-resource-tracing"><strong>2.4.2. Customised resource tracing</strong></a></li>
   <li><a href="#configure-multiqc-reports" id="toc-configure-multiqc-reports" class="nav-link" data-scroll-target="#configure-multiqc-reports"><strong>2.4.2. Configure MultiQC reports</strong></a></li>
   </ul>
 </nav>
@@ -267,47 +268,162 @@ Objectives
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>Create and apply a custom configuration file for resource tracing</li>
-<li>Create and apply a custom configuration file for MultiQC</li>
-<li>Add a custom configuration file details to the params YAML file</li>
-<li>Apply multiple custom configuration files in workflow execution</li>
-<li>Observe the heirarchy of parameter configuration in action</li>
+<li><p>Create and apply a custom configuration file for over-riding default containers</p></li>
+<li><p>Create and apply a custom configuration file for resource tracing</p></li>
+<li><p>Create and apply a custom configuration file for MultiQC</p></li>
+<li><p>Apply multiple custom configuration files in a single workflow execution with <code>-c &lt;conf-1,conf2,...&gt;</code></p></li>
 </ul>
 </div>
 </div>
-<p>Using multiple configuration files allows you to customise nf-core pipelines to your specific needs. Depending on how you work, where you work, and what pipelines you run, you may have configuration files that handle distinct issues, can be applied to specific infrastructures, or shared by multiple nf-core pipelines. In this lesson we will be applying multiple configuration files to the one run command.</p>
-<section id="apply-multiple-configurations" class="level3">
-<h3 class="anchored" data-anchor-id="apply-multiple-configurations"><strong>2.4.1. Apply multiple configurations</strong></h3>
-<p>You may need to apply multiple configuration files at once to an nf-core pipeline run. A few scenarios in which you would need to do this include:</p>
-<table class="table">
-<colgroup>
-<col style="width: 15%">
-<col style="width: 84%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Scenario</th>
-<th>Why?</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Debugging and testing</td>
-<td>If you are toubleshooting a particular process in the workflow, you may want to create a separate config file with process-specific modifications.</td>
-</tr>
-<tr class="even">
-<td>Resource optimisation</td>
-<td>Depending on the scale and complexity of your data, some steps of the pipeline may require different settings or resources to achieve optimal performance. By using different config files with different parameters or settings, you can fine-tune the pipeline run.</td>
-</tr>
-<tr class="odd">
-<td>MultiQC configuration</td>
-<td>MultiQC allows users to specify configuration options in a YAML file called multiqc_config.yaml. This file allows users to customize the behavior and appearance of the MultiQC report.</td>
-</tr>
-</tbody>
-</table>
-<section id="customised-resource-tracing" class="level4 unlisted">
-<h4 class="unlisted anchored" data-anchor-id="customised-resource-tracing"><strong>2.4.2. Customised resource tracing</strong></h4>
-<p>Remember we can use the <code>Nextflow log</code> command to show information about previous pipeline executions. We can customise which fields to print using the <a href="https://www.nextflow.io/docs/latest/tracing.html#customizing-fields"><code>-fields</code> flag</a>. This flag accepts options used by the <a href="https://www.nextflow.io/docs/latest/tracing.html#trace-fields">trace report</a>.</p>
+<p>Using multiple configuration files allows you to customise nf-core pipelines to your specific needs. Depending on how you work, where you work, and what pipelines you run, you may have configuration files that: - Handle distinct issues - Can be applied to specific infrastructures - Can be shared by multiple nf-core pipelines</p>
+<p>In this lesson we will create three custom configuration files that affect different aspects of the workflow and apply them to the one run command.</p>
+<section id="configure-your-run-to-use-a-non-default-container" class="level3">
+<h3 class="anchored" data-anchor-id="configure-your-run-to-use-a-non-default-container"><strong>2.4.1. Configure your run to use a non-default container</strong></h3>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note that for deploying nf-core workflows, it is not recommended to replace the tools within the workflow, as this will decrease portability and reproducibilty! This exercise is to demonstrate how you can specify containers, as this may aid you in developing and testing your own Nextflow workflows</p>
+</div>
+</div>
+<p>For this example, we are going to test out the latest version of <a href="https://github.com/FelixKrueger/TrimGalore">Trim Galore</a>. We have been using the default version of Trim Galore that is executed with nf-core/rnaseq revision 3.11.1.</p>
+<p>We can easily view the versions of all tools used from the <code>software_versions.yml</code> file created by default in the <code>&lt;outdir&gt;/pipeline_info</code> directory by nf-core workflows <em>OR</em> by viewing the same information from the ‘nf-core/rnaseq Software Versions’ section of the MultiQC html report.<br>
+<br></p>
+<p>➤ Identify the version of Trim Galore that has been used in our runs so far from the <code>software_versions.yml</code> file.</p>
+<p>You might view the file by opening it from the VS Code explorer pane, using <code>more</code> command, or <code>grep</code> for the tool name.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>more Lesson-2.3.4/pipeline_info/software_versions.yml</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>##</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>#TRIMGALORE:</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>#  cutadapt: '3.4'</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>#  trimgalore: 0.6.7</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>#</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The process names are listed in alphabetical order, with the tools and versions used in the <code>script</code> section of the process listed below the process name. We can see for TRIMGALORE process that version 0.6.7 of Trim Galore was used. <br><br></p>
+<p>There is a <a href="https://github.com/FelixKrueger/TrimGalore/releases/tag/0.6.10">newer version of Trim Galore</a> available, version 0.6.10. Recall that we have been accessing some materials on <a href="https://support.pawsey.org.au/documentation/pages/viewpage.action?pageId=92832676#NimbusforBioinformatics-1.BiocontainersandReferenceGenomedata"><strong>CernVM-FS</strong></a>, a read-only filesystem which provides shared access to common bioinformatics reference datasets as well as Singularity containers of everything stored in <a href="https://biocontainers.pro/">Biocontainers</a>.</p>
+<p>CernVM-FS comes pre-mounted on Pawsey Nimbus VMs using the <a href="https://support.pawsey.org.au/documentation/display/US/Nimbus+for+Bioinformatics#"><strong>Pawsey Bio - Ubuntu 22.04 - 2023-03</strong></a> image, so we can access and apply the Trim Galore biocontainer by specifying the path to this remote image within the process scope of a custom config, using the ‘withName’ process selector.</p>
+<p>We could just as easily specify an alternate remote source, such as <a href="https://quay.io/organization/biocontainer">quay.io</a>, or point to a local image.</p>
+<p><br></p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<strong>Thoughts</strong>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="emoji" data-emoji="question">❓</span> For maintaining best practice, where is the best place for the container definition?</p>
+<ol type="a">
+<li><p>Within the <code>custom-nimbus.config</code> institutional config file</p></li>
+<li><p>Within a separate custom config file named eg <code>custom-tools.config</code></p></li>
+</ol>
+<p>Why do you think this?</p>
+</div>
+</div>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Remember, Nextflow’s portability is achieved by separating <strong>workflow implementation</strong> from the <strong>configuration settings</strong> required to execute it. In the event that we are testing a different tool version, this should <strong>not</strong> be placed within the institutional config that is shareable with others using the same infrastructure. Swapping out tool versions is a bespoke adaptation of the nf-core workflow that could harm reproducibility if it was inadvertently executed. By placing it within a clearly named custom config file, there is less chance of unwittingly executing a workflow that does not match the expected utilisation of tools.</p>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>➤ First, identify the container for the 0.6.10 version of Trim Galore:</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Containers are mounted at the path <code>/cvmfs/singularity.galaxyproject.org</code>, with sub-directories based on the first 2 letters of the tool name, eg <code>/cvmfs/singularity.galaxyproject.org/t/r/</code> for Trim Galore containers.</p>
+</div>
+</div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ls /cvmfs/singularity.galaxyproject.org/t/r/trim*</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>##</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>#  /cvmfs/singularity.galaxyproject.org/t/r/trim-galore:0.6.10--hdfd78af_0</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>##</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><br></p>
+<p>➤ Next, identify the execution path for the TRIM_GALORE module:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>grep -i galore nf-core-rnaseq-3.11.1/workflow/conf/modules.config </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>##</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>#    if (params.trimmer == 'trimgalore') {</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>#            withName: '.*:FASTQ_FASTQC_UMITOOLS_TRIMGALORE:FASTQC' {</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>#    if (params.trimmer == 'trimgalore') {</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>#            withName: '.*:FASTQ_FASTQC_UMITOOLS_TRIMGALORE:TRIMGALORE' {</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>#                        params.extra_trimgalore_args ? params.extra_trimgalore_args.split("\\s(?=--)") : ''</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>##</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><br></p>
+<p>➤ Open a file for editing named <code>custom-tools.config</code>, and start building your config with the process scope and ‘withName’ selector that we covered in <a href="../notebooks/2.3_configEnv.html#2.3.5.-custom-resource-configuration-using-process-names">Session 2.3</a></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>process {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  withName: {</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><br></p>
+<p>➤ Then copy the Trim Galore module execution path:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>process {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  withName: '.*:FASTQ_FASTQC_UMITOOLS_TRIMGALORE:TRIMGALORE' {</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><br></p>
+<p>➤ Finally, copy the container details:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>process {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  withName: '.*:FASTQ_FASTQC_UMITOOLS_TRIMGALORE:TRIMGALORE' {</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    container = '/cvmfs/singularity.galaxyproject.org/t/r/trim-galore:0.6.10--hdfd78af_0' </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><br></p>
+<p>➤ Execute the run supplying our two configuration files:</p>
+<ul>
+<li>When adding multiple custom configs, we apply them to <code>-c</code> in a comma-delimited list</li>
+<li>If you haven’t already done so, delete or comment out the ‘withName’ resource content we applied to the STAR_ALIGN process in the <code>custom-nimbus.config</code> file</li>
+<li>Specify output directory <code>Lesson-2.4.1</code></li>
+</ul>
+<div class="sourceCode" id="cb7"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a> nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  -profile workshop \</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  -c custom-nimbus.config,custom-tools.config \</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  -params-file workshop-params.yaml \</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  --outdir Lesson-2.4.1 \</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  -resume </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><br></p>
+<p>➤ After your run has completed, check that the updated version of Trim Galore has been used:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>grep -i galore Lesson-2.4.1/pipeline_info/software_versions.yml</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>##</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>#TRIMGALORE:</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>#  trimgalore: 0.6.10</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>##</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><br><br></p>
+</section>
+<section id="customised-resource-tracing" class="level3">
+<h3 class="anchored" data-anchor-id="customised-resource-tracing"><strong>2.4.2. Customised resource tracing</strong></h3>
+<p>Running Nextflow workflows with the flag <code>-with-trace</code> writes a <a href="https://www.nextflow.io/docs/latest/tracing.html#trace-report">trace report</a> named <code>trace.txt</code> in the working directory.</p>
+<p>nf-core pipelines by default create an <code>execution_trace</code> file within <code>&lt;outdir&gt;/pipeline_info</code>, with the default fields that Nextflow <code>-with-trace</code> applies. A trace report can be customised to include any combination of <a href="https://www.nextflow.io/docs/latest/tracing.html#trace-fields">available fields</a> using the Nextflow <code>-fields</code> flag.</p>
+<p>In this exercise, we will create a custom configuration file that writes a detailed resource tracing file including our customised fields.</p>
+<p>To begin, we will extract these custom fields from a previous run using the <code>nextflow log</code> command.</p>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -318,18 +434,22 @@ Objectives
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Using the <a href="https://www.nextflow.io/docs/latest/tracing.html#trace-fields">trace report fields</a>, write a nextflow log command to query the following for a previous workflow run:</p>
+<p>Using the <a href="https://www.nextflow.io/docs/latest/tracing.html#trace-fields">trace report fields</a>, write a <code>nextflow log</code> command to query the following for a previous workflow run:</p>
 <ul>
-<li>The name of the task</li>
-<li>The exit status of the task</li>
-<li>The number of CPUs requested for task execution</li>
-<li>The disk space requested for the task execution</li>
-<li>The memory requested for the task execution</li>
+<li>Task <strong>name</strong></li>
+<li>Task <strong>status</strong></li>
+<li>Task <strong>exit</strong> status</li>
+<li>Task execution time (<strong>realtime</strong>)</li>
+<li>Number of <strong>cpus</strong> requested for the task</li>
+<li>Percentage of CPU used by the process (<a href="https://github.com/nextflow-io/nextflow/issues/3893#event-9076291921">use <strong>pcpu</strong> rather than <strong>%cpu</strong></a>)</li>
+<li>Amount of <strong>memory</strong> requested for the task</li>
+<li>Percentage of memory used by the process (<a href="https://github.com/nextflow-io/nextflow/issues/3893#event-9076291921">use <strong>pmem</strong> rather than <strong>%mem</strong></a>)</li>
+<li>Resident set size of the process (<strong>rss</strong>)</li>
 </ul>
 </div>
 </div>
 <div class="callout-caution callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -338,75 +458,132 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>nextflow log &lt;runName&gt; -f name,exit,cpus,disk,memory</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>First, run <code>nextflow log</code> with no arguments to obtain the name of your last run (unless you can remember it!)</p>
+<p>Then, supply that run name to the command below:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>nextflow log &lt;run_name&gt; -f name,status,exit,realtime,cpus,pcpu,memory,pmem,rss</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
-<p>Let’s make a portable configuration file for resource tracing called <code>trace-benchmark.config</code>. We can apply this config when we want to collect resource benchmarks. Because this config is not infrastructure- or pipeline-specific, we can share it with collaborators and use it across multiple pipelines:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>// Define timestamp, to avoid overwriting existing trace </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>def trace_timestamp = new java.util.Date().format('yyyy-MM-dd_HH-mm-ss')</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>// Generate custom resource trace file </span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>trace {</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  enabled = true </span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  file = "workshop-resource-trace-${trace_timestamp}.txt"</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  fields = 'name,status,realtime,cpus,%cpu,memory,%mem,rss'</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Rerun the workflow, adding <code>trace-benchmark.config</code> to the config flag and observe the extra file that is saved to our <code>session2</code> directory:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  -profile workshop \</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  -c custom-nimbus.config,trace-benchmark.config \</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  -params-file workshop-params.yaml \</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  --outdir Lesson-4 \</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  -resume</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Take a look at the launch log printed to the screen. You can see your profile, custom config, and parameters have all been applied successfully! Once the workflow has run, take a look at the <code>workshop-resource-trace-${trace_timestamp}.txt</code> file:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>name    status  realtime        cpus    %cpu    memory  %mem    rss</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>NFCORE_RNASEQ:RNASEQ:INPUT_CHECK:SAMPLESHEET_CHECK (samplesheet.csv)    CACHED  1s      1       28.0%   6 GB    0.2%    16.1 MB</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>NFCORE_RNASEQ:RNASEQ:PREPARE_GENOME:GTF2BED (mm10_chr18.gtf)    CACHED  1s      2       51.3%   6 GB    0.3%    23.8 MB</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>NFCORE_RNASEQ:RNASEQ:PREPARE_GENOME:CUSTOM_GETCHROMSIZES (mm10_chr18.fa)        CACHED  1s      1       34.1%   6 GB    0.0%    4.7 MB</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>NFCORE_RNASEQ:RNASEQ:PREPARE_GENOME:GTF_GENE_FILTER (mm10_chr18.fa)     CACHED  1s      1       34.7%   6 GB    0.1%    13.9 MB</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>NFCORE_RNASEQ:RNASEQ:FASTQ_SUBSAMPLE_FQ_SALMON:FQ_SUBSAMPLE (SRR3473984)        CACHED  2s      1       43.7%   6 GB    0.0%    6.5 MB</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>NFCORE_RNASEQ:RNASEQ:PREPARE_GENOME:MAKE_TRANSCRIPTS_FASTA (rsem/mm10_chr18.fa) CACHED  4s      2       42.0%   6 GB    1.2%    94.4 MB</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>NFCORE_RNASEQ:RNASEQ:FASTQ_SUBSAMPLE_FQ_SALMON:FQ_SUBSAMPLE (SRR3473985)        CACHED  2s      1       44.1%   6 GB    0.0%    6.3 MB</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="callout-warning callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-<span class="emoji" data-emoji="skull_and_crossbones">☠️</span> <strong>Don’t confuse double and single quotes!</strong> <span class="emoji" data-emoji="skull_and_crossbones">☠️</span>
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Double quotes (<code>""</code>) allow for variable interpolation</strong>, which means that variables can be evaluated and their values are substituted within the string.</p>
-<p><strong>Single quotes (<code>''</code>) denote a string literally</strong>, which means that the string is treated as-is without any variable interpolation.</p>
-<p>Try swapping the double quoted file value in your custom config above for a single-quoted value, rerun the workflow and note the creation of a</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>file = 'workshop-resource-trace-${trace_timestamp}.txt'</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</section>
+<p><br></p>
+<p>If there is a specific combination of fields you would like to regularly capture for your pipeline runs, perhaps for <a href="https://www.nature.com/articles/s41467-019-09406-4">resource benchmarking</a>, it would be useful to have a custom configuration file that can be optionally applied to any run. Let’s make a portable configuration file for resource tracing called <code>custom-trace.config</code>.</p>
+<p>Because this config is not infrastructure or pipeline specific, we can share it with collaborators and use it across multiple pipelines. <br></p>
+<p>➤ Open a file for editing called <code>custom-trace.config</code> and add the following content: &gt; Note that we need to use <code>%cpu</code> and <code>%mem</code>, as per the <a href="https://www.nextflow.io/docs/latest/tracing.html#trace-fields">Nextflow documentation</a> and not <code>pcpu</code> and <code>pmem</code> as we applied on the command line according to this <a href="https://github.com/nextflow-io/nextflow/issues/3893#event-9076291921">issue</a>.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>// Define timestamp, to avoid overwriting existing trace </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>def trace_timestamp = new java.util.Date().format('yyyy-MM-dd_HH-mm-ss')</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>// Generate custom resource trace file </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>trace {</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  enabled = true </span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  file = "${params.outdir}/custom-resource-trace-${trace_timestamp}.txt"</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  fields = 'name,status,exit,realtime,cpus,%cpu,memory,%mem,rss'</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><br></p>
+<p>➤ Resume your previous run, adding <code>custom-trace.config</code> and specifying output directory Lesson-2.4.2:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  -profile workshop \</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  -c custom-nimbus.config,custom-tools.config,custom-trace.config \</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  -params-file workshop-params.yaml \</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  --outdir Lesson-2.4.2 \</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  -resume </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="emoji" data-emoji="eyes">👀</span> Notice that your multiple custom configurations are listed under ‘Core Nextflow options’ on the launch log printed to the screen <img src="../figs/2.4_screenshot_config_list.png" class="img-fluid"> <br></p>
+<p>➤ Once the workflow has run, take a look at the <code>&lt;outdir&gt;/custom-resource-trace-${trace_timestamp}.txt</code> file:</p>
+<p><img src="../figs/2.4_screenshot_custom_trace.png" class="img-fluid"> <br><br></p>
 </section>
 <section id="configure-multiqc-reports" class="level3">
 <h3 class="anchored" data-anchor-id="configure-multiqc-reports"><strong>2.4.2. Configure MultiQC reports</strong></h3>
-<p>Many nf-core pipelines use <a href="https://multiqc.info/docs/">MultiQC</a> to generate a summary report at the end of a workflow. MultiQC is a reporting tool that can aggregate results and statistics output by various bioinformatics tools. It helps to summarise experiments containing multiple samples and multiple analysis steps. In nf-core pipelines, MultiQC is used to summarise statistics and results output by processes in the workflow and its reports can be quite verbose. MultiQC can be configured using custom YAML files to <a href="https://multiqc.info/docs/reports/customisation/">customise the outputs of reports</a>.</p>
-<p>We are going to configure MultiQC to aid interpretation of the <a href="https://multiqc.info/modules/fastqc/">FastQC output it plots</a>. Create a custom MultiQC configuration YAML file called <code>multiqc-config.yaml</code> and add the following:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fastqc_config</span><span class="kw">:</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">fastqc_theoretical_gc</span><span class="kw">:</span><span class="at"> </span><span class="st">"mm10_txome"</span><span class="at"> </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Here, we’re plotting the <a href="https://multiqc.info/modules/fastqc/#theoretical-gc-content">theoretical GC content</a> for the mouse reference transcript.</p>
-<p>To the <code>workshop-params.yaml</code> file, add:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">multiqc_config</span><span class="kw">:</span><span class="at"> </span><span class="st">"multiqc-config.yaml"</span><span class="at"> </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Make sure both YAML files are saved, then re-run the workflow:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  -profile workshop \</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  -c custom-nimbus.config \</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  -params-file workshop-params.yaml \</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  --outdir Lesson-4 \</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  -resume</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The logging information printed to the screen shows us again that the <code>params.yaml</code> file with the output directory set to <strong>Lesson-2</strong> has been overridden by the use of the flag <code>--outdir Lesson-4</code> in the run command. As the workflow runs, notice all the completed processes that are pulled from the cache and not rerun. Our use of the <code>multiqc-config.yaml</code> file adjusted the MultiQC process, as such this process was repeated using the updated settings.</p>
-<p>The changes we made above added the normal mouse transcriptome GC profile as a track to the fastQC per-sequence GC content plot. Take a look at the changes, open the Exercise4 <code>multiqc_report.html</code> file with Live Server as per previosuly (or use scp to take a copy to your local computer if you are not on VS Code). Compare this report with the MultiQC report from <strong>lesson 1</strong> by looking at the section <strong>FastQC: Per Sequence GC Content</strong>. Compare the two plots to observe the custom track has been successfully added.</p>
-<p><img src="../figs/2.4_MultiQC.png" class="img-fluid"></p>
+<p>Many nf-core pipelines use <a href="https://multiqc.info/docs/">MultiQC</a> to generate a summary report at the end of a workflow. MultiQC is a reporting tool that can aggregate results and statistics output by various bioinformatics tools, helping to summarise experiments containing multiple samples and multiple analysis steps.</p>
+<p>MultiQC allows users the flexibility of <a href="https://multiqc.info/docs/reports/customisation/">customising the output reports</a>.</p>
+<p>nf-core has enabled users to take full advantage of this functionality through the inclusion of the <a href="https://nf-co.re/rnaseq/3.11.1/parameters#multiqc_config"><code>--multiqc_config</code> parameter</a>.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <code>--multiqc_config</code> parameter is a <strong>‘hidden param’!</strong> To see this parameter, you need to apply <code>--show_hidden_params</code> on the command line help, or select ‘Show hidden params’ on the nf-core parameters webpage.</p>
+</div>
+</div>
+<p><br></p>
+<p>We are going to configure MultiQC to:</p>
+<ul>
+<li>Aid interpretation of the FastQC “Per Sequence GC Content” plot by overlaying a <a href="https://multiqc.info/modules/fastqc/#theoretical-gc-content">theoretical GC content track</a> specific for our mm10 reference genome</li>
+<li>Add a custom report header <br><br></li>
+</ul>
+<p>➤ Open a file for editing named <code>custom-multiqc-config.yaml</code> and add the following content:</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can add any fields under the <code>report_header_info</code> section, as long as you follow the required formatting</p>
+</div>
+</div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a># Project level information:</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>report_header_info:</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  - Contact E-mail: "cali.willet@sydney.edu.au"</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  - Workshop host: "Australian BioCommons"</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  - Workshop title: "Unlocking nf-core - customising workflows for your research"</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  - Workshop URL: https://sydney-informatics-hub.github.io/customising-nfcore-workshop/</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a># Theoretical GC Content:</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>fastqc_config:  </span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  fastqc_theoretical_gc: "mm10_txome" </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><br></p>
+<p>➤ To the <code>workshop-params.yaml</code> file, add:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>multiqc_config: "custom-multiqc-config.yaml" </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><br></p>
+<p>➤ Make sure both YAML files are saved, then re-run the workflow:</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note that we do not need to add our MultiQC config at <code>-c</code> because we have specified it within the custom parameters YAML file.</p>
+</div>
+</div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  -profile workshop \</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  -c custom-nimbus.config,,custom-tools.config,custom-trace.config \</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  -params-file workshop-params.yaml \</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  --outdir Lesson-2.4.3 \</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  -resume</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><br></p>
+<p>➤ View the html file <code>Lesson-2.4.2/multiqc/star_salmon/multiqc_report.html</code> and compare it to the report generated by a previous run</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>If you are using VS Code with the ‘Live Server’ extension installed, right click the html file in the Explorer pane and select ‘Open with Live Server’</li>
+<li>If you are using a terminal without a browser GUI enabled, use eg <code>scp</code> command to take a copy to your local computer and open in your preferred browser</li>
+</ul>
+</div>
+</div>
+<p>Navigate to the section titled <strong>FastQC: Per Sequence GC Content</strong>. Compare the two plots to observe the custom track has been successfully added.</p>
+<p><img src="../figs/2.4_MultiQC.png" class="img-fluid"> <br></p>
+<p><span class="emoji" data-emoji="eyes">👀</span> This track has shown that our sample transcriptomes follow a normal distribution consistent with the mm10 reference. <br><br></p>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -417,11 +594,11 @@ Solution
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Given the normal mouse transcriptome GC profile indicated by the black dotted line, can you detect any GC bias in the input sequence data?</p>
+<p>If we did detect GC bias, how could we customise our run to correct for this?</p>
 </div>
 </div>
 <div class="callout-caution callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -430,14 +607,28 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>No, all samples’ GC profiles follow a normal distribution.</p>
+<p>This is a tricky one, particularly if you are unfamiliar with RNAseq analysis!</p>
+<ol type="1">
+<li>Correcting for GC bias in this analysis requires operation at the transcript quantification step, which is performed by the <code>SALMON_QUANT</code> module</li>
+<li>Reading the tool documentation for <code>salmon</code> indicates we need to apply the <a href="https://salmon.readthedocs.io/en/latest/salmon.html#gcbias"><code>--gcBias</code></a> flag</li>
+<li>Checking the available nf-core <a href="https://nf-co.re/rnaseq/3.11.1/parameters">parameters for the rnaseq pipeline</a>, we find that there is no nf-core parameter addressing GC bias!</li>
+<li>However, the astute observer would discover a parameter <code>--extra_salmon_quant_args</code> with description <em>‘Extra arguments to pass to Salmon quant command in addition to defaults defined by the pipeline’</em>. Sounds perfect, yes?!</li>
+<li>We can then provide the required <code>salmon</code> flag (and any others we needed) as an argument to the nf-core <code>--extra_salmon_quant_args</code> parameter, wrapped in quotes, supplying the parameter to the run as we would any other nf-core parameter (either on the command line or within a parameters file):</li>
+</ol>
+<div class="sourceCode" id="cb15"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a># Within parameters YAML file:</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>extra_salmon_quant_args : '--gcBias'</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a># On the command line- note the intentional inclusion of whitespace inside the quotes:</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>--extra_salmon_quant_args '--gcBias '</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
-<p>Note that if we did detect GC bias, we could go back and correct for this by adding the custom salmon flag <code>--gcBias</code> to the nf-core parameter <code>--extra_salmon_quant_args</code>. If we were to do this, we would have to add the following line to our <code>workflow-params.yaml</code> file:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>extra_salmon_quant_args : '--writeUnmappedNames --gcBias'</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><br><br></p>
+<p><span class="emoji" data-emoji="scream">😱</span> <span style="color:#8b0000;"><strong>What would we do if the above solution was not available within our chosen nf-core pipeline?</strong></span></p>
+<p>We will cover this in the next lesson! <span class="emoji" data-emoji="sunglasses">😎</span></p>
+<p><br><br></p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -449,8 +640,8 @@ Solution
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>takeaway 1</li>
-<li>takeaway 2</li>
+<li>You can customise container use, resourcetracing and mutliqc reports through custom configuration files</li>
+<li>You can specify multiple custom configuration files at <code>-c</code> in a comma-delimited list</li>
 </ul>
 </div>
 </div>

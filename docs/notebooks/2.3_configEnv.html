@@ -236,7 +236,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#institutional-config-files" id="toc-institutional-config-files" class="nav-link" data-scroll-target="#institutional-config-files"><strong>2.3.3. Institutional config files</strong></a></li>
   <li><a href="#custom-resource-configuration-using-process-labels" id="toc-custom-resource-configuration-using-process-labels" class="nav-link" data-scroll-target="#custom-resource-configuration-using-process-labels"><strong>2.3.4. Custom resource configuration using process labels</strong></a></li>
   <li><a href="#custom-resource-configuration-using-process-names" id="toc-custom-resource-configuration-using-process-names" class="nav-link" data-scroll-target="#custom-resource-configuration-using-process-names"><strong>2.3.5. Custom resource configuration using process names</strong></a></li>
-  <li><a href="#specify-a-custom-container" id="toc-specify-a-custom-container" class="nav-link" data-scroll-target="#specify-a-custom-container"><strong>2.3.6. Specify a custom container</strong></a></li>
   </ul>
 </nav>
     </div>
@@ -273,9 +272,8 @@ Objectives
 <ul>
 <li>Learn how to check the default configurations that are applied to nf-core workflows</li>
 <li>Understand how to over-ride default configurations with custom configuration files</li>
-<li>Write a custom config file for your local environment and apply this configuration to your run<br>
-</li>
-<li>Use an alternative container source for a workflow process<br>
+<li>Write a custom config file for your local environment and apply this configuration to your run</li>
+<li>Observe the heirarchy of parameter configuration in action<br>
 </li>
 </ul>
 </div>
@@ -308,8 +306,8 @@ Objectives
 </ol>
 <p>Let’s take a look at these two configuration files to gain an undertsanding of how defaults are applied.</p>
 <p>➤ Using the <code>more</code> command, take a few moments to scroll through both the <code>nextflow.config</code> and <code>base.config</code> files:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">more</span> nf-core-rnaseq-3.11.1/workflow/conf/base.config</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">more</span> nf-core-rnaseq-3.11.1/workflow/nextflow.config</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>more nf-core-rnaseq-3.11.1/workflow/conf/base.config</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>more nf-core-rnaseq-3.11.1/workflow/nextflow.config</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br></p>
 <p>The <code>base.config</code> sets the default compute resource settings to be used by the processes in the nf-core workflow. It uses <strong>process labels</strong> to enable different sets of resources to be applied to groups of processes that require similar compute. These labels are specified within the <code>main.nf</code> file for a process. <span style="color:#000080;"> We can over-ride these default compute resources using a custom configuration file.</span></p>
 <p>The <code>nextflow.config</code> file is more workflow-specific, and sets the defaults for the workflow parameters, as well as defines profiles to change the default software access from <code>$PATH</code> to the specified access method, eg Singularity. <span style="color:#000080;"> We can over-ride these parameters on the command line or with a parameters file, and over-ride the default behaviour of searching for tools on <code>$PATH</code> by specifying a <code>-profile</code>.</span><br>
@@ -384,11 +382,11 @@ Solution
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>To uncover these answers, we need to understand what <strong>process label</strong> has been assigned to the <code>STAR_ALIGN</code> module.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">more</span> workflow/modules/nf-core/star/align/main.nf </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> label workflow/modules/nf-core/star/align/main.nf </span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># then </span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">more</span> nf-core-rnaseq-3.11.1/workflow/conf/base.config</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>more workflow/modules/nf-core/star/align/main.nf </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a># or</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>grep label workflow/modules/nf-core/star/align/main.nf </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a># then </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>more nf-core-rnaseq-3.11.1/workflow/conf/base.config</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>STAR_ALIGN</code> has the label <code>process_high</code> which has the settings 12 CPUs, 72 GB mem, 16 hrs walltime applied by the default <code>base.config</code>. We have previosuly applied <code>--max_cpus 2</code> and <code>--max_memory 6</code>, so the <code>check_max()</code> function would have reduced the resources given to the STAR alignment process to 2 CPUs and 6 GB RAM, while retaining the default max walltime.</p>
 </div>
 </div>
@@ -434,10 +432,10 @@ Solution
 <p>There is a <a href="https://github.com/nf-core/configs/tree/master/conf">repository of institutional configs</a> for nf-core pipelines. These have been contributed to by the community.</p>
 <p>We have created an <a href="https://github.com/nf-core/configs/blob/master/conf/pawsey_nimbus.config">nf-core config for Pawsey’s Nimbus cloud</a>: this (and other institutional configs) was downloaded along with the workflow code. <br><br></p>
 <p>➤ View the available list of institutional configs we pulled down along with the workflow code:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>  nf-core-rnaseq-3.11.1/configs/conf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ls  nf-core-rnaseq-3.11.1/configs/conf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br></p>
 <p>➤ Let’s take a look at the Pawsey Nimbus config:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">more</span>  nf-core-rnaseq-3.11.1/configs/conf/pawsey_nimbus.config</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>more  nf-core-rnaseq-3.11.1/configs/conf/pawsey_nimbus.config</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br></p>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -467,7 +465,7 @@ Solution
 </div>
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">-profile</span> pawsey_nimbus,singularity,c2r8</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>-profile pawsey_nimbus,singularity,c2r8</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>To select the institutional config, we apply <code>-profile &lt;config_basename&gt;</code>. To select the desired profiles from within that config, we further add the <code>singularity</code> and <code>c2r8</code> profiles in a comma-delimited list.</p>
 </div>
 </div>
@@ -594,7 +592,7 @@ Nextflow cache and resume
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-What was that warning all about?
+What was that warning all about?!
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -863,142 +861,11 @@ Solution
 </div>
 </div>
 <p><br></p>
-</section>
-<section id="specify-a-custom-container" class="level3">
-<h3 class="anchored" data-anchor-id="specify-a-custom-container"><strong>2.3.6. Specify a custom container</strong></h3>
-<div class="callout-important callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Note that for deploying nf-core workflows, it is not recommended to replace the tools within the workflow, as this will decrease portability and reproducibilty! This exercise is to demonstrate how you can specify containers, as this may aid you in developing and testing your own Nextflow workflows</p>
-</div>
-</div>
-<p>For this example, we are going to test out the latest version of <a href="https://github.com/FelixKrueger/TrimGalore">Trim Galore</a>. We have been using the default version of Trim Galore that is executed with nf-core/rnaseq revision 3.11.1.</p>
-<p>We can easily view the versions of all tools used from the <code>software_versions.yml</code> file created by default in the <code>&lt;outdir&gt;/pipeline_info</code> directory by nf-core workflows <em>OR</em> by viewing the same information from the ‘nf-core/rnaseq Software Versions’ section of the MultiQC html report.<br>
-<br></p>
-<p>➤ Identify the version of Trim Galore that has been used in our runs so far from the <code>software_versions.yml</code> file.</p>
-<p>You might view the file by opening it from the VS Code explorer pane, using <code>more</code> command, or <code>grep</code> for the tool name.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>more Lesson-2.3.4/pipeline_info/software_versions.yml</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>##</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>#TRIMGALORE:</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>#  cutadapt: '3.4'</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>#  trimgalore: 0.6.7</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>#</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The process names are listed in alphabetical order, with the tools and versions used in the <code>script</code> section of the process listed below the process name. We can see for TRIMGALORE process that version 0.6.7 of Trim Galore was used. <br><br></p>
-<p>There is a <a href="https://github.com/FelixKrueger/TrimGalore/releases/tag/0.6.10">newer version of Trim Galore</a> available, version 0.6.10. Recall that we have been accessing some materials on <a href="https://support.pawsey.org.au/documentation/pages/viewpage.action?pageId=92832676#NimbusforBioinformatics-1.BiocontainersandReferenceGenomedata"><strong>CernVM-FS</strong></a>, a read-only filesystem which provides shared access to common bioinformatics reference datasets as well as Singularity containers of everything stored in <a href="https://biocontainers.pro/">Biocontainers</a>.</p>
-<p>CernVM-FS comes pre-mounted on Pawsey Nimbus VMs using the <a href="https://support.pawsey.org.au/documentation/display/US/Nimbus+for+Bioinformatics#"><strong>Pawsey Bio - Ubuntu 22.04 - 2023-03</strong></a> image, so we can access and apply the Trim Galore biocontainer by specifying the path to this remote image within the process scope of a custom config, using the ‘withName’ process selector.</p>
-<p>We could just as easily specify an alternate remote source, such as <a href="https://quay.io/organization/biocontainer">quay.io</a>, or point to a local image.</p>
-<p><br></p>
-<div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-<strong>Thoughts</strong>
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><span class="emoji" data-emoji="question">❓</span> For maintaining best practice, where is the best place for the container definition?</p>
-<ol type="a">
-<li><p>Within the <code>custom-nimbus.config</code> institutional config file</p></li>
-<li><p>Within a separate custom config file named eg <code>custom-tools.config</code></p></li>
-</ol>
-<p>Why do you think this?</p>
-</div>
-</div>
-<div class="callout-caution callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-23" class="callout-23-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Remember, Nextflow’s portability is achieved by separating <strong>workflow implementation</strong> from the <strong>configuration settings</strong> required to execute it. In the event that we are testing a different tool version, this should <strong>not</strong> be placed within the institutional config that is shareable with others using the same infrastructure. Swapping out tool versions is a bespoke adaptation of the nf-core workflow that could harm reproducibility if it was inadvertently executed. By placing it within a clearly named custom config file, there is less chance of unwittingly executing a workflow that does not match the expected utilisation of tools.</p>
-</div>
-</div>
-</div>
-<p><br></p>
-<p>➤ First, identify the container for the 0.6.10 version of Trim Galore:</p>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Containers are mounted at the path <code>/cvmfs/singularity.galaxyproject.org</code>, with sub-directories based on the first 2 letters of the tool name, eg <code>/cvmfs/singularity.galaxyproject.org/t/r/</code> for Trim Galore containers.</p>
-</div>
-</div>
-<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> /cvmfs/singularity.galaxyproject.org/t/r/trim<span class="pp">*</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co">##</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  /cvmfs/singularity.galaxyproject.org/t/r/trim-galore:0.6.10--hdfd78af_0</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co">##</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><br></p>
-<p>➤ Next, identify the execution path for the TRIM_GALORE module:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>grep -i galore nf-core-rnaseq-3.11.1/workflow/conf/modules.config </span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>##</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>#    if (params.trimmer == 'trimgalore') {</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>#            withName: '.*:FASTQ_FASTQC_UMITOOLS_TRIMGALORE:FASTQC' {</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>#    if (params.trimmer == 'trimgalore') {</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>#            withName: '.*:FASTQ_FASTQC_UMITOOLS_TRIMGALORE:TRIMGALORE' {</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>#                        params.extra_trimgalore_args ? params.extra_trimgalore_args.split("\\s(?=--)") : ''</span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>##</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><br></p>
-<p>➤ Open a file for editing named <code>custom-tools.config</code>, and start building your config with the process scope and ‘withName’ selector:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>process {</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  withName: {</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><br></p>
-<p>➤ Then copy the Trim Galore module execution path:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>process {</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  withName: '.*:FASTQ_FASTQC_UMITOOLS_TRIMGALORE:TRIMGALORE' {</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><br></p>
-<p>➤ Finally, copy the container details:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>process {</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  withName: '.*:FASTQ_FASTQC_UMITOOLS_TRIMGALORE:TRIMGALORE' {</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    container = '/cvmfs/singularity.galaxyproject.org/t/r/trim-galore:0.6.10--hdfd78af_0' </span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><br></p>
-<p>➤ Delete or comment out the ‘withName’ content we applied to the STAR_ALIGN process in the <code>custom-nimbus.config</code> file, then execute the run to output directory Lesson-2.3.6, making sure to add the <code>custom-tools.config</code>:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a> nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  -profile workshop \</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  -c custom-nimbus.config,custom-tools.config \</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  -params-file workshop-params.yaml \</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  --outdir Lesson-2.3.6 \</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  -resume </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><br></p>
-<p>➤ After your run has completed, check that the updated version of Trim Galore has been used:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>grep -i galore Lesson-2.3.6/pipeline_info/software_versions.yml</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>##</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>#TRIMGALORE:</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>#  trimgalore: 0.6.10</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>##</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><br><br></p>
+<p>➤ Delete or comment out the ‘withName’ resource content we applied to the STAR_ALIGN process in the <code>custom-nimbus.config</code> file</p>
+<ul>
+<li>We will be using this config in the next section</li>
+<li>In Nextflow, use <code>//</code> for single line comments or <code>/* .. */</code> to comment a block on multiple lines <br><br></li>
+</ul>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

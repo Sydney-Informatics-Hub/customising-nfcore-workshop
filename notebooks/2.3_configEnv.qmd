@@ -12,8 +12,8 @@ from: markdown+emoji
 
 - Learn how to check the default configurations that are applied to nf-core workflows
 - Understand how to over-ride default configurations with custom configuration files
-- Write a custom config file for your local environment and apply this configuration to your run  
-- Use an alternative container source for a workflow process  
+- Write a custom config file for your local environment and apply this configuration to your run
+- Observe the heirarchy of parameter configuration in action  
 :::
 
 In the previous exercises, we have explored how to customise a run with **workflow parameters** on the command line or within a parameters file. 
@@ -43,7 +43,7 @@ The critical nf-core configuration aspects can be grouped into 3 key areas:
  Let's take a look at these two configuration files to gain an undertsanding of how defaults are applied.
 
 &#x27A4; Using the `more` command, take a few moments to scroll through both the `nextflow.config` and `base.config` files:
-``` bash
+``` default
 more nf-core-rnaseq-3.11.1/workflow/conf/base.config
 more nf-core-rnaseq-3.11.1/workflow/nextflow.config
 ```
@@ -86,7 +86,7 @@ Within `base.config`, the `check_max()` function over-rides the process resource
 ::: {.callout-caution collapse="true"}
 ### Solution
 To uncover these answers, we need to understand what **process label** has been assigned to the `STAR_ALIGN` module. 
-```bash
+```default
 more workflow/modules/nf-core/star/align/main.nf 
 # or
 grep label workflow/modules/nf-core/star/align/main.nf 
@@ -140,14 +140,14 @@ We have created an [nf-core config for Pawsey’s Nimbus cloud](https://github.c
 
 &#x27A4; View the available list of institutional configs we pulled down along with the workflow code:
 
-``` bash
+``` default
 ls  nf-core-rnaseq-3.11.1/configs/conf
 ```
 <br/>
 
 &#x27A4; Let's take a look at the Pawsey Nimbus config: 
 
-```bash
+```default
 more  nf-core-rnaseq-3.11.1/configs/conf/pawsey_nimbus.config
 ```
 <br/>
@@ -162,7 +162,7 @@ more  nf-core-rnaseq-3.11.1/configs/conf/pawsey_nimbus.config
 
 ::: {.callout-caution collapse="true"}
 ### Solution
-``` bash
+``` default
 -profile pawsey_nimbus,singularity,c2r8
 ``` 
 To select the institutional config, we apply `-profile <config_basename>`. To select the desired profiles from within that config, we further add the `singularity` and `c2r8` profiles in a comma-delimited list. 
@@ -297,7 +297,7 @@ nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
 <br/><br/>
 
 ::: {.callout-important}
-### What was that warning all about?
+### What was that warning all about?!
 We can also see a warning because we have included a custom config - this warning is to remind us that any parameters we have included in a custom config WILL NOT over-ride defaults (except for the rare exceptions of max resources). 
 
 ![](../figs/2.3_warn_multiple_configs.png)
@@ -549,151 +549,11 @@ WARN: There's no process matching config selector: .*:RNASEQ:ALIGN_STAR:STARALIG
 :::
 <br/>
 
+&#x27A4; Delete or comment out the 'withName' resource content we applied to the STAR_ALIGN process in the `custom-nimbus.config` file
 
-### **2.3.6. Specify a custom container**
-
-
-::: callout-important
-### 
-Note that for deploying nf-core workflows, it is not recommended to replace the tools within the workflow, as this will decrease portability and reproducibilty! This exercise is to demonstrate how you can specify containers, as this may aid you in developing and testing your own Nextflow workflows
-:::
-
-For this example, we are going to test out the latest version of [Trim Galore](https://github.com/FelixKrueger/TrimGalore). We have been using the default version of Trim Galore that is executed with nf-core/rnaseq revision 3.11.1. 
-
-We can easily view the versions of all tools used from the `software_versions.yml` file created by default in the `<outdir>/pipeline_info` directory by nf-core workflows *OR* by viewing the same information from the 'nf-core/rnaseq Software Versions' section of the MultiQC html report.  
-<br/>
-
-&#x27A4; Identify the version of Trim Galore that has been used in our runs so far from the `software_versions.yml` file. 
-
-You might view the file by opening it from the VS Code explorer pane, using `more` command, or `grep` for the tool name.
-
-```default
-more Lesson-2.3.4/pipeline_info/software_versions.yml
-
-##
-#TRIMGALORE:
-#  cutadapt: '3.4'
-#  trimgalore: 0.6.7
-#
-```
-
-The process names are listed in alphabetical order, with the tools and versions used in the `script` section of the process listed below the process name. We can see for TRIMGALORE process that version 0.6.7 of Trim Galore was used. 
+- We will be using this config in the next section
+- In Nextflow, use `//` for single line comments or  `/* .. */` to comment a block on multiple lines
 <br/><br/>
-
-There is a [newer version of Trim Galore](https://github.com/FelixKrueger/TrimGalore/releases/tag/0.6.10) available, version 0.6.10. Recall that we have been accessing some materials on [**CernVM-FS**](https://support.pawsey.org.au/documentation/pages/viewpage.action?pageId=92832676#NimbusforBioinformatics-1.BiocontainersandReferenceGenomedata ), a read-only filesystem which provides shared access to common bioinformatics reference datasets as well as Singularity containers of everything stored in [Biocontainers](https://biocontainers.pro/).
-
-CernVM-FS comes pre-mounted on Pawsey Nimbus VMs using the [**Pawsey Bio - Ubuntu 22.04 - 2023-03**](https://support.pawsey.org.au/documentation/display/US/Nimbus+for+Bioinformatics#) image, so we can access and apply the Trim Galore biocontainer by specifying the path to this remote image within the process scope of a custom config, using the 'withName' process selector. 
-
-We could just as easily specify an alternate remote source, such as [quay.io](https://quay.io/organization/biocontainer), or point to a local image. 
-
-<br/>
-
-::: callout-tip
-### **Thoughts**{.unlisted}
-:question: For maintaining best practice, where is the best place for the container definition?
-
-a) Within the `custom-nimbus.config` institutional config file
-
-b) Within a separate custom config file named eg `custom-tools.config`
-
-Why do you think this? 
-:::
-
-::: {.callout-caution collapse="true"}
-### Solution
-Remember, Nextflow's portability is achieved by separating **workflow implementation** from the **configuration settings** required to execute it. In the event that we are testing a different tool version, this should **not** be placed within the institutional config that is shareable with others using the same infrastructure. Swapping out tool versions is a bespoke adaptation of the nf-core workflow that could harm reproducibility if it was inadvertently executed. By placing it within a clearly named custom config file, there is less chance of unwittingly executing a workflow that does not match the expected utilisation of tools. 
-:::
-<br/> 
-
-
-&#x27A4; First, identify the container for the 0.6.10 version of Trim Galore:
-
-::: callout-note
-###
-Containers are mounted at the path `/cvmfs/singularity.galaxyproject.org`, with sub-directories based on the first 2 letters of the tool name, eg `/cvmfs/singularity.galaxyproject.org/t/r/` for Trim Galore containers. 
-:::
-
-``` bash
-ls /cvmfs/singularity.galaxyproject.org/t/r/trim*
-
-##
-#  /cvmfs/singularity.galaxyproject.org/t/r/trim-galore:0.6.10--hdfd78af_0
-##
-```
-<br/>
-
-&#x27A4; Next, identify the execution path for the TRIM_GALORE module: 
-
-``` default
-grep -i galore nf-core-rnaseq-3.11.1/workflow/conf/modules.config 
-
-##
-#    if (params.trimmer == 'trimgalore') {
-#            withName: '.*:FASTQ_FASTQC_UMITOOLS_TRIMGALORE:FASTQC' {
-#    if (params.trimmer == 'trimgalore') {
-#            withName: '.*:FASTQ_FASTQC_UMITOOLS_TRIMGALORE:TRIMGALORE' {
-#                        params.extra_trimgalore_args ? params.extra_trimgalore_args.split("\\s(?=--)") : ''
-##
-```
-<br/>
-
-&#x27A4; Open a file for editing named  `custom-tools.config`, and start building your config with the process scope and 'withName' selector:
-
-```default
-process {
-  withName: {
-
-  }
-}
-```
-<br/>
-
-&#x27A4; Then copy the Trim Galore module execution path:
-
-``` default
-process {
-  withName: '.*:FASTQ_FASTQC_UMITOOLS_TRIMGALORE:TRIMGALORE' {
-
-  }
-}
-```
-<br/>
-
-&#x27A4; Finally, copy the container details:
-
-``` default
-process {
-  withName: '.*:FASTQ_FASTQC_UMITOOLS_TRIMGALORE:TRIMGALORE' {
-    container = '/cvmfs/singularity.galaxyproject.org/t/r/trim-galore:0.6.10--hdfd78af_0' 
-  }
-}
-```
-<br/>
-
-&#x27A4; Delete or comment out the 'withName' content we applied to the STAR_ALIGN process in the `custom-nimbus.config` file, then execute the run to output directory Lesson-2.3.6, making sure to add the `custom-tools.config`:
-
-``` default
- nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
-  -profile workshop \
-  -c custom-nimbus.config,custom-tools.config \
-  -params-file workshop-params.yaml \
-  --outdir Lesson-2.3.6 \
-  -resume 
-```
-<br/>
-
-&#x27A4; After your run has completed, check that the updated version of Trim Galore has been used:
-
-```default
-grep -i galore Lesson-2.3.6/pipeline_info/software_versions.yml
-
-##
-#TRIMGALORE:
-#  trimgalore: 0.6.10
-##
-```
-<br/><br/>
-
 
 
 ::: {.callout-note}
