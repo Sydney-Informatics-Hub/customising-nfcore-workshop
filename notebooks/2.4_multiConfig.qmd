@@ -12,7 +12,7 @@ from: markdown+emoji
 - Create and apply a custom configuration file for over-riding default containers
 - Create and apply a custom configuration file for resource tracing
 - Create and apply a custom configuration file for MultiQC
-
+- Create and apply a custom configuration that supplies tool arguments that are not available as nf-core parameters
 - Apply multiple custom configuration files in a single workflow execution with `-c <conf-1,conf2,...>` 
 :::
 
@@ -245,10 +245,11 @@ nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
   --outdir Lesson-2.4.2 \
   -resume 
 ```
-
-:eyes: Notice that your multiple custom configurations are listed under 'Core Nextflow options' on the launch log printed to the screen
-![](../figs/2.4_screenshot_config_list.png)
 <br/>
+
+:eyes: Notice that your multiple custom configurations are listed under **Core Nextflow options** on the launch log printed to the screen
+![](../figs/2.4_screenshot_config_list.png)
+<br/><br/>
 
 &#x27A4;  Once the workflow has run, take a look at the `<outdir>/custom-resource-trace-${trace_timestamp}.txt` file:
 
@@ -256,7 +257,7 @@ nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
 <br/><br/>
 
 
-### **2.4.2. Configure MultiQC reports**
+### **2.4.3. Configure MultiQC reports**
 
 Many nf-core pipelines use [MultiQC](https://multiqc.info/docs/) to generate a summary report at the end of a workflow. MultiQC is a reporting tool that can aggregate results and statistics output by various bioinformatics tools, helping to summarise experiments containing multiple samples and multiple analysis steps. 
 
@@ -367,12 +368,179 @@ extra_salmon_quant_args : '--gcBias'
 
 <br/><br/>
 
+### **2.4.4. Apply external arguments**
 
+All nf-core modules are currently required to include the mandatory arguments that a tool needs to run within the `main.nf` file of the process running that tool. 
+
+Optional arguments for a tool that are commonly changed are usually included as nf-core workflow parameters, so they can be easily customised on the command line or supplied within a parameters file. 
+
+As we are all aware, bioinformatics tools can have a *lot* of optional arguments. It is not feasible for nf-core to paramaterise all of these arguments...
+
+![](../figs/2.4_args_pie_chart.png)
+<br/>
+
+
+In this lesson, we will learn how to apply any argument for a tool that is not explicitly covered by an nf-core workflow parameter using Nextflow's [`ext` directive](https://www.nextflow.io/docs/latest/process.html#ext).
+<br/><br/>
+
+&#x27A4; Consider the diagram below:
+
+
+- On the **left** of the diagram is an example of the standard `main.nf` format of a process named `example` stored in the `modules` directory
+  - Above the script block, the `$args` variable is defined
+  - The `task.ext.args ?: ''` expression checks if the `ext.args` parameter has already been defined
+  - If it isn't defined it will assign an empty string 
+  - Inside the script block, the `$args` variable is applied to the process command
+- In the **middle** of the diagram is an example of a custom configuration file targeting the `modules/example/main.nf` process
+  - This configuration file gives the tool argument `--flag1` to `ext.args`
+- On the **right** of the diagram we see how the tool command is executed if `-c example-custom.config` was applied
+  - `--flag1` is interpolated by the `$args` variable 
+<br/>
+
+![](../figs/2.5_ext-args.png)
+<br/><br/><br/>
+
+To practice this, we are going to pass an optional flag to the Trim Galore process. 
+
+::: {.callout-important}
+###
+This workshop was developed *before* the release of `nf-core/rnaseq -r 3.11.0`, where the parameter [`--extra_trimgalore_args`](https://nf-co.re/rnaseq/3.11.1/parameters#extra_trimgalore_args) was first introduced. 
+
+We have retained this exercise as it is equally applicable to other tools which do not have an `--extra_<tool>_args` nf-core parameter. 
+
+This is a good reminder that:
+
+- nf-core pipelines are under active development
+- carefully check the parameter and usage docs with each new release
+- submit feature requests to the nf-core/github pipeline repo to have `--extra_<tool>_args` added where you think its warranted
+:::
+<br/><br/>
+
+For the sake of the lesson, let's assume we want to apply a very stringent minimum Phred score of 40. 
+
+>:exclamation: This is overly stringent! Bear with us... :blush:
+<br/>
+
+&#x27A4;  Follow the decision tree to answer some key questions we need to answer to apply this workflow customisation:
+
+![](../figs/2.4_trimgalore_qual_decision_chart.png)
+<br/><br/><br/>
+
+::: {.callout-note}
+### Inclusion of ext.args
+Recall from [Session 2.1](2.1_design.qmd#2.1.2.-desing-your-run-command) that the inclusion of `ext.args` is currently standard practice for all DSL2 nf-core modules where additional parameters may be required to run a process, however this *may not be implemented for all processes*
+:::
+
+Following the above exploration, we have learnt that:
+
+- The Trim Galore argument `--quality 40` is required to over-ride the Trim Galore default of 20
+- This parameter is absent from the nf-core/rnaseq parameters list
+- Only `--cores` and `--gzip` are hard-coded in `trimgalore/main.nf`
+- `ext.args` **is** defined in `trimgalore/main.nf`
+
+
+<br/>
+
+ 
+
+::: callout-tip
+### **Challenge**{.unlisted}
+Write a custom configuration file named `custom-args.config` that adds `--quality 40` to the script block of the TRIM_GALORE module. 
+
+:bulb: **Hint:** you may find it helpful to take a copy of the `custom-tools.config` file from the previous exercise
+:::
+
+::: {.callout-caution collapse="true"}
+### Solution
+```default
+// A custom configuration file for specifying external tool arguments
+
+process {
+    withName: '.*:FASTQ_FASTQC_UMITOOLS_TRIMGALORE:TRIMGALORE' {   
+        ext.args = '--quality 40'
+    }
+}
+```
+:::
+<br/>
+
+&#x27A4;  Resume the run, specifying our latest custom config file `custom-args.config` and output directory Lesson-2.4.4:
+
+```default
+nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
+  -profile workshop \
+  -c custom-nimbus.config,custom-tools.config,custom-trace.config,custom-args.config \
+  -params-file workshop-params.yaml \
+  --outdir Lesson-2.4.4 \
+  -resume
+```
+<br/><br/>
+
+:astonished: Pipeline **completed successfully** but <span style="color:#8b0000;"> 2/2 samples failed!</span>
+
+![](../figs/2.4_failed_star.png)
+<br/><br/>
+
+
+&#x27A4;  Investigate the source of the failure:
+
+- Following the advice of the warning message, check the MultiQC report by opening the file `Lesson-2.4.4/multiqc/star_salmon/multiqc_report.html`
+  - Click on the 'WARNING: Fail Trimming Check' on the navigation headings on the left
+  - Both of our samples '*failed the minimum trimmed reads threshold specified via the `--min_trimmed_reads` parameter, and hence were ignored for the downstream processing steps*'
+  - Looking at the [`--min_trimmed_reads`](https://nf-co.re/rnaseq/3.11.1/parameters#min_trimmed_reads) parameter documentation, the default 10,000 and our samples both had < 5,000 
+
+![](../figs/2.4_min_trim_param.png)
+<br/>
+
+
+&#x27A4; Confirm that the external arguments were applied to the run:
+
+::: {.callout-warning}
+###
+In this example, it is clear that our `ext.args` customisation was successfully applied because of the catastrophic failure it produced. But in less dramatic cases, how can we confirm that the external argument was actually applied?
+:::
+
+On your `multiqc_report.html` file, navigate to the section 'nf-core/rnaseq Workflow Summary'. 
+
+Unlike our custom **options**, **profiles**, and **configs**, the custom quality parameter is **not documented!**
+<br/><br/>
+
+Some tools write a handy log, in which case you might view the applied parameters from that file: 
+
+![](../figs/2.4_trimgalore_log.png)
+<br/><br/>
+
+
+In the absence of an informative tool log, you can always rely on `nextflow log`:
+```default
+nextflow log <run_name> -f script | grep -A 10 trim_galore
+
+##
+#        trim_galore \
+#            --quality 40 \
+#            --cores 1 \
+#            --gzip \
+#            SRR3473989.fastq.gz
+##
+```
+<br/><br/>
+
+
+::: {.callout-important}
+## Stay vigilant! 
+
+This lesson highlights the need to **thoroughly check your output to ensure that the intended anlysis has been run and the results are what you require**. 
+
+The message `Pipeline completed successfully` printed to your terminal everytime a run completes (and also exit status of zero for invidual tasks or cluster jobs if you are running on a cluster) indicates that there were no errors running the pipeline, **not** that your samples have produced the desired output!
+:::
+<br/><br/>
 
 
 ::: {.callout-note}
 ### **Key points**
-- You can customise container use, resourcetracing and mutliqc reports through custom configuration files
+- You can customise container use, resource tracing and mutliqc reports through custom configuration files
+- You can apply tool arguments to an nf-core pipeline using the `ext.args` feature
 - You can specify multiple custom configuration files at `-c` in a comma-delimited list 
+- There is no substitute for reading the tool docs when customising your runs!
 :::
   
