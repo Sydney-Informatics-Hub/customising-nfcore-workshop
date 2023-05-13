@@ -252,7 +252,6 @@ Objectives
 <p>Before scaling the nf-core/rnaseq pipeline up to a full dataset, we’ll explore the functionality of the workflow and identify processes that may need to be adjusted or customised. While nf-core pipelines are designed to run with ‘sensible’ default settings, these may not always suit the needs of your experiment of compute environment. Designing a custom run command requires you to identify which parameters you need to specify to suit your circumstances and experimental design. In this lesson, we will download an nf-core pipeline, then design and execute a customised run command using various <a href="https://www.nextflow.io/docs/latest/config.html#scope-params">parameters</a>.</p>
 <section id="download-the-pipeline-code" class="level3">
 <h3 class="anchored" data-anchor-id="download-the-pipeline-code"><strong>2.1.1. Download the pipeline code</strong></h3>
-<p>We recommend that you keep a local copy of a pipeline’s code for the sake of reproducibility and good record keeping.</p>
 <p>➤ In this session we are using Singularity containers to manage software installation for all nf-core/rnaseq tools. Confirm the Singularity cache directory we set in the previous session using the <code>$NXF_SINGULARITY_CACHEDIR</code> <a href="https://www.nextflow.io/docs/latest/config.html#environment-variables">Nextflow environmental variable</a>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>echo $NXF_SINGULARITY_CACHEDIR</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This should match the directory you set in the previous session:</p>
@@ -289,7 +288,7 @@ Solution
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>As we explored in <a href="1.4_users.html#nf-core-download">Lesson 1.4.2</a> we can fetch the workflow code base with the following command:</p>
+<p>As we explored in <a href="../notebooks/1.4_users.html#nf-core-download">Lesson 1.4.3</a> we can fetch the workflow code base with the following command:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nf-core download rnaseq \</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  --revision 3.11.1 \</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  --outdir ~/session2/nf-core-rnaseq-3.11.1 \</span>
@@ -351,19 +350,19 @@ Solution
 <tbody>
 <tr class="odd">
 <td><code>conf/</code></td>
-<td>Contains standard configuration files for various profiles that build on global settings set by <code>nextflow.config</code></td>
+<td>Contains files default configuration settings and optional profiles that build on global <code>nextflow.config</code>settings</td>
 </tr>
 <tr class="even">
 <td><code>main.nf</code></td>
-<td>The executable Nextflow script that defines the structure and flow of the workflow. It calls <code>workflows/rnaseq.nf</code></td>
+<td>The executable Nextflow script. It calls <code>workflows/rnaseq.nf</code></td>
 </tr>
 <tr class="odd">
 <td><code>modules/</code></td>
-<td>Contains Nextflow processes used by the workflow. They are called by the <code>main.nf</code> file</td>
+<td>Contains processes that are used by the workflow. Each process is split into a module with its own <code>main.nf</code> file</td>
 </tr>
 <tr class="even">
 <td><code>workflows/rnaseq.nf</code></td>
-<td>All the modules, subworkflows, channels, workflow structure for running the rnaseq pipeline</td>
+<td>The complete rnaseq pipeline, containing modules and subworkflows that are connected by channels</td>
 </tr>
 </tbody>
 </table>
@@ -389,7 +388,7 @@ Solution
 </section>
 <section id="design-your-run-command" class="level3">
 <h3 class="anchored" data-anchor-id="design-your-run-command"><strong>2.1.2. Design your run command</strong></h3>
-<p>As we learned in <a href="1.3_configure.html#viewing-parameters">lesson 1.3.3</a>, all nf-core pipelines have a unique set of pipeline-specific parameters that can be used in conjunction with Nextflow parameters to configure the workflow. Generally, nf-core pipelines can be customised at a few different levels:</p>
+<p>As we learned in <a href="../notebooks/1.3_configure.html#viewing-parameters">lesson 1.3.3</a>, all nf-core pipelines have a unique set of pipeline-specific parameters that can be used in conjunction with Nextflow parameters to configure the workflow. Generally, nf-core pipelines can be customised at different levels:</p>
 <table class="table">
 <colgroup>
 <col style="width: 21%">
@@ -404,27 +403,23 @@ Solution
 <tbody>
 <tr class="odd">
 <td>The workflow</td>
-<td>Where diverging workflows are available for a pipeline, you may choose a path to follow</td>
+<td>Where diverging methods are available for a pipeline, you may choose a method to follow</td>
 </tr>
 <tr class="even">
 <td>A process</td>
-<td>Where more than one tool is available for a single process, you may choose which to use</td>
+<td>Where more than one tool is available for a single step, you may choose which to use</td>
 </tr>
 <tr class="odd">
 <td>A tool</td>
-<td>Apply specific thresholds or optional flags for a tool on top of the default run command</td>
-</tr>
-<tr class="even">
-<td>Compute resources</td>
-<td>Specify resource thresholds or software execution methods for the workflow or a process</td>
+<td>You may choose to apply specific thresholds or optional flags for a tool</td>
 </tr>
 </tbody>
 </table>
-<p>Looking at the nf-core/rnaseq pipeline structure provided in the below, we can see that the developers have:</p>
+<p>Looking at the nf-core/rnaseq pipeline structure provided in the image below, we can see that the developers have:</p>
 <ol type="1">
 <li>Organised the workflow into 5 stages based on the type of work that is being done</li>
-<li>Provided a choice of multiple workflows different methods and specified which is the default</li>
-<li>Provided a choice of tool for some processes</li>
+<li>Provided a choice of multiple methods and specified defaults</li>
+<li>Provided a choice of tools for some steps</li>
 </ol>
 <p>The structure of the pipeline gives us a sense of the high-level customisation options available to us.</p>
 <p><img src="../figs/2.1_pipeline-choice.png" class="quarto-discovered-preview-image img-fluid"></p>
@@ -467,13 +462,13 @@ Solution
 </div>
 </div>
 </div>
-<p>Users can apply parameters to customise their run command in 3 different ways:</p>
+<p>Users can customise parameters in 3 different ways:</p>
 <ol type="1">
-<li>Provided pipeline-specific parameters (i.e.&nbsp;<code>--param_name</code>)</li>
-<li>Nextflow parameters (i.e.&nbsp;<code>-profile</code>)</li>
+<li>Comand line parameters (i.e.&nbsp;<code>--param_name</code>)</li>
+<li>Parameters files (i.e.&nbsp;<code>-params-file</code>)</li>
 <li>Additional process-specific parameters using the <code>ext.args</code> variable (See lesson 2.5)</li>
 </ol>
-<p>While all nf-core pipelines are provided with comprehensive documentation that explains workflow structure, process outputs, and available parameters it can be challenging to piece these different sources of information together to determine which parameters you should be using.</p>
+<p>While all nf-core pipelines are provided with comprehensive documentation that explains workflow structure, process outputs, and available parameters, it can be challenging to piece these different sources of information together to determine which parameters you should be using.</p>
 <p>We recommend the following approach to deciding on which parameters to use:</p>
 <ol type="1">
 <li>Read the pipeline’s <a href="https://nf-co.re/rnaseq/3.11.1/usage">Usage docs</a> to understand required inputs, workflow structure, and available customisation options.</li>
@@ -493,15 +488,15 @@ How do I know if <code>ext.args</code> is used by a process?
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The inclusion of <code>ext.args</code> is currently standard practice for all DSL2 <a href="https://nf-co.re/developers/modules">nf-core modules</a> where additional parameters may be required to run a process. However, this may not be implemented for all processes. Depending on the pipeline, these process modules may not have defined the <code>ext.args</code> variable.</p>
+<p>The inclusion of <code>ext.args</code> is currently standard practice for all DSL2 <a href="https://nf-co.re/developers/modules">nf-core modules</a> where additional parameters may be required to run a process. However, this may not be implemented for all processes. Depending on the pipeline, some modules may not have defined the <code>ext.args</code> variable in the script blocks and is thus not available for applying customisation.</p>
 <p>Take a look at what is available for the nf-core/rnaseq pipeline:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>grep -r "ext.args" nf-core-rnaseq-3.11.1/workflow/modules/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<p>The number and type of default and optional parameters an nf-core pipeline accepts is at the discretion of it’s developers. However at a minimum, nf-core pipelines typically:</p>
+<p>The number and type of default and optional parameters an nf-core pipeline accepts is at the discretion of it’s developers. However, at a minimum, nf-core pipelines typically:</p>
 <ul>
 <li>Require users to specify a <a href="https://nf-co.re/rnaseq/3.11.1/usage#samplesheet-input">sample sheet</a> (<code>--input</code>) detailing sample data and relevant metadata</li>
-<li>Autogenerate or acquire missing reference files from <a href="https://github.com/nf-core/rnaseq/blob/master/conf/igenomes.config">iGenomes</a> (<code>--genome</code>) if not provided by the user.</li>
+<li>Autogenerate or acquire missing reference files from <a href="https://github.com/nf-core/rnaseq/blob/master/conf/igenomes.config">iGenomes</a> (using the <code>--genome</code> option) if not provided by the user.</li>
 </ul>
 <p>➤ You can see the recommended (typical) run command and all the parameters available for the nf-core/rnaseq pipeline by running:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf --help </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -524,7 +519,7 @@ How do I know if <code>ext.args</code> is used by a process?
 <div class="sourceCode" id="cb10"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core/rnaseq --input samplesheet.csv --outdir &lt;OUTDIR&gt; --genome GRCh37 -profile docker</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>It outlines a requirement for a few basic things:</p>
 <ul>
-<li>An input file</li>
+<li>An input samplesheet</li>
 <li>A location to store outputs</li>
 <li>Relevant reference data</li>
 <li>A software management method</li>
@@ -539,14 +534,14 @@ How do I know if <code>ext.args</code> is used by a process?
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Nextflow-specific parameters use one (<code>-</code>) hyphen, whereas pipeline-specific parameters use two (<code>--</code>). In the typical run command above <code>-profile</code> is a <strong>Nextflow</strong> parameter, while <code>--input</code> is an <strong>nf-core</strong> parameter.</p>
+<p>Nextflow options use one (<code>-</code>) hyphen, whereas pipeline-specific parameters use two (<code>--</code>). In the typical run command above <code>-profile</code> is a <strong>Nextflow</strong> option, while <code>--input</code> is an <strong>nf-core</strong> parameter.</p>
 </div>
 </div>
 <p>Most of us will need to adjust the command a little more for our experiments though. Today we’ll be adjusting the typical nf-core/rnaseq run command by:</p>
 <ol type="1">
-<li>Providing our own reference files</li>
-<li>Using the Singularity profile, instead of Docker</li>
-<li>Customising some processes</li>
+<li>Providing our own sample sheet</li>
+<li>Using the Singularity profile, instead of the Docker profile</li>
+<li>Customising the execution of some processes</li>
 <li>Specifying the computing resource limitations of our instances</li>
 </ol>
 <p>➤ Our input fastq files (<code>fastqs/</code>), reference data (<code>mm10_reference/</code>), and full sample sheet are already available on an external file system called CernVM-FS that we can access from our Nimbus instances. Take a look at the files:</p>
@@ -601,8 +596,8 @@ Solution
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>SRR3473988,/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523/fastqs/SRR3473988_selected.fastq.gz,,forward</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Now that we have prepared our input data, we will customise the typical run command by:</p>
 <ol type="1">
-<li>Providing our own reference fasta, index files, and gtf using <a href="https://nf-co.re/rnaseq/3.11.1/parameters#reference-genome-options">file-specific parameters</a> instead of using the Illumina AWS iGenomes database parameter <code>--genomes</code></li>
-<li>Using Nextflow’s <code>-profile</code> parameter to specify that we will be running the Singularity profile as <a href="https://github.com/nf-core/rnaseq/blob/3.11.1/nextflow.config#L144">specified in <code>nextflow.config</code></a> instead of Docker</li>
+<li>Providing our own reference fasta, index files, and gtf using <a href="https://nf-co.re/rnaseq/3.11.1/parameters#reference-genome-options">file-specific parameters</a> instead of using the Illumina AWS iGenomes database parameter <code>--genome</code></li>
+<li>Using Nextflow’s <code>-profile</code> parameter to specify that we will be running the Singularity profile as <a href="https://github.com/nf-core/rnaseq/blob/3.11.1/nextflow.config#L144">specified in <code>nextflow.config</code></a> instead of the Docker profile</li>
 <li>Adding additional process-specific flags to <a href="https://nf-co.re/rnaseq/3.11.1/parameters#skip_markduplicates">skip duplicate read marking</a>, <a href="https://nf-co.re/rnaseq/3.11.1/parameters#save_trimmed">save trimmed reads</a> and <a href="https://nf-co.re/rnaseq/3.11.1/parameters#save_unaligned">save unaligned reads</a></li>
 <li>Adding additional max resource flags to specify the <a href="https://nf-co.re/rnaseq/3.11.1/parameters#max_cpus">number of CPUs</a> and <a href="https://nf-co.re/rnaseq/3.11.1/parameters#max_memory">amount of memory</a> available to the pipeline</li>
 </ol>
@@ -627,7 +622,7 @@ Solution
 <span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    --max_cpus 2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Take a look at the stdout printed to the screen. Your workflow configuration and parameter customisations are all documented here. You can use this to confirm if your parameters have been correctly passed to the run command:</p>
 <p><img src="../figs/2.1_nf-core-stdout.png" class="img-fluid"></p>
-<p>As the workflow starts, you will also see a number of processes spawn out underneath this. Recall from lesson 1 that processes are executed independently and can run in parallel. Nextflow manages the data dependencies between processes, ensuring that each process is executed only when its input data is available and all of its dependencies have been satisfied.</p>
+<p>As the workflow starts, you will also see a number of processes spawn out underneath this. Recall from Sesson 1 that processes are executed independently and can run in parallel. Nextflow manages the data dependencies between processes, ensuring that each process is executed only when its input data is available and all of its dependencies have been satisfied.</p>
 <p>To understand how this is coordinated, consider the STAR_ALIGN process that is being run. You’ll notice a few things:</p>
 <ul>
 <li>We can see which inputs are being worked on by a process by looking at the round brackets at the end of the process name</li>
@@ -649,7 +644,7 @@ Solution
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>Duration    : 9m 16s</span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>CPU hours   : 0.3</span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>Succeeded   : 66</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The pipeline ran successfully, however note the warning about all samples having failed the strandedness check. We’ll explore that in the next lesson.</p>
+<p>The pipeline ran successfully, however, note the warning about all samples having failed the strandedness check. We’ll explore that in the next lesson.</p>
 <p>➤ In the meantime, list (<code>ls -la</code>) the contents of your directory, you’ll see a few new directories (and a hidden directory and log file) have been created:</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>total 416</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x   7 ubuntu ubuntu 4.0K Apr 21 03:44 .</span>

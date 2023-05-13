@@ -19,7 +19,7 @@ from: markdown+emoji
 
 In [Lesson 1.3.7](1.3_configure.html#custom-configuration-files), we learned that [parameters](https://www.nextflow.io/docs/latest/config.html#scope-params) are values that can be set by the user and used to control the behaviour of a workflow or process within the workflow. Within the Nextflow code base, they are defined by the `params{}` scope. They can be suppled as either a `--parameter` flag to the run command or inside a parameter file. 
 
-In the previous lesson we supplied pipeline parameters as flags in our run command (`--`). In this lesson we will add another parameter to our run command and rerun the pipeline using a parameter file. 
+In the previous lesson we supplied pipeline parameters as flags in our run command (`--`). In this lesson we will add another parameter to our run command and re-run the pipeline using a parameter file. 
 
 ### **2.2.1. Why should I use a parameters file?**
 
@@ -45,7 +45,7 @@ Succeeded   : 66
 
 ::: {.callout-warning}
 ### Handling dodgy error messages :cursing_face:
-The first warning message isn't very descriptive (see this [pull request](https://github.com/nf-core/rnaseq/pull/963)). You might come across issues like this when running nf-core pipelines, too. Bug reports and user feedback is very important to open source software communities like nf-core. If you come across any issues submit a GitHub issue or start a discussion in the relevant nf-core Slack channel so others are aware and it can be addressed by the pipeline's developers.
+The first warning message isn't very descriptive (see this [pull request](https://github.com/nf-core/rnaseq/pull/963)). You might come across issues like this when running nf-core pipelines, too. Bug reports and user feedback is very important to open source software communities like nf-core. If you come across any issues, submit a GitHub issue or start a discussion in the relevant nf-core Slack channel so others are aware and it can be addressed by the pipeline's developers.
 :::
 
 &#x27A4; Take a look at the MultiQC report, as directed by the second message. You can find the MultiQC report in the `Lesson-2.1/` directory: 
@@ -72,13 +72,13 @@ Take a look a the section labelled **WARNING: Fail Strand Check**
 
 ![](../figs/2.2_multiqc.png)
 
-The warning we have received is indicating that the read strandedness we specified in our `samplesheet.csv` and **inferred strandedness** identified by the RSeqQC process in the pipeline do not match. Look's like I have incorrectly specified strandedness as forward in the `samplesheet.csv` when our raw reads actually show an equal distribution of sense and antisense reads (my mistake! :expressionless:). 
+The warning we have received is indicating that the read strandedness we specified in our `samplesheet.csv` and **inferred strandedness** identified by the RSeqQC process in the pipeline do not match. It looks like I have incorrectly specified strandedness as forward in the `samplesheet.csv` when our raw reads actually show an equal distribution of sense and antisense reads (my mistake! :expressionless:). 
 
-For those not familiar with RNAseq data, incorrectly specified strandedness may negatively impact the read quantification step (process: Salmon quant) and give us inaccurate results. So, let's clarify how the Salmon quant process is gathering strandedness information for our input files by default and find a way to address this with the parameters provided by the nf-core/rnaseq pipeline. 
+For those who are not familiar with RNAseq data, incorrectly specified strandedness may negatively impact the read quantification step (process: Salmon quant) and give us inaccurate results. So, let's clarify how the Salmon quant process is gathering strandedness information for our input files by default and find a way to address this with the parameters provided by the nf-core/rnaseq pipeline. 
 
 ### **2.2.3. Identify the run command for a process**
 
-To observe exactly what command is being run for a process, we can attempt to infer this information from a process `main.nf` script in the `modules/` directory. However, given all the different parameters that may be applied at the process level, this may not be very clear. 
+To observe exactly what command is being run for a process, we can attempt to infer this information from the modules `main.nf` script in the `modules/` directory. However, given all the different parameters that may be applied at the process level, this may not be very clear. 
 
 &#x27A4; Take a look at the Salmon quant `main.nf` file: 
 
@@ -86,12 +86,12 @@ To observe exactly what command is being run for a process, we can attempt to in
 cat nf-core-rnaseq-3.11.1/workflow/modules/nf-core/salmon/quant/main.nf
 ```
 
-It is very hard to see what is actually happening, given all the different variables, conditional arguments, and loops inside this script. Above the script block we can see strandedness is being applied using a few different conditional arguments. Instead of trying to infer how the `$strandedness` variable is being defined and applied to the process, let's use the hidden process files saved to the `work/` directory.   
+Unless you are familiar with developing nf-core pipelines, it can be very hard to see what is actually happening, given all the different variables and conditional arguments inside this script. Above the script block we can see strandedness is being applied using a few different conditional arguments. Instead of trying to infer how the `$strandedness` variable is being defined and applied to the process, let's use the hidden command files saved for this task in the `work/` directory.   
 
 ::: callout-tip
 ### **Hidden files in the work directory!**
 
-Remember that the pipeline's results are cached in the `work` directory. In addition to the cached files, each task execution directories inside the work directory contains a number of hidden files:
+Remember that the pipeline's results are cached in the `work` directory. In addition to the cached input and output files, each task directory contains a number of hidden files:
 
 * `.command.sh`: The command script run for the task. 
 * `.command.run`: The command wrapped used to run the task. 
@@ -102,7 +102,7 @@ Remember that the pipeline's results are cached in the `work` directory. In addi
 * `.exitcode`: A file containing the task exit code (0 if successful)
 :::
 
-Recall from [lesson 1.1.9](1.1_nextflow.html#nextflow-log) that the `nextflow log` command has multiple options to facilitate the queries and is especially useful while debugging a pipeline and while inspecting pipeline execution metadata. 
+Recall from [lesson 1.1.9](1.1_nextflow.md#nextflow-log) that the `nextflow log` command has multiple options to facilitate the queries and is especially useful while debugging a pipeline and while inspecting pipeline execution metadata. 
 
 To understand how Salmon quant is interpreting strandedness, we're going to use this command to track down the hidden `.command.sh` scripts for each Salmon quant task that was run. This will allow us to find out how Salmon quant handles strandedness and if there is a way for us to override this. 
 
