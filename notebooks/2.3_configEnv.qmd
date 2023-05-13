@@ -280,7 +280,7 @@ profiles {
 
 
 
-&#x27A4;  Now re-run the pipeline, requesting the 'workshop' profile be applied from our custom-nimbus.config:
+&#x27A4;  Now re-run the pipeline, requesting the 'workshop' profile be applied from our `custom-nimbus.config`:
 
 ```default
 nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
@@ -291,15 +291,43 @@ nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
   -resume
 ```
 
-:eyes: We can see that our custom resource parameters have been applied
+:eyes: We can see that our custom resource parameters have been read:
 
 ![](../figs/2.3_run_stdout_.png)
 <br/><br/>
 
+::: {.callout-important}
+### What was that warning all about?
+We can also see a warning because we have included a custom config - this warning is to remind us that any parameters we have included in a custom config WILL NOT over-ride defaults (except for the rare exceptions of max resources). 
+
+![](../figs/2.3_warn_multiple_configs.png)
+<br/>
+
+Recall from  [Session 1
+configuring nf-core workflows](1.3_configure.md#1.3.7.-custom-configuration-files) when you attemped to set the parameter `multiqc_title` to your favourite colour within `my_custom_config.config`. The `multiqc_title` parameter displayed in the STDOUT under "Input/output options" but was NOT applied to the run! The alarming-looking warning provided by nf-core is a gentle but firm reminder of this very important detail.
+<br/>
+
+&#x27A4;  <span style="color:#8b0000;">Bonus optional activity:</span> add the multiqc_title parameter in a `params` scope of the workshop profile within `custom-nimbus.config`, and re-submit the previous run. Note the changes to `multiqc_title` have been reported on the STDOUT, but have not been applied to the output in `<outdir>/multiqc/star_salmon`.
+
+``` default
+    params {
+      multiqc_title = 'black'
+    }
+```
+
+![](../figs/2.3_mqc_title_stdout.png)
+
+```default
+$ ls Lesson-2.3.3-MQC/multiqc/star_salmon/
+multiqc_data  multiqc_plots  multiqc_report.html
+```
+
+:::
+<br/><br/>
 
 ### **2.3.4. Custom resource configuration using process labels**
 
-Recall how our custom-nimbus.config restricted the CPU and memory usage by setting `max_cpu`s and `max_memory` within the `params` scope of the profile. This can be a simple and effective method, however does not provide a lot of granularity. 
+Recall how our `custom-nimbus.config` restricted the CPU and memory usage by setting `max_cpus` and `max_memory` within the `params` scope of the profile. This can be a simple and effective method, however does not provide a lot of granularity. 
 
 For example, consider that you had access to a 16 core machine. If you appled `max_cpus 16` to the nf-core rnaseq workflow, the STAR_ALIGN module would still only utilise 12 CPUs, as this module (as we learned in 2.3.1) has the label `process_high` which sets 12 CPUs. In this case, you would have *up to 4 idle CPUs*\* while the STAR_ALIGN module completed for each sample. 
 
@@ -376,8 +404,14 @@ nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
 ```
 
 ::: {.callout-note}
-###
-Recall that `base.config` is loaded by default by nf-core pipelines. Also recall the order of priority in which parameters and configurations are applied by nextflow. The settings we specify with  `-c custom-nimbus.config` will over-ride those that appear in the default nf-core configurations `workflow/conf/base.config` and `workflow/nextflow.config`. Settings that are not over-ridden by `-c <config>` or any parameter from params file or provided on the command line will still be set to the defaults.
+### Configuration order of priority
+Recall the [order of priority](https://www.nextflow.io/docs/latest/config.html#configuration-file) in which parameters and configurations are applied by nextflow. 
+
+The settings we specify with  `-c custom-nimbus.config` will over-ride those that appear in the default nf-core configurations `workflow/nextflow.config` and `workflow/conf/base.config`. 
+
+Settings that are not over-ridden by `-c <config>` or any parameter from params file or provided on the command line will still be set to the nf-core defaults specified in `nextflow.config`, `base.config` or `main.nf`.
+
+![](../figs/2.3_config_priority_order.png)
 ::: 
 <br/><br/>
 
@@ -506,7 +540,7 @@ What do you expect would happen to your run if your execution path was **not** s
 
 ::: {.callout-caution collapse="true"}
 ### Solution
-In this case, our pipeline would complete OK, because the resources for the STAR_ALIGN process have been appropriately set for our VM using the 'process_high' label within our custom-nimbus.config. 
+In this case, our pipeline would complete OK, because the resources for the STAR_ALIGN process have been appropriately set for our VM using the 'process_high' label within our `custom-nimbus.config`. 
 
 The configurations set within that 'withName' process scope would not function, and a warning would be printed, eg
 ```default
@@ -549,15 +583,18 @@ The process names are listed in alphabetical order, with the tools and versions 
 There is a [newer version of Trim Galore](https://github.com/FelixKrueger/TrimGalore/releases/tag/0.6.10) available, version 0.6.10. Recall that we have been accessing some materials on [**CernVM-FS**](https://support.pawsey.org.au/documentation/pages/viewpage.action?pageId=92832676#NimbusforBioinformatics-1.BiocontainersandReferenceGenomedata ), a read-only filesystem which provides shared access to common bioinformatics reference datasets as well as Singularity containers of everything stored in [Biocontainers](https://biocontainers.pro/).
 
 CernVM-FS comes pre-mounted on Pawsey Nimbus VMs using the [**Pawsey Bio - Ubuntu 22.04 - 2023-03**](https://support.pawsey.org.au/documentation/display/US/Nimbus+for+Bioinformatics#) image, so we can access and apply the Trim Galore biocontainer by specifying the path to this remote image within the process scope of a custom config, using the 'withName' process selector. 
+
+We could just as easily specify an alternate remote source, such as [quay.io](https://quay.io/organization/biocontainer), or point to a local image. 
+
 <br/>
 
 ::: callout-tip
 ### **Thoughts**{.unlisted}
 :question: For maintaining best practice, where is the best place for the container definition?
 
-a) Within the custom-nimbus.config institutional config file
+a) Within the `custom-nimbus.config` institutional config file
 
-b) Within a separate custom config file named eg custom-tools.config
+b) Within a separate custom config file named eg `custom-tools.config`
 
 Why do you think this? 
 :::
@@ -633,7 +670,7 @@ process {
 ```
 <br/>
 
-&#x27A4; Delete or comment out the 'withName' content we applied to the STAR_ALIGN process in the custom-nimbus.config file, then execute the run to outpu directory Lesson-2.3.6 making sure to add the custom-tools.config:
+&#x27A4; Delete or comment out the 'withName' content we applied to the STAR_ALIGN process in the `custom-nimbus.config` file, then execute the run to output directory Lesson-2.3.6, making sure to add the `custom-tools.config`:
 
 ``` default
  nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
@@ -665,5 +702,5 @@ grep -i galore Lesson-2.3.6/pipeline_info/software_versions.yml
 - nf-core executes by default with `workflow/nextflow.config` and `workflow/conf/base.config` and has a repository of community-contributed institutional configs that ship with the workflow 
 - custom configs can be applied to a run with `-c <config_name>`, and will over-ride settings in the default configs
 - customisations can be targeted to specific processes with 'withLabel' or 'withName'
-- workflow parameters belong in `-params-file <params_file>` and not `-c <custom_config>`_ 
+- workflow parameters belong in `-params-file <params_file>` and not `-c <custom_config>`
 :::
