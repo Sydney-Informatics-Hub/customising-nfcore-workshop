@@ -125,7 +125,7 @@ git clone https://github.com/nf-core/rnaseq.git
 
 ### **2.1.2. Design your run command**
 
-As we learned in [lesson 1.3.3](1.3_configure.md#viewing-parameters), all nf-core pipelines have a unique set of pipeline-specific parameters that can be used in conjunction with Nextflow parameters to configure the workflow. Generally, nf-core pipelines can be customised at different levels:
+As we learned in [Lesson 1.3.3](1.3_configure.md#viewing-parameters), all nf-core pipelines have a unique set of pipeline-specific parameters that can be used in conjunction with Nextflow parameters to configure the workflow. Generally, nf-core pipelines can be customised at different levels:
 
 |Level of effect      |Customisation feature                                                        |
 |---------------------|-----------------------------------------------------------------------------|
@@ -170,7 +170,7 @@ Users can customise parameters in 3 different ways:
 
 1. Comand line parameters (i.e. `--param_name`)
 2. Parameters files (i.e. `-params-file`)
-3. Additional process-specific parameters using the `ext.args` variable (See lesson 2.5)
+3. Additional process-specific parameters using the `ext.args` variable (See [Lesson 2.5](2.5_extArgs.qmd))
 
 While all nf-core pipelines are provided with comprehensive documentation that explains workflow structure, process outputs, and available parameters, it can be challenging to piece these different sources of information together to determine which parameters you should be using.
 
@@ -329,7 +329,7 @@ Take a look at the stdout printed to the screen. Your workflow configuration and
 
 ![](../figs/2.1_nf-core-stdout.png)
 
-As the workflow starts, you will also see a number of processes spawn out underneath this. Recall from Sesson 1 that processes are executed independently and can run in parallel. Nextflow manages the data dependencies between processes, ensuring that each process is executed only when its input data is available and all of its dependencies have been satisfied. 
+As the workflow starts, you will also see a number of processes spawn out underneath this. Recall from [Lession 1.1](1.1_nextflow.md#what-is-nextflow) that processes are executed independently and can run in parallel. Nextflow manages the data dependencies between processes, ensuring that each process is executed only when its input data is available and all of its dependencies have been satisfied. 
 
 To understand how this is coordinated, consider the STAR_ALIGN process that is being run. You'll notice a few things: 
 

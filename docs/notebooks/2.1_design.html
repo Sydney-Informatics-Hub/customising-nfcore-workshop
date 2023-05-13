@@ -388,7 +388,7 @@ Solution
 </section>
 <section id="design-your-run-command" class="level3">
 <h3 class="anchored" data-anchor-id="design-your-run-command"><strong>2.1.2. Design your run command</strong></h3>
-<p>As we learned in <a href="../notebooks/1.3_configure.html#viewing-parameters">lesson 1.3.3</a>, all nf-core pipelines have a unique set of pipeline-specific parameters that can be used in conjunction with Nextflow parameters to configure the workflow. Generally, nf-core pipelines can be customised at different levels:</p>
+<p>As we learned in <a href="../notebooks/1.3_configure.html#viewing-parameters">Lesson 1.3.3</a>, all nf-core pipelines have a unique set of pipeline-specific parameters that can be used in conjunction with Nextflow parameters to configure the workflow. Generally, nf-core pipelines can be customised at different levels:</p>
 <table class="table">
 <colgroup>
 <col style="width: 21%">
@@ -415,6 +415,7 @@ Solution
 </tr>
 </tbody>
 </table>
+<p>Resources allocated for a pipeline to run can also be checked using pipeline parameters. You may find that your runs occasionally fail due to a particular step of the pipeline requesting more resources than you have on your system. These parameters act as a cap, to prevent Nextflow submitting a single job requesting resources more than what is available.</p>
 <p>Looking at the nf-core/rnaseq pipeline structure provided in the image below, we can see that the developers have:</p>
 <ol type="1">
 <li>Organised the workflow into 5 stages based on the type of work that is being done</li>
@@ -466,7 +467,7 @@ Solution
 <ol type="1">
 <li>Comand line parameters (i.e.&nbsp;<code>--param_name</code>)</li>
 <li>Parameters files (i.e.&nbsp;<code>-params-file</code>)</li>
-<li>Additional process-specific parameters using the <code>ext.args</code> variable (See lesson 2.5)</li>
+<li>Additional process-specific parameters using the <code>ext.args</code> variable (See <a href="../notebooks/2.5_extArgs.html">Lesson 2.5</a>)</li>
 </ol>
 <p>While all nf-core pipelines are provided with comprehensive documentation that explains workflow structure, process outputs, and available parameters, it can be challenging to piece these different sources of information together to determine which parameters you should be using.</p>
 <p>We recommend the following approach to deciding on which parameters to use:</p>
@@ -622,7 +623,7 @@ Solution
 <span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    --max_cpus 2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Take a look at the stdout printed to the screen. Your workflow configuration and parameter customisations are all documented here. You can use this to confirm if your parameters have been correctly passed to the run command:</p>
 <p><img src="../figs/2.1_nf-core-stdout.png" class="img-fluid"></p>
-<p>As the workflow starts, you will also see a number of processes spawn out underneath this. Recall from Sesson 1 that processes are executed independently and can run in parallel. Nextflow manages the data dependencies between processes, ensuring that each process is executed only when its input data is available and all of its dependencies have been satisfied.</p>
+<p>As the workflow starts, you will also see a number of processes spawn out underneath this. Recall from <a href="../notebooks/1.1_nextflow.html#what-is-nextflow">Lession 1.1</a> that processes are executed independently and can run in parallel. Nextflow manages the data dependencies between processes, ensuring that each process is executed only when its input data is available and all of its dependencies have been satisfied.</p>
 <p>To understand how this is coordinated, consider the STAR_ALIGN process that is being run. You’ll notice a few things:</p>
 <ul>
 <li>We can see which inputs are being worked on by a process by looking at the round brackets at the end of the process name</li>
