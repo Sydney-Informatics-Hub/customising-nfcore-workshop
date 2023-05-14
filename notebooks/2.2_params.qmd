@@ -19,7 +19,7 @@ from: markdown+emoji
 
 In [Lesson 1.3.7](1.3_configure.html#custom-configuration-files), we learned that [parameters](https://www.nextflow.io/docs/latest/config.html#scope-params) are values that can be set by the user and used to control the behaviour of a workflow or process within the workflow. Within the Nextflow code base, they are defined by the `params{}` scope. They can be suppled as either a `--parameter` flag to the run command or inside a parameter file. 
 
-In the previous lesson we supplied pipeline parameters as flags in our run command (`--`). In this lesson we will add another parameter to our run command and re-run the pipeline using a parameter file. 
+In the previous lesson we supplied pipeline parameters as flags in our run command (`--`). In this lesson we will add another parameter to our run command and rerun the pipeline using a parameter file. 
 
 ### **2.2.1. Why should I use a parameters file?**
 

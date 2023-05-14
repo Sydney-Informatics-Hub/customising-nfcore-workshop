@@ -280,7 +280,7 @@ Objectives
 </table>
 <section id="customised-resource-tracing" class="level4 unlisted">
 <h4 class="unlisted anchored" data-anchor-id="customised-resource-tracing"><strong>2.4.2. Customised resource tracing</strong></h4>
-<p>Remember we can use the <code>Nextflow log</code> command to show information about previous pipeline executions. We can customise which fields to print using the <a href="https://www.nextflow.io/docs/latest/tracing.html#customizing-fields"><code>-fields</code> flag</a>. This flag accepts options used by the <a href="https://www.nextflow.io/docs/latest/tracing.html#trace-fields">trace report</a>.</p>
+<p>Remember we can use the <code>nextflow log</code> command to show information about previous pipeline executions. We can customise which fields to print using the <a href="https://www.nextflow.io/docs/latest/tracing.html#customizing-fields"><code>-fields</code> flag (-f)</a>. This flag accepts options used by the <a href="https://www.nextflow.io/docs/latest/tracing.html#trace-fields">trace report</a>.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -370,7 +370,7 @@ Solution
 <p>Here, we’re plotting the <a href="https://multiqc.info/modules/fastqc/#theoretical-gc-content">theoretical GC content</a> for the mouse reference transcript.</p>
 <p>To the <code>workshop-params.yaml</code> file, add:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">multiqc_config</span><span class="kw">:</span><span class="at"> </span><span class="st">"multiqc-config.yaml"</span><span class="at"> </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Make sure both YAML files are saved, then re-run the workflow:</p>
+<p>Make sure both YAML files are saved, then rerun the workflow:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  -profile workshop \</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  -c custom-nimbus.config \</span>
@@ -378,7 +378,7 @@ Solution
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  --outdir Lesson-4 \</span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  -resume</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The logging information printed to the screen shows us again that the <code>params.yaml</code> file with the output directory set to <strong>Lesson-2</strong> has been overridden by the use of the flag <code>--outdir Lesson-4</code> in the run command. As the workflow runs, notice all the completed processes that are pulled from the cache and not rerun. Our use of the <code>multiqc-config.yaml</code> file adjusted the MultiQC process, as such this process was repeated using the updated settings.</p>
-<p>The changes we made above added the normal mouse transcriptome GC profile as a track to the fastQC per-sequence GC content plot. Take a look at the changes, open the Exercise4 <code>multiqc_report.html</code> file with Live Server as per previosuly (or use scp to take a copy to your local computer if you are not on VS Code). Compare this report with the MultiQC report from <strong>lesson 1</strong> by looking at the section <strong>FastQC: Per Sequence GC Content</strong>. Compare the two plots to observe the custom track has been successfully added.</p>
+<p>The changes we made above added the normal mouse transcriptome GC profile as a track to the fastQC per-sequence GC content plot. Take a look at the changes, open the Exercise4 <code>multiqc_report.html</code> file with Live Server as per previosuly (or use <code>scp</code> to take a copy to your local computer if you are not on VS Code). Compare this report with the MultiQC report from <strong>lesson 1</strong> by looking at the section <strong>FastQC: Per Sequence GC Content</strong>. Compare the two plots to observe the custom track has been successfully added.</p>
 <p><img src="../figs/2.4_MultiQC.png" class="quarto-discovered-preview-image img-fluid"></p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">

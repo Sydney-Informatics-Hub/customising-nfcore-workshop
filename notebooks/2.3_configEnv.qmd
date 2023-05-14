@@ -18,11 +18,11 @@ from: markdown+emoji
 
 In the previous exercises, we have explored how to customise a run with **workflow parameters** on the command line or within a parameters file. 
 
-We will now look at **configuration settings**, which manage **how the workflow is implemented on your system**. 
+We will now look at additional **parameters** and **configuration settings**, which help manage **how nf-core workflows are implemented on your system**. 
 
 ::: callout-note
 ### 
-Nextflow's portability is achieved by separating **workflow implementation** (input data, custom parameters, etc) from the **configuration settings** (tool access, compute resources, etc) required to execute it. This portability facilitates **reproducibility**: by applying the same parameters as a colleague, and adjusting configurations to suit your platform, you can achieve the same results on any machine with no requirement to edit the code.
+Nextflow's portability is achieved by abstracting the **workflow** (input data, custom parameters, etc) from the **configuration settings** (software access, compute resources, etc) required to execute it. Nextflow facilitates **portability** and **reproducibility** by allowing parameters to be customized and shared with others on a different system, with its own configuration requirements, without needing to edit the code base.
 :::  
 
 <br/>
@@ -31,16 +31,18 @@ Nextflow's portability is achieved by separating **workflow implementation** (in
 
 Recall that when a `main.nf` file is run for any Nextflow workflow, Nextflow looks for [configuration files in multiple locations](https://www.nextflow.io/docs/latest/config.html#configuration-file) to determine how to execute the workflow and its processes. 
 
-Currently, all nf-core workflows use a `nextflow.config` file and a `conf/base.config` file to define the default execution settings and parameters of a workflow.   
+Currently, all nf-core workflows use a `nextflow.config` file and multiple `.config` files in the `conf/` folder with both default and optional configuration settings and parameters.
 
-The critical nf-core configuration aspects can be grouped into 3 key areas:
+There are 3 main areas you may want to consider when custimising your execution:
 
 1. Parameters
 2. Compute resources
 3. Software/tool access
-<br/><br/>
 
- Let's take a look at these two configuration files to gain an undertsanding of how defaults are applied.
+<br/>
+<br/>
+
+Let's take a deeper look at these two configuration files to gain an undertsanding of how defaults are applied.
 
 &#x27A4; Using the `more` command, take a few moments to scroll through both the `nextflow.config` and `base.config` files:
 ``` bash
@@ -49,10 +51,12 @@ more nf-core-rnaseq-3.11.1/workflow/nextflow.config
 ```
 <br/>
 
-The `base.config` sets the default compute resource settings to be used by the processes in the nf-core workflow. It uses **process labels** to enable different sets of resources to be applied to groups of processes that require similar compute. These labels are specified within the `main.nf` file for a process. <span style="color:#000080;"> We can over-ride these default compute resources using a custom configuration file.</span>
+The `base.config` sets the default compute resource settings to be used by the processes in the nf-core workflow. It uses **process labels** to enable different sets of resources to be applied to groups of processes that require similar compute. These labels are specified within the `main.nf` file for a module. <span style="color:#000080;"> We can over-ride these default compute resources using a custom configuration file.</span>
 
-The `nextflow.config` file is more workflow-specific, and sets the defaults for the workflow parameters, as well as defines profiles to change the default software access from `$PATH` to the specified access method, eg Singularity. <span style="color:#000080;"> We can over-ride these parameters on the command line or with a parameters file, and over-ride the default behaviour of searching for tools on `$PATH` by specifying a `-profile`.</span>  
-<br/><br/>
+The `nextflow.config` file is workflow-specific, and sets the defaults for the workflow parameters, as well as defines profiles that can be used to change the default software access from `$PATH` to the specified software manager, e.g., Singularity. <span style="color:#000080;"> We can over-ride workflow parameters on the command line or with a parameters file, and over-ride the default behaviour of searching for tools on `$PATH` by specifying a `-profile`.</span>
+
+<br/>
+<br/>
 
 ::: callout-tip
 ### **Challenge**{.unlisted}
@@ -62,7 +66,7 @@ The `nextflow.config` file is more workflow-specific, and sets the defaults for 
 
 ::: {.callout-caution collapse="true"}
 ### Solution
-- The tools required by the different processes (eg STAR, salmon) would not be accessible, as they are not installed locally and saved to `$PATH` (we have been accessing them via the 'singularity' profile and using the saved images from our `$NXF_SINGULARITY_CACHEDIR` directory
+- The tools required by the different processes (e.g., STAR, salmon) would not be accessible, as they are not installed locally and saved to `$PATH` (we have been accessing them via the 'singularity' profile and using the saved images from our `$NXF_SINGULARITY_CACHEDIR` directory.
 - The first process to use more than 2 CPUs or 8 GB RAM would fail and cause the pipeline to exit with a fatal error; this is because nf-core pipelines check that the requested resources are available before attempting to execute a module.  
 :::
 <br/>
@@ -79,13 +83,13 @@ Within `base.config`, the `check_max()` function over-rides the process resource
 ::: callout-tip
 ### **Challenge**{.unlisted}
 
-- What are the default settings for CPU, memory and walltime for the `STAR_ALIGN` module?
+- What are the default settings for CPU, memory and walltime for the `STAR_ALIGN` process?
 - How have these defaults been changed from our applied customisations in the previous runs?
 :::
 
 ::: {.callout-caution collapse="true"}
 ### Solution
-To uncover these answers, we need to understand what **process label** has been assigned to the `STAR_ALIGN` module. 
+To uncover these answers, we need to understand what **process label** has been assigned in the `STAR_ALIGN` module. 
 ```bash
 more workflow/modules/nf-core/star/align/main.nf 
 # or
@@ -133,12 +137,14 @@ Bioinformatics relies on large-scale computational infrastructures and has a sig
 
 We can set these and other configurations within a custom configuration file that is specific to our institution; this is referred to as an **institutional config**. 
 
-There is a [repository of institutional configs](https://github.com/nf-core/configs/tree/master/conf) for nf-core pipelines. These have been contributed to by the community. 
+There is a [repository of institutional configs](https://github.com/nf-core/configs/tree/master/conf) for nf-core pipelines. These have been submitted by the community. 
 
-We have created an [nf-core config for Pawsey’s Nimbus cloud](https://github.com/nf-core/configs/blob/master/conf/pawsey_nimbus.config): this (and other institutional configs) was downloaded along with the workflow code. 
-<br/><br/>
+We have created an [nf-core config for Pawsey’s Nimbus cloud](https://github.com/nf-core/configs/blob/master/conf/pawsey_nimbus.config): this config, and other institutional configs, were downloaded along with the workflow code when we executed the nf-core donwload command.
 
-&#x27A4; View the available list of institutional configs we pulled down along with the workflow code:
+<br/>
+<br/>
+
+&#x27A4; View the available list of institutional configs we pulled with the workflow code:
 
 ``` bash
 ls  nf-core-rnaseq-3.11.1/configs/conf
@@ -157,7 +163,7 @@ more  nf-core-rnaseq-3.11.1/configs/conf/pawsey_nimbus.config
 
 - What arguments would we apply to our command line to utilise the pawsey_nimbus.config and set the right configurations for software and compute for our VMs?
 
-:bulb: Hint: the Nimbus training VM 'instance flavour' is 'c2r8' ie 2 CPU and 8 GB RAM. See the [Pawsey Nimbus nf-core config documentation](https://github.com/nf-core/configs/blob/master/docs/pawsey_nimbus.md) for help. 
+:bulb: Hint: the Nimbus training VM 'instance flavour' is 'c2r8', ie 2 CPU and 8 GB RAM. See the [Pawsey Nimbus nf-core config documentation](https://github.com/nf-core/configs/blob/master/docs/pawsey_nimbus.md) for help. 
 :::
 
 ::: {.callout-caution collapse="true"}
@@ -175,7 +181,7 @@ In the event where your institution does not have a publicly availabe configurat
 :bulb: <span style="color:#000080;"> You can contribute to the nf-core community by [sharing your config!](https://github.com/nf-core/configs/tree/master#adding-a-new-config)</span>
 <br/><br/>
 
-For the sake of the exercise, let's assume there wasn't a Pawsey Nimbus config publicly available, and write our own that is specific to our 'c2r8' VMs. 
+For the sake of the exercise, let's assume there wasn't a Pawsey Nimbus config publicly available, and we needed to write our own that is specific to our 'c2r8' VMs. 
 
 &#x27A4; Open a new file called `custom-nimbus.config` and start writing some Nextflow code by adding: 
 
@@ -280,7 +286,7 @@ profiles {
 
 
 
-&#x27A4;  Now re-run the pipeline, requesting the 'workshop' profile be applied from our custom-nimbus.config:
+&#x27A4;  Now re-run the pipeline, requesting the `workshop` profile be applied from our custom-nimbus.config:
 
 ```default
 nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
@@ -301,12 +307,13 @@ nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
 
 Recall how our custom-nimbus.config restricted the CPU and memory usage by setting `max_cpu`s and `max_memory` within the `params` scope of the profile. This can be a simple and effective method, however does not provide a lot of granularity. 
 
-For example, consider that you had access to a 16 core machine. If you appled `max_cpus 16` to the nf-core rnaseq workflow, the STAR_ALIGN module would still only utilise 12 CPUs, as this module (as we learned in 2.3.1) has the label `process_high` which sets 12 CPUs. In this case, you would have *up to 4 idle CPUs*\* while the STAR_ALIGN module completed for each sample. 
+For example, consider that you had access to a 16 core machine. If you appled `max_cpus 16` to the nf-core rnaseq workflow, the `STAR_ALIGN` process would still only utilise 12 CPUs, as this module (as we learned in 2.3.1) has the label `process_high` which sets 12 CPUs. In this case, you would have *up to 4 idle CPUs*\* while the `STAR_ALIGN` process ran for each sample. 
 
 >\* Nextflow will fill available resources as the input channels for processes are fulfilled. It will depend on the specific workflow and the requirements of the modules as to whether the resources can be filled. For 'bottleneck' steps like alignment, optimising the utilisation of available compute so that no resources are idle is critical to ensuring an efficient run. 
 
 <br/>
-To make the best use of our compute environment, we can write a custom configuration file that fine-tunes resources using process labels to assign the same resources to groups of processes sharing the same label, or 'withName' to target specific processes. 
+
+To make the best use of our compute environment, we can write a custom configuration file that fine-tunes resources using process labels to assign the same resources to groups of processes sharing the same label, or `withName` to target specific processes. 
 
 Note that the following exercise is trivial given the limitations of our VMs. Consider how this approach can be really powerful when working on a high performance cluster, where the process scope can be used to direct modules to execute on specific queues with the `queue` process directive and set precise compute requests tailored to the hardware on that queue. See [Tips and tricks](../tips_tricks.qmd#Send processes to a job scheduler on HPC) for an example HPC institutional config. 
 
@@ -377,15 +384,15 @@ nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
 
 ::: {.callout-note}
 ###
-Recall that `base.config` is loaded by default by nf-core pipelines. Also recall the order of priority in which parameters and configurations are applied by nextflow. The settings we specify with  `-c custom-nimbus.config` will over-ride those that appear in the default nf-core configurations `workflow/conf/base.config` and `workflow/nextflow.config`. Settings that are not over-ridden by `-c <config>` or any parameter from params file or provided on the command line will still be set to the defaults.
+Recall that `base.config` is loaded by default by nf-core pipelines. Also recall the order of priority in which parameters and configurations are applied by Nextflow. The settings we specify with  `-c custom-nimbus.config` will over-ride those that appear in the default nf-core configurations `workflow/conf/base.config` and `workflow/nextflow.config`. Settings that are not over-ridden by `-c <config>`, a parameters file, or provided on the command line will still be set to the defaults.
 ::: 
 <br/><br/>
 
 ### **2.3.5. Custom resource configuration using process names**
 
-This exercise will demonstrate how to adjust the resource configurations for a specific process using the `withName` process selector, using the STAR_ALIGN module as example. 
+This exercise will demonstrate how to adjust the resource configurations for a specific process using the `withName` process selector, using the `STAR_ALIGN` module as example. 
 
-To provide customised resources that apply *only* to the STAR_ALIGN module, we need to ensure we have the right process name in our configuration file. Recall from [Session 1
+To provide customised resources that apply *only* to the `STAR_ALIGN` module, we need to ensure we have the right process name in our configuration file. Recall from [Session 1
 configuring nf-core workflows](1.3_configure.md#1.3.5.-default-configuration-files) the following tips: 
 
 - The extended execution path is built from the workflow, subworkflow, and module  names
@@ -399,7 +406,7 @@ grep withName nf-core-rnaseq-3.11.1/workflow/conf/modules.config | grep STAR
 
 ::: callout-tip
 ### **Challenge**{.unlisted}
-What extended execution path could we use to ensure our customisations were applied only to the STAR_ALIGN module? 
+What extended execution path could we use to ensure our customisations were applied only to the `STAR_ALIGN` process? 
 :::
 
 ::: {.callout-caution collapse="true"}
@@ -413,7 +420,7 @@ Any of the following would be correct and specific:
 :::
 <br/><br/>
 
-&#x27A4; Continue editing `custom-nimbus.config`. Inside the process scope, add the 'withName' syntax and specify the execution path for the STAR_ALIGN module:
+&#x27A4; Continue editing `custom-nimbus.config`. Inside the process scope, add the `withName` syntax and specify the execution path for the `STAR_ALIGN` module:
 
 ```default
 process {
@@ -494,7 +501,7 @@ nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
   -resume 
 ```
 
-If your execution path for the STAR_ALIGN process was specified correctly, your run should have died with the following error:
+If your execution path for the `STAR_ALIGN` process was specified correctly, your run should have died with the following error:
 
 ![](../figs/2.3_star_failed_resources.png)
 <br/><br/>
@@ -506,9 +513,9 @@ What do you expect would happen to your run if your execution path was **not** s
 
 ::: {.callout-caution collapse="true"}
 ### Solution
-In this case, our pipeline would complete OK, because the resources for the STAR_ALIGN process have been appropriately set for our VM using the 'process_high' label within our custom-nimbus.config. 
+In this case, our pipeline would complete OK, because the resources for the `STAR_ALIGN` process have been appropriately set for our VM using the `process_high` label within our custom-nimbus.config. 
 
-The configurations set within that 'withName' process scope would not function, and a warning would be printed, eg
+The configurations set within that `withName` process scope would not function, and a warning would be printed, for example:
 ```default
 WARN: There's no process matching config selector: .*:RNASEQ:ALIGN_STAR:STARALIGN
 ```
@@ -543,12 +550,13 @@ more Lesson-2.3.4/pipeline_info/software_versions.yml
 #
 ```
 
-The process names are listed in alphabetical order, with the tools and versions used in the `script` section of the process listed below the process name. We can see for TRIMGALORE process that version 0.6.7 of Trim Galore was used. 
+The process names are listed in alphabetical order, with the tools and versions used in the `script` section of the process listed below the process name. We can see for `TRIMGALORE` process that version 0.6.7 of Trim Galore was used. 
 <br/><br/>
 
 There is a [newer version of Trim Galore](https://github.com/FelixKrueger/TrimGalore/releases/tag/0.6.10) available, version 0.6.10. Recall that we have been accessing some materials on [**CernVM-FS**](https://support.pawsey.org.au/documentation/pages/viewpage.action?pageId=92832676#NimbusforBioinformatics-1.BiocontainersandReferenceGenomedata ), a read-only filesystem which provides shared access to common bioinformatics reference datasets as well as Singularity containers of everything stored in [Biocontainers](https://biocontainers.pro/).
 
-CernVM-FS comes pre-mounted on Pawsey Nimbus VMs using the [**Pawsey Bio - Ubuntu 22.04 - 2023-03**](https://support.pawsey.org.au/documentation/display/US/Nimbus+for+Bioinformatics#) image, so we can access and apply the Trim Galore biocontainer by specifying the path to this remote image within the process scope of a custom config, using the 'withName' process selector. 
+CernVM-FS comes pre-mounted on Pawsey Nimbus VMs using the [**Pawsey Bio - Ubuntu 22.04 - 2023-03**](https://support.pawsey.org.au/documentation/display/US/Nimbus+for+Bioinformatics#) image, so we can access and apply the Trim Galore biocontainer by specifying the path to this remote image within the process scope of a custom config, using the `withName` process selector. 
+
 <br/>
 
 ::: callout-tip
@@ -557,7 +565,7 @@ CernVM-FS comes pre-mounted on Pawsey Nimbus VMs using the [**Pawsey Bio - Ubunt
 
 a) Within the custom-nimbus.config institutional config file
 
-b) Within a separate custom config file named eg custom-tools.config
+b) Within a separate named custom config file, e.g., custom-tools.config
 
 Why do you think this? 
 :::
@@ -573,7 +581,7 @@ Remember, Nextflow's portability is achieved by separating **workflow implementa
 
 ::: callout-note
 ###
-Containers are mounted at the path `/cvmfs/singularity.galaxyproject.org`, with sub-directories based on the first 2 letters of the tool name, eg `/cvmfs/singularity.galaxyproject.org/t/r/` for Trim Galore containers. 
+Containers are mounted at the path `/cvmfs/singularity.galaxyproject.org`, with sub-directories based on the first 2 letters of the tool name, e.g., `/cvmfs/singularity.galaxyproject.org/t/r/` for Trim Galore containers. 
 :::
 
 ``` bash
@@ -585,7 +593,7 @@ ls /cvmfs/singularity.galaxyproject.org/t/r/trim*
 ```
 <br/>
 
-&#x27A4; Next, identify the execution path for the TRIM_GALORE module: 
+&#x27A4; Next, identify the execution path for the `TRIM_GALORE` process: 
 
 ``` default
 grep -i galore nf-core-rnaseq-3.11.1/workflow/conf/modules.config 
@@ -600,7 +608,7 @@ grep -i galore nf-core-rnaseq-3.11.1/workflow/conf/modules.config
 ```
 <br/>
 
-&#x27A4; Open a file for editing named  `custom-tools.config`, and start building your config with the process scope and 'withName' selector:
+&#x27A4; Open a file for editing named  `custom-tools.config`, and start building your config with the process scope and `withName` selector:
 
 ```default
 process {
@@ -611,7 +619,7 @@ process {
 ```
 <br/>
 
-&#x27A4; Then copy the Trim Galore module execution path:
+&#x27A4; Then copy the `TRIM_GALORE` execution path:
 
 ``` default
 process {
@@ -633,7 +641,7 @@ process {
 ```
 <br/>
 
-&#x27A4; Delete or comment out the 'withName' content we applied to the STAR_ALIGN process in the custom-nimbus.config file, then execute the run to outpu directory Lesson-2.3.6 making sure to add the custom-tools.config:
+&#x27A4; Delete or comment out the `withName` content we applied to the `STAR_ALIGN` process in the custom-nimbus.config file, then execute the run to outpu directory Lesson-2.3.6 making sure to add the custom-tools.config:
 
 ``` default
  nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
@@ -664,6 +672,6 @@ grep -i galore Lesson-2.3.6/pipeline_info/software_versions.yml
 - nf-core workflows work 'out of the box' but there are compute and software configurations we should customise for our runs to work well on our compute infrastructure
 - nf-core executes by default with `workflow/nextflow.config` and `workflow/conf/base.config` and has a repository of community-contributed institutional configs that ship with the workflow 
 - custom configs can be applied to a run with `-c <config_name>`, and will over-ride settings in the default configs
-- customisations can be targeted to specific processes with 'withLabel' or 'withName'
+- customisations can be targeted to specific processes with `withLabel` or `withName`
 - workflow parameters belong in `-params-file <params_file>` and not `-c <custom_config>`_ 
 :::

@@ -31,7 +31,7 @@ You may need to apply multiple configuration files at once to an nf-core pipelin
 
 #### **2.4.2. Customised resource tracing**{.unlisted}
 
-Remember we can use the `Nextflow log` command to show information about previous pipeline executions. We can customise which fields to print using the [`-fields` flag](https://www.nextflow.io/docs/latest/tracing.html#customizing-fields). This flag accepts options used by the [trace report](https://www.nextflow.io/docs/latest/tracing.html#trace-fields). 
+Remember we can use the `nextflow log` command to show information about previous pipeline executions. We can customise which fields to print using the [`-fields` flag (-f)](https://www.nextflow.io/docs/latest/tracing.html#customizing-fields). This flag accepts options used by the [trace report](https://www.nextflow.io/docs/latest/tracing.html#trace-fields). 
 
 ::: callout-tip
 ### **Challenge**{.unlisted}
@@ -123,7 +123,7 @@ To the `workshop-params.yaml` file, add:
 multiqc_config: "multiqc-config.yaml" 
 ```
 
-Make sure both YAML files are saved, then re-run the workflow:
+Make sure both YAML files are saved, then rerun the workflow:
 
 ```default
 nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
@@ -136,7 +136,7 @@ nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
 
 The logging information printed to the screen shows us again that the `params.yaml` file with the output directory set to **Lesson-2** has been overridden by the use of the flag `--outdir Lesson-4` in the run command. As the workflow runs, notice all the completed processes that are pulled from the cache and not rerun. Our use of the `multiqc-config.yaml` file adjusted the MultiQC process, as such this process was repeated using the updated settings. 
 
-The changes we made above added the normal mouse transcriptome GC profile as a track to the fastQC per-sequence GC content plot. Take a look at the changes, open the Exercise4 `multiqc_report.html` file with Live Server as per previosuly (or use scp to take a copy to your local computer if you are not on VS Code). Compare this report with the MultiQC report from **lesson 1** by looking at the section **FastQC: Per Sequence GC Content**. Compare the two plots to observe the custom track has been successfully added. 
+The changes we made above added the normal mouse transcriptome GC profile as a track to the fastQC per-sequence GC content plot. Take a look at the changes, open the Exercise4 `multiqc_report.html` file with Live Server as per previosuly (or use `scp` to take a copy to your local computer if you are not on VS Code). Compare this report with the MultiQC report from **lesson 1** by looking at the section **FastQC: Per Sequence GC Content**. Compare the two plots to observe the custom track has been successfully added. 
 
 ![](../figs/2.4_MultiQC.png)
 

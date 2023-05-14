@@ -497,7 +497,7 @@ How do I know if <code>ext.args</code> is used by a process?
 <p>The number and type of default and optional parameters an nf-core pipeline accepts is at the discretion of it’s developers. However, at a minimum, nf-core pipelines typically:</p>
 <ul>
 <li>Require users to specify a <a href="https://nf-co.re/rnaseq/3.11.1/usage#samplesheet-input">sample sheet</a> (<code>--input</code>) detailing sample data and relevant metadata</li>
-<li>Autogenerate or acquire missing reference files from <a href="https://github.com/nf-core/rnaseq/blob/master/conf/igenomes.config">iGenomes</a> (using the <code>--genome</code> option) if not provided by the user.</li>
+<li>Autogenerate or acquire missing reference files from <a href="https://github.com/nf-core/rnaseq/blob/master/conf/igenomes.config">iGenomes</a> (using the <code>--genome</code> parameter) if not provided by the user.</li>
 </ul>
 <p>➤ You can see the recommended (typical) run command and all the parameters available for the nf-core/rnaseq pipeline by running:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf --help </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

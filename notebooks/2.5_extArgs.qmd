@@ -19,20 +19,20 @@ All nf-core modules are currently required to provide the mandatory arguments fo
 
 ### **2.5.1. External directives in action**
 
- nf-core modules provide all optional non-file arguments as a string using the [`ext` directive](https://www.nextflow.io/docs/latest/process.html#ext) via the `$task.ext.args` variable. In the diagram below, on the left is an example of the standard `main.nf` format of a process stored in the `modules/` directory. Above the script block, the `$args` variable is defined. Inside the script block the `$args` variable is applied to the process command.
+nf-core modules provide all optional non-file arguments as a string using the [`ext` directive](https://www.nextflow.io/docs/latest/process.html#ext) via the `$task.ext.args` variable. On the left of the diagram below, an example of the standard `main.nf` format of a process stored in the `modules/` directory is shown. Above the script block, the `$args` variable is defined. Inside the script block the `$args` variable is applied to the process command.
 
 ::: {.callout-note}
 ## What's that Nextflow expression doing?
 The `task.ext.args ?: ''` expression checks if the `ext.args` parameter has already been defined already for a task. If it isn't defined it will assign an empty string by default. 
 :::
 
-But where is the `$ext.args` string actually defined? In the middle of the diagram below there is an example of a custom configuration file targeting the `modules/example/main.nf` process. This configuration file is using the EXAMPLE process `ext.args` to pass `-flag1` to the tool command. Running the pipeline having included `-c example-custom.config` in the run command, you will observe the application of `-flag1` in the `.command.sh` inside that task's work directory.  
+But where is the `$ext.args` string actually defined? In the middle of the diagram below there is an example of a custom configuration file targeting the `modules/example/main.nf` process. This configuration file is using the `EXAMPLE` process `ext.args` to pass `-flag1` to the tool command. Running the pipeline having included `-c example-custom.config` in the run command, you will observe the application of `-flag1` in the `.command.sh` inside that task's work directory.  
 
 ![](../figs/2.5_ext-args.png)
 
 ### **2.5.2. Customisation at the process level**
 
-To practice this, we are going to pass an optional flag to the Trim Galore process. It is up to you to decipher what customisations are required to make your analysis suitable for your data and research questions. In order to understand what customisations you may want to specify as extra arguments, we recommend you: 
+To practice this, we are going to pass an optional flag to the `TRIMGALORE` process. It is up to you to decipher what customisations are required to make your analysis suitable for your data and research questions. In order to understand what customisations you may want to specify as extra arguments, we recommend you: 
 
 1. Read the tool documentation to understand all the available parameters for that tool 
 2. View the list of nf-core parameters for that tool 
@@ -47,14 +47,14 @@ For RNAseq datasets, this Phred score is way too high!
 
 1. Explore the full list of Trim Galore parameters either using the [Trim Galore documentation](https://github.com/FelixKrueger/TrimGalore/blob/master/Docs/Trim_Galore_User_Guide.md#general-options). 
 2. Look at the nf-core/rnaseq pipeline parameter options in the nf-core/rnaseq pipeline [documentation](https://nf-co.re/rnaseq/3.11.1/parameters) 
-3. View the nf-core/rnaseq pipeline Trim Galore [`main.nf`](https://github.com/nf-core/rnaseq/blob/master/modules/nf-core/trimgalore/main.nf) file
+3. View the nf-core/rnaseq pipeline `TRIMGALORE` [`main.nf`](https://github.com/nf-core/rnaseq/blob/master/modules/nf-core/trimgalore/main.nf) file
 
 ::: callout-tip
 ### **Challenge**{.unlisted}
 
 1. What Trim Galore flag would you use to change the default Phred score? 
 2. Is this flag offered as an input parameter by the nf-core/rnaseq pipeline? 
-3. What optional flags are applied to the Trim Galore process? 
+3. What optional flags are applied to the `TRIMGALORE` process? 
 :::
 
 ::: {.callout-caution collapse="true"}
@@ -73,7 +73,7 @@ We will follow the Trim Galore user guide to apply the `--quality` flag with a P
 
 ### **2.5.3. Observe the application of `ext.args`**
 
-To parse that to the Trim Galore process, we need to specify this in a custom config. This time, our Trim Galore custom configuration file will restrict the usage of the parameter to the only place it applies, the Trim Galore process. We can do this using the Nextflow `process {}` scope and `withName:` selector. 
+To parse that to the `TRIMGALORE` process, we need to specify this in a custom config. This time, our `TRIMGALORE` custom configuration file will restrict the usage of the parameter to the only place it applies, the `TRIMGALORE` process. We can do this using the Nextflow `process {}` scope and `withName:` selector. 
 
 Open a new file `trim-galore.config` and add the following content:
 ```default
@@ -127,7 +127,7 @@ Given we have applied the `-resume` flag, what tasks do you expect to be re-run,
 ::: {.callout-caution collapse="true"}
 ### Solution
 
-* Taken from cache: initial FastQC processes for each fastq file
+* Taken from cache: initial `FASTQC` processes for each fastq file
 * Rerun: read trimming and all downstream processes
 :::
 

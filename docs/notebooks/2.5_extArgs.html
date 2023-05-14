@@ -251,7 +251,7 @@ Objectives
 <p>All nf-core modules are currently required to provide the mandatory arguments for a tool to run in the process’ <code>main.nf</code> file. Remember that nf-core pipelines generally run with sensible parameters as default, so these processes may also contain commonly changed or applied optional arguments for a tool. Despite this, nf-core pipelines allow you the flexibility to customise the command a process runs, whether it is permitted by the nf-core workflow parameters or not. In this lesson, we will be using Nextflow’s <a href="https://www.nextflow.io/docs/latest/process.html#ext"><code>ext</code> directive</a> to specify an optional argument to a process within the workflow.</p>
 <section id="external-directives-in-action" class="level3">
 <h3 class="anchored" data-anchor-id="external-directives-in-action"><strong>2.5.1. External directives in action</strong></h3>
-<p>nf-core modules provide all optional non-file arguments as a string using the <a href="https://www.nextflow.io/docs/latest/process.html#ext"><code>ext</code> directive</a> via the <code>$task.ext.args</code> variable. In the diagram below, on the left is an example of the standard <code>main.nf</code> format of a process stored in the <code>modules/</code> directory. Above the script block, the <code>$args</code> variable is defined. Inside the script block the <code>$args</code> variable is applied to the process command.</p>
+<p>nf-core modules provide all optional non-file arguments as a string using the <a href="https://www.nextflow.io/docs/latest/process.html#ext"><code>ext</code> directive</a> via the <code>$task.ext.args</code> variable. On the left of the diagram below, an example of the standard <code>main.nf</code> format of a process stored in the <code>modules/</code> directory is shown. Above the script block, the <code>$args</code> variable is defined. Inside the script block the <code>$args</code> variable is applied to the process command.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -265,12 +265,12 @@ What’s that Nextflow expression doing?
 <p>The <code>task.ext.args ?: ''</code> expression checks if the <code>ext.args</code> parameter has already been defined already for a task. If it isn’t defined it will assign an empty string by default.</p>
 </div>
 </div>
-<p>But where is the <code>$ext.args</code> string actually defined? In the middle of the diagram below there is an example of a custom configuration file targeting the <code>modules/example/main.nf</code> process. This configuration file is using the EXAMPLE process <code>ext.args</code> to pass <code>-flag1</code> to the tool command. Running the pipeline having included <code>-c example-custom.config</code> in the run command, you will observe the application of <code>-flag1</code> in the <code>.command.sh</code> inside that task’s work directory.</p>
+<p>But where is the <code>$ext.args</code> string actually defined? In the middle of the diagram below there is an example of a custom configuration file targeting the <code>modules/example/main.nf</code> process. This configuration file is using the <code>EXAMPLE</code> process <code>ext.args</code> to pass <code>-flag1</code> to the tool command. Running the pipeline having included <code>-c example-custom.config</code> in the run command, you will observe the application of <code>-flag1</code> in the <code>.command.sh</code> inside that task’s work directory.</p>
 <p><img src="../figs/2.5_ext-args.png" class="quarto-discovered-preview-image img-fluid"></p>
 </section>
 <section id="customisation-at-the-process-level" class="level3">
 <h3 class="anchored" data-anchor-id="customisation-at-the-process-level"><strong>2.5.2. Customisation at the process level</strong></h3>
-<p>To practice this, we are going to pass an optional flag to the Trim Galore process. It is up to you to decipher what customisations are required to make your analysis suitable for your data and research questions. In order to understand what customisations you may want to specify as extra arguments, we recommend you:</p>
+<p>To practice this, we are going to pass an optional flag to the <code>TRIMGALORE</code> process. It is up to you to decipher what customisations are required to make your analysis suitable for your data and research questions. In order to understand what customisations you may want to specify as extra arguments, we recommend you:</p>
 <ol type="1">
 <li>Read the tool documentation to understand all the available parameters for that tool</li>
 <li>View the list of nf-core parameters for that tool</li>
@@ -293,7 +293,7 @@ What’s that Nextflow expression doing?
 <ol type="1">
 <li>Explore the full list of Trim Galore parameters either using the <a href="https://github.com/FelixKrueger/TrimGalore/blob/master/Docs/Trim_Galore_User_Guide.md#general-options">Trim Galore documentation</a>.</li>
 <li>Look at the nf-core/rnaseq pipeline parameter options in the nf-core/rnaseq pipeline <a href="https://nf-co.re/rnaseq/3.11.1/parameters">documentation</a></li>
-<li>View the nf-core/rnaseq pipeline Trim Galore <a href="https://github.com/nf-core/rnaseq/blob/master/modules/nf-core/trimgalore/main.nf"><code>main.nf</code></a> file</li>
+<li>View the nf-core/rnaseq pipeline <code>TRIMGALORE</code> <a href="https://github.com/nf-core/rnaseq/blob/master/modules/nf-core/trimgalore/main.nf"><code>main.nf</code></a> file</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -308,7 +308,7 @@ What’s that Nextflow expression doing?
 <ol type="1">
 <li>What Trim Galore flag would you use to change the default Phred score?</li>
 <li>Is this flag offered as an input parameter by the nf-core/rnaseq pipeline?</li>
-<li>What optional flags are applied to the Trim Galore process?</li>
+<li>What optional flags are applied to the <code>TRIMGALORE</code> process?</li>
 </ol>
 </div>
 </div>
@@ -337,7 +337,7 @@ Solution
 </section>
 <section id="observe-the-application-of-ext.args" class="level3">
 <h3 class="anchored" data-anchor-id="observe-the-application-of-ext.args"><strong>2.5.3. Observe the application of <code>ext.args</code></strong></h3>
-<p>To parse that to the Trim Galore process, we need to specify this in a custom config. This time, our Trim Galore custom configuration file will restrict the usage of the parameter to the only place it applies, the Trim Galore process. We can do this using the Nextflow <code>process {}</code> scope and <code>withName:</code> selector.</p>
+<p>To parse that to the <code>TRIMGALORE</code> process, we need to specify this in a custom config. This time, our <code>TRIMGALORE</code> custom configuration file will restrict the usage of the parameter to the only place it applies, the <code>TRIMGALORE</code> process. We can do this using the Nextflow <code>process {}</code> scope and <code>withName:</code> selector.</p>
 <p>Open a new file <code>trim-galore.config</code> and add the following content:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>// Trim Galore Phred score custom configuration </span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -397,7 +397,7 @@ Solution
 <div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
-<li>Taken from cache: initial FastQC processes for each fastq file</li>
+<li>Taken from cache: initial <code>FASTQC</code> processes for each fastq file</li>
 <li>Rerun: read trimming and all downstream processes</li>
 </ul>
 </div>

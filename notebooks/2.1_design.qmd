@@ -198,7 +198,7 @@ grep -r "ext.args" nf-core-rnaseq-3.11.1/workflow/modules/
 The number and type of default and optional parameters an nf-core pipeline accepts is at the discretion of it's developers. However, at a minimum, nf-core pipelines typically:
 
 * Require users to specify a [sample sheet](https://nf-co.re/rnaseq/3.11.1/usage#samplesheet-input)  (`--input`) detailing sample data and relevant metadata
-* Autogenerate or acquire missing reference files from [iGenomes](https://github.com/nf-core/rnaseq/blob/master/conf/igenomes.config) (using the `--genome` option) if not provided by the user.
+* Autogenerate or acquire missing reference files from [iGenomes](https://github.com/nf-core/rnaseq/blob/master/conf/igenomes.config) (using the `--genome` parameter) if not provided by the user.
 
 &#x27A4; You can see the recommended (typical) run command and all the parameters available for the nf-core/rnaseq pipeline by running:
 
