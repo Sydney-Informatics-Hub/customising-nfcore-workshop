@@ -277,8 +277,13 @@ Objectives
 </ul>
 </div>
 </div>
-<p>Using multiple configuration files allows you to customise nf-core pipelines to your specific needs. Depending on how you work, where you work, and what pipelines you run, you may have configuration files that: - Handle distinct issues - Can be applied to specific infrastructures - Can be shared by multiple nf-core pipelines</p>
-<p>In this lesson we will create three custom configuration files that affect different aspects of the workflow and apply them to the one run command.</p>
+<p>Using multiple configuration files allows you to customise nf-core pipelines to your specific needs. Depending on how you work, where you work, and what pipelines you run, you may have configuration files that:</p>
+<ul>
+<li>Handle distinct issues</li>
+<li>Can be applied to specific infrastructures</li>
+<li>Can be shared by multiple nf-core pipelines</li>
+</ul>
+<p>In this lesson we will create four custom configuration files that affect different aspects of the workflow and apply them to the one run command. <br><br></p>
 <section id="configure-your-run-to-use-a-non-default-container" class="level3">
 <h3 class="anchored" data-anchor-id="configure-your-run-to-use-a-non-default-container"><strong>2.4.1. Configure your run to use a non-default container</strong></h3>
 <div class="callout-important callout callout-style-default callout-captioned">
@@ -297,10 +302,10 @@ Objectives
 <p>For this example, we are going to test out the latest version of <a href="https://github.com/FelixKrueger/TrimGalore">Trim Galore</a>. We have been using the default version of Trim Galore that is executed with nf-core/rnaseq revision 3.11.1.</p>
 <p>We can easily view the versions of all tools used from the <code>software_versions.yml</code> file created by default in the <code>&lt;outdir&gt;/pipeline_info</code> directory by nf-core workflows <em>OR</em> by viewing the same information from the ‘nf-core/rnaseq Software Versions’ section of the MultiQC html report.<br>
 <br></p>
-<p>➤ Identify the version of Trim Galore that has been used in our runs so far from the <code>software_versions.yml</code> file.</p>
-<blockquote class="blockquote">
-<p>You might view the file by opening it from the VS Code explorer pane, using <code>more</code> command, or <code>grep</code> for the tool name.</p>
-</blockquote>
+<p>➤ Identify the version of Trim Galore that has been used in our runs so far from the <code>software_versions.yml</code> file:</p>
+<ul>
+<li>You might view the file by opening it from the VS Code explorer pane, using <code>more</code> command, or <code>grep</code> for the tool name</li>
+</ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>more Lesson-2.3.4/pipeline_info/software_versions.yml</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>##</span>
@@ -308,9 +313,9 @@ Objectives
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>#  cutadapt: '3.4'</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>#  trimgalore: 0.6.7</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>#</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The process names are listed in alphabetical order, with the tools and versions used in the <code>script</code> section of the process listed below the process name. We can see for TRIMGALORE process that version 0.6.7 of Trim Galore was used. <br><br></p>
+<p>The module names are listed in alphabetical order, with the tools and versions used in the <code>script</code> section of the process listed below each module. We can see TRIMGALORE that version 0.6.7 of Trim Galore was used. <br><br></p>
 <p>There is a <a href="https://github.com/FelixKrueger/TrimGalore/releases/tag/0.6.10">newer version of Trim Galore</a> available, version 0.6.10. Recall that we have been accessing some materials on <a href="https://support.pawsey.org.au/documentation/pages/viewpage.action?pageId=92832676#NimbusforBioinformatics-1.BiocontainersandReferenceGenomedata"><strong>CernVM-FS</strong></a>, a read-only filesystem which provides shared access to common bioinformatics reference datasets as well as Singularity containers of everything stored in <a href="https://biocontainers.pro/">Biocontainers</a>.</p>
-<p>CernVM-FS comes pre-mounted on Pawsey Nimbus VMs using the <a href="https://support.pawsey.org.au/documentation/display/US/Nimbus+for+Bioinformatics#"><strong>Pawsey Bio - Ubuntu 22.04 - 2023-03</strong></a> image, so we can access and apply the Trim Galore biocontainer by specifying the path to this remote image within the process scope of a custom config, using the ‘withName’ process selector.</p>
+<p>CernVM-FS comes pre-mounted on Pawsey Nimbus VMs using the <a href="https://support.pawsey.org.au/documentation/display/US/Nimbus+for+Bioinformatics#"><strong>Pawsey Bio - Ubuntu 22.04 - 2023-03</strong></a> image, so we can access and apply the Trim Galore biocontainer by specifying the path to this remote image within the <code>process</code> scope of a custom config, using the <code>'withName'</code> process selector.</p>
 <p>We could just as easily specify an alternate remote source, such as <a href="https://quay.io/organization/biocontainer">quay.io</a>, or point to a local image.</p>
 <p><br></p>
 <div class="callout-tip callout callout-style-default callout-captioned">
@@ -323,7 +328,7 @@ Objectives
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><span class="emoji" data-emoji="question">❓</span> For maintaining best practice, where is the best place for the container definition?</p>
+<p><span class="emoji" data-emoji="question">❓</span> For maintaining best practice, where is the best place to specify our custom container?</p>
 <ol type="a">
 <li><p>Within the <code>custom-nimbus.config</code> institutional config file</p></li>
 <li><p>Within a separate custom config file named eg <code>custom-tools.config</code></p></li>
@@ -368,7 +373,7 @@ Solution
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>#  /cvmfs/singularity.galaxyproject.org/t/r/trim-galore:0.6.10--hdfd78af_0</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>##</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br></p>
-<p>➤ Next, identify the execution path for the TRIM_GALORE module:</p>
+<p>➤ Next, identify the execution path for the TRIMGALORE module:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>grep -i galore nf-core-rnaseq-3.11.1/workflow/conf/modules.config </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>##</span>
@@ -379,31 +384,43 @@ Solution
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>#                        params.extra_trimgalore_args ? params.extra_trimgalore_args.split("\\s(?=--)") : ''</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>##</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br></p>
-<p>➤ Open a file for editing named <code>custom-tools.config</code>, and start building your config with the process scope and ‘withName’ selector that we covered in <a href="../notebooks/2.3_configEnv.html#2.3.5.-custom-resource-configuration-using-process-names">Session 2.3</a></p>
+<p>➤ Open a file for editing named <code>custom-tools.config</code>, and start building your config with the <code>process</code> scope and <code>'withName'</code> selector that we covered in <a href="2.3_configEnv.html#custom-resource-configuration-using-process-names">Lesson 2.3.5</a>:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>process {</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  withName: {</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br></p>
-<p>➤ Then copy the Trim Galore module execution path:</p>
+<p>➤ Then copy the Trim Galore module execution path from your terminal inside the <code>process</code> block:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>process {</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  withName: '.*:FASTQ_FASTQC_UMITOOLS_TRIMGALORE:TRIMGALORE' {</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br></p>
-<p>➤ Finally, copy the container details:</p>
+<p>➤ Finally, copy the container details from your terminal inside the <code>withName</code> block:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>process {</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  withName: '.*:FASTQ_FASTQC_UMITOOLS_TRIMGALORE:TRIMGALORE' {</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    container = '/cvmfs/singularity.galaxyproject.org/t/r/trim-galore:0.6.10--hdfd78af_0' </span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br></p>
-<p>➤ Execute the run supplying our two configuration files:</p>
+<p>➤ Save <code>custom-tools.config</code> then resume the previous run, supplying our two configuration files at <code>-c</code>:</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Specify multiple configs
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When adding multiple custom configs, we apply them to <code>-c</code> in a <strong>comma-delimited list</strong></p>
+</div>
+</div>
 <ul>
-<li>When adding multiple custom configs, we apply them to <code>-c</code> in a comma-delimited list</li>
-<li>If you haven’t already done so, delete or comment out the ‘withName’ resource content we applied to the STAR_ALIGN process in the <code>custom-nimbus.config</code> file</li>
+<li>If you haven’t already done so, delete or comment out the <code>'withName'</code> resource content we applied to the STAR_ALIGN process in the <code>custom-nimbus.config</code> file</li>
 <li>Specify output directory <code>Lesson-2.4.1</code></li>
 </ul>
 <div class="sourceCode" id="cb7"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a> nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \</span>
@@ -424,9 +441,9 @@ Solution
 </section>
 <section id="customised-resource-tracing" class="level3">
 <h3 class="anchored" data-anchor-id="customised-resource-tracing"><strong>2.4.2. Customised resource tracing</strong></h3>
-<p>Running Nextflow workflows with the flag <code>-with-trace</code> writes a <a href="https://www.nextflow.io/docs/latest/tracing.html#trace-report">trace report</a> named <code>trace.txt</code> in the working directory.</p>
+<p>Running Nextflow workflows with the option <code>-with-trace</code> writes a <a href="https://www.nextflow.io/docs/latest/tracing.html#trace-report">trace report</a> named <code>trace.txt</code> in the working directory.</p>
 <p>nf-core pipelines by default create an <code>execution_trace</code> file within <code>&lt;outdir&gt;/pipeline_info</code>, with the default fields that Nextflow <code>-with-trace</code> applies. A trace report can be customised to include any combination of <a href="https://www.nextflow.io/docs/latest/tracing.html#trace-fields">available fields</a> using the Nextflow <code>-fields</code> flag.</p>
-<p>In this exercise, we will create a custom configuration file that writes a detailed resource tracing file including our customised fields.</p>
+<p>In this exercise, we will create a custom configuration file that writes a detailed resource tracing file including our chosen fields.</p>
 <p>To begin, we will extract these custom fields from a previous run using the <code>nextflow log</code> command.</p>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -453,7 +470,7 @@ Solution
 </div>
 </div>
 <div class="callout-caution callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -462,7 +479,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>First, run <code>nextflow log</code> with no arguments to obtain the name of your last run (unless you can remember it!)</p>
 <p>Then, supply that run name to the command below:</p>
@@ -472,11 +489,21 @@ Solution
 </div>
 <p><br></p>
 <p>If there is a specific combination of fields you would like to regularly capture for your pipeline runs, perhaps for <a href="https://www.nature.com/articles/s41467-019-09406-4">resource benchmarking</a>, it would be useful to have a custom configuration file that can be optionally applied to any run.</p>
-<p>Let’s make a portable configuration file for resource tracing. Because this config is not infrastructure or pipeline specific, we can share it with collaborators and use it across multiple pipelines. <br></p>
+<p>Let’s make a portable configuration file for resource tracing. Because this config is not infrastructure or pipeline specific, we can share it with collaborators and use it across multiple pipelines. <br><br></p>
 <p>➤ Open a file for editing called <code>custom-trace.config</code> and add the following content:</p>
-<blockquote class="blockquote">
-<p>Note that we need to use <code>%cpu</code> and <code>%mem</code>, as per the <a href="https://www.nextflow.io/docs/latest/tracing.html#trace-fields">Nextflow documentation</a> and not <code>pcpu</code> and <code>pmem</code> as we applied on the command line according to this <a href="https://github.com/nextflow-io/nextflow/issues/3893#event-9076291921">issue</a>.</p>
-</blockquote>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note that we need to use <code>%cpu</code> and <code>%mem</code>, as per the <a href="https://www.nextflow.io/docs/latest/tracing.html#trace-fields">Nextflow documentation</a>, and not <code>pcpu</code> and <code>pmem</code> as we applied on the command line due to this <a href="https://github.com/nextflow-io/nextflow/issues/3893#event-9076291921">issue</a></p>
+</div>
+</div>
 <div class="sourceCode" id="cb10"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>// Define timestamp, to avoid overwriting existing trace </span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>def trace_timestamp = new java.util.Date().format('yyyy-MM-dd_HH-mm-ss')</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -496,7 +523,7 @@ Solution
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  -resume </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br></p>
 <p><span class="emoji" data-emoji="eyes">👀</span> Notice that your multiple custom configurations are listed under <strong>Core Nextflow options</strong> on the launch log printed to the screen: <br><br> <img src="../figs/2.4_screenshot_config_list.png" class="img-fluid"> <br><br></p>
-<p>➤ Once the workflow has run, take a look at the <code>&lt;outdir&gt;/custom-resource-trace-${trace_timestamp}.txt</code> file:</p>
+<p>➤ Once the workflow has run, take a look at the <code>Lesson-2.4.2/custom-resource-trace-${trace_timestamp}.txt</code> file:</p>
 <p><img src="../figs/2.4_screenshot_custom_trace.png" class="img-fluid"> <br><br></p>
 </section>
 <section id="configure-multiqc-reports" class="level3">
@@ -510,11 +537,11 @@ Solution
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Important
+Hidden nf-core parameters
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The <code>--multiqc_config</code> parameter is a <strong>‘hidden param’!</strong> To see this parameter, you need to apply <code>--show_hidden_params</code> on the command line help, or select ‘Show hidden params’ on the nf-core parameters webpage.</p>
+<p>The <code>--multiqc_config</code> parameter is a <strong>‘hidden param’!</strong> To see this parameter, you need to apply <code>--show_hidden_params</code> on the command line help, or select <strong>‘Show hidden params’</strong> on the nf-core parameters webpage</p>
 </div>
 </div>
 <p><br></p>
@@ -543,10 +570,11 @@ Tip
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  - Workshop host: "Australian BioCommons"</span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  - Workshop title: "Unlocking nf-core - customising workflows for your research"</span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  - Workshop URL: https://sydney-informatics-hub.github.io/customising-nfcore-workshop/</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a># Theoretical GC Content:</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>fastqc_config:  </span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  fastqc_theoretical_gc: "mm10_txome" </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  - Sample data: Mouse RNAseq from https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-2801-4 </span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a># Theoretical GC Content:</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>fastqc_config:  </span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  fastqc_theoretical_gc: "mm10_txome" </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br></p>
 <p>➤ To the <code>workshop-params.yaml</code> file, add:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>multiqc_config: "custom-multiqc-config.yaml" </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -558,11 +586,11 @@ Tip
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-
+Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Note that we do not need to add our MultiQC config at <code>-c</code> because we have specified it within the custom parameters YAML file.</p>
+<p>We do not need to add our MultiQC config at the Nextflow option <code>-c</code> because we have specified it as an nf-core parameter within <code>workshop-params.yaml</code></p>
 </div>
 </div>
 <div class="sourceCode" id="cb14"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \</span>
@@ -572,14 +600,14 @@ Tip
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  --outdir Lesson-2.4.3 \</span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  -resume</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br></p>
-<p>➤ View the html file <code>Lesson-2.4.2/multiqc/star_salmon/multiqc_report.html</code> and compare it to the report generated by a previous run</p>
+<p>➤ View the html file <code>Lesson-2.4.2/multiqc/star_salmon/multiqc_report.html</code> and compare it to the report generated by a previous run:</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-
+Viewing HTML
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -606,7 +634,7 @@ Tip
 </div>
 </div>
 <div class="callout-caution callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -615,7 +643,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>This is a tricky one, particularly if you are unfamiliar with RNAseq analysis!</p>
 <ol type="1">
@@ -653,15 +681,15 @@ Solution
 <li>Above the script block, the <code>$args</code> variable is defined</li>
 <li>The <code>task.ext.args ?: ''</code> expression checks if the <code>ext.args</code> parameter has already been defined</li>
 <li>If it isn’t defined it will assign an empty string</li>
-<li>Inside the script block, the <code>$args</code> variable is applied to the process command</li>
+<li>Inside the script block, the <code>$args</code> variable is applied to the tool command</li>
 </ul></li>
-<li>In the <strong>middle</strong> of the diagram is an example of a custom configuration file targeting the <code>modules/example/main.nf</code> process
+<li>In the <strong>middle</strong> of the diagram is a custom configuration file targeting the ‘EXAMPLE’ process
 <ul>
-<li>This configuration file gives the tool argument <code>--flag1</code> to <code>ext.args</code></li>
+<li>This configuration file gives the tool-specific argument <code>--flag1</code> to <code>ext.args</code> using <code>withName</code></li>
 </ul></li>
-<li>On the <strong>right</strong> of the diagram we see how the tool command is executed if <code>-c example-custom.config</code> was applied
+<li>On the <strong>right</strong> of the diagram we see how the tool command is executed if <code>-c example-custom.config</code> was applied to the run
 <ul>
-<li><code>--flag1</code> is interpolated by the <code>$args</code> variable <br><br></li>
+<li>The <code>$args</code> variable is interpolated to <code>--flag1</code> when <code>modules/example/main.nf</code> is executed <br><br></li>
 </ul></li>
 </ul>
 <p><img src="../figs/2.5_ext-args.png" class="img-fluid"> <br><br><br></p>
@@ -682,15 +710,19 @@ Solution
 <ul>
 <li>nf-core pipelines are under active development</li>
 <li>carefully check the parameter and usage docs with each new release</li>
-<li>submit feature requests to the nf-core/github pipeline repo to have <code>--extra_&lt;tool&gt;_args</code> added where you think its warranted</li>
+<li>submit feature requests to the nf-core/github pipeline repo to have <code>--extra_&lt;tool&gt;_args</code> added where you think it’s warranted</li>
 </ul>
 </div>
 </div>
 <p><br><br></p>
 <p>For the sake of the lesson, let’s assume we want to apply a very stringent minimum Phred score of 40.</p>
 <p><span class="emoji" data-emoji="exclamation">❗</span> <em>This is overly stringent! Bear with us…</em> <span class="emoji" data-emoji="blush">😊</span> <br><br></p>
-<p>➤ Follow the decision tree to answer some key questions we need to answer to apply this workflow customisation:</p>
-<p><img src="../figs/2.4_trimgalore_qual_decision_chart.png" class="img-fluid"> <br><br><br></p>
+<p>➤ Follow the decision tree to work out how to apply this workflow customisation. Some useful links are below the flowchart:</p>
+<p><img src="../figs/2.4_trimgalore_qual_decision_chart.png" class="img-fluid"> <br><br></p>
+<p><span class="emoji" data-emoji="toolbox">🧰</span> <a href="https://github.com/FelixKrueger/TrimGalore/blob/master/Docs/Trim_Galore_User_Guide.md#general-options">Trim Galore docs</a></p>
+<p><span class="emoji" data-emoji="toolbox">🧰</span> <a href="https://nf-co.re/rnaseq/3.11.1/parameters#read-trimming-options">nf-core/rnaseq trimming params</a></p>
+<p><span class="emoji" data-emoji="toolbox">🧰</span> <a href="https://github.com/nf-core/rnaseq/blob/3.11.1/modules/nf-core/trimgalore/main.nf">Trim Galore <code>main.nf</code></a></p>
+<p><br><br></p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -701,15 +733,18 @@ Inclusion of ext.args
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Recall from <a href="../notebooks/2.1_design.html#2.1.2.-desing-your-run-command">Session 2.1</a> that the inclusion of <code>ext.args</code> is currently standard practice for all DSL2 nf-core modules where additional parameters may be required to run a process, however this <em>may not be implemented for all processes</em></p>
+<p>Recall from <a href="2.1_design.html#design-your-run-command">Lesson 2.1.2</a> that the inclusion of <code>ext.args</code> is currently standard practice for all DSL2 nf-core modules where additional parameters may be required to run a process, however this <em>may not be implemented for all processes</em></p>
 </div>
 </div>
-<p>Following the above exploration, we have learnt that:</p>
+<p>From the above investigation, we have learnt that:</p>
 <ul>
-<li>The Trim Galore argument <code>--quality 40</code> is required to over-ride the Trim Galore default of 20</li>
-<li>This parameter is absent from the nf-core/rnaseq parameters list</li>
-<li>Only <code>--cores</code> and <code>--gzip</code> are hard-coded in <code>trimgalore/main.nf</code></li>
-<li><code>ext.args</code> <strong>is</strong> defined in <code>trimgalore/main.nf</code></li>
+<li><p>The Trim Galore argument <code>--quality 40</code> is required to over-ride the Trim Galore default of 20</p></li>
+<li><p>This parameter is absent from the nf-core/rnaseq parameters list</p>
+<ul>
+<li><em>Remember to kindly ignore the <code>--extra_trimgalore_args</code> param for the sake of the exercise!</em> <span class="emoji" data-emoji="blush">😊</span></li>
+</ul></li>
+<li><p>Only <code>--cores</code> and <code>--gzip</code> are hard-coded in <code>trimgalore/main.nf</code></p></li>
+<li><p><code>ext.args</code> <strong>is</strong> defined in <code>trimgalore/main.nf</code></p></li>
 </ul>
 <p><br></p>
 <div class="callout-tip callout callout-style-default callout-captioned">
@@ -722,12 +757,12 @@ Inclusion of ext.args
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Write a custom configuration file named <code>custom-args.config</code> that adds <code>--quality 40</code> to the script block of the TRIM_GALORE module.</p>
-<p><span class="emoji" data-emoji="bulb">💡</span> <strong>Hint:</strong> you may find it helpful to take a copy of the <code>custom-tools.config</code> file from the previous exercise</p>
+<p>Write a custom configuration file named <code>custom-args.config</code> that adds <code>--quality 40</code> to the script block of the TRIMGALORE module</p>
+<p><span class="emoji" data-emoji="bulb">💡</span> <strong>Hint:</strong> you may find it helpful to take a copy of the <code>custom-tools.config</code> file from the previous exercise!</p>
 </div>
 </div>
 <div class="callout-caution callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -736,7 +771,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="sourceCode" id="cb16"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>// A custom configuration file for specifying external tool arguments</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -749,7 +784,7 @@ Solution
 </div>
 </div>
 <p><br></p>
-<p>➤ Resume the run, specifying our latest custom config file <code>custom-args.config</code> and output directory Lesson-2.4.4:</p>
+<p>➤ Save <code>custom-args.config</code> then resume the run, specifying our latest custom config file at <code>-c</code> and output directory Lesson-2.4.4:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  -profile workshop \</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  -c custom-nimbus.config,custom-tools.config,custom-trace.config,custom-args.config \</span>
@@ -760,34 +795,24 @@ Solution
 <p><span class="emoji" data-emoji="astonished">😲</span> Pipeline <strong>completed successfully</strong> but <span style="color:#8b0000;"> 2/2 samples failed!</span></p>
 <p><img src="../figs/2.4_failed_star.png" class="img-fluid"> <br><br></p>
 <p>➤ Investigate the source of the failure:</p>
-<p>Following the advice of the warning message, check the MultiQC report by opening the file <code>Lesson-2.4.4/multiqc/star_salmon/multiqc_report.html</code></p>
 <ul>
-<li>Click on the ‘WARNING: Fail Trimming Check’ on the navigation headings on the left</li>
-<li>Both of our samples ‘<em>failed the minimum trimmed reads threshold specified via the <code>--min_trimmed_reads</code> parameter, and hence were ignored for the downstream processing steps</em>’</li>
-<li>Looking at the <a href="https://nf-co.re/rnaseq/3.11.1/parameters#min_trimmed_reads"><code>--min_trimmed_reads</code></a> parameter documentation, the default 10,000 and our samples both had &lt; 5,000</li>
+<li><p>Following the advice of the warning message, check the MultiQC report by opening the file <code>Lesson-2.4.4/multiqc/star_salmon/multiqc_report.html</code> (with Live Server VS Code extension or taking a local copy)</p></li>
+<li><p>Click on the ‘WARNING: Fail Trimming Check’ on the navigation headings on the left</p></li>
+<li><p>Both of our samples ‘<em>failed the minimum trimmed reads threshold specified via the <code>--min_trimmed_reads</code> parameter, and hence were ignored for the downstream processing steps</em>’</p>
+<ul>
+<li>You can confirm this by checking the <code>Lesson-2.4.4</code> output directory. Notice that there is no <code>star_salmon</code> directory, which is where the output of STAR alignment and Salmon quantification modules are saved</li>
+</ul></li>
+<li><p>Looking at the nf-core/rnaseq parameter documentation, we see <a href="https://nf-co.re/rnaseq/3.11.1/parameters#min_trimmed_reads"><code>--min_trimmed_reads</code> param</a> with default value 10,000. Our samples both had &lt; 5,000 reads.</p></li>
 </ul>
-<p><img src="../figs/2.4_min_trim_param.png" class="img-fluid"> <br><br></p>
-<p>➤ Confirm that the external argument was applied to the run:</p>
-<div class="callout-warning callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>In this example, it is clear that our <code>ext.args</code> customisation was successfully applied because of the catastrophic failure it produced. But in less dramatic cases, how can we confirm that the external argument was actually applied?</p>
-</div>
-</div>
+<p><img src="../figs/2.4_min_trim_param.png" class="img-fluid"> <br><br><br></p>
+<p><span class="emoji" data-emoji="exclamation">❗</span> In this example, it is clear that our <code>ext.args</code> customisation was successfully applied because of the catastrophic failure it produced. But in less dramatic cases, <strong>how can we confirm that the external argument was actually applied?</strong> <span class="emoji" data-emoji="thinking">🤔</span> <br><br></p>
+<p>➤ Within your MultiQc report, navigate to the section <strong>‘nf-core/rnaseq Workflow Summary’</strong>:</p>
 <ul>
-<li>On your <code>multiqc_report.html</code> file, navigate to the section ‘nf-core/rnaseq Workflow Summary’.</li>
-<li>Unlike our custom <strong>options</strong>, <strong>profiles</strong>, and <strong>configs</strong>, the custom quality parameter is <strong>not documented!</strong> <br><br></li>
+<li>Unlike our custom <strong>options</strong>, <strong>profiles</strong>, and <strong>configs</strong>, the custom quality parameter is <strong>not documented!</strong> <br></li>
 </ul>
 <p>Some tools write a handy log, in which case you might view the applied parameters from that file:</p>
 <p><img src="../figs/2.4_trimgalore_log.png" class="img-fluid"> <br><br></p>
-<p>In the absence of an informative tool log, you can always rely on <code>nextflow log</code>:</p>
+<p>In the absence of an informative tool log, you can always rely on <code>nextflow log</code> <span class="emoji" data-emoji="smiling_face_with_three_hearts">🥰</span></p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>nextflow log &lt;run_name&gt; -f script | grep -A 10 trim_galore</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>##</span>
@@ -798,6 +823,10 @@ Solution
 <span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>#            SRR3473989.fastq.gz</span>
 <span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>##</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br><br></p>
+<p>➤ <strong>Optional final run for the purists at heart <span class="emoji" data-emoji="angel">👼</span></strong></p>
+<ul>
+<li>If you would like to conclude today’s compute with a successful run, try changing the Trim Galore <code>--quality</code> threshold to 30 <br><br><br></li>
+</ul>
 <div class="callout-important callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -809,7 +838,7 @@ Stay vigilant!
 </div>
 <div class="callout-body-container callout-body">
 <p>This lesson highlights the need to <strong>thoroughly check your output to ensure that the intended anlysis has been run and the results are what you require</strong>.</p>
-<p>The message <code>Pipeline completed successfully</code> printed to your terminal everytime a run completes (and also exit status of zero for invidual tasks or cluster jobs if you are running on a cluster) indicates that there were no errors running the pipeline, <strong>not</strong> that your samples have produced the desired output!</p>
+<p>The message <code>Pipeline completed successfully</code> printed to your terminal every time a run completes (and also exit status of zero for individual tasks or cluster jobs if you are running on a cluster) indicates that there were no errors running the pipeline, <strong>not</strong> that your samples have produced the desired output!</p>
 </div>
 </div>
 <p><br><br></p>
@@ -825,8 +854,8 @@ Stay vigilant!
 <div class="callout-body-container callout-body">
 <ul>
 <li>You can customise container use, resource tracing and mutliqc reports through custom configuration files</li>
-<li>You can apply tool arguments to an nf-core pipeline using the <code>ext.args</code> feature</li>
-<li>You can specify multiple custom configuration files at <code>-c</code> in a comma-delimited list</li>
+<li>You can apply external tool arguments to an nf-core pipeline using the <code>ext.args</code> feature</li>
+<li>You can specify multiple custom configuration files at the Nextflow option <code>-c</code> in a comma-delimited list</li>
 <li>There is no substitute for reading the tool docs when customising your runs!</li>
 </ul>
 </div>

@@ -17,12 +17,13 @@ from: markdown+emoji
 :::
 
 Using multiple configuration files allows you to customise nf-core pipelines to your specific needs. Depending on how you work, where you work, and what pipelines you run, you may have configuration files that:
+
 - Handle distinct issues
 - Can be applied to specific infrastructures
 - Can be shared by multiple nf-core pipelines
 
-In this lesson we will create three custom configuration files that affect different aspects of the workflow and apply them to the one run command.
-
+In this lesson we will create four custom configuration files that affect different aspects of the workflow and apply them to the one run command.
+<br/><br/>
 
 ### **2.4.1. Configure your run to use a non-default container**
 
@@ -36,9 +37,9 @@ For this example, we are going to test out the latest version of [Trim Galore](h
 We can easily view the versions of all tools used from the `software_versions.yml` file created by default in the `<outdir>/pipeline_info` directory by nf-core workflows *OR* by viewing the same information from the 'nf-core/rnaseq Software Versions' section of the MultiQC html report.  
 <br/>
 
-&#x27A4; Identify the version of Trim Galore that has been used in our runs so far from the `software_versions.yml` file. 
+&#x27A4; Identify the version of Trim Galore that has been used in our runs so far from the `software_versions.yml` file: 
 
->You might view the file by opening it from the VS Code explorer pane, using `more` command, or `grep` for the tool name.
+- You might view the file by opening it from the VS Code explorer pane, using `more` command, or `grep` for the tool name
 
 ```default
 more Lesson-2.3.4/pipeline_info/software_versions.yml
@@ -50,12 +51,12 @@ more Lesson-2.3.4/pipeline_info/software_versions.yml
 #
 ```
 
-The process names are listed in alphabetical order, with the tools and versions used in the `script` section of the process listed below the process name. We can see for TRIMGALORE process that version 0.6.7 of Trim Galore was used. 
+The module names are listed in alphabetical order, with the tools and versions used in the `script` section of the process listed below each module. We can see TRIMGALORE that version 0.6.7 of Trim Galore was used. 
 <br/><br/>
 
 There is a [newer version of Trim Galore](https://github.com/FelixKrueger/TrimGalore/releases/tag/0.6.10) available, version 0.6.10. Recall that we have been accessing some materials on [**CernVM-FS**](https://support.pawsey.org.au/documentation/pages/viewpage.action?pageId=92832676#NimbusforBioinformatics-1.BiocontainersandReferenceGenomedata ), a read-only filesystem which provides shared access to common bioinformatics reference datasets as well as Singularity containers of everything stored in [Biocontainers](https://biocontainers.pro/).
 
-CernVM-FS comes pre-mounted on Pawsey Nimbus VMs using the [**Pawsey Bio - Ubuntu 22.04 - 2023-03**](https://support.pawsey.org.au/documentation/display/US/Nimbus+for+Bioinformatics#) image, so we can access and apply the Trim Galore biocontainer by specifying the path to this remote image within the process scope of a custom config, using the 'withName' process selector. 
+CernVM-FS comes pre-mounted on Pawsey Nimbus VMs using the [**Pawsey Bio - Ubuntu 22.04 - 2023-03**](https://support.pawsey.org.au/documentation/display/US/Nimbus+for+Bioinformatics#) image, so we can access and apply the Trim Galore biocontainer by specifying the path to this remote image within the `process` scope of a custom config, using the `'withName'` process selector. 
 
 We could just as easily specify an alternate remote source, such as [quay.io](https://quay.io/organization/biocontainer), or point to a local image. 
 
@@ -63,7 +64,7 @@ We could just as easily specify an alternate remote source, such as [quay.io](ht
 
 ::: callout-tip
 ### **Thoughts**{.unlisted}
-:question: For maintaining best practice, where is the best place for the container definition?
+:question: For maintaining best practice, where is the best place to specify our custom container?
 
 a) Within the `custom-nimbus.config` institutional config file
 
@@ -95,7 +96,7 @@ ls /cvmfs/singularity.galaxyproject.org/t/r/trim*
 ```
 <br/>
 
-&#x27A4; Next, identify the execution path for the TRIM_GALORE module: 
+&#x27A4; Next, identify the execution path for the TRIMGALORE module: 
 
 ``` default
 grep -i galore nf-core-rnaseq-3.11.1/workflow/conf/modules.config 
@@ -110,8 +111,8 @@ grep -i galore nf-core-rnaseq-3.11.1/workflow/conf/modules.config
 ```
 <br/>
 
-&#x27A4; Open a file for editing named  `custom-tools.config`, and start building your config with the process scope and 'withName' selector that we covered in [Session 2.3
-](2.3_configEnv.qmd#2.3.5.-custom-resource-configuration-using-process-names)
+&#x27A4; Open a file for editing named  `custom-tools.config`, and start building your config with the `process` scope and `'withName'` selector that we covered in
+[Lesson 2.3.5](2.3_configEnv.html#custom-resource-configuration-using-process-names):
 
 ```default
 process {
@@ -122,7 +123,7 @@ process {
 ```
 <br/>
 
-&#x27A4; Then copy the Trim Galore module execution path:
+&#x27A4; Then copy the Trim Galore module execution path from your terminal inside the `process` block:
 
 ``` default
 process {
@@ -133,7 +134,7 @@ process {
 ```
 <br/>
 
-&#x27A4; Finally, copy the container details:
+&#x27A4; Finally, copy the container details from your terminal inside the `withName` block:
 
 ``` default
 process {
@@ -144,10 +145,15 @@ process {
 ```
 <br/>
 
-&#x27A4; Execute the run supplying our two configuration files:
+&#x27A4; Save `custom-tools.config` then resume the previous run, supplying our two configuration files at `-c`:
 
-- When adding multiple custom configs, we apply them to `-c` in a comma-delimited list
-- If you haven't already done so, delete or comment out the 'withName' resource content we applied to the STAR_ALIGN process in the `custom-nimbus.config` file
+::: callout-note
+### Specify multiple configs
+When adding multiple custom configs, we apply them to `-c` in a **comma-delimited list**
+:::
+
+- First, delete or comment out the `withName` block we applied in the `custom-nimbus.config` file
+  - In Nextflow, use `//` for single line comments or  `/* .. */` to comment a block on multiple lines
 - Specify output directory `Lesson-2.4.1` 
 
 ``` default
@@ -175,11 +181,11 @@ grep -i galore Lesson-2.4.1/pipeline_info/software_versions.yml
 
 ### **2.4.2. Customised resource tracing**
 
-Running Nextflow workflows with the flag `-with-trace` writes a [trace report](https://www.nextflow.io/docs/latest/tracing.html#trace-report) named `trace.txt` in the working directory.
+Running Nextflow workflows with the option `-with-trace` writes a [trace report](https://www.nextflow.io/docs/latest/tracing.html#trace-report) named `trace.txt` in the working directory.
 
 nf-core pipelines by default create an `execution_trace` file within `<outdir>/pipeline_info`, with the default fields that Nextflow `-with-trace` applies. A trace report can be customised to include any combination of [available fields](https://www.nextflow.io/docs/latest/tracing.html#trace-fields)  using the Nextflow `-fields` flag.
 
-In this exercise, we will create a custom configuration file that writes a detailed resource tracing file including our customised fields. 
+In this exercise, we will create a custom configuration file that writes a detailed resource tracing file including our chosen fields. 
 
 To begin, we will extract these custom fields from a previous run using the `nextflow log` command.  
 
@@ -217,11 +223,14 @@ nextflow log <run_name> -f name,status,exit,realtime,cpus,pcpu,memory,pmem,rss
 If there is a specific combination of fields you would like to regularly capture for your pipeline runs, perhaps for [resource benchmarking](https://www.nature.com/articles/s41467-019-09406-4), it would be useful to have a custom configuration file that can be optionally applied to any run. 
 
 Let's make a portable configuration file for resource tracing. Because this config is not infrastructure or pipeline specific, we can share it with collaborators and use it across multiple pipelines. 
-<br/>
+<br/><br/>
 
 &#x27A4;  Open a file for editing called `custom-trace.config` and add the following content:
 
-> Note that we need to use `%cpu` and `%mem`, as per the [Nextflow documentation](https://www.nextflow.io/docs/latest/tracing.html#trace-fields) and not `pcpu` and `pmem` as we applied on the command line according to this [issue](https://github.com/nextflow-io/nextflow/issues/3893#event-9076291921).
+::: callout-note
+###
+Note that we need to use `%cpu` and `%mem`, as per the [Nextflow documentation](https://www.nextflow.io/docs/latest/tracing.html#trace-fields), and not `pcpu` and `pmem` as we applied on the command line due to this [issue](https://github.com/nextflow-io/nextflow/issues/3893#event-9076291921)
+:::
 
 ```default
 // Define timestamp, to avoid overwriting existing trace 
@@ -253,7 +262,7 @@ nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
 ![](../figs/2.4_screenshot_config_list.png)
 <br/><br/>
 
-&#x27A4;  Once the workflow has run, take a look at the `<outdir>/custom-resource-trace-${trace_timestamp}.txt` file:
+&#x27A4;  Once the workflow has run, take a look at the `Lesson-2.4.2/custom-resource-trace-${trace_timestamp}.txt` file:
 
 ![](../figs/2.4_screenshot_custom_trace.png)
 <br/><br/>
@@ -268,7 +277,8 @@ MultiQC allows users the flexibility of [customising the output reports](https:/
 nf-core has enabled users to take full advantage of this functionality through the inclusion of the [`--multiqc_config` parameter](https://nf-co.re/rnaseq/3.11.1/parameters#multiqc_config).
 
 ::: {.callout-important}
-The `--multiqc_config` parameter is a **'hidden param'!** To see this parameter, you need to apply `--show_hidden_params` on the command line help, or select 'Show hidden params' on the nf-core parameters webpage. 
+### Hidden nf-core parameters
+The `--multiqc_config` parameter is a **'hidden param'!** To see this parameter, you need to apply `--show_hidden_params` on the command line help, or select **'Show hidden params'** on the nf-core parameters webpage 
 :::
 <br/>
 
@@ -293,6 +303,7 @@ report_header_info:
   - Workshop host: "Australian BioCommons"
   - Workshop title: "Unlocking nf-core - customising workflows for your research"
   - Workshop URL: https://sydney-informatics-hub.github.io/customising-nfcore-workshop/
+  - Sample data: Mouse RNAseq from https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-2801-4 
 
 # Theoretical GC Content:
 fastqc_config:  
@@ -310,8 +321,7 @@ multiqc_config: "custom-multiqc-config.yaml"
 &#x27A4; Make sure both YAML files are saved, then re-run the workflow:
 
 ::: {.callout-note}
-###
-Note that we do not need to add our MultiQC config at `-c` because we have specified it within the custom parameters YAML file.
+We do not need to add our MultiQC config at the Nextflow option `-c` because we have specified it as an nf-core parameter within `workshop-params.yaml`
 :::
 
 ```default
@@ -324,10 +334,10 @@ nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
 ```
 <br/>
 
-&#x27A4; View the html file `Lesson-2.4.2/multiqc/star_salmon/multiqc_report.html` and compare it to the report generated by a previous run
+&#x27A4; View the html file `Lesson-2.4.2/multiqc/star_salmon/multiqc_report.html` and compare it to the report generated by a previous run:
 
 ::: {.callout-note}
-###
+### Viewing HTML
 - If you are using VS Code with the 'Live Server' extension installed, right click the html file in the Explorer pane and select 'Open with Live Server'
 - If you are using a terminal without a browser GUI enabled, use eg `scp` command to take a copy to your local computer and open in your preferred browser 
 :::
@@ -394,11 +404,11 @@ In this lesson, we will learn how to apply any argument for a tool that is not e
   - Above the script block, the `$args` variable is defined
   - The `task.ext.args ?: ''` expression checks if the `ext.args` parameter has already been defined
   - If it isn't defined it will assign an empty string 
-  - Inside the script block, the `$args` variable is applied to the process command
-- In the **middle** of the diagram is an example of a custom configuration file targeting the `modules/example/main.nf` process
-  - This configuration file gives the tool argument `--flag1` to `ext.args`
-- On the **right** of the diagram we see how the tool command is executed if `-c example-custom.config` was applied
-  - `--flag1` is interpolated by the `$args` variable 
+  - Inside the script block, the `$args` variable is applied to the tool command
+- In the **middle** of the diagram is a custom configuration file targeting the 'EXAMPLE' process
+  - This configuration file gives the tool-specific argument `--flag1` to `ext.args` using `withName`
+- On the **right** of the diagram we see how the tool command is executed if `-c example-custom.config` was applied to the run
+  - The `$args` variable is interpolated to `--flag1` when `modules/example/main.nf` is executed
 <br/><br/>
 
 ![](../figs/2.5_ext-args.png)
@@ -416,7 +426,7 @@ This is a good reminder that:
 
 - nf-core pipelines are under active development
 - carefully check the parameter and usage docs with each new release
-- submit feature requests to the nf-core/github pipeline repo to have `--extra_<tool>_args` added where you think its warranted
+- submit feature requests to the nf-core/github pipeline repo to have `--extra_<tool>_args` added where you think it's warranted
 :::
 <br/><br/>
 
@@ -425,21 +435,37 @@ For the sake of the lesson, let's assume we want to apply a very stringent minim
 :exclamation: *This is overly stringent! Bear with us...* :blush:
 <br/><br/>
 
-&#x27A4;  Follow the decision tree to answer some key questions we need to answer to apply this workflow customisation:
+&#x27A4;  Follow the decision tree to work out how to apply this workflow customisation. Some useful links are below the flowchart:
+
+
+
 
 ![](../figs/2.4_trimgalore_qual_decision_chart.png)
-<br/><br/><br/>
+<br/><br/>
+
+:toolbox: [Trim Galore docs](https://github.com/FelixKrueger/TrimGalore/blob/master/Docs/Trim_Galore_User_Guide.md#general-options)
+
+:toolbox: [nf-core/rnaseq trimming params](https://nf-co.re/rnaseq/3.11.1/parameters#read-trimming-options)
+
+:toolbox: [Trim Galore `main.nf`](https://github.com/nf-core/rnaseq/blob/3.11.1/modules/nf-core/trimgalore/main.nf)
+
+<br/><br/>
+
 
 ::: {.callout-note}
 ### Inclusion of ext.args
-Recall from [Session 2.1](2.1_design.qmd#2.1.2.-desing-your-run-command) that the inclusion of `ext.args` is currently standard practice for all DSL2 nf-core modules where additional parameters may be required to run a process, however this *may not be implemented for all processes*
+Recall from [Lesson 2.1.2](2.1_design.html#design-your-run-command) that the inclusion of `ext.args` is currently standard practice for all DSL2 nf-core modules where additional parameters may be required to run a process, however this *may not be implemented for all processes*
 :::
 
-Following the above exploration, we have learnt that:
+From the above investigation, we have learnt that:
 
 - The Trim Galore argument `--quality 40` is required to over-ride the Trim Galore default of 20
-- This parameter is absent from the nf-core/rnaseq parameters list
+
+- This parameter is absent from the nf-core/rnaseq parameters list 
+  - *Remember to kindly ignore the `--extra_trimgalore_args` param for the sake of the exercise!* :blush:
+
 - Only `--cores` and `--gzip` are hard-coded in `trimgalore/main.nf`
+
 - `ext.args` **is** defined in `trimgalore/main.nf`
 
 
@@ -448,9 +474,9 @@ Following the above exploration, we have learnt that:
  
 ::: callout-tip
 ### **Challenge**{.unlisted}
-Write a custom configuration file named `custom-args.config` that adds `--quality 40` to the script block of the TRIM_GALORE module. 
+Write a custom configuration file named `custom-args.config` that adds `--quality 40` to the script block of the TRIMGALORE module 
 
-:bulb: **Hint:** you may find it helpful to take a copy of the `custom-tools.config` file from the previous exercise
+:bulb: **Hint:** you may find it helpful to take a copy of the `custom-tools.config` file from the previous exercise!
 :::
 
 ::: {.callout-caution collapse="true"}
@@ -467,7 +493,7 @@ process {
 :::
 <br/>
 
-&#x27A4;  Resume the run, specifying our latest custom config file `custom-args.config` and output directory Lesson-2.4.4:
+&#x27A4;  Save `custom-args.config` then resume the run, specifying our latest custom config file at `-c` and output directory Lesson-2.4.4:
 
 ```default
 nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
@@ -487,26 +513,26 @@ nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
 
 &#x27A4;  Investigate the source of the failure:
 
-Following the advice of the warning message, check the MultiQC report by opening the file `Lesson-2.4.4/multiqc/star_salmon/multiqc_report.html`
+- Following the advice of the warning message, check the MultiQC report by opening the file `Lesson-2.4.4/multiqc/star_salmon/multiqc_report.html` (with Live Server VS Code extension or taking a local copy)
 
-  - Click on the 'WARNING: Fail Trimming Check' on the navigation headings on the left
-  - Both of our samples '*failed the minimum trimmed reads threshold specified via the `--min_trimmed_reads` parameter, and hence were ignored for the downstream processing steps*'
-  - Looking at the [`--min_trimmed_reads`](https://nf-co.re/rnaseq/3.11.1/parameters#min_trimmed_reads) parameter documentation, the default 10,000 and our samples both had < 5,000 
+- Click on the 'WARNING: Fail Trimming Check' on the navigation headings on the left
+
+- Both of our samples '*failed the minimum trimmed reads threshold specified via the `--min_trimmed_reads` parameter, and hence were ignored for the downstream processing steps*'
+  - You can confirm this by checking the `Lesson-2.4.4` output directory. Notice that there is no `star_salmon` directory, which is where the output of STAR alignment and Salmon quantification modules are saved 
+
+- Looking at the nf-core/rnaseq parameter documentation, we see [`--min_trimmed_reads` param](https://nf-co.re/rnaseq/3.11.1/parameters#min_trimmed_reads) with default value 10,000. Our samples both had < 5,000 reads. 
 
 ![](../figs/2.4_min_trim_param.png)
+<br/><br/><br/>
+
+
+:exclamation: In this example, it is clear that our `ext.args` customisation was successfully applied because of the catastrophic failure it produced. But in less dramatic cases, **how can we confirm that the external argument was actually applied?** :thinking:
 <br/><br/>
 
+&#x27A4; Within your MultiQc report, navigate to the section **'nf-core/rnaseq Workflow Summary'**:
 
-&#x27A4; Confirm that the external argument was applied to the run:
-
-::: {.callout-warning}
-###
-In this example, it is clear that our `ext.args` customisation was successfully applied because of the catastrophic failure it produced. But in less dramatic cases, how can we confirm that the external argument was actually applied?
-:::
-
-- On your `multiqc_report.html` file, navigate to the section 'nf-core/rnaseq Workflow Summary'. 
 - Unlike our custom **options**, **profiles**, and **configs**, the custom quality parameter is **not documented!**
-<br/><br/>
+<br/>
 
 Some tools write a handy log, in which case you might view the applied parameters from that file: 
 
@@ -514,7 +540,7 @@ Some tools write a handy log, in which case you might view the applied parameter
 <br/><br/>
 
 
-In the absence of an informative tool log, you can always rely on `nextflow log`:
+In the absence of an informative tool log, you can always rely on `nextflow log` :smiling_face_with_three_hearts:
 ```default
 nextflow log <run_name> -f script | grep -A 10 trim_galore
 
@@ -529,12 +555,17 @@ nextflow log <run_name> -f script | grep -A 10 trim_galore
 <br/><br/>
 
 
+&#x27A4;  **Optional final run for the purists at heart :angel:**
+
+- If you would like to conclude today's compute with a successful run, try changing the Trim Galore `--quality` threshold to 30
+<br/><br/><br/> 
+
 ::: {.callout-important}
 ## Stay vigilant! 
 
 This lesson highlights the need to **thoroughly check your output to ensure that the intended anlysis has been run and the results are what you require**. 
 
-The message `Pipeline completed successfully` printed to your terminal everytime a run completes (and also exit status of zero for invidual tasks or cluster jobs if you are running on a cluster) indicates that there were no errors running the pipeline, **not** that your samples have produced the desired output!
+The message `Pipeline completed successfully` printed to your terminal every time a run completes (and also exit status of zero for individual tasks or cluster jobs if you are running on a cluster) indicates that there were no errors running the pipeline, **not** that your samples have produced the desired output!
 :::
 <br/><br/>
 
@@ -542,8 +573,8 @@ The message `Pipeline completed successfully` printed to your terminal everytime
 ::: {.callout-note}
 ### **Key points**
 - You can customise container use, resource tracing and mutliqc reports through custom configuration files
-- You can apply tool arguments to an nf-core pipeline using the `ext.args` feature
-- You can specify multiple custom configuration files at `-c` in a comma-delimited list 
+- You can apply external tool arguments to an nf-core pipeline using the `ext.args` feature
+- You can specify multiple custom configuration files at the Nextflow option `-c` in a comma-delimited list 
 - There is no substitute for reading the tool docs when customising your runs!
 :::
   

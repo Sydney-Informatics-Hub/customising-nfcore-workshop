@@ -296,29 +296,36 @@ Objectives
 <p><br></p>
 <section id="default-nf-core-configuration" class="level3">
 <h3 class="anchored" data-anchor-id="default-nf-core-configuration"><strong>2.3.1. Default nf-core configuration</strong></h3>
-<p>Recall that when a <code>main.nf</code> file is run for any Nextflow workflow, Nextflow looks for <a href="https://www.nextflow.io/docs/latest/config.html#configuration-file">configuration files in multiple locations</a> to determine how to execute the workflow and its processes.</p>
-<p>Currently, all nf-core workflows use a <code>nextflow.config</code> file and a <code>conf/base.config</code> file to define the default execution settings and parameters of a workflow.</p>
-<p>The critical nf-core configuration aspects can be grouped into 3 key areas:</p>
+<p>Recall that when a pipeline script is launched, Nextflow looks for <a href="https://www.nextflow.io/docs/latest/config.html#configuration-file">configuration files in multiple locations</a>.</p>
+<p><img src="../figs/2.3_config_priority_order_no_text_overlay.png" class="img-fluid"> <br></p>
+<p>Currently, all nf-core workflows use a <code>workflow/nextflow.config</code> file and a <code>workflow/conf/base.config</code> file to define the default execution settings and parameters of a workflow.</p>
+<p>The critical configuration aspects can be grouped into 3 general categories:</p>
 <ol type="1">
 <li>Parameters</li>
-<li>Compute resources</li>
-<li>Software/tool access <br><br></li>
+<li>Hardware</li>
+<li>Software <br><br></li>
 </ol>
 <p>Let’s take a look at these two configuration files to gain an undertsanding of how defaults are applied.</p>
 <p>➤ Using the <code>more</code> command, take a few moments to scroll through both the <code>nextflow.config</code> and <code>base.config</code> files:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>more nf-core-rnaseq-3.11.1/workflow/conf/base.config</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>more nf-core-rnaseq-3.11.1/workflow/nextflow.config</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br></p>
-<p>The <code>base.config</code> sets the default compute resource settings to be used by the processes in the nf-core workflow. It uses <strong>process labels</strong> to enable different sets of resources to be applied to groups of processes that require similar compute. These labels are specified within the <code>main.nf</code> file for a process. <span style="color:#000080;"> We can over-ride these default compute resources using a custom configuration file.</span></p>
-<p>The <code>nextflow.config</code> file is more workflow-specific, and sets the defaults for the workflow parameters, as well as defines profiles to change the default software access from <code>$PATH</code> to the specified access method, eg Singularity. <span style="color:#000080;"> We can over-ride these parameters on the command line or with a parameters file, and over-ride the default behaviour of searching for tools on <code>$PATH</code> by specifying a <code>-profile</code>.</span><br>
-<br><br></p>
+<p>The <code>base.config</code> sets the default compute resource settings to be used by the processes in the nf-core workflow. It uses <strong>process labels</strong> to enable different sets of resources to be applied to groups of processes that require similar compute. These labels are specified within the <code>main.nf</code> file for a process.</p>
+<blockquote class="blockquote">
+<p><span style="color:#000080;"> We can over-ride these default compute resources using a custom configuration file.</span></p>
+</blockquote>
+<p>The <code>nextflow.config</code> file is more workflow-specific, and sets the defaults for the workflow parameters, as well as defines profiles to change the default software access from <code>$PATH</code> to the specified access method, eg Singularity.</p>
+<blockquote class="blockquote">
+<p><span style="color:#000080;"> We can over-ride these parameters on the command line or with a parameters file, and over-ride the default behaviour of searching for tools on <code>$PATH</code> by specifying a <code>-profile</code>.</span></p>
+</blockquote>
+<p><br><br></p>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-<strong>Challenge</strong>
+Challenge
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -341,7 +348,7 @@ Solution
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
-<li>The tools required by the different processes (eg STAR, salmon) would not be accessible, as they are not installed locally and saved to <code>$PATH</code> (we have been accessing them via the ‘singularity’ profile and using the saved images from our <code>$NXF_SINGULARITY_CACHEDIR</code> directory</li>
+<li>The tools required by the different processes (eg STAR, salmon) would not be accessible, as they are not installed locally and saved to <code>$PATH</code>. We have used the ‘singularity’ profile to run the container images saved in our <code>$NXF_SINGULARITY_CACHEDIR</code> directory</li>
 <li>The first process to use more than 2 CPUs or 8 GB RAM would fail and cause the pipeline to exit with a fatal error; this is because nf-core pipelines check that the requested resources are available before attempting to execute a module.<br>
 </li>
 </ul>
@@ -349,9 +356,12 @@ Solution
 </div>
 </div>
 <p><br></p>
-<p>The parameters <code>--max_cpus</code>, <code>--max_memory</code> and <code>--max_time</code> are applied as a <strong>cap</strong> for a workflow, to ensure that no single process attempts to use more resources than you have available on your platform. <span style="color:#000080;"> Setting these values to the maximum or near-maximum on your machine/node is an important customisation to prevent uneccessary failed runs.</span></p>
-<p>Default settings for <code>--max_cpus</code>, <code>--max_memory</code> and <code>--max_time</code> are applied within the nf-core workflow <code>nextflow.config</code> - these are generous values expecting to be over-ridden with your custom settings.</p>
-<p>Within <code>base.config</code>, the <code>check_max()</code> function over-rides the process resources <em>if the custom ‘max’ setting is lower than the default setting for that process</em>.</p>
+<p>The parameters <code>--max_cpus</code>, <code>--max_memory</code> and <code>--max_time</code> are applied as a <strong>cap</strong> for a workflow, to ensure that no single process attempts to use more resources than you have available on your platform.</p>
+<blockquote class="blockquote">
+<p><span style="color:#000080;"> Setting these values to the maximum or near-maximum on your machine/node is an important customisation to prevent uneccessary failed runs.</span></p>
+</blockquote>
+<p>Default settings for <code>--max_cpus</code>, <code>--max_memory</code> and <code>--max_time</code> are applied within the nf-core <code>workflow/nextflow.config</code>. These are generous values expecting to be over-ridden with your custom settings.</p>
+<p>Within <code>workflow/conf/base.config</code>, the <code>check_max()</code> function over-rides the process resources <em>if the custom ‘max’ setting is lower than the default setting for that process</em>.</p>
 <p><img src="../figs/2.3_check_max.png" class="img-fluid"> <br><br></p>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -359,7 +369,7 @@ Solution
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-<strong>Challenge</strong>
+Challenge
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -387,7 +397,7 @@ Solution
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>grep label workflow/modules/nf-core/star/align/main.nf </span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a># then </span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>more nf-core-rnaseq-3.11.1/workflow/conf/base.config</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><code>STAR_ALIGN</code> has the label <code>process_high</code> which has the settings 12 CPUs, 72 GB mem, 16 hrs walltime applied by the default <code>base.config</code>. We have previosuly applied <code>--max_cpus 2</code> and <code>--max_memory 6</code>, so the <code>check_max()</code> function would have reduced the resources given to the STAR alignment process to 2 CPUs and 6 GB RAM, while retaining the default max walltime.</p>
+<p><code>STAR_ALIGN</code> has the label <code>process_high</code> which has the settings 12 CPUs, 72 GB mem, 16 hrs walltime applied by the default <code>base.config</code>. We have previosuly applied <code>--max_cpus 2</code> and <code>--max_memory 6.GB</code>, so the <code>check_max()</code> function would have reduced the resources given to the STAR alignment process to 2 CPUs and 6 GB RAM, while retaining the default max walltime.</p>
 </div>
 </div>
 </div>
@@ -395,41 +405,43 @@ Solution
 </section>
 <section id="when-to-use-a-custom-config-file" class="level3">
 <h3 class="anchored" data-anchor-id="when-to-use-a-custom-config-file"><strong>2.3.2. When to use a custom config file</strong></h3>
-<p>As we have just observed, nf-core pipelines ship with default configurations for software access and compute resources. These may not be suited to running on your compute environment. In these circumstances, you may benefit from using a <strong>custom configuration file</strong>.</p>
-<p>In our runs so far, we have avoided the use of custom configuration files by taking advantage of <code>-profile singularity</code> to access the required pipeline tools from singularity containers rather than from <code>$PATH</code>, and by taking advantage of the <code>max</code> parameters for CPU and memory.</p>
+<p>In our runs so far, we have avoided the need for a custom configuration file by:</p>
+<ul>
+<li>Applying the ‘singularity’ profile from the default <code>nextflow.config</code></li>
+<li>Over-riding the defaults set in <code>nextflow.config</code> for <code>max_cpus</code> and <code>max_memory</code> so the run will fit on our VMs</li>
+</ul>
 <p>These are basic configurations. What if:</p>
 <ul>
 <li>We wanted to increase the resources used above what is requested with process labels to take advantage of high CPU or high memory infrastructures?</li>
 <li>We wanted to run on a HPC with PBS Pro or SLURM job scheduling?</li>
 <li>We wanted to execute specific modules on specific node types on a cluster?</li>
-<li>We wanted to use an alternate tool?</li>
+<li>We wanted to use a non-default software container?</li>
 <li>We wanted to customise outputs beyond what was possible with the nf-core workflow parameters?</li>
 </ul>
-<p><em><span style="color:#000080;">These applications are where a custom configuration file is warranted.</span></em> <br><br></p>
-<p>By recording these configurations in a file, we can:</p>
-<ul>
-<li>Ensure that our pipeline runs <strong>efficiently</strong> and <strong>reproducibly</strong> on our compute environment</li>
-<li>Easily <strong>share</strong> the custom config file with others to run the workflow in the same computational environment <br></li>
-</ul>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-<strong>Why should I be concerned with computational efficiency?</strong> <span class="emoji" data-emoji="earth_asia">🌏</span>
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Bioinformatics relies on large-scale computational infrastructures and has a signficant carbon footprint due to the energy required to run computational workflows. We can optimise our worklfows to not only reduce their runtime, but also adopt more sustainable computing practices. This <a href="https://academic.oup.com/mbe/article/39/3/msac034/6526403">paper</a> makes for an interesting read about the carbon footprint of bioinformatics workflows and tools!</p>
-</div>
-</div>
-<p><br><br></p>
+<p><span class="emoji" data-emoji="bulb">💡</span> <span style="color:#8b0000;"> This is all possible with custom configuration files!</span> <br><br></p>
 </section>
 <section id="institutional-config-files" class="level3">
 <h3 class="anchored" data-anchor-id="institutional-config-files"><strong>2.3.3. Institutional config files</strong></h3>
 <p>We can set these and other configurations within a custom configuration file that is specific to our institution; this is referred to as an <strong>institutional config</strong>.</p>
-<p>There is a <a href="https://github.com/nf-core/configs/tree/master/conf">repository of institutional configs</a> for nf-core pipelines. These have been contributed to by the community.</p>
+<p>Institutional configs help us create <strong>efficient</strong> workflows that can be <strong>shared</strong> with others to <strong>reproducibly</strong> run the workflow in the same computational environment <br></p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Why should I be concerned with computational efficiency? <span class="emoji" data-emoji="earth_asia">🌏</span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Bioinformatics relies on large-scale computational infrastructures and has a signficant carbon footprint due to the energy required to run computational workflows. We can optimise our worklfows to not only reduce their runtime, but also adopt more sustainable computing practices. This <a href="https://academic.oup.com/mbe/article/39/3/msac034/6526403">paper</a> makes for an interesting read about the carbon footprint of bioinformatics workflows and tools!</p>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>There is a <a href="https://github.com/nf-core/configs/tree/master">repository of institutional configs</a> for nf-core pipelines. These have been contributed to by the community.</p>
 <p>We have created an <a href="https://github.com/nf-core/configs/blob/master/conf/pawsey_nimbus.config">nf-core config for Pawsey’s Nimbus cloud</a>: this (and other institutional configs) was downloaded along with the workflow code. <br><br></p>
 <p>➤ View the available list of institutional configs we pulled down along with the workflow code:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ls  nf-core-rnaseq-3.11.1/configs/conf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -443,12 +455,12 @@ Solution
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-<strong>Challenge</strong>
+Challenge
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>What arguments would we apply to our command line to utilise the pawsey_nimbus.config and set the right configurations for software and compute for our VMs?</li>
+<li>What arguments would we apply to our command line to utilise the <code>pawsey_nimbus.config</code> and set the right configurations for software and compute for our VMs?</li>
 </ul>
 <p><span class="emoji" data-emoji="bulb">💡</span> Hint: the Nimbus training VM ‘instance flavour’ is ‘c2r8’ ie 2 CPU and 8 GB RAM. See the <a href="https://github.com/nf-core/configs/blob/master/docs/pawsey_nimbus.md">Pawsey Nimbus nf-core config documentation</a> for help.</p>
 </div>
@@ -536,7 +548,7 @@ Singularity options
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br><br></p>
-<p>➤ Add finally, add a profile description and set the cache behaviour to lenient:</p>
+<p>➤ Add finally, add a profile description using the <code>config_profile_description</code> parameter and set the cache behaviour to lenient:</p>
 <div class="callout-warning callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -555,37 +567,61 @@ Nextflow cache and resume
 </div>
 <div class="sourceCode" id="cb9"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>// Nimbus nf-core workshop configuration profile</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>params {</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    config_profile_description  = 'Pawsey Nimbus c2r8 profile'</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>process {</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    cache = 'lenient'</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>process {</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    cache = 'lenient'</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>profiles {</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  workshop {</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    singularity {</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>      enabled     = true</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>      autoMounts  = true</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>      cacheDir    = "/home/ubuntu/singularity_cache"</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    params {</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>      max_cpus   = 2</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>      max_memory = '6.GB'      </span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>profiles {</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  workshop {</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    singularity {</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>      enabled     = true</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>      autoMounts  = true</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>      cacheDir    = "/home/ubuntu/singularity_cache"</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    params {</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>      config_profile_description  = 'Pawsey Nimbus c2r8 profile'</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>      max_cpus   = 2</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>      max_memory = '6.GB'      </span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br><br></p>
-<p>➤ Now re-run the pipeline, requesting the ‘workshop’ profile be applied from our <code>custom-nimbus.config</code>:</p>
+<p>➤ Save the config then re-run the pipeline, requesting the <code>workshop</code> profile be applied from our <code>custom-nimbus.config</code> and set the <code>--outdir</code> parameter to <code>Lesson-2.3.3</code></p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  -profile workshop \</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  -c custom-nimbus.config \</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  -params-file workshop-params.yaml \</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  --outdir Lesson-2.3.3 \</span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  -resume</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><span class="emoji" data-emoji="eyes">👀</span> We can see that our custom resource parameters have been read:</p>
-<p><img src="../figs/2.3_run_stdout_.png" class="img-fluid"> <br><br></p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Using profiles from local configs vs nf-core configs repo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Because our <code>profile</code> is described within a local config, we need to specify both the name of the profile we want to apply to the run and the config that describes it. If our config was part of the nf-core config repository, we would not need to specify the config at <code>-c</code>. The basename of the config would be supplied at <code>-profile</code> and any profiles within that config that we wanted to apply to the run would be specified in a comma-delimted list.</p>
+<p>For example to run the above command using the <a href="https://github.com/nf-core/configs/blob/master/conf/pawsey_nimbus.config">Pawsey Nimbus config from the nf-core config repo</a>:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  -profile pawsey_nimbus,singularity,c2r8 </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  -params-file workshop-params.yaml \</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  --outdir Lesson-2.3.3 \</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  -resume</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p><br></p>
+<p><span class="emoji" data-emoji="eyes">👀</span> We can see that our custom configurations have been read:</p>
+<ul>
+<li>Our Nimbus config is listed under <strong>Core Nextflow options</strong></li>
+<li>Our profile description shows under <strong>Institutional config options</strong></li>
+<li>Our <code>max_cpus</code> and <code>max_memory</code> show under <strong>Max job request options</strong></li>
+</ul>
+<p><img src="../figs/2.3_run_stdout.png" class="img-fluid"> <br><br><br></p>
+<p><span class="emoji" data-emoji="hourglass">⌛</span> Applying the new profile means the processes will execute from scratch rather than from cached files!</p>
+<p>While we wait, let’s talk about the <span class="emoji" data-emoji="elephant">🐘</span> in the room…</p>
 <div class="callout-important callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -596,141 +632,68 @@ What was that warning all about?!
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>We can also see a warning because we have included a custom config - this warning is to remind us that any parameters we have included in a custom config WILL NOT over-ride defaults (except for the rare exceptions of max resources).</p>
+<p>This warning appears because we have included a custom config, ie we now have ‘multiple configs’ because the default <code>nextflow.config</code> counts as well!</p>
 <p><img src="../figs/2.3_warn_multiple_configs.png" class="img-fluid"> <br></p>
-<p>Recall from <a href="../notebooks/1.3_configure.html#1.3.7.-custom-configuration-files">Session 1 configuring nf-core workflows</a> when you attemped to set the parameter <code>multiqc_title</code> to your favourite colour within <code>my_custom_config.config</code>. The <code>multiqc_title</code> parameter displayed in the STDOUT under “Input/output options” but was NOT applied to the run! The alarming-looking warning provided by nf-core is a gentle but firm reminder of this very important detail. <br></p>
+<p>Recall <a href="1.3_configure.html#custom-configuration-files">Lesson 1.3.7 ’Custom configuration files</a> where you attemped to set the parameter <code>multiqc_title</code> to your favourite colour within <code>my_custom_config.config</code>. The <code>multiqc_title</code> parameter displayed in the STDOUT under <strong>‘Input/output options’</strong> but was NOT applied to the run! The alarming-looking warning provided by nf-core is a gentle but firm reminder of this very important detail. <br></p>
 <p>➤ <span style="color:#8b0000;">Bonus optional activity:</span> add the multiqc_title parameter in a <code>params</code> scope of the workshop profile within <code>custom-nimbus.config</code>, and re-submit the previous run. Note the changes to <code>multiqc_title</code> have been reported on the STDOUT, but have not been applied to the output in <code>&lt;outdir&gt;/multiqc/star_salmon</code>.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>    params {</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>      multiqc_title = 'black'</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>    params {</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>      multiqc_title = 'black'</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="../figs/2.3_mqc_title_stdout.png" class="img-fluid"></p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>$ ls Lesson-2.3.3-MQC/multiqc/star_salmon/</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>multiqc_data  multiqc_plots  multiqc_report.html</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>$ ls Lesson-2.3.3-MQC/multiqc/star_salmon/</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>multiqc_data  multiqc_plots  multiqc_report.html</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p><br><br></p>
 </section>
 <section id="custom-resource-configuration-using-process-labels" class="level3">
 <h3 class="anchored" data-anchor-id="custom-resource-configuration-using-process-labels"><strong>2.3.4. Custom resource configuration using process labels</strong></h3>
-<p>Recall how our <code>custom-nimbus.config</code> restricted the CPU and memory usage by setting <code>max_cpus</code> and <code>max_memory</code> within the <code>params</code> scope of the profile. This can be a simple and effective method, however does not provide a lot of granularity.</p>
-<p>For example, consider that you had access to a 16 core machine. If you appled <code>max_cpus 16</code> to the nf-core rnaseq workflow, the STAR_ALIGN module would still only utilise 12 CPUs, as this module (as we learned in 2.3.1) has the label <code>process_high</code> which sets 12 CPUs. In this case, you would have <em>up to 4 idle CPUs</em>* while the STAR_ALIGN module completed for each sample.</p>
-<blockquote class="blockquote">
-<p>* Nextflow will fill available resources as the input channels for processes are fulfilled. It will depend on the specific workflow and the requirements of the modules as to whether the resources can be filled. For ‘bottleneck’ steps like alignment, optimising the utilisation of available compute so that no resources are idle is critical to ensuring an efficient run.</p>
-</blockquote>
-<p><br> To make the best use of our compute environment, we can write a custom configuration file that fine-tunes resources using process labels to assign the same resources to groups of processes sharing the same label, or ‘withName’ to target specific processes.</p>
-<p>Note that the following exercise is trivial given the limitations of our VMs. Consider how this approach can be really powerful when working on a high performance cluster, where the process scope can be used to direct modules to execute on specific queues with the <code>queue</code> process directive and set precise compute requests tailored to the hardware on that queue. See <a href="../tips_tricks.html#Send processes to a job scheduler on HPC">Tips and tricks</a> for an example HPC institutional config.</p>
-<p><br></p>
-<p>➤ Continue editing <code>custom-nimbus.config</code>, and set CPU and memory via <code>process</code> scope instead of <code>params</code> scope of the ‘workshop’ profile.</p>
-<div class="callout-tip callout callout-style-default callout-captioned">
+<p>Capping workflow resources using the <code>max</code> parameters is a bit of a blunt instrument.</p>
+<p>To achieve optimum computational efficiency on your platform, more granular control may be required.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-<strong>Challenge</strong>
+For example, consider the case of a 16 core machine
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Set 2 CPUs and 6 GB memory for the process labels <code>process_low</code>, <code>process_medium</code> and <code>process_high</code> within the process scope</p>
-<p><span class="emoji" data-emoji="bulb">💡</span> Hint: View the file <code>nf-core-rnaseq-3.11.1/workflow/conf/base.config</code> for syntax example.</p>
-</div>
-</div>
-<div class="callout-caution callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-14" class="callout-14-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Replace the <code>process</code> scope with a <code>params</code> scope. Use <code>withLabel:&lt;label_name&gt;</code> syntax to set resources for each label.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>// Nimbus nf-core workshop configuration profile</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>params {</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  config_profile_description  = 'Pawsey Nimbus c2r8 profile'</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>process {</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  cache = 'lenient'</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>profiles {</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  workshop {</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    singularity {</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>      enabled     = true</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>      autoMounts  = true</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>      cacheDir    = "/home/ubuntu/singularity_cache"</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    process {</span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>      withLabel:process_low {</span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>        cpus   = 2</span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>        memory = 6.GB</span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>      withLabel:process_medium {</span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>        cpus   = 2</span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>        memory = 6.GB</span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>      withLabel:process_high {</span>
-<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>        cpus   = 2</span>
-<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>        memory = 6.GB</span>
-<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<p>If you appled <code>--max_cpus 16</code> to the nf-core rnaseq workflow, the STAR_ALIGN module would still only utilise 12 CPUs, as this module (as we learned in 2.3.1) has the label <code>process_high</code> which sets CPUs to 12.</p>
+<p>If there were no processes with fulfilled input channels that could make use of the 4 remaining CPUs, those resources would sit idle until the STAR_ALIGN process had completed.</p>
+<p>Optimisation for this platform might for example set <code>max_cpus</code> to 8 so two samples could be aligned concurrently, or over-ride the CPU resources assigned to the STAR_ALIGN module to 16.</p>
 </div>
 </div>
 <p><br></p>
-<p>➤ Re-run the workflow with our custom configuration, setting <code>outdir</code> parameter to <code>Lesson-2.3.4</code>.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  -profile workshop \</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  -c custom-nimbus.config \</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  -params-file workshop-params.yaml \</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  --outdir Lesson-2.3.4 \</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  -resume </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The next two lessons will demonstrate how to achieve this using custom configuration files that fine-tune resources using <code>process labels</code> to assign the same resources to groups of processes sharing the same label, or <code>withName</code> to target specific processes. <br></p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Configuration order of priority
+Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Recall the <a href="https://www.nextflow.io/docs/latest/config.html#configuration-file">order of priority</a> in which parameters and configurations are applied by nextflow.</p>
-<p>The settings we specify with <code>-c custom-nimbus.config</code> will over-ride those that appear in the default nf-core configurations <code>workflow/nextflow.config</code> and <code>workflow/conf/base.config</code>.</p>
-<p>Settings that are not over-ridden by <code>-c &lt;config&gt;</code> or any parameter from params file or provided on the command line will still be set to the nf-core defaults specified in <code>nextflow.config</code>, <code>base.config</code> or <code>main.nf</code>.</p>
-<p><img src="../figs/2.3_config_priority_order.png" class="img-fluid"></p>
+<p>The following exercise is trivial given the limitations of our VMs. Consider how this approach can be really powerful when working on a high performance cluster, where modules can be directed to specific queues with the <code>queue</code> process directive. See <a href="../tips_tricks.html#Send processes to a job scheduler on HPC">Tips and tricks</a> for an example HPC institutional config.</p>
 </div>
 </div>
-<p><br><br></p>
-</section>
-<section id="custom-resource-configuration-using-process-names" class="level3">
-<h3 class="anchored" data-anchor-id="custom-resource-configuration-using-process-names"><strong>2.3.5. Custom resource configuration using process names</strong></h3>
-<p>This exercise will demonstrate how to adjust the resource configurations for a specific process using the <code>withName</code> process selector, using the STAR_ALIGN module as example.</p>
-<p>To provide customised resources that apply <em>only</em> to the STAR_ALIGN module, we need to ensure we have the right process name in our configuration file. Recall from <a href="../notebooks/1.3_configure.html#1.3.5.-default-configuration-files">Session 1 configuring nf-core workflows</a> the following tips:</p>
-<ul>
-<li>The extended execution path is built from the workflow, subworkflow, and module names</li>
-<li>It can be tricky to evaluate the path used to execute a module. If you are unsure of how to build the path you can copy it from the <code>conf/modules.config</code> file</li>
-</ul>
-<p>You can <a href="https://github.com/nf-core/rnaseq/blob/master/conf/modules.config">view the modules.conf file on Github</a> or search your local copy:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>grep withName nf-core-rnaseq-3.11.1/workflow/conf/modules.config | grep STAR</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><br></p>
+<p>➤ Edit <code>custom-nimbus.config</code> to set CPU and memory within <code>process</code> scope instead of <code>params</code> scope:</p>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-<strong>Challenge</strong>
+Challenge
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>What extended execution path could we use to ensure our customisations were applied only to the STAR_ALIGN module?</p>
+<p>Set 2 CPUs and 6 GB memory for the process labels <code>process_low</code>, <code>process_medium</code> and <code>process_high</code> within the process scope</p>
+<p><span class="emoji" data-emoji="bulb">💡</span> Hint: View the file <code>nf-core-rnaseq-3.11.1/workflow/conf/base.config</code> for syntax example.</p>
 </div>
 </div>
 <div class="callout-caution callout callout-style-default callout-captioned">
@@ -745,90 +708,113 @@ Solution
 </div>
 <div id="callout-17" class="callout-17-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Any of the following would be correct and specific:</p>
-<pre><code>'NFCORE_RNASEQ:RNASEQ:ALIGN_STAR:STAR_ALIGN'
-'.*:RNASEQ:ALIGN_STAR:STAR_ALIGN'
-'.*:ALIGN_STAR:STAR_ALIGN'</code></pre>
+<ul>
+<li>Delete the <code>max_cpus</code> and <code>max_memory</code> parameters from the <code>params</code> scope</li>
+<li>Add a <code>process</code> scope inside the <code>workshop</code> profile</li>
+<li>Use <code>withLabel: &lt;label_name&gt;</code> to set resources for each label</li>
+</ul>
+<div class="sourceCode" id="cb14"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>// Nimbus nf-core workshop configuration profile</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>process {</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    cache = 'lenient'    </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>profiles {</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    workshop {</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>        singularity {</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>            enabled = true</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>            autoMounts = true</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>            cacheDir = '/home/ubuntu/singularity_cache'</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>        params {</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>            config_profile_description = 'Pawsey Nimbuc c2r8 profile'</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>        process {</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>            withLabel: process_low {</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>                cpus = 2</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>                memory = 6.GB</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>            withLabel: process_medium {</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>                cpus = 2</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>                memory = 6.GB</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>            } </span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>            withLabel: process_high {</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>                cpus = 2</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>                memory = 6.GB</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
-<p><br><br></p>
-<p>➤ Continue editing <code>custom-nimbus.config</code>. Inside the process scope, add the ‘withName’ syntax and specify the execution path for the STAR_ALIGN module:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>process {</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  withName: '.*:RNASEQ:ALIGN_STAR:STAR_ALIGN' {</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>}      </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br></p>
-<p>➤ Then set CPU to 24 and memory to 96 GB:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>process {</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  withName: '.*:RNASEQ:ALIGN_STAR:STAR_ALIGN' {</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    cpus = 24</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    memory = 96.GB</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>} </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="callout-caution callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<p>➤ Save the file then re-run the workflow with our custom configuration, setting <code>outdir</code> parameter to <code>Lesson-2.3.4</code>:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  -profile workshop \</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  -c custom-nimbus.config \</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  -params-file workshop-params.yaml \</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  --outdir Lesson-2.3.4 \</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  -resume </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p><span class="emoji" data-emoji="eyes">👀</span> Notice that the <strong>Max job request options</strong> are no longer listed on the run log printed to screen</p>
+</blockquote>
+<p><br><br></p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Completed config file
+Configuration order of priority
 </div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-18" class="callout-18-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb19"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>// Nimbus nf-core workshop configuration profile</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>params {</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  config_profile_description  = 'Pawsey Nimbus c2r8 profile'</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>process {</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  cache = 'lenient'</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>profiles {</span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  workshop {</span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    singularity {</span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>      enabled     = true</span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>      autoMounts  = true</span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>      cacheDir    = "/home/ubuntu/singularity_cache"</span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>    process {</span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>      withLabel:process_low {</span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>        cpus   = 2</span>
-<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>        memory = 6.GB</span>
-<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>      withLabel:process_medium {</span>
-<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>        cpus   = 2</span>
-<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>        memory = 6.GB</span>
-<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>      withLabel:process_high {</span>
-<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>        cpus   = 2</span>
-<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>        memory = 6.GB</span>
-<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>      withName: '.*:RNASEQ:ALIGN_STAR:STAR_ALIGN' {</span>
-<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>        cpus   = 24</span>
-<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>        memory = 96.GB</span>
-<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<p>Recall the <a href="https://www.nextflow.io/docs/latest/config.html#configuration-file">order of priority</a> in which parameters and configurations are applied by Nextflow.</p>
+<p>The settings we specify with <code>-c custom-nimbus.config</code> will over-ride those that appear in the default nf-core configurations <code>workflow/nextflow.config</code> and <code>workflow/conf/base.config</code>.</p>
+<p>Settings that are not over-ridden by <code>-c &lt;config&gt;</code> or any parameter from params file or provided on the command line will still be set to the nf-core defaults specified in <code>nextflow.config</code>, <code>base.config</code> or <code>main.nf</code>.</p>
+<p>To avoid confusion, it is best not to name your custom configuration files <code>nextflow.config</code>!</p>
+<p><img src="../figs/2.3_config_priority_order.png" class="img-fluid"></p>
 </div>
 </div>
 <p><br><br></p>
-<p>➤ Execute your run to output directory Lesson-2.3.5, once again applying your custom profile and config:</p>
-<p><span class="emoji" data-emoji="question">❓</span> <em>What do you think will happen to this run?</em></p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  -profile workshop \</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  -c custom-nimbus.config \</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  -params-file workshop-params.yaml \</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  --outdir Lesson-2.3.5 \</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  -resume </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>If your execution path for the STAR_ALIGN process was specified correctly, your run should have died with the following error:</p>
-<p><img src="../figs/2.3_star_failed_resources.png" class="img-fluid"> <br><br></p>
+</section>
+<section id="custom-resource-configuration-using-process-names" class="level3">
+<h3 class="anchored" data-anchor-id="custom-resource-configuration-using-process-names"><strong>2.3.5. Custom resource configuration using process names</strong></h3>
+<p>This exercise will demonstrate how to adjust the resource configurations for a specific process using the <code>withName</code> process selector, using the STAR_ALIGN module as example.</p>
+<p><code>withName</code> is a powerful tool:</p>
+<ul>
+<li>Specifically target individual modules</li>
+<li>No need to edit the module <code>main.nf</code> file to add a process label</li>
+<li>Multiple module names can be supplied using wildcards or ‘or’ (<code>*</code> or <code>|</code>) notation <br><br></li>
+</ul>
+<p>To utilise <code>withName</code>, we first need to ensure we have the correct and specific <strong>executuion path</strong> for the module/modules that we wish to target. <br><br></p>
+<p>➤ Identify the execution path for the STAR_ALIGN module:</p>
+<ul>
+<li><p>Recall from <a href="1.3_configure.html#default-configuration-files">Lesson 1.3.5 ‘Default configuration files’</a> the following tips:</p>
+<ul>
+<li>The extended execution path is built from the pipeline, workflow, subworkflow, and module names</li>
+<li>It can be tricky to evaluate the path used to execute a module. If you are unsure of how to build the path you can copy it from the <code>workflow/conf/modules.config</code> file</li>
+</ul></li>
+</ul>
+<p>You can <a href="https://github.com/nf-core/rnaseq/blob/master/conf/modules.config">view the modules.conf file on Github</a> or search your local copy:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>grep STAR nf-core-rnaseq-3.11.1/workflow/conf/modules.config</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>##</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>#    withName: 'UNTAR_.*|STAR_GENOMEGENERATE|STAR_GENOMEGENERATE_IGENOMES|HISAT2_BUILD' {</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>#// STAR Salmon alignment options</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>#        withName: '.*:ALIGN_STAR:STAR_ALIGN|.*:ALIGN_STAR:STAR_ALIGN_IGENOMES' {</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>#        withName: '.*:QUANTIFY_STAR_SALMON:SALMON_QUANT' {</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>#        withName: '.*:QUANTIFY_STAR_SALMON:SALMON_TX2GENE' {</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>#        withName: '.*:QUANTIFY_STAR_SALMON:SALMON_TXIMPORT' {</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>#        withName: '.*:QUANTIFY_STAR_SALMON:SALMON_SE_.*' {</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>#            withName: 'DESEQ2_QC_STAR_SALMON' {</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>#// STAR RSEM alignment options</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>##</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Note that this does not provide the PIPELINE or WORKFLOW name at the front of the path</li>
+<li>If you have previously run the pipeline, you could also extract it from your run log printed to screen, execution trace etc</li>
+</ul>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -839,7 +825,7 @@ Completed config file
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>What do you expect would happen to your run if your execution path was <strong>not</strong> specified correctly?</p>
+<p>What extended execution path could we use to ensure our customisations were applied only to the STAR_ALIGN module?</p>
 </div>
 </div>
 <div class="callout-caution callout callout-style-default callout-captioned">
@@ -854,18 +840,121 @@ Solution
 </div>
 <div id="callout-20" class="callout-20-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>In this case, our pipeline would complete OK, because the resources for the STAR_ALIGN process have been appropriately set for our VM using the ‘process_high’ label within our <code>custom-nimbus.config</code>.</p>
-<p>The configurations set within that ‘withName’ process scope would not function, and a warning would be printed, eg</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>WARN: There's no process matching config selector: .*:RNASEQ:ALIGN_STAR:STARALIGN</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Any of the following would be correct and specific:</p>
+<pre><code>'NFCORE_RNASEQ:RNASEQ:ALIGN_STAR:STAR_ALIGN'
+'.*:RNASEQ:ALIGN_STAR:STAR_ALIGN'
+'.*:ALIGN_STAR:STAR_ALIGN'</code></pre>
 </div>
 </div>
 </div>
+<p><br><br></p>
+<p>➤ Continue editing <code>custom-nimbus.config</code>. Inside the <code>process</code> scope, provide the execution path for the STAR_ALIGN module to the <code>withName</code> selector:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>process {</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  withName: '.*:RNASEQ:ALIGN_STAR:STAR_ALIGN' {</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>}      </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br></p>
-<p>➤ Delete or comment out the ‘withName’ resource content we applied to the STAR_ALIGN process in the <code>custom-nimbus.config</code> file</p>
-<ul>
-<li>We will be using this config in the next section</li>
-<li>In Nextflow, use <code>//</code> for single line comments or <code>/* .. */</code> to comment a block on multiple lines <br><br></li>
-</ul>
+<p>➤ Then set CPU to 24 and memory to 96 GB:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>process {</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  withName: '.*:RNASEQ:ALIGN_STAR:STAR_ALIGN' {</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    cpus = 24</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    memory = 96.GB</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>} </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Completed config file
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-21" class="callout-21-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb20"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>// Nimbus nf-core workshop configuration profile</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>process {</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    cache = 'lenient'    </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>profiles {</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    workshop {</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>        singularity {</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>            enabled = true</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>            autoMounts = true</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>            cacheDir = '/home/ubuntu/singularity_cache'</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>        params {</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>            config_profile_description = 'Pawsey Nimbuc c2r8 profile'</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>        process {</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>            withLabel: process_low {</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>                cpus = 2</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>                memory = 6.GB</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>            withLabel: process_medium {</span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>                cpus = 2</span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>                memory = 6.GB</span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>            } </span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>            withLabel: process_high {</span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>                cpus = 2</span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>                memory = 6.GB</span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>            withName: '.*:RNASEQ:ALIGN_STAR:STAR_ALIGN' {</span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>                cpus = 24</span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>                memory = 96.GB</span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<p><br><br></p>
+<p>➤ Save the config then resume your run, setting <code>outdir</code> to <code>Lesson-2.3.5</code>, once again applying your <code>workshop</code> profile from <code>custom-nimbus.config</code>:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  -profile workshop \</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  -c custom-nimbus.config \</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  -params-file workshop-params.yaml \</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  --outdir Lesson-2.3.5 \</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  -resume </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If your execution path for the STAR_ALIGN module was specified correctly, your run should have died with the following error:</p>
+<p><img src="../figs/2.3_star_failed_resources.png" class="img-fluid"></p>
+<p><br></p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Challenge
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What do you expect would happen to your run if your execution path was <strong>not</strong> specified correctly?</p>
+</div>
+</div>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-23" class="callout-23-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>In this case, our pipeline would complete OK, because the resources for the STAR_ALIGN process have been appropriately set for our VM using the <code>process_high</code> label within our <code>custom-nimbus.config</code>.</p>
+<p>The directives set within the <code>withName</code> scope would not be applicable, and a warning would be printed, eg</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>WARN: There's no process matching config selector: .*:RNASEQ:ALIGN_STAR:STARALIGN</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<p><br><br></p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -880,7 +969,7 @@ Solution
 <li>nf-core workflows work ‘out of the box’ but there are compute and software configurations we should customise for our runs to work well on our compute infrastructure</li>
 <li>nf-core executes by default with <code>workflow/nextflow.config</code> and <code>workflow/conf/base.config</code> and has a repository of community-contributed institutional configs that ship with the workflow</li>
 <li>custom configs can be applied to a run with <code>-c &lt;config_name&gt;</code>, and will over-ride settings in the default configs</li>
-<li>customisations can be targeted to specific processes with ‘withLabel’ or ‘withName’</li>
+<li>customisations can be targeted to specific processes using <code>withLabel</code> or <code>withName</code></li>
 <li>workflow parameters belong in <code>-params-file &lt;params_file&gt;</code> and not <code>-c &lt;custom_config&gt;</code></li>
 </ul>
 </div>
