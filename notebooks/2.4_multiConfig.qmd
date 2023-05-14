@@ -17,7 +17,11 @@ from: markdown+emoji
 - Apply multiple custom configuration files in a single workflow execution with `-c <conf-1,conf2,...>` 
 :::
 
-Using multiple configuration files allows you to customise nf-core pipelines to your specific needs. Depending on how you work, where you work, and what pipelines you run, you may have configuration files that:
+
+Using multiple configuration files allows you to customise nf-core pipelines to your specific needs. 
+
+Depending on how you work, where you work, and what pipelines you run, you may have configuration files that:
+
 
 - Handle distinct issues
 - Can be applied to specific infrastructures
