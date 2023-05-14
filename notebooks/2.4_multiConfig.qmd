@@ -9,10 +9,11 @@ from: markdown+emoji
 
 ::: callout-tip
 ### Objectives{.unlisted}
-- Create and apply a custom configuration file for over-riding default containers
-- Create and apply a custom configuration file for resource tracing
-- Create and apply a custom configuration file for MultiQC
-- Create and apply a custom configuration that supplies tool arguments that are not available as nf-core parameters
+- Create and apply custom configuration files for:
+  - Specifying a non-default tool container
+  - Customised resource tracing
+  - Bespoke MultiQC report formatting
+  - Adding tool arguments that are not available as nf-core parameters
 - Apply multiple custom configuration files in a single workflow execution with `-c <conf-1,conf2,...>` 
 :::
 

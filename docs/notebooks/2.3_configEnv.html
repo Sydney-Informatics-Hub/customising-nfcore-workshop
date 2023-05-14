@@ -296,8 +296,8 @@ Objectives
 <p><br></p>
 <section id="default-nf-core-configuration" class="level3">
 <h3 class="anchored" data-anchor-id="default-nf-core-configuration"><strong>2.3.1. Default nf-core configuration</strong></h3>
-<p>Recall that when a pipeline script is launched, Nextflow looks for <a href="https://www.nextflow.io/docs/latest/config.html#configuration-file">configuration files in multiple locations</a>.</p>
-<p><img src="../figs/2.3_config_priority_order_no_text_overlay.png" class="img-fluid"> <br></p>
+<p>Recall that when a pipeline script is launched, Nextflow looks for <a href="https://www.nextflow.io/docs/latest/config.html#configuration-file">configuration files in multiple locations</a>:</p>
+<p><img src="../figs/2.3_config_priority_order_no_text_overlay.png" class="img-fluid" style="width:65.0%"> <br></p>
 <p>Currently, all nf-core workflows use a <code>workflow/nextflow.config</code> file and a <code>workflow/conf/base.config</code> file to define the default execution settings and parameters of a workflow.</p>
 <p>The critical configuration aspects can be grouped into 3 general categories:</p>
 <ol type="1">
@@ -418,7 +418,7 @@ Solution
 <li>We wanted to use a non-default software container?</li>
 <li>We wanted to customise outputs beyond what was possible with the nf-core workflow parameters?</li>
 </ul>
-<p><span class="emoji" data-emoji="bulb">💡</span> <span style="color:#8b0000;"> This is all possible with custom configuration files!</span> <br><br></p>
+<p><span class="emoji" data-emoji="bulb">💡</span> <span style="color:#000080;"> This is all possible with custom configuration files!</span> <br><br></p>
 </section>
 <section id="institutional-config-files" class="level3">
 <h3 class="anchored" data-anchor-id="institutional-config-files"><strong>2.3.3. Institutional config files</strong></h3>
@@ -527,11 +527,24 @@ Singularity options
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br><br></p>
-<p>➤ Now let’s address those two resource parameters <code>--max_memory 6.GB</code> and <code>--max_cpus 2</code>. At the same level as the <code>singularity {}</code> scope, add a parameters scope and specify each parameter underneath:</p>
-<blockquote class="blockquote">
-<p><span class="emoji" data-emoji="skull_and_crossbones">☠️</span> Remember: when customising nf-core workflows, <span style="color:red;"> <strong>DO NOT ADD PARAMETERS to custom config files!</strong></span> The case of ‘max’ resource settings is a rare exception to this rule.</p>
-</blockquote>
-<p><img src="../figs/2.3_warn_params_in_configs.png" class="img-fluid"> <a href="https://nf-co.re/usage/configuration#custom-configuration-files">Image source</a> <br></p>
+<p>➤ Now let’s address those two resource parameters <code>--max_memory 6.GB</code> and <code>--max_cpus 2</code>. At the same level as the <code>singularity</code> scope, add a <code>params</code> scope and specify each parameter underneath:</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<span class="emoji" data-emoji="skull_and_crossbones">☠️</span> <span style="color:#8b0000;">No nf-core params in custom configs!</span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>When customising nf-core workflows, <span style="color:#8b0000;"><strong>do not add parmeters to custom config files!</strong></span> The case of <code>max</code> resource settings is a <span style="color:#8b0000;"><strong>rare exception</strong></span> to this rule.</p>
+<p><img src="../figs/2.3_warn_params_in_configs.png" class="img-fluid"> <a href="https://nf-co.re/usage/configuration#custom-configuration-files">Image source</a></p>
+</div>
+</div>
+</div>
 <div class="sourceCode" id="cb8"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>// Nimbus nf-core workshop configuration profile</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>profiles {</span>
@@ -550,7 +563,7 @@ Singularity options
 <p><br><br></p>
 <p>➤ Add finally, add a profile description using the <code>config_profile_description</code> parameter and set the cache behaviour to lenient:</p>
 <div class="callout-warning callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -559,7 +572,7 @@ Nextflow cache and resume
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Workflow execution is <a href="https://training.nextflow.io/basic_training/cache_and_resume/#resume-troubleshootingl">sometimes not resumed as expected</a>. The <a href="https://www.nextflow.io/docs/latest/process.html#cache">default behaviour of Nextflow cache keys</a> is to index the input files meta-data information. Reducing the cache stringency to ‘lenient’ means the files cache keys are based only on filesize and path, and can help to avoid unexpectedly re-running certain processes when <code>-resume</code> is in use.</p>
 </div>
@@ -697,7 +710,7 @@ Challenge
 </div>
 </div>
 <div class="callout-caution callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -706,7 +719,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li>Delete the <code>max_cpus</code> and <code>max_memory</code> parameters from the <code>params</code> scope</li>
@@ -829,7 +842,7 @@ Configuration order of priority
 </div>
 </div>
 <div class="callout-caution callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -838,7 +851,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-20" class="callout-20-contents callout-collapse collapse">
+<div id="callout-21" class="callout-21-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Any of the following would be correct and specific:</p>
 <pre><code>'NFCORE_RNASEQ:RNASEQ:ALIGN_STAR:STAR_ALIGN'
@@ -862,7 +875,7 @@ Solution
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>} </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout-caution callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -871,7 +884,7 @@ Completed config file
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-21" class="callout-21-contents callout-collapse collapse">
+<div id="callout-22" class="callout-22-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="sourceCode" id="cb20"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>// Nimbus nf-core workshop configuration profile</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -937,7 +950,7 @@ Challenge
 </div>
 </div>
 <div class="callout-caution callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -946,7 +959,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-23" class="callout-23-contents callout-collapse collapse">
+<div id="callout-24" class="callout-24-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>In this case, our pipeline would complete OK, because the resources for the STAR_ALIGN process have been appropriately set for our VM using the <code>process_high</code> label within our <code>custom-nimbus.config</code>.</p>
 <p>The directives set within the <code>withName</code> scope would not be applicable, and a warning would be printed, eg</p>

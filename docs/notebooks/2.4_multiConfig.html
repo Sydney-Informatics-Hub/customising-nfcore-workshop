@@ -269,10 +269,13 @@ Objectives
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>Create and apply a custom configuration file for over-riding default containers</li>
-<li>Create and apply a custom configuration file for resource tracing</li>
-<li>Create and apply a custom configuration file for MultiQC</li>
-<li>Create and apply a custom configuration that supplies tool arguments that are not available as nf-core parameters</li>
+<li>Create and apply a custom configuration file for:
+<ul>
+<li>Specifying a non-default tool container</li>
+<li>Customised resource tracing</li>
+<li>Bespoke MultiQC report formatting</li>
+<li>Adding tool arguments that are not available as nf-core parameters</li>
+</ul></li>
 <li>Apply multiple custom configuration files in a single workflow execution with <code>-c &lt;conf-1,conf2,...&gt;</code></li>
 </ul>
 </div>
@@ -420,7 +423,10 @@ Specify multiple configs
 </div>
 </div>
 <ul>
-<li>If you haven’t already done so, delete or comment out the <code>'withName'</code> resource content we applied to the STAR_ALIGN process in the <code>custom-nimbus.config</code> file</li>
+<li>First, delete or comment out the <code>withName</code> block we applied in the <code>custom-nimbus.config</code> file
+<ul>
+<li>In Nextflow, use <code>//</code> for single line comments or <code>/* .. */</code> to comment a block on multiple lines</li>
+</ul></li>
 <li>Specify output directory <code>Lesson-2.4.1</code></li>
 </ul>
 <div class="sourceCode" id="cb7"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a> nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \</span>

@@ -29,9 +29,9 @@ Nextflow's portability is achieved by separating **workflow implementation** (in
 
 ### **2.3.1. Default nf-core configuration**
 
-Recall that when a pipeline script is launched, Nextflow looks for [configuration files in multiple locations](https://www.nextflow.io/docs/latest/config.html#configuration-file). 
+Recall that when a pipeline script is launched, Nextflow looks for [configuration files in multiple locations](https://www.nextflow.io/docs/latest/config.html#configuration-file): 
 
-![](../figs/2.3_config_priority_order_no_text_overlay.png)
+![](../figs/2.3_config_priority_order_no_text_overlay.png){width=65%}
 <br/>
 
 Currently, all nf-core workflows use a `workflow/nextflow.config` file and a `workflow/conf/base.config` file to define the default execution settings and parameters of a workflow.   
@@ -125,7 +125,7 @@ These are basic configurations. What if:
 - We wanted to customise outputs beyond what was possible with the nf-core workflow parameters?
  
 
-:bulb: <span style="color:#8b0000;"> This is all possible with custom configuration files!</span>
+:bulb: <span style="color:#000080;"> This is all possible with custom configuration files!</span>
 <br/><br/>
 
 
@@ -225,14 +225,16 @@ profiles {
 ```
 <br/><br/>
 
-&#x27A4; Now let's address those two resource parameters `--max_memory 6.GB` and `--max_cpus 2`. At the same level as the `singularity {}` scope, add a parameters scope and specify each parameter underneath: 
+&#x27A4; Now let's address those two resource parameters `--max_memory 6.GB` and `--max_cpus 2`. At the same level as the `singularity` scope, add a `params` scope and specify each parameter underneath: 
 
->:skull_and_crossbones:
-Remember: when customising nf-core workflows, <span style="color:red;"> **DO NOT ADD PARAMETERS to custom config files!**</span> The case of 'max' resource settings is a rare exception to this rule.
+::: {.callout-important collapse=true}
+### :skull_and_crossbones: <span style="color:#8b0000;">No nf-core params in custom configs!</span>
+ When customising nf-core workflows, <span style="color:#8b0000;">**do not add parmeters to custom config files!**</span> The case of `max` resource settings is a <span style="color:#8b0000;">**rare exception**</span> to this rule.
 
 ![](../figs/2.3_warn_params_in_configs.png)
 [Image source](https://nf-co.re/usage/configuration#custom-configuration-files)
-<br/>
+:::
+
 ```default
 // Nimbus nf-core workshop configuration profile
 
