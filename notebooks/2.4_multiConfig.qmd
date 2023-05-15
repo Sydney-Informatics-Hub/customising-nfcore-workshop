@@ -85,19 +85,21 @@ Alternatively, we could specify an alternate remote source, such as [quay.io](ht
 <br/>
 
 ::: callout-tip
-### **Poll question!**
-:question: For maintaining portability and reproducibility, what is the best way to specify our custom Trim Glaore container when we execute the nf-core/rnaseq pipeline? 
+### **Poll question** :hand:
+:question: For maintaining portability and reproducibility, what is the best way to specify our custom Trim Galore container when we execute the nf-core/rnaseq pipeline? 
 
 a) Within the `custom-nimbus.config` institutional config file. It's already working well on our platform, so we can build on it for further customisations without issue. 
 
-b) Within a separate custom config file named `custom-tools.config`. We would then apply it at `-c` along with our institutional config. 
+b) Within a separate custom config file named `custom-tools.config`. We would then apply it at `-c` along with our institutional config whenever it was required. 
 
 c) Within the Trim Galore `main.nf` file. This way, we don't need to worry about adding another custom config when we execute the `run` command. 
 
 :::
 
 ::: {.callout-caution collapse="true"}
-### Discussion
+### :stop_sign: No peeking!
+**Discussion**
+
 In the event that we are testing a different tool version, this should **not** be placed within the institutional config that is shareable with others using nf-core pipelines on the same infrastructure. Doing so would prevent our institutional config from being portable to other analyses. 
 
 In general, editing the process `main.nf` file is **not** recommended, as this impedes reproducibility. Swapping out tool versions is a bespoke adaptation of the nf-core workflow that would harm reproducibility if it was inadvertently executed, which is likely to happen if it is hidden within the source code.  
