@@ -290,25 +290,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="https://user-images.githubusercontent.com/73086054/236149551-1703e56c-680b-4733-8613-c3409f43b6f2.png" class="img-fluid"></p>
 <section id="login-via-visual-studio-code" class="level4">
 <h4 class="anchored" data-anchor-id="login-via-visual-studio-code"><strong>Login via Visual Studio Code</strong></h4>
-<ol type="1">
-<li>Connect to your instance with VS code by adding the host details to your ssh config file.
+<ul>
+<li><p>Connect to your instance with VS code by adding the host details to your <code>.ssh</code> config file:</p>
 <ul>
 <li><code>Ctrl</code>+<code>Shift</code>+<code>P</code> to open command palette</li>
 <li>Select <code>Remote-SSH: Open SSH configuraiton file</code></li>
 <li>Add new entry, filling out host name and identity file:</li>
+</ul></li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Host nfcoreWorkshop</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  HostName 146.118.XX.XXX  </span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  User training     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li>Connect to this address
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  User training     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Connect to this addres:
 <ul>
 <li><code>Ctrl</code>+<code>Shift</code>+<code>P</code> to open command palette</li>
 <li>Select <code>Remote-SSH: Connect to Host</code> and select name of your host</li>
 <li>Select <code>Linux</code> from dropdown menu and then <code>continue</code></li>
 </ul></li>
-</ol>
-<p>Having successfully logged in, you should see a small green box in the bottom left corner of your screen:</p>
+<li>Having successfully logged in, you should see a small green box in the bottom left corner of your screen:</li>
+</ul>
 <p><img src="https://user-images.githubusercontent.com/73086054/228143085-20a5bdfc-f4e7-4472-b43f-2c975ae5eb4c.png" class="img-fluid"></p>
+<ul>
+<li>Under the actions listed under <code>Start</code>, select <code>Open folder</code> then open <code>/home/training</code></li>
+<li>Select the box for <code>Trust the authors of all files in the parent folder ‘home’</code> then click <code>Yes, I trust the authors</code></li>
+<li>To open a terminal, from the top ribbon options, select <code>Terminal</code> –&gt; <code>New Terminal</code></li>
+</ul>
+<p><br></p>
 </section>
 </section>
 <section id="option-2-install-and-set-up-a-terminal-application" class="level3">
