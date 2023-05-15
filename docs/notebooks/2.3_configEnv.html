@@ -418,7 +418,8 @@ Solution
 <li>We wanted to use a non-default software container?</li>
 <li>We wanted to customise outputs beyond what was possible with the nf-core workflow parameters?</li>
 </ul>
-<p><span class="emoji" data-emoji="bulb">💡</span> <span style="color:#000080;"> This is all possible with custom configuration files!</span> <br><br></p>
+<p><span class="emoji" data-emoji="bulb">💡</span> <span style="color:#000080;"> This is all possible with custom configuration files!</span></p>
+<p><br><br></p>
 </section>
 <section id="institutional-config-files" class="level3">
 <h3 class="anchored" data-anchor-id="institutional-config-files"><strong>2.3.3. Institutional config files</strong></h3>
@@ -556,7 +557,7 @@ Singularity options
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    }</span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    params {</span>
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>      max_cpus   = 2</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>      max_memory = '6.GB'      </span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>      max_memory = 6.GB      </span>
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    }</span>
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -594,7 +595,7 @@ Nextflow cache and resume
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    params {</span>
 <span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>      config_profile_description  = 'Pawsey Nimbus c2r8 profile'</span>
 <span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>      max_cpus   = 2</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>      max_memory = '6.GB'      </span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>      max_memory = 6.GB      </span>
 <span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    }</span>
 <span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -647,8 +648,8 @@ What was that warning all about?!
 <div class="callout-body-container callout-body">
 <p>This warning appears because we have included a custom config, ie we now have ‘multiple configs’ because the default <code>nextflow.config</code> counts as well!</p>
 <p><img src="../figs/2.3_warn_multiple_configs.png" class="img-fluid"> <br></p>
-<p>Recall <a href="1.3_configure.html#custom-configuration-files">Lesson 1.3.7 ’Custom configuration files</a> where you attemped to set the parameter <code>multiqc_title</code> to your favourite colour within <code>my_custom_config.config</code>. The <code>multiqc_title</code> parameter displayed in the STDOUT under <strong>‘Input/output options’</strong> but was NOT applied to the run! The alarming-looking warning provided by nf-core is a gentle but firm reminder of this very important detail. <br></p>
-<p>➤ <span style="color:#8b0000;">Bonus optional activity:</span> add the multiqc_title parameter in a <code>params</code> scope of the workshop profile within <code>custom-nimbus.config</code>, and re-submit the previous run. Note the changes to <code>multiqc_title</code> have been reported on the STDOUT, but have not been applied to the output in <code>&lt;outdir&gt;/multiqc/star_salmon</code>.</p>
+<p>Recall <a href="1.3_configure.html#custom-configuration-files">Lesson 1.3.7 Custom configuration files</a> where you attemped to set the parameter <code>multiqc_title</code> to your favourite colour within <code>my_custom_config.config</code>. The <code>multiqc_title</code> parameter displayed in the STDOUT under <strong>‘Input/output options’</strong> but was NOT applied to the run! The alarming-looking warning provided by nf-core is a gentle but firm reminder of this very important detail. <br></p>
+<p><strong>Reminder of what that looks like in action</strong>: if the <code>multiqc_title</code> parameter was included as a param in <code>custom-nimbus.config</code>, the param and value would appear in the run log but would not actually be applied to the run.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>    params {</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>      multiqc_title = 'black'</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -706,7 +707,7 @@ Challenge
 </div>
 <div class="callout-body-container callout-body">
 <p>Set 2 CPUs and 6 GB memory for the process labels <code>process_low</code>, <code>process_medium</code> and <code>process_high</code> within the process scope</p>
-<p><span class="emoji" data-emoji="bulb">💡</span> Hint: View the file <code>nf-core-rnaseq-3.11.1/workflow/conf/base.config</code> for syntax example.</p>
+<p><span class="emoji" data-emoji="bulb">💡</span> Hint: View the file <code>nf-core-rnaseq-3.11.1/workflow/conf/base.config</code> for syntax example</p>
 </div>
 </div>
 <div class="callout-caution callout callout-style-default callout-captioned">
@@ -769,9 +770,7 @@ Solution
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  -params-file workshop-params.yaml \</span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  --outdir Lesson-2.3.4 \</span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  -resume </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<blockquote class="blockquote">
 <p><span class="emoji" data-emoji="eyes">👀</span> Notice that the <strong>Max job request options</strong> are no longer listed on the run log printed to screen</p>
-</blockquote>
 <p><br><br></p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -942,31 +941,21 @@ Completed config file
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Challenge
+Thoughts? <span class="emoji" data-emoji="thought_balloon">💭</span>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>What do you expect would happen to your run if your execution path was <strong>not</strong> specified correctly?</p>
+<p>What do you expect would happen to your run if your execution path for the module was <strong>not</strong> specified correctly?</p>
 </div>
 </div>
-<div class="callout-caution callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-24" class="callout-24-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
+<details>
+<summary>
+<span class="emoji" data-emoji="stop_sign">🛑</span>
+</summary>
 <p>In this case, our pipeline would complete OK, because the resources for the STAR_ALIGN process have been appropriately set for our VM using the <code>process_high</code> label within our <code>custom-nimbus.config</code>.</p>
 <p>The directives set within the <code>withName</code> scope would not be applicable, and a warning would be printed, eg</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>WARN: There's no process matching config selector: .*:RNASEQ:ALIGN_STAR:STARALIGN</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
+</details>
 <p><br><br></p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">

@@ -54,17 +54,17 @@ more nf-core-rnaseq-3.11.1/workflow/nextflow.config
 
 The `base.config` sets the default compute resource settings to be used by the processes in the nf-core workflow. It uses **process labels** to enable different sets of resources to be applied to groups of processes that require similar compute. These labels are specified within the `main.nf` file for a process. 
 
-><span style="color:#000080;"> We can over-ride these default compute resources using a custom configuration file.</span>
+<span style="color:#000080;"> We can over-ride these default compute resources using a custom configuration file.</span>
 
 The `nextflow.config` file is more workflow-specific, and sets the defaults for the workflow parameters, as well as defines profiles to change the default software access from `$PATH` to the specified access method, eg Singularity. 
 
-><span style="color:#000080;"> We can over-ride these parameters on the command line or with a parameters file, and over-ride the default behaviour of searching for tools on `$PATH` by specifying a `-profile`.</span>  
+<span style="color:#000080;"> We can over-ride these parameters on the command line or with a parameters file, and over-ride the default behaviour of searching for tools on `$PATH` by specifying a `-profile`.</span>  
 
 <br/><br/>
 
 ::: callout-tip
 ### Challenge{.unlisted}
-- Thinking of the resource configuration settings we have applied to our rnaseq runs so far (`-profile singularity`, `--max_cpus`, `--max_memory`), if we were to run the nf-core/rnaseq workflow now without these custom configurations, do you think the run would complete successfully on our training VMs? 
+- Thinking of the resource configuration settings we have applied to our rnaseq runs so far (`-profile singularity`, `--max_cpus`, `--max_memory`), if we were to run the `nf-core/rnaseq` workflow now without these custom configurations, do you think the run would complete successfully on our training VMs? 
 - If not, why?
 :::
 
@@ -77,7 +77,7 @@ The `nextflow.config` file is more workflow-specific, and sets the defaults for 
 
 The parameters `--max_cpus`, `--max_memory` and `--max_time` are applied as a **cap** for a workflow, to ensure that no single process attempts to use more resources than you have available on your platform. 
 
-> <span style="color:#000080;"> Setting these values to the maximum or near-maximum on your machine/node is an important customisation to prevent uneccessary failed runs.</span>  
+<span style="color:#000080;"> Setting these values to the maximum or near-maximum on your machine/node is an important customisation to prevent uneccessary failed runs.</span>  
 
 Default settings for `--max_cpus`, `--max_memory` and `--max_time` are applied within the nf-core `workflow/nextflow.config`. These are generous values expecting to be over-ridden with your custom settings. 
 
@@ -126,6 +126,7 @@ These are basic configurations. What if:
  
 
 :bulb: <span style="color:#000080;"> This is all possible with custom configuration files!</span>
+
 <br/><br/>
 
 
@@ -247,7 +248,7 @@ profiles {
     }
     params {
       max_cpus   = 2
-      max_memory = '6.GB'      
+      max_memory = 6.GB      
     }
   }
 }
@@ -279,7 +280,7 @@ profiles {
     params {
       config_profile_description  = 'Pawsey Nimbus c2r8 profile'
       max_cpus   = 2
-      max_memory = '6.GB'      
+      max_memory = 6.GB      
     }
   }
 }
@@ -335,10 +336,10 @@ This warning appears because we have included a custom config, ie we now have 'm
 ![](../figs/2.3_warn_multiple_configs.png)
 <br/>
 
-Recall [Lesson 1.3.7 'Custom configuration files](1.3_configure.html#custom-configuration-files) where you attemped to set the parameter `multiqc_title` to your favourite colour within `my_custom_config.config`. The `multiqc_title` parameter displayed in the STDOUT under **'Input/output options'** but was NOT applied to the run! The alarming-looking warning provided by nf-core is a gentle but firm reminder of this very important detail.
+Recall [Lesson 1.3.7 Custom configuration files](1.3_configure.html#custom-configuration-files) where you attemped to set the parameter `multiqc_title` to your favourite colour within `my_custom_config.config`. The `multiqc_title` parameter displayed in the STDOUT under **'Input/output options'** but was NOT applied to the run! The alarming-looking warning provided by nf-core is a gentle but firm reminder of this very important detail.
 <br/>
 
-&#x27A4;  <span style="color:#8b0000;">Bonus optional activity:</span> add the multiqc_title parameter in a `params` scope of the workshop profile within `custom-nimbus.config`, and re-submit the previous run. Note the changes to `multiqc_title` have been reported on the STDOUT, but have not been applied to the output in `<outdir>/multiqc/star_salmon`.
+**Reminder of what that looks like in action**: if the `multiqc_title` parameter was included as a param in `custom-nimbus.config`, the param and value would appear in the run log but would not actually be applied to the run.
 
 ``` default
     params {
@@ -387,7 +388,7 @@ The following exercise is trivial given the limitations of our VMs. Consider how
 ### Challenge{.unlisted}
 Set 2 CPUs and 6 GB memory for the process labels `process_low`, `process_medium` and `process_high` within the process scope 
 
-:bulb: Hint: View the file `nf-core-rnaseq-3.11.1/workflow/conf/base.config` for syntax example. 
+:bulb: Hint: View the file `nf-core-rnaseq-3.11.1/workflow/conf/base.config` for syntax example 
 :::
 
 ::: {.callout-caution collapse="true"}
@@ -446,7 +447,7 @@ nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
   -resume 
 ```
 
->:eyes: Notice that the **Max job request options** are no longer listed on the run log printed to screen
+:eyes: Notice that the **Max job request options** are no longer listed on the run log printed to screen
 
 <br/><br/>
 
@@ -480,7 +481,7 @@ To utilise `withName`, we first need to ensure we have the correct and specific 
 
 &#x27A4;  Identify the execution path for the STAR_ALIGN module:
 
-- Recall from [Lesson 1.3.5 'Default configuration files'](1.3_configure.html#default-configuration-files) the following tips: 
+- Recall from [Lesson 1.3.5 Default configuration files](1.3_configure.html#default-configuration-files) the following tips: 
 
   - The extended execution path is built from the pipeline, workflow, subworkflow, and module names
   - It can be tricky to evaluate the path used to execute a module. If you are unsure of how to build the path you can copy it from the `workflow/conf/modules.config` file
@@ -609,19 +610,21 @@ If your execution path for the STAR_ALIGN module was specified correctly, your r
 <br/>
 
 ::: {.callout-tip}
-### Challenge
-What do you expect would happen to your run if your execution path was **not** specified correctly?
+### Thoughts? :thought_balloon:
+What do you expect would happen to your run if your execution path for the module was **not** specified correctly?
 :::
 
-::: {.callout-caution collapse="true"}
-### Solution
+<details>
+<summary> :stop_sign: </summary>
 In this case, our pipeline would complete OK, because the resources for the STAR_ALIGN process have been appropriately set for our VM using the `process_high` label within our `custom-nimbus.config`. 
 
 The directives set within the `withName` scope would not be applicable, and a warning would be printed, eg
 ```default
 WARN: There's no process matching config selector: .*:RNASEQ:ALIGN_STAR:STARALIGN
 ```
-:::
+</details>
+
+
 <br/><br/>
 
 
