@@ -16,7 +16,7 @@ nextflow log <run_name> -help
 
 ### **Execute Nextflow in the background**
 
-The [`-bg`](https://www.nextflow.io/docs/latest/cli.html?highlight=bg#execution-as-a-background-job) options allows you to run your pipeline in the background and continue using your terminal. It is similar to `nohup`. You can redirect all stdout to a log file. 
+The [`-bg`](https://www.nextflow.io/docs/latest/cli.html?highlight=bg#execution-as-a-background-job) options allows you to run your pipeline in the background and continue using your terminal. It is similar to `nohup`. You can redirect all standard output to a log file. 
 
 ```default 
 nextflow run <workflow_repo/main.nf> -bg > workshop_tip.log
