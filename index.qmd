@@ -7,9 +7,7 @@ output:
 from: markdown+emoji
 ---
 
-**This course is currently under development**
-
-This workshop will set you up with the foundational knowledge required to run and customise nf-core workflows in a reproducible manner. The content is broken up into 2 half-day sessions. Using the nf-core/rnaseq workflow as an example, we will step through essential features common across all nf-core workflows. We will explore ways to adjust the workflow parameters based on the needs of your dataset and configuration the workflow to run on your computational environment. See the [lesson plan](notebooks/0.0_welcome.qmd) for details. 
+This workshop will provide you with the foundational knowledge required to run and customise nf-core workflows in a reproducible manner. The content is broken up into 2 half-day sessions. In the first session we will cover the basic principles of Nextflow and nf-core pipelines. In the second session we will step through various customisation scenarios using the [nf-core/rnaseq](https://nf-co.re/rnaseq/3.11.1) pipeline. We will explore ways to adjust the workflow parameters based on the needs of your dataset and configuration the workflow to run on your computational environment. See the [lesson plan](notebooks/0.0_welcome.qmd) for details. 
 
 ### **Trainers**{.unlisted}
 
@@ -30,7 +28,7 @@ This workshop is suitable for people who are familiar with working at the comman
 
 Please complete the [Setup Instructions](./setup.html) **before the course**.
 
-If you have any trouble, please get in contact with us ASAP.
+If you have any trouble, please get in contact with us ASAP via Slack.
 
 ### **Code of Conduct**{.unlisted}
 
@@ -48,7 +46,7 @@ Our full code of conduct, with incident reporting guidelines, is available [here
 
 | Lesson     | Overview |
 |------------|----------|
-| [Set up your computer](setup.html)| Follow these instructions to install VSCode and login to your Nimbus instance. |
+| [Set up your computer](setup.html)| Follow these instructions to install VS Code and login to your Nimbus instance. |
 | [Session 1: Introduction to nf-core](notebooks/1.0_intro.html)| Learn fundamental ideas and skills that are essential for using Nextflow and nf-core workflows. |
 | [Session 2: Customising nf-core](notebooks/2.0_intro.html)| Write, run, adjust, and re-run an nf-core workflow as we step through various customisation scenarios. |
 
