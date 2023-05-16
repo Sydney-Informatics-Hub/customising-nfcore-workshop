@@ -227,7 +227,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#why-should-i-use-a-parameters-file" id="toc-why-should-i-use-a-parameters-file" class="nav-link active" data-scroll-target="#why-should-i-use-a-parameters-file"><strong>2.2.1. Why should I use a parameters file?</strong></a></li>
+  <li><a href="#why-should-i-use-a-params-file" id="toc-why-should-i-use-a-params-file" class="nav-link active" data-scroll-target="#why-should-i-use-a-params-file"><strong>2.2.1. Why should I use a params file?</strong></a></li>
   <li><a href="#troubleshoot-the-warning-message" id="toc-troubleshoot-the-warning-message" class="nav-link" data-scroll-target="#troubleshoot-the-warning-message"><strong>2.2.2. Troubleshoot the warning message</strong></a></li>
   <li><a href="#identify-the-run-command-for-a-process" id="toc-identify-the-run-command-for-a-process" class="nav-link" data-scroll-target="#identify-the-run-command-for-a-process"><strong>2.2.3. Identify the run command for a process</strong></a></li>
   <li><a href="#write-a-parameter-file" id="toc-write-a-parameter-file" class="nav-link" data-scroll-target="#write-a-parameter-file"><strong>2.2.4. Write a parameter file</strong></a></li>
@@ -277,8 +277,8 @@ Objectives
 <p>In <a href="1.3_configure.html#custom-configuration-files">lesson 1.3.7</a>, we learned that <a href="https://www.nextflow.io/docs/latest/config.html#scope-params">parameters</a> are values that can be set by the user and used to control the behaviour of a workflow or process within the workflow. Within the Nextflow code base, they are defined by the <code>params{}</code> scope. They can be suppled as either a <code>--parameter</code> flag to the run command or inside a parameter file.</p>
 <p>In the previous lesson we supplied pipeline parameters as flags in our run command (<code>--</code>). In this lesson we will add another parameter to our run command and re-run the pipeline using a parameter file.</p>
 <p><br></p>
-<section id="why-should-i-use-a-parameters-file" class="level3">
-<h3 class="anchored" data-anchor-id="why-should-i-use-a-parameters-file"><strong>2.2.1. Why should I use a parameters file?</strong></h3>
+<section id="why-should-i-use-a-params-file" class="level3">
+<h3 class="anchored" data-anchor-id="why-should-i-use-a-params-file"><strong>2.2.1. Why should I use a params file?</strong></h3>
 <p>Using a parameter file is advantageous in a number of ways:</p>
 <ol type="1">
 <li><strong>Code readability</strong>: By using a params file, you can ensure your run command is readable by storing all your parameters customisations in one place and easily make changes or additions as needed.</li>
@@ -286,7 +286,7 @@ Objectives
 <li><strong>Flexibility</strong>: If you need to run the same nf-core pipeline with slightly different settings, using a parameters file makes it easier to make those changes without modifying the run command each time.</li>
 <li><strong>Version control</strong>: Using version controlled parameter files allows you to track changes to your pipeline configuration over time and revert to previous versions if needed.</li>
 </ol>
-<p><br> <br></p>
+<p><br></p>
 </section>
 <section id="troubleshoot-the-warning-message" class="level3">
 <h3 class="anchored" data-anchor-id="troubleshoot-the-warning-message"><strong>2.2.2. Troubleshoot the warning message</strong></h3>
@@ -310,7 +310,6 @@ Handling dodgy error messages <span class="emoji" data-emoji="cursing_face">🤬
 <p>The first warning message isn’t very descriptive (see this <a href="https://github.com/nf-core/rnaseq/pull/963">pull request</a>). You might come across issues like this when running nf-core pipelines, too. Bug reports and user feedback is very important to open source software communities like nf-core. If you come across any issues, submit a GitHub issue or start a discussion in the relevant nf-core Slack channel so others are aware and it can be addressed by the pipeline’s developers.</p>
 </div>
 </div>
-<p><br></p>
 <p>➤ Take a look at the MultiQC report, as directed by the second message. You can find the MultiQC report in the <code>Lesson-2.1/</code> directory:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ls -la Lesson-2.1/multiqc/star_salmon/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>total 1468</span>
@@ -319,13 +318,12 @@ Handling dodgy error messages <span class="emoji" data-emoji="cursing_face">🤬
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 2 ubuntu ubuntu    4096 Apr 12 04:13 multiqc_data</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 5 ubuntu ubuntu    4096 Apr 12 04:13 multiqc_plots</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>-rw-rw-r-- 1 ubuntu ubuntu 1483297 Apr 12 04:13 multiqc_report.html</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><br></p>
 <p>➤ Open the <code>multiqc_report.html</code> the file navigator panel on the left side of your VS Code window by right-clicking on it and then selecting <code>Open with Live Server</code></p>
 <p>Take a look a the section labelled <strong>WARNING: Fail Strand Check</strong></p>
 <p><img src="../figs/2.2_multiqc.png" class="img-fluid"></p>
 <p>The warning we have received is indicating that the read strandedness we specified in our <code>samplesheet.csv</code> and <strong>inferred strandedness</strong> identified by the RSeqQC process in the pipeline do not match. It looks like I have incorrectly specified strandedness as forward in the <code>samplesheet.csv</code> when our raw reads actually show an equal distribution of sense and antisense reads (my mistake! <span class="emoji" data-emoji="expressionless">😑</span>).</p>
 <p>For those who are not familiar with RNAseq data, incorrectly specified strandedness may negatively impact the read quantification step (process: Salmon quant) and give us inaccurate results. So, let’s clarify how the Salmon quant process is gathering strandedness information for our input files by default and find a way to address this with the parameters provided by the nf-core/rnaseq pipeline.</p>
-<p><br> <br></p>
+<p><br></p>
 </section>
 <section id="identify-the-run-command-for-a-process" class="level3">
 <h3 class="anchored" data-anchor-id="identify-the-run-command-for-a-process"><strong>2.2.3. Identify the run command for a process</strong></h3>
@@ -380,7 +378,7 @@ Handling dodgy error messages <span class="emoji" data-emoji="cursing_face">🤬
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        echo $cmd;     </span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>      fi; </span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    done </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>That will list all process <code>.command.sh</code> scripts containing ‘salmon’. There are a few different processes that run Salmon in the workflow. We are looking for Salmon quant which performs the read quantification. For example:</p>
+<p>That will list all process <code>.command.sh</code> scripts containing ‘salmon’. There are a few different processes that run Salmon to perform other steps in the workflow. We are looking for Salmon quant which performs the read quantification:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>/home/ubuntu/session2/work/50/d4462ece237213ace901a779a45286/.command.sh</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>/home/ubuntu/session2/work/2f/11774c859f9f55f816b754a65290a7/.command.sh</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>/home/ubuntu/session2/work/bc/0478d8de4d1c6df1413c50f4bffcb1/.command.sh</span>
@@ -394,7 +392,6 @@ Handling dodgy error messages <span class="emoji" data-emoji="cursing_face">🤬
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>/home/ubuntu/session2/work/ec/0a013bfb1f96d3c7170137262294e7/.command.sh</span>
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>/home/ubuntu/session2/work/b7/37428bc5be1fd2c34e3911fb827334/.command.sh</span>
 <span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>/home/ubuntu/session2/work/57/a18fcea6a06565b14140ab06a3d077/.command.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><br> <br></p>
 <p>Compared with the salmon quant <code>main.nf</code> file, we get a lot more fine scale details from the <code>.command.sh</code> process scripts:</p>
 <p><img src="../figs/2.2_salmon-quant.png" class="img-fluid"></p>
 <p>Looking at the nf-core/rnaseq Parameter documentation and Salmon documentation, we found that we can override this default using the <code>--salmon_quant_libtype U</code> <a href="https://nf-co.re/rnaseq/3.11.1/parameters#salmon_quant_libtype">parameter</a> to indicate our data is unstranded and override <code>samplesheet.csv</code> input.</p>
@@ -429,11 +426,11 @@ Handling dodgy error messages <span class="emoji" data-emoji="cursing_face">🤬
 <p>Fill in the parameters file below and save as <code>workshop-params.yaml</code>. This time, include the <code>--salmon_quant_libtype U</code> parameter.</p>
 <p><span class="emoji" data-emoji="bulb">💡</span> YAML formatting tips!</p>
 <ul>
-<li>strings need to be inside double quotes</li>
-<li>booleans (true/false) and numbers do not require quotes</li>
+<li>Strings need to be inside double quotes</li>
+<li>Booleans (true/false) and numbers do not require quotes</li>
 </ul>
 <div class="sourceCode" id="cb12"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">input</span><span class="kw">:</span><span class="at"> </span><span class="st">""</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">outdir</span><span class="kw">:</span><span class="at"> </span><span class="st">""</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">outdir</span><span class="kw">:</span><span class="at"> </span><span class="st">"Lesson-2.2"</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">fasta</span><span class="kw">:</span><span class="at"> </span><span class="st">""</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">gtf</span><span class="kw">:</span><span class="at"> </span><span class="st">""</span></span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">star_index</span><span class="kw">:</span><span class="at"> </span><span class="st">""</span></span>
@@ -441,7 +438,7 @@ Handling dodgy error messages <span class="emoji" data-emoji="cursing_face">🤬
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">skip_markduplicates</span><span class="kw">:</span><span class="at"> </span></span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">save_trimmed</span><span class="kw">:</span><span class="at"> </span></span>
 <span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="fu">save_unaligned</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="fu">salmon_quant_libtype</span><span class="kw">:</span><span class="at"> </span><span class="st">""</span><span class="at"> </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="fu">salmon_quant_libtype</span><span class="kw">:</span><span class="at"> </span><span class="st">"U"</span><span class="at"> </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="callout-caution callout callout-style-default callout-captioned">
@@ -487,7 +484,7 @@ Solution
 <li>The <code>-resume</code> flag. Nextflow has lots of <a href="https://www.nextflow.io/docs/latest/cli.html?highlight=resume#run">run options</a> including the ability to use cached output!</li>
 <li>Some processes will be pulled from the cache. These processes remain unaffected by our addition of a new parameter.<br>
 </li>
-<li>This run of the pipline will complete in a much shorter time.</li>
+<li>This run of the pipeline will complete in a much shorter time.</li>
 </ol>
 <div class="sourceCode" id="cb15"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>-[nf-core/rnaseq] Pipeline completed successfully with skipped sampl(es)-</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>-[nf-core/rnaseq] Please check MultiQC report: 2/2 samples failed strandedness check.-</span>
@@ -508,8 +505,9 @@ Solution
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>A parameter file can be used to specify input parameters for any Nextflow workflow.</li>
-<li>A parameter file can be applied to a run command using the <code>-params-file</code> flag.</li>
+<li><code>Nextflow log</code> can be used to query task-specific metadata and trace the application of parameters</li>
+<li>A params file can be used to specify input parameters for any Nextflow workflow.</li>
+<li>A params file can be applied to a run command using the <code>-params-file</code> flag.</li>
 <li>Parameter files can be written in YAML or JSON file formats.<br>
 </li>
 </ul>

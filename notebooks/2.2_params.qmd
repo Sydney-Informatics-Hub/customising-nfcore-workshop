@@ -23,7 +23,7 @@ In the previous lesson we supplied pipeline parameters as flags in our run comma
 
 </br>
 
-### **2.2.1. Why should I use a parameters file?**
+### **2.2.1. Why should I use a params file?**
 
 Using a parameter file is advantageous in a number of ways:
 
@@ -32,7 +32,6 @@ Using a parameter file is advantageous in a number of ways:
 3. **Flexibility**: If you need to run the same nf-core pipeline with slightly different settings, using a parameters file makes it easier to make those changes without modifying the run command each time. 
 4. **Version control**: Using version controlled parameter files allows you to track changes to your pipeline configuration over time and revert to previous versions if needed.
 
-</br>
 </br>
 
 ### **2.2.2. Troubleshoot the warning message**
@@ -52,7 +51,6 @@ Succeeded   : 66
 ### Handling dodgy error messages :cursing_face:
 The first warning message isn't very descriptive (see this [pull request](https://github.com/nf-core/rnaseq/pull/963)). You might come across issues like this when running nf-core pipelines, too. Bug reports and user feedback is very important to open source software communities like nf-core. If you come across any issues, submit a GitHub issue or start a discussion in the relevant nf-core Slack channel so others are aware and it can be addressed by the pipeline's developers.
 :::
-</br>
 
 &#x27A4; Take a look at the MultiQC report, as directed by the second message. You can find the MultiQC report in the `Lesson-2.1/` directory: 
 
@@ -68,7 +66,6 @@ drwxrwxr-x 2 ubuntu ubuntu    4096 Apr 12 04:13 multiqc_data
 drwxrwxr-x 5 ubuntu ubuntu    4096 Apr 12 04:13 multiqc_plots
 -rw-rw-r-- 1 ubuntu ubuntu 1483297 Apr 12 04:13 multiqc_report.html
 ```
-</br>
 
 &#x27A4; Open the `multiqc_report.html` the file navigator panel on the left side of your VS Code window by right-clicking on it and then selecting `Open with Live Server`
 
@@ -80,7 +77,6 @@ The warning we have received is indicating that the read strandedness we specifi
 
 For those who are not familiar with RNAseq data, incorrectly specified strandedness may negatively impact the read quantification step (process: Salmon quant) and give us inaccurate results. So, let's clarify how the Salmon quant process is gathering strandedness information for our input files by default and find a way to address this with the parameters provided by the nf-core/rnaseq pipeline. 
 
-</br>
 </br>
 
 ### **2.2.3. Identify the run command for a process**
@@ -159,7 +155,7 @@ nextflow log ${run_name} | while read line;
     done 
 ```
 
-That will list all process `.command.sh` scripts containing 'salmon'. There are a few different processes that run Salmon in the workflow. We are looking for Salmon quant which performs the read quantification. For example: 
+That will list all process `.command.sh` scripts containing 'salmon'. There are a few different processes that run Salmon to perform other steps in the workflow. We are looking for Salmon quant which performs the read quantification:
 
 ```default
 /home/ubuntu/session2/work/50/d4462ece237213ace901a779a45286/.command.sh
@@ -176,9 +172,6 @@ That will list all process `.command.sh` scripts containing 'salmon'. There are 
 /home/ubuntu/session2/work/b7/37428bc5be1fd2c34e3911fb827334/.command.sh
 /home/ubuntu/session2/work/57/a18fcea6a06565b14140ab06a3d077/.command.sh
 ```
-
-</br>
-</br>
 
 Compared with the salmon quant `main.nf` file, we get a lot more fine scale details from the `.command.sh` process scripts: 
 
@@ -205,12 +198,12 @@ Fill in the parameters file below and save as `workshop-params.yaml`. This time,
 
 :bulb: YAML formatting tips!
 
-* strings need to be inside double quotes 
-* booleans (true/false) and numbers do not require quotes 
+* Strings need to be inside double quotes 
+* Booleans (true/false) and numbers do not require quotes 
 
 ```yaml
 input: ""
-outdir: ""
+outdir: "Lesson-2.2"
 fasta: ""
 gtf: ""
 star_index: ""
@@ -218,7 +211,7 @@ salmon_index: ""
 skip_markduplicates: 
 save_trimmed: 
 save_unaligned: 
-salmon_quant_libtype: "" 
+salmon_quant_libtype: "U" 
 ```
 :::
 
@@ -261,7 +254,7 @@ As the workflow runs a second time, you will notice 4 things:
 1. The command is much tidier thanks to offloading some parameters to the params file
 2. The `-resume` flag. Nextflow has lots of [run options](https://www.nextflow.io/docs/latest/cli.html?highlight=resume#run) including the ability to use cached output!
 3. Some processes will be pulled from the cache. These processes remain unaffected by our addition of a new parameter.  
-4. This run of the pipline will complete in a much shorter time.
+4. This run of the pipeline will complete in a much shorter time.
 
 ```default
 -[nf-core/rnaseq] Pipeline completed successfully with skipped sampl(es)-
@@ -277,7 +270,8 @@ Cached      : 55
 
 ::: {.callout-note}
 ### **Key points**
-- A parameter file can be used to specify input parameters for any Nextflow workflow.
-- A parameter file can be applied to a run command using the `-params-file` flag. 
+- `Nextflow log` can be used to query task-specific metadata and trace the application of parameters
+- A params file can be used to specify input parameters for any Nextflow workflow.
+- A params file can be applied to a run command using the `-params-file` flag. 
 - Parameter files can be written in YAML or JSON file formats.  
 :::
