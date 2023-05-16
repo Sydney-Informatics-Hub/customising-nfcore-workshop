@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Sydney Informatics Hub training - 2.2. Why and how to use a parameters file</title>
+<title>Sydney Informatics Hub - 2.2. Managing parameter reproducibility</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -134,7 +134,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Sydney Informatics Hub training</span>
+    <span class="navbar-title">Sydney Informatics Hub</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -206,10 +206,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <a class="dropdown-item" href="../notebooks/2.4_multiConfig.html">
  <span class="dropdown-text">2.4 Apply multiple configurations</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="../notebooks/2.5_extArgs.html">
- <span class="dropdown-text">2.5 Apply external arguments</span></a>
-  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -244,7 +240,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><strong>2.2. Why and how to use a parameters file</strong></h1>
+<h1 class="title"><strong>2.2. Managing parameter reproducibility</strong></h1>
 </div>
 
 
@@ -278,8 +274,9 @@ Objectives
 </ul>
 </div>
 </div>
-<p>In <a href="1.3_configure.html#custom-configuration-files">Lesson 1.3.7</a>, we learned that <a href="https://www.nextflow.io/docs/latest/config.html#scope-params">parameters</a> are values that can be set by the user and used to control the behaviour of a workflow or process within the workflow. Within the Nextflow code base, they are defined by the <code>params{}</code> scope. They can be suppled as either a <code>--parameter</code> flag to the run command or inside a parameter file.</p>
+<p>In <a href="1.3_configure.html#custom-configuration-files">lesson 1.3.7</a>, we learned that <a href="https://www.nextflow.io/docs/latest/config.html#scope-params">parameters</a> are values that can be set by the user and used to control the behaviour of a workflow or process within the workflow. Within the Nextflow code base, they are defined by the <code>params{}</code> scope. They can be suppled as either a <code>--parameter</code> flag to the run command or inside a parameter file.</p>
 <p>In the previous lesson we supplied pipeline parameters as flags in our run command (<code>--</code>). In this lesson we will add another parameter to our run command and re-run the pipeline using a parameter file.</p>
+<p><br></p>
 <section id="why-should-i-use-a-parameters-file" class="level3">
 <h3 class="anchored" data-anchor-id="why-should-i-use-a-parameters-file"><strong>2.2.1. Why should I use a parameters file?</strong></h3>
 <p>Using a parameter file is advantageous in a number of ways:</p>
@@ -289,6 +286,7 @@ Objectives
 <li><strong>Flexibility</strong>: If you need to run the same nf-core pipeline with slightly different settings, using a parameters file makes it easier to make those changes without modifying the run command each time.</li>
 <li><strong>Version control</strong>: Using version controlled parameter files allows you to track changes to your pipeline configuration over time and revert to previous versions if needed.</li>
 </ol>
+<p><br></p>
 </section>
 <section id="troubleshoot-the-warning-message" class="level3">
 <h3 class="anchored" data-anchor-id="troubleshoot-the-warning-message"><strong>2.2.2. Troubleshoot the warning message</strong></h3>
@@ -312,23 +310,22 @@ Handling dodgy error messages <span class="emoji" data-emoji="cursing_face">🤬
 <p>The first warning message isn’t very descriptive (see this <a href="https://github.com/nf-core/rnaseq/pull/963">pull request</a>). You might come across issues like this when running nf-core pipelines, too. Bug reports and user feedback is very important to open source software communities like nf-core. If you come across any issues, submit a GitHub issue or start a discussion in the relevant nf-core Slack channel so others are aware and it can be addressed by the pipeline’s developers.</p>
 </div>
 </div>
+<p><br></p>
 <p>➤ Take a look at the MultiQC report, as directed by the second message. You can find the MultiQC report in the <code>Lesson-2.1/</code> directory:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ls -la Lesson-2.1/multiqc/star_salmon/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<pre class="defaul"><code>total 1468
-drwxrwxr-x 4 ubuntu ubuntu    4096 Apr 12 04:13 .
-drwxrwxr-x 3 ubuntu ubuntu    4096 Apr 12 04:13 ..
-drwxrwxr-x 2 ubuntu ubuntu    4096 Apr 12 04:13 multiqc_data
-drwxrwxr-x 5 ubuntu ubuntu    4096 Apr 12 04:13 multiqc_plots
--rw-rw-r-- 1 ubuntu ubuntu 1483297 Apr 12 04:13 multiqc_report.html</code></pre>
-<p>Open the <code>multiqc_report.html</code> the file navigator panel on the left side of your VS Code window by clicking on it. Then open the rendered html file using the Live Server extension:</p>
-<ol type="1">
-<li><code>Ctrl</code>+<code>Shift</code>+<code>P</code> to open the command palette</li>
-<li>Select <code>Live Server: Open with Live Server</code> to open html file in your browser window.</li>
-</ol>
+<div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>total 1468</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 4 ubuntu ubuntu    4096 Apr 12 04:13 .</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 3 ubuntu ubuntu    4096 Apr 12 04:13 ..</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 2 ubuntu ubuntu    4096 Apr 12 04:13 multiqc_data</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 5 ubuntu ubuntu    4096 Apr 12 04:13 multiqc_plots</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>-rw-rw-r-- 1 ubuntu ubuntu 1483297 Apr 12 04:13 multiqc_report.html</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><br></p>
+<p>➤ Open the <code>multiqc_report.html</code> the file navigator panel on the left side of your VS Code window by right-clicking on it and then selecting <code>Open with Live Server</code></p>
 <p>Take a look a the section labelled <strong>WARNING: Fail Strand Check</strong></p>
 <p><img src="../figs/2.2_multiqc.png" class="img-fluid"></p>
 <p>The warning we have received is indicating that the read strandedness we specified in our <code>samplesheet.csv</code> and <strong>inferred strandedness</strong> identified by the RSeqQC process in the pipeline do not match. It looks like I have incorrectly specified strandedness as forward in the <code>samplesheet.csv</code> when our raw reads actually show an equal distribution of sense and antisense reads (my mistake! <span class="emoji" data-emoji="expressionless">😑</span>).</p>
 <p>For those who are not familiar with RNAseq data, incorrectly specified strandedness may negatively impact the read quantification step (process: Salmon quant) and give us inaccurate results. So, let’s clarify how the Salmon quant process is gathering strandedness information for our input files by default and find a way to address this with the parameters provided by the nf-core/rnaseq pipeline.</p>
+<p><br></p>
 </section>
 <section id="identify-the-run-command-for-a-process" class="level3">
 <h3 class="anchored" data-anchor-id="identify-the-run-command-for-a-process"><strong>2.2.3. Identify the run command for a process</strong></h3>
@@ -397,6 +394,7 @@ drwxrwxr-x 5 ubuntu ubuntu    4096 Apr 12 04:13 multiqc_plots
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>/home/ubuntu/session2/work/ec/0a013bfb1f96d3c7170137262294e7/.command.sh</span>
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>/home/ubuntu/session2/work/b7/37428bc5be1fd2c34e3911fb827334/.command.sh</span>
 <span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>/home/ubuntu/session2/work/57/a18fcea6a06565b14140ab06a3d077/.command.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><br></p>
 <p>Compared with the salmon quant <code>main.nf</code> file, we get a lot more fine scale details from the <code>.command.sh</code> process scripts:</p>
 <p><img src="../figs/2.2_salmon-quant.png" class="img-fluid"></p>
 <p>Looking at the nf-core/rnaseq Parameter documentation and Salmon documentation, we found that we can override this default using the <code>--salmon_quant_libtype U</code> <a href="https://nf-co.re/rnaseq/3.11.1/parameters#salmon_quant_libtype">parameter</a> to indicate our data is unstranded and override <code>samplesheet.csv</code> input.</p>
@@ -413,6 +411,7 @@ drwxrwxr-x 5 ubuntu ubuntu    4096 Apr 12 04:13 multiqc_plots
 <p>If we want to get rid of the warning message <code>Please check MultiQC report: 2/2 samples failed strandedness check</code>, we’ll have to change the strandedness fields in our <code>samplesheet.csv</code>. Keep in mind, doing this will invalidate the pipeline’s cache and cause the pipeline to run from the beginning.</p>
 </div>
 </div>
+<p><br></p>
 </section>
 <section id="write-a-parameter-file" class="level3">
 <h3 class="anchored" data-anchor-id="write-a-parameter-file"><strong>2.2.4. Write a parameter file</strong></h3>
@@ -470,6 +469,7 @@ Solution
 </div>
 </div>
 </div>
+<p><br></p>
 </section>
 <section id="apply-the-parameter-file" class="level3">
 <h3 class="anchored" data-anchor-id="apply-the-parameter-file"><strong>2.2.5. Apply the parameter file</strong></h3>
@@ -496,6 +496,7 @@ Solution
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>CPU hours   : 0.3 (82.2% cached)</span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>Succeeded   : 11</span>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>Cached      : 55</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><br></p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -518,7 +519,9 @@ Solution
 
 </section>
 
-<p>All materials copyright Sydney Informatics Hub, University of Sydney</p></main> <!-- /main -->
+<div style="font-size: 12px;">
+All materials copyright Sydney Informatics Hub, University of Sydney
+</div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
