@@ -8,31 +8,39 @@ output:
 
 ### **Query specific pipeline executions**
 
+The [Nextflow log](https://www.nextflow.io/docs/latest/cli.html#log) command is useful for querying execution metadata and history. You can filter your queries and output specific fields in the printed log. 
+
 ```default
-nextflow log <run_name> -f  
+nextflow log <run_name> -help
 ```
 
-### **Run Nextflow in the background**
+### **Execute Nextflow in the background**
 
-The [Nextflow config](https://www.nextflow.io/docs/latest/cli.html#config) command is useful for understanding the resolved profiles and parameters that Nextflow will use run a pipeline. 
+The [`-bg`](https://www.nextflow.io/docs/latest/cli.html?highlight=bg#execution-as-a-background-job) options allows you to run your pipeline in the background and continue using your terminal. It is similar to `nohup`. You can redirect all stdout to a log file. 
 
 ```default 
-nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf -bg > workshop_tip.log
+nextflow run <workflow_repo/main.nf> -bg > workshop_tip.log
 ```
 
 ### **Capture a Nextflow pipeline's configuration**
 
+The [Nextflow config](https://www.nextflow.io/docs/latest/cli.html#config) command prints the resolved pipeline configuration. It is especially useful for printing all resolved parameters and profiles Nextflow will use to run a pipeline. 
+
 ```default
-nextflow config nf-core-rnaseq-3.11.1/workflow
+nextflow config <workflow_repo> -help
 ```
 
 ### **Clean Nextflow cache and work directories**
 
-Examples of dry run and remove features for [clean](https://www.nextflow.io/docs/latest/cli.html#clean)
+The [Nextflow clean](https://www.nextflow.io/docs/latest/cli.html#clean) command will remove files from previous executions stored in the `.nextflow` cache and `work` directories. The `-dry-run` option allows you to preview which files will be deleted. 
+
+```default
+nextflow clean <workflow_repo> -help
+```
 
 ### **Access private GitHub repositories**
 
-To interact with private repositories on GitHub or when running into GitHub API rate limits for public repositories (i.e. when using Nextflow Tower), you can [provide Nextflow with access to GitHub](https://www.nextflow.io/docs/latest/sharing.html#github-credentials) by specifying your GitHub user name and a [Personal Access Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) in the [`scm` configuration file](https://www.nextflow.io/docs/latest/sharing.html#scm-configuration-file) inside your specified `.nextflow/` directory.
+To interact with private repositories on GitHub, you can provide Nextflow with [access to GitHub](https://www.nextflow.io/docs/latest/sharing.html#github-credentials) by specifying your GitHub user name and a [Personal Access Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) in the [`scm` configuration file](https://www.nextflow.io/docs/latest/sharing.html#scm-configuration-file) inside your specified `.nextflow/` directory:
 
 ```default
 providers {
@@ -45,6 +53,80 @@ providers {
 }
 ```
 
-### **Send processes to a job scheduler on HPC**
+### **Run Nextflow on HPC**
 
-Write a custom configuration file for your HPCs job scheduler: specify for all processes, withName {}, withLabel {}. 
+Nextflow, by default, spawns parallel task executions wherever it is running. You can use [Nextflow's executors](https://www.nextflow.io/docs/latest/executor.html) feature to run these tasks using an HPC job schedulers such as [SLURM](https://www.nextflow.io/docs/latest/executor.html#slurm) and [PBS Pro](https://www.nextflow.io/docs/latest/executor.html#pbs-pro). Use a custom configuration file to send all processes to the job scheduler as separate jobs and define essential resource requests like `cpus`, `time`, `memory`, and `queue` inside a `process {}` [scope](https://www.nextflow.io/docs/latest/process.html#processes). 
+
+#### **Run all workflow tasks as separate jobs on HPC**
+
+In this custom configuration file we have sent all tasks that a workflow is running to a PBS Pro job scheduler and specified jobs to be run on the normal queue, each running for a max time of 3 hours with 1 cpu and 4 Gb of memory:
+
+```default
+process {
+  executor = 'pbspro'
+  queue = 'normal'
+  cpus = 1
+  time = '3h'
+  memory = '4.GB'
+}
+```
+
+#### **Run processes with different resource profiles as HPC jobs**
+
+Adjusting the custom configuration file above, we can use the `withName {}` [process selector](https://www.nextflow.io/docs/latest/config.html?highlight=withname#process-selectors) to specify process-specific resource requirements:
+
+```default
+process {
+  executor = 'pbspro'
+	
+  withName processONE {
+    queue = 'normal'
+    cpus = 1
+    time = '3h'
+    memory = '4.GB'
+  }
+
+  withName processTWO {
+    queue = 'hugemem'
+    cpus = 48
+    time = '10h'
+    memory = '400.GB'
+  }
+}
+```
+
+#### **Specify infrastructure-specific directives for your jobs**
+
+Adjusting the custom configuration file above, we can define any native configuration options using the [clusterOptions](https://www.nextflow.io/docs/latest/process.html#process-clusteroptions) directive. We can use this to specify non-standard resources. Below we have specified which HPC project code to bill for all process jobs:
+
+```default
+process {
+  executor = 'pbspro'
+  clusterOptions = '-P project001'
+	
+  withName processONE {
+    queue = 'normal'
+    cpus = 1
+    time = '3h'
+    memory = '4.GB'
+  }
+
+  withName processTWO {
+    queue = 'hugemem'
+    cpus = 48
+    time = '10h'
+    memory = '400.GB'
+  }
+}
+```
+
+### **Additional resources**
+
+Here are some useful resources to help you get started with running nf-core pipelines and developing Nextflow pipelines:
+
+* [Nextflow tutorials](https://nf-co.re/docs/usage/nextflow)
+* [nf-core pipeline tutorials](https://nf-co.re/usage/usage_tutorials)
+* [Nextflow patterns](https://nextflow-io.github.io/patterns/index.html)
+* [HPC tips and tricks](https://www.nextflow.io/blog/2021/5_tips_for_hpc_users.html)
+* [Nextflow coding best practice recommendations](https://carpentries-incubator.github.io/Pipeline_Training_with_Nextflow/07-Nextflow_Best_Practice/index.html)
+* [The Nextflow blog](https://www.nextflow.io/blog.html)
