@@ -42,7 +42,7 @@ website:
           href: notebooks/2.5_extArgs.html
       - text: "Tips & Tricks"
         href: tips_tricks.html
-  body-footer: "All materials copyright Sydney Informatics Hub, University of Sydney"
+  body-footer: "<div style='font-size: 12px;'>All materials copyright Sydney Informatics Hub, University of Sydney</div>"
 
           
 format:

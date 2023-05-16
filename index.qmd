@@ -9,7 +9,7 @@ from: markdown+emoji
 
 **This course is currently under development**
 
-This workshop will set you up with the foundational knowledge required to run and customise nf-core workflows in a reproducible manner. Using the nf-core/rnaseq workflow as an example, we will step through essential features common across all nf-core workflows. We will explore ways to adjust the workflow parameters based on the needs of your dataset and configuration the workflow to run on your computational environment. 
+This workshop will set you up with the foundational knowledge required to run and customise nf-core workflows in a reproducible manner. The content is broken up into 2 half-day sessions. Using the nf-core/rnaseq workflow as an example, we will step through essential features common across all nf-core workflows. We will explore ways to adjust the workflow parameters based on the needs of your dataset and configuration the workflow to run on your computational environment. See the [lesson plan](notebooks/0.0_welcome.qmd) for details. 
 
 ### **Trainers**{.unlisted}
 
