@@ -184,7 +184,7 @@ If we want to get rid of the warning message `Please check MultiQC report: 2/2 s
 
 ### **2.2.4. Write a parameter file**
 
-Nextflow accepts either `yaml` or `json` formats for parameter files. Any of the pipeline-specific [parameters](https://nf-co.re/rnaseq/3.11.1/parameters) can be supplied to a Nextflow pipeline in this way. We wrote a parameter file in `json` format in lesson 1.3.7, let's use `yaml` format this time. 
+Nextflow accepts either `yaml` or `json` formats for parameter files. Any of the pipeline-specific [parameters](https://nf-co.re/rnaseq/3.11.1/parameters) can be supplied to a Nextflow pipeline in this way. We wrote a parameter file in `json` format in [lesson 1.3.7](../notebooks/1.3_configure.md#custom-configuration-files), let's use `yaml` format this time. 
 
 ::: callout-tip
 ### **Challenge**{.unlisted}
@@ -262,6 +262,6 @@ Cached      : 55
 ::: {.callout-note}
 ### **Key points**
 - A parameter file can be used to specify input parameters for any Nextflow workflow.
-- Specify parameter files in a workflow run command using the `-params-file` flag. 
+- A parameter file can be applied to a run command using the `-params-file` flag. 
 - Parameter files can be written in YAML or JSON file formats.  
 :::
