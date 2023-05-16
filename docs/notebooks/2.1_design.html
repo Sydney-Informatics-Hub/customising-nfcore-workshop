@@ -683,13 +683,11 @@ Solution
 <span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    --save_unaligned true \</span>
 <span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    --max_memory '6.GB' \</span>
 <span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    --max_cpus 2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><br></p>
 <p><span class="emoji" data-emoji="eyes">👀</span> Take a look at the stdout printed to the screen. Your workflow configuration and parameter customisations are all documented here. You can use this to confirm if your parameters have been correctly passed to the run command:</p>
 <p><img src="../figs/2.1_nf-core-stdout.png" class="img-fluid"></p>
 <p>As the workflow starts, you will also see a number of processes spawn out underneath this. Recall from <a href="1.1_nextflow.html#processes-and-channels">session 1</a> that processes are executed independently and can run in parallel. Nextflow manages the data dependencies between processes, ensuring that each process is executed only when its input data is available and all of its dependencies have been satisfied.</p>
 <p>To understand how this is coordinated, consider the STAR_ALIGN process that is being run.</p>
 <p><img src="../figs/2.1_nf-core_processes.png" class="img-fluid"></p>
-<p><br></p>
 <p><span class="emoji" data-emoji="eyes">👀</span> You’ll notice a few things:</p>
 <ul>
 <li>We can see which inputs are being processed by looking at the end of the process name</li>

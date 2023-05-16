@@ -348,8 +348,6 @@ nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
     --max_cpus 2
 ```
 
-</br>
-
 :eyes:  Take a look at the stdout printed to the screen. Your workflow configuration and parameter customisations are all documented here. You can use this to confirm if your parameters have been correctly passed to the run command: 
 
 ![](../figs/2.1_nf-core-stdout.png)
@@ -359,8 +357,6 @@ As the workflow starts, you will also see a number of processes spawn out undern
 To understand how this is coordinated, consider the STAR_ALIGN process that is being run. 
 
 ![](../figs/2.1_nf-core_processes.png)
-
-</br>
 
 :eyes: You'll notice a few things: 
 
