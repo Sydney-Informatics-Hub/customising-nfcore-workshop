@@ -11,7 +11,7 @@ In this workshop series, we will be using Pawsey’s Nimbus cloud. The [Pawsey S
 
 The main requirements for this workshop are a personal computer with:
 
-* A web broswer 
+* A web browser 
 * Visual Studio Code (recommended) or a terminal application 
 
 Below, you will find instructions on how to set up a terminal application and web browser on your computer and how to connect to Nimbus. Each participant will be provided with their instance’s IP address at the beginning of the workshop. 
@@ -49,7 +49,7 @@ Connect to your instance with VS code by adding the host details to your `.ssh` 
   2. Find and copy your IP address, it will start with 146.118.XXX.XX 
   3. In a new VS code terminal, type `Ctrl`+`Shift`+`P` if you're on a Windows machine or `Cmd`+`Shift`+`P` for MacOS to open the command palette 
   4. Select `Remote-SSH: Connect to Host` and select `Open SSH configuraiton file` 
-  5. Add a new entry using your allocated IP address and save your .ssh config file: 
+  5. Add a new entry using your allocated IP address and save your `.ssh` config file: 
 
   ```default
   Host nfcoreWorkshop
@@ -79,7 +79,7 @@ To set up your VS Code window for the workshop:
 
 |Shortcut |Windows |MacOS |
 |--|--|--|
-| Show command palette | `ctrl`+`shift`+`P` |`cmd`+`shift`+`P` |
+|Show command palette | `ctrl`+`shift`+`P` |`cmd`+`shift`+`P` |
 |Toggle sidebar |`ctrl`+`B`|`cmd`+`B`|
 |Open new window|`ctrl`+`shift`+`N`|`cmd`+`shift`+`N`|
 |Open/close terminal|`ctrl`+`J`|`cmd`+`J`|
