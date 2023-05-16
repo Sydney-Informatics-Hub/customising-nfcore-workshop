@@ -122,11 +122,12 @@ To install and start using MobaXterm:
 #### **Login via Terminal**
 
 To log in to Nimbus, we will use a Secure Shell (SSH) connection. To connect, you need 3 things:
-1. The assigned IP address of your instance (i.e. 146.118.XXX.XX). Each participant will be provided with their instance’s IP address at the beginning of the workshop.
-2. Your login name. In our case, this will be **training** for all participants.
-3. Your password. All participants will be provided with a password at the beginning of the workshop.
 
-To log in, type the following into your terminal, using your login name and the instance’s IP address:
+* The assigned IP address of your instance (i.e. 146.118.XXX.XX). Each participant will be provided with their instance’s IP address at the beginning of the workshop.
+* Your login name. In our case, this will be **training** for all participants.
+* Your password. All participants will be provided with a password at the beginning of the workshop.
+
+To log in: type the following into your terminal, using your allocated instance’s IP address:
 
 ```default
 ssh training@146.118.XXX.XX
@@ -152,7 +153,7 @@ Warning: Permanently added '146.118.XX.XXX' (ECDSA) to the list of known hosts.
 
 Enter the password provided at the beginning of the workshop. Ask one of the demonstrators if you’ve forgotten it.
 
-::: {.callout-note appearance="simple"}
+::: {.callout-note}
 ## Pay Attention
 When you type a password on the terminal, there will not be any indication the password is being entered. You'll not see a moving cursor, or even any asterisks, or bullets. That is an intentional security mechanism used by all terminal applications and can trip us up sometimes, so be careful when typing or copying your password in.  
 :::

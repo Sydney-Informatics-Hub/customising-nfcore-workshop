@@ -33,6 +33,7 @@ Using a parameter file is advantageous in a number of ways:
 4. **Version control**: Using version controlled parameter files allows you to track changes to your pipeline configuration over time and revert to previous versions if needed.
 
 </br>
+</br>
 
 ### **2.2.2. Troubleshoot the warning message**
 
@@ -79,6 +80,7 @@ The warning we have received is indicating that the read strandedness we specifi
 
 For those who are not familiar with RNAseq data, incorrectly specified strandedness may negatively impact the read quantification step (process: Salmon quant) and give us inaccurate results. So, let's clarify how the Salmon quant process is gathering strandedness information for our input files by default and find a way to address this with the parameters provided by the nf-core/rnaseq pipeline. 
 
+</br>
 </br>
 
 ### **2.2.3. Identify the run command for a process**
@@ -175,6 +177,7 @@ That will list all process `.command.sh` scripts containing 'salmon'. There are 
 /home/ubuntu/session2/work/57/a18fcea6a06565b14140ab06a3d077/.command.sh
 ```
 
+</br>
 </br>
 
 Compared with the salmon quant `main.nf` file, we get a lot more fine scale details from the `.command.sh` process scripts: 

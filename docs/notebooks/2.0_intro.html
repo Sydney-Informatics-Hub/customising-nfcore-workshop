@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Sydney Informatics Hub training - 2.0. Introduction to session 2</title>
+<title>Sydney Informatics Hub - 2.0. Introduction to session 2</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -134,7 +134,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Sydney Informatics Hub training</span>
+    <span class="navbar-title">Sydney Informatics Hub</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -206,10 +206,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <a class="dropdown-item" href="../notebooks/2.4_multiConfig.html">
  <span class="dropdown-text">2.4 Apply multiple configurations</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="../notebooks/2.5_extArgs.html">
- <span class="dropdown-text">2.5 Apply external arguments</span></a>
-  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -278,19 +274,35 @@ Applying what you learn here to other nf-core workflows
 <p>While all activities in this session will be performed using the nf-core/rnaseq workflow, all customisation scenarios we explore are applicable to other nf-core workflows and do not require an understanding of RNAseq data processing.</p>
 </div>
 </div>
+<p><br></p>
 <section id="log-back-in-to-your-instance" class="level3">
 <h3 class="anchored" data-anchor-id="log-back-in-to-your-instance"><strong>2.0.1. Log back in to your instance</strong></h3>
-<p>Follow <a href="../setup.html">set up instructions</a> to log back into your instance.</p>
+<p>Follow <a href="../setup.html">set up instructions</a> to log back into your instance in either VS Code or your terminal.</p>
+<p>In VS Code:</p>
+<ol type="1">
+<li>Type <code>Ctrl</code> + <code>Shift</code> + <code>P</code> to open command palette and select <code>Remote-SSH: Connect to Host</code> and <code>nfcoreWorkshop</code></li>
+<li>Type in your provided password (see the Slack channel for the password) and hit enter</li>
+</ol>
+<p><strong>OR</strong></p>
+<p>In a terminal application:</p>
+<ol type="1">
+<li>Type the following into your terminal, using your allocated instance’s IP address:</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ssh training@146.118.XXX.XX</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li>Type in your provided password (see the Slack channel for the password) and hit enter</li>
+</ol>
+<p><br></p>
 </section>
 <section id="create-a-new-work-directory" class="level3">
 <h3 class="anchored" data-anchor-id="create-a-new-work-directory"><strong>2.0.2. Create a new work directory</strong></h3>
 <p>Create a new directory for all session 2 activities and move into it:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>mkdir ~/session2 &amp;&amp; cd $_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mkdir ~/session2 &amp;&amp; cd $_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>
 
-<div style="font-size: 12px;">
+<div style="font-size: 14px;">
 All materials copyright Sydney Informatics Hub, University of Sydney
 </div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

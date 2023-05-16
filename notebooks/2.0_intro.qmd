@@ -23,9 +23,28 @@ Each lesson in this session will build on the previous lessons, so you can gain 
 While all activities in this session will be performed using the nf-core/rnaseq workflow, all customisation scenarios we explore are applicable to other nf-core workflows and do not require an understanding of RNAseq data processing. 
 :::
 
+</br>
+
 ### **2.0.1. Log back in to your instance**
 
-Follow [set up instructions](../setup.html) to log back into your instance. 
+Follow [set up instructions](../setup.html) to log back into your instance in either VS Code or your terminal. 
+
+In VS Code: 
+
+1. Type `Ctrl` + `Shift` + `P` to open command palette and select `Remote-SSH: Connect to Host` and `nfcoreWorkshop`
+2. Type in your provided password (see the Slack channel for the password) and hit enter
+
+**OR** 
+
+In a terminal application:
+
+1. Type the following into your terminal, using your allocated instance’s IP address:
+```default
+ssh training@146.118.XXX.XX
+```
+2. Type in your provided password (see the Slack channel for the password) and hit enter
+
+</br>
 
 ### **2.0.2. Create a new work directory**
 

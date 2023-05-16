@@ -273,11 +273,12 @@ Objectives
 </div>
 </div>
 <p>Before scaling the nf-core/rnaseq pipeline up to a full dataset, we’ll explore the functionality of the workflow and identify processes that may need to be adjusted or customised. While nf-core pipelines are designed to run with ‘sensible’ default settings, these may not always suit the needs of your experiment of compute environment. Designing a custom run command requires you to identify which parameters you need to specify to suit your circumstances and experimental design. In this lesson, we will download an nf-core pipeline, then design and execute a customised run command using various <a href="https://www.nextflow.io/docs/latest/config.html#scope-params">parameters</a>.</p>
+<p><br></p>
 <section id="download-the-pipeline-code" class="level3">
 <h3 class="anchored" data-anchor-id="download-the-pipeline-code"><strong>2.1.1. Download the pipeline code</strong></h3>
 <p>➤ In this session we are using Singularity containers to manage software installation for all nf-core/rnaseq tools. Confirm the Singularity cache directory we set in the previous session using the <code>$NXF_SINGULARITY_CACHEDIR</code> <a href="https://www.nextflow.io/docs/latest/config.html#environment-variables">Nextflow environmental variable</a>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>echo $NXF_SINGULARITY_CACHEDIR</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This should match the directory you set in the previous session:</p>
+<p><span class="emoji" data-emoji="eyes">👀</span> This should match the directory you set in the previous session:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>/home/ubuntu/singularity_cache</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -321,6 +322,7 @@ Solution
 </div>
 </div>
 </div>
+<p><br></p>
 <p>The pipeline files and institutional configuration files from <a href="https://github.com/nf-core/configs">nf-core/configs</a> will be downloaded to <code>~/session2/nf-core-rnaseq-3.11.1</code>. Inside this directory you will see 2 subdirectories.</p>
 <p>➤ Take a look at the directory structure:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ls -l nf-core-rnaseq-3.11.1/*</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -358,7 +360,7 @@ Solution
 <span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 4 ubuntu ubuntu  4096 Apr  21 09:17 subworkflows</span>
 <span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu  1684 Apr  21 09:17 tower.yml</span>
 <span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 2 ubuntu ubuntu  4096 Apr  21 09:17 workflows</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The public <a href="https://github.com/nf-core/configs">institutional configs</a> were downloaded to the <code>configs</code> directory. The code base for our pipeline will be stored in the <code>workflow</code> directory. The files and directories we will be working with in this session are:</p>
+<p><br> The public <a href="https://github.com/nf-core/configs">institutional configs</a> were downloaded to the <code>configs</code> directory. The code base for our pipeline will be stored in the <code>workflow</code> directory. The files and directories we will be working with in this session are:</p>
 <table class="table">
 <colgroup>
 <col style="width: 25%">
@@ -384,8 +386,8 @@ Solution
 <td>Contains Nextflow processes used by the workflow. Each process is split into a module with its own <code>main.nf</code> file</td>
 </tr>
 <tr class="even">
-<td><code>workflows/rnaseq.nf</code> The complete rnaseq pipeline, containing modules and subworkflows that are connected by channels</td>
-<td></td>
+<td><code>workflows/rnaseq.nf</code></td>
+<td>The complete rnaseq pipeline, containing modules and subworkflows that are connected by channels</td>
 </tr>
 </tbody>
 </table>
@@ -408,6 +410,7 @@ Solution
 </div>
 </div>
 </div>
+<p><br></p>
 </section>
 <section id="design-your-run-command" class="level3">
 <h3 class="anchored" data-anchor-id="design-your-run-command"><strong>2.1.2. Design your run command</strong></h3>
@@ -489,9 +492,10 @@ Solution
 </tr>
 </tbody>
 </table>
+<p><br></p>
 <section id="pipeline-structure" class="level4">
 <h4 class="anchored" data-anchor-id="pipeline-structure"><strong>Pipeline structure</strong></h4>
-<p>Looking at the nf-core/rnaseq pipeline structure provided in the <a href="https://nf-co.re/rnaseq/3.11.1">introduction</a>, we can see that the developers have:</p>
+<p><span class="emoji" data-emoji="eyes">👀</span> Looking at the nf-core/rnaseq pipeline structure provided in the <a href="https://nf-co.re/rnaseq/3.11.1">introduction</a>, we can see that the developers have:</p>
 <ol type="1">
 <li>Organised the workflow into 5 stages based on the type of work that is being done</li>
 <li>Provided a choice of multiple methods and specified defaults</li>
@@ -504,7 +508,7 @@ Solution
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-<strong>Poll question!</strong>
+<strong>Thoughts? <span class="emoji" data-emoji="thought_balloon">💭</span></strong>
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -515,7 +519,7 @@ Solution
 <strong>d.</strong> The choice of alignment and quantification method is determined automatically based on the input data.</p>
 </div>
 </div>
-<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-note callout callout-style-simple callout-captioned">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -537,6 +541,7 @@ Solution
 </div>
 </div>
 </div>
+<p><br></p>
 </section>
 <section id="default-pipeline-usage" class="level4">
 <h4 class="anchored" data-anchor-id="default-pipeline-usage"><strong>Default pipeline usage</strong></h4>
@@ -569,9 +574,10 @@ Solution
 <p>Nextflow-specific parameters use one (<code>-</code>) hyphen, whereas pipeline-specific parameters use two (<code>--</code>). In the typical run command above <code>-profile</code> is a <strong>Nextflow</strong> parameter, while <code>--input</code> is an <strong>nf-core</strong> parameter.</p>
 </div>
 </div>
+<p><br></p>
 </section>
-<section id="required---input" class="level4">
-<h4 class="anchored" data-anchor-id="required---input"><strong>Required: <code>--input</code></strong></h4>
+<section id="required-input---input" class="level4">
+<h4 class="anchored" data-anchor-id="required-input---input"><strong>Required input: <code>--input</code></strong></h4>
 <p>Most of us will need to adjust the default run command for our experiments. Today we’ll be adjusting the typical nf-core/rnaseq run command by:</p>
 <ol type="1">
 <li>Providing our own reference files</li>
@@ -591,9 +597,10 @@ Solution
 <div class="sourceCode" id="cb12"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sample,fastq_1,fastq_2,strandedness</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>SRR3473989,/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523/fastqs/SRR3473989_selected.fastq.gz,,forward</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>SRR3473988,/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523/fastqs/SRR3473988_selected.fastq.gz,,forward</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><br></p>
 </section>
-<section id="required-reference-data" class="level4">
-<h4 class="anchored" data-anchor-id="required-reference-data"><strong>Required: reference data</strong></h4>
+<section id="required-input-reference-data" class="level4">
+<h4 class="anchored" data-anchor-id="required-input-reference-data"><strong>Required input: reference data</strong></h4>
 <p>Many nf-core pipelines have a minimum requirement for reference data inputs. The input reference data requirements for this pipeline are provided in the <a href="https://nf-co.re/rnaseq/3.11.1/usage#reference-genome-files">usage documentation</a>. We can replace the <code>--genome</code> flag in the typical run command with our own files. To see what reference files we can specify using parameters, rerun the pipeline’s help command to view all the available parameters:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf --help --show_hidden_params</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>From the <strong>Reference genome options</strong> parameters, we will provide our own files using:</p>
@@ -619,6 +626,7 @@ Solution
 <p>Keep in mind that both this help command and the nf-core parameters documentation hides less common parameters.</p>
 </div>
 </div>
+<p><br></p>
 </section>
 <section id="optional-parameters" class="level4">
 <h4 class="anchored" data-anchor-id="optional-parameters"><strong>Optional parameters</strong></h4>
@@ -656,6 +664,7 @@ Solution
 </div>
 <p>You can see how we’ve customised the typical run command in the diagram below:</p>
 <p><img src="../figs/2.1_custom-command.png" class="img-fluid"></p>
+<p><br></p>
 </section>
 </section>
 <section id="run-the-pipeline" class="level3">
@@ -674,12 +683,14 @@ Solution
 <span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    --save_unaligned true \</span>
 <span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    --max_memory '6.GB' \</span>
 <span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    --max_cpus 2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Take a look at the stdout printed to the screen. Your workflow configuration and parameter customisations are all documented here. You can use this to confirm if your parameters have been correctly passed to the run command:</p>
+<p><br></p>
+<p><span class="emoji" data-emoji="eyes">👀</span> Take a look at the stdout printed to the screen. Your workflow configuration and parameter customisations are all documented here. You can use this to confirm if your parameters have been correctly passed to the run command:</p>
 <p><img src="../figs/2.1_nf-core-stdout.png" class="img-fluid"></p>
 <p>As the workflow starts, you will also see a number of processes spawn out underneath this. Recall from <a href="1.1_nextflow.html#processes-and-channels">session 1</a> that processes are executed independently and can run in parallel. Nextflow manages the data dependencies between processes, ensuring that each process is executed only when its input data is available and all of its dependencies have been satisfied.</p>
 <p>To understand how this is coordinated, consider the STAR_ALIGN process that is being run.</p>
 <p><img src="../figs/2.1_nf-core_processes.png" class="img-fluid"></p>
-<p>You’ll notice a few things:</p>
+<p><br></p>
+<p><span class="emoji" data-emoji="eyes">👀</span> You’ll notice a few things:</p>
 <ul>
 <li>We can see which inputs are being processed by looking at the end of the process name</li>
 <li>When a process starts it progressively spawns tasks for all inputs to be processed</li>
@@ -687,6 +698,7 @@ Solution
 <li>Once a TRIMGALORE task is completed for a sample, the STAR_ALIGN task for that sample begins</li>
 <li>When the STAR_ALIGN process starts, it spawns 2 tasks.</li>
 </ul>
+<p><br></p>
 </section>
 <section id="examine-the-outputs" class="level3">
 <h3 class="anchored" data-anchor-id="examine-the-outputs"><strong>2.1.4. Examine the outputs</strong></h3>
@@ -709,7 +721,7 @@ Solution
 <span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x   4 ubuntu ubuntu 4.0K Apr 21 02:08 nf-core-rnaseq-3.11.1</span>
 <span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>-rw-rw-r--   1 ubuntu ubuntu  563 Apr 21 03:14 samplesheet.csv</span>
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 143 ubuntu ubuntu 4.0K Apr 21 03:58 work</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Nextflow has created 2 new output directories, <strong>work</strong> and <strong>Lesson-2.1</strong> in the current directory.</p>
+<p><span class="emoji" data-emoji="eyes">👀</span> Nextflow has created 2 new output directories, <strong>work</strong> and <strong>Lesson-2.1</strong> in the current directory.</p>
 <section id="the-work-directory" class="level4">
 <h4 class="anchored" data-anchor-id="the-work-directory">The <code>work</code> directory</h4>
 <p>As each job is run, a unique sub-directory is created in the <code>work</code> directory. These directories house temporary files and various command logs created by a process. We can find all information regarding this process that we need to troubleshoot a failed process.</p>
@@ -759,6 +771,7 @@ Solution
 </div>
 </div>
 </div>
+<p><br></p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -782,7 +795,7 @@ Solution
 </section>
 </section>
 
-<div style="font-size: 12px;">
+<div style="font-size: 14px;">
 All materials copyright Sydney Informatics Hub, University of Sydney
 </div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

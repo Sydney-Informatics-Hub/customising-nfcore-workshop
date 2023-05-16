@@ -20,6 +20,8 @@ from: markdown+emoji
 
 Before scaling the nf-core/rnaseq pipeline up to a full dataset, we'll explore the functionality of the workflow and identify processes that may need to be adjusted or customised. While nf-core pipelines are designed to run with 'sensible' default settings, these may not always suit the needs of your experiment of compute environment. Designing a custom run command requires you to identify which parameters you need to specify to suit your circumstances and experimental design. In this lesson, we will download an nf-core pipeline, then design and execute a customised run command using various [parameters](https://www.nextflow.io/docs/latest/config.html#scope-params). 
 
+</br>
+
 ### **2.1.1. Download the pipeline code**
 
 &#x27A4; In this session we are using Singularity containers to manage software installation for all nf-core/rnaseq tools. Confirm the Singularity cache directory we set in the previous session using the `$NXF_SINGULARITY_CACHEDIR` [Nextflow environmental variable](https://www.nextflow.io/docs/latest/config.html#environment-variables): 
@@ -27,7 +29,7 @@ Before scaling the nf-core/rnaseq pipeline up to a full dataset, we'll explore t
 ```default
 echo $NXF_SINGULARITY_CACHEDIR
 ```
-This should match the directory you set in the previous session: 
+:eyes: This should match the directory you set in the previous session: 
 
 ```default
 /home/ubuntu/singularity_cache
@@ -57,6 +59,8 @@ nf-core download rnaseq \
   --singularity-cache-only
 ```
 :::
+
+</br>
 
 The pipeline files and institutional configuration files from [nf-core/configs](https://github.com/nf-core/configs) will be downloaded to `~/session2/nf-core-rnaseq-3.11.1 `. Inside this directory you will see 2 subdirectories. 
 
@@ -103,6 +107,7 @@ drwxrwxr-x 4 ubuntu ubuntu  4096 Apr  21 09:17 subworkflows
 drwxrwxr-x 2 ubuntu ubuntu  4096 Apr  21 09:17 workflows
 ```
 
+</br>
 The public [institutional configs](https://github.com/nf-core/configs) were downloaded to the `configs` directory. The code base for our pipeline will be stored in the `workflow` directory. The files and directories we will be working with in this session are:
 
 |Feature                |Importance                                                         |
@@ -110,7 +115,7 @@ The public [institutional configs](https://github.com/nf-core/configs) were down
 |`conf/`                |Contains files, default configuration settings and optional profiles that build on global settings set by `nextflow.config`|
 |`main.nf`              |The executable Nextflow script that defines the structure and flow of the workflow. It calls `workflows/rnaseq.nf`|
 |`modules/`             |Contains Nextflow processes used by the workflow. Each process is split into a module with its own `main.nf` file|
-|`workflows/rnaseq.nf`  The complete rnaseq pipeline, containing modules and subworkflows that are connected by channels |
+|`workflows/rnaseq.nf`  |The complete rnaseq pipeline, containing modules and subworkflows that are connected by channels |
 
 ::: {.callout-caution collapse="true"}
 ### **Alternate installation method**{.unlisted}
@@ -122,6 +127,8 @@ git clone https://github.com/nf-core/rnaseq.git
 ```
 :no_entry: **BEWARE** :no_entry: this method will download a copy of the pipeline with a different directory name and slightly different structure. If you choose to use this method, you will need to adjust some paths specified in the upcoming lessons accordingly. 
 ::: 
+
+</br>
 
 ### **2.1.2. Design your run command**
 
@@ -155,10 +162,11 @@ The following sections of the documentation can be used to understand what the p
 |                                                            | processes         | - process           |
 |                                                            | processes         | - tool              |
 +------------------------------------------------------------+-------------------+---------------------+
+</br>
 
 #### **Pipeline structure**
 
-Looking at the nf-core/rnaseq pipeline structure provided in the [introduction](https://nf-co.re/rnaseq/3.11.1), we can see that the developers have:
+:eyes: Looking at the nf-core/rnaseq pipeline structure provided in the [introduction](https://nf-co.re/rnaseq/3.11.1), we can see that the developers have:
 
 1. Organised the workflow into 5 stages based on the type of work that is being done
 2. Provided a choice of multiple methods and specified defaults
@@ -167,7 +175,7 @@ Looking at the nf-core/rnaseq pipeline structure provided in the [introduction](
 ![](../figs/2.1_pipeline-choice.png)
 
 ::: callout-tip
-### **Poll question!**{.unlisted}
+### **Thoughts? :thought_balloon:**{.unlisted}
 
 :question: Observing the diagram above, which statement is true regarding the choice of alignment and quantification methods provided by the nf-core/rnaseq pipeline?
 
@@ -177,7 +185,7 @@ Looking at the nf-core/rnaseq pipeline structure provided in the [introduction](
 **d.** The choice of alignment and quantification method is determined automatically based on the input data.  
 :::
 
-::: {.callout-caution collapse="true"}
+::: {.callout-note appearance="simple" collapse="true"}
 ### Solution
 
 The correct answer is **b**. The nf-core/rnaseq pipeline allows users to choose between pseudo-alignment and quantification or several different methods for genome-based read alignment and quantification. 
@@ -186,6 +194,8 @@ The correct answer is **b**. The nf-core/rnaseq pipeline allows users to choose 
 * c is incorrect because while read alignment and quantification using STAR and Salmon are the default method, users can choose pseudo-alignment method.
 * d is also incorrect, as the pipeline only accepts fastq files as input and the choice of alignment and quantification method must be specified by the user.
 :::
+
+</br>
 
 #### **Default pipeline usage**
 
@@ -216,7 +226,9 @@ It outlines a requirement for a few basic things:
 Nextflow-specific parameters use one (`-`) hyphen, whereas pipeline-specific parameters use two (`--`). In the typical run command above `-profile` is a **Nextflow** parameter, while `--input` is an **nf-core** parameter.
 ::: 
 
-#### **Required: `--input`**
+</br>
+
+#### **Required input: `--input`**
 
 Most of us will need to adjust the default run command for our experiments. Today we'll be adjusting the typical nf-core/rnaseq run command by: 
 
@@ -255,7 +267,9 @@ SRR3473989,/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/
 SRR3473988,/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523/fastqs/SRR3473988_selected.fastq.gz,,forward
 ```
 
-#### **Required: reference data**
+</br>
+
+#### **Required input: reference data**
 
 Many nf-core pipelines have a minimum requirement for reference data inputs. The input reference data requirements for this pipeline are provided in the [usage documentation](https://nf-co.re/rnaseq/3.11.1/usage#reference-genome-files). We can replace the `--genome` flag in the typical run command with our own files. To see what reference files we can specify using parameters, rerun the pipeline's help command to view all the available parameters: 
 
@@ -279,8 +293,9 @@ Notice the message at the bottom of the screen:
 !! Hiding 24 params, use --show_hidden_params to show them !!
 ```
 Keep in mind that both this help command and the nf-core parameters documentation hides less common parameters. 
-
 ::: 
+
+</br>
 
 #### **Optional parameters**
 
@@ -311,6 +326,7 @@ You can see how we've customised the typical run command in the diagram below:
 
 ![](../figs/2.1_custom-command.png)
 
+</br>
 
 ### **2.1.3. Run the pipeline**
 
@@ -332,7 +348,9 @@ nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
     --max_cpus 2
 ```
 
-Take a look at the stdout printed to the screen. Your workflow configuration and parameter customisations are all documented here. You can use this to confirm if your parameters have been correctly passed to the run command: 
+</br>
+
+:eyes:  Take a look at the stdout printed to the screen. Your workflow configuration and parameter customisations are all documented here. You can use this to confirm if your parameters have been correctly passed to the run command: 
 
 ![](../figs/2.1_nf-core-stdout.png)
 
@@ -342,13 +360,17 @@ To understand how this is coordinated, consider the STAR_ALIGN process that is b
 
 ![](../figs/2.1_nf-core_processes.png)
 
-You'll notice a few things: 
+</br>
+
+:eyes: You'll notice a few things: 
 
 * We can see which inputs are being processed by looking at the end of the process name
 * When a process starts it progressively spawns tasks for all inputs to be processed 
 * A single TRIMGALORE process is run across both samples in our `samplesheet.csv` before STAR_ALIGN begins 
 * Once a TRIMGALORE task is completed for a sample, the STAR_ALIGN task for that sample begins 
 * When the STAR_ALIGN process starts, it spawns 2 tasks.
+
+</br>
 
 ### **2.1.4. Examine the outputs**
 
@@ -380,7 +402,7 @@ drwxrwxr-x   4 ubuntu ubuntu 4.0K Apr 21 02:08 nf-core-rnaseq-3.11.1
 drwxrwxr-x 143 ubuntu ubuntu 4.0K Apr 21 03:58 work
 ```
 
-Nextflow has created 2 new output directories, **work** and **Lesson-2.1** in the current directory. 
+:eyes: Nextflow has created 2 new output directories, **work** and **Lesson-2.1** in the current directory. 
 
 #### The `work` directory
 
@@ -420,6 +442,8 @@ NFCORE_RNASEQ:RNASEQ:ALIGN_STAR:STAR_ALIGN (SRR3473989) 2m 37s
 NFCORE_RNASEQ:RNASEQ:ALIGN_STAR:STAR_ALIGN (SRR3473988) 2m 17s
 ```
 :::
+
+</br>
 
 ::: {.callout-note}
 ### **Key points**
