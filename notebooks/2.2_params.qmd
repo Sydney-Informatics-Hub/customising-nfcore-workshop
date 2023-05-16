@@ -13,7 +13,7 @@ from: markdown+emoji
 - Investigate a warning message provided by an nf-core pipeline run
 - Use the `nextflow log` command to trace processes cached in the work directory
 - Observe how a process is implemented at the task level
-- Rerun a workflow using a parameter file to specify pipeline-specific parameters
+- Re-run a workflow using a parameter file to specify pipeline-specific parameters
 - Understand the use of the parameter file for reproducible and transparent research
 :::
 
