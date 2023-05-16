@@ -49,8 +49,8 @@ Our full code of conduct, with incident reporting guidelines, is available [here
 | Lesson     | Overview |
 |------------|----------|
 | [Set up your computer](setup.html)| Follow these instructions to install VSCode and login to your Nimbus instance. |
-| [Day 1: Introduction to nf-core](notebooks/1.0_intro.html)| Learn fundamental ideas and skills that are essential for using Nextflow and nf-core workflows. |
-| [Day 2: Customising nf-core](notebooks/2.0_intro.html)| Write, run, adjust, and re-run an nf-core workflow as we step through various customisation scenarios. |
+| [Session 1: Introduction to nf-core](notebooks/1.0_intro.html)| Learn fundamental ideas and skills that are essential for using Nextflow and nf-core workflows. |
+| [Session 2: Customising nf-core](notebooks/2.0_intro.html)| Write, run, adjust, and re-run an nf-core workflow as we step through various customisation scenarios. |
 
 ### **Course survey**{.unlisted}
 
