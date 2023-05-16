@@ -1,8 +1,0 @@
----
-title: "**2.5. Passing external arguments to a process**"
-output:
-  html_document:
-    toc: false
-    toc_float: false
-from: markdown+emoji
----
