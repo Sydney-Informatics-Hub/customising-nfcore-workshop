@@ -132,7 +132,7 @@ git clone https://github.com/nf-core/rnaseq.git
 
 ### **2.1.2. Design your run command**
 
-As we learned in [lesson 1.3.3](../notebooks/1.3_configure.md#viewing-parameters), all nf-core pipelines have a unique set of pipeline-specific parameters that can be used in conjunction with Nextflow parameters to configure the workflow. Generally, nf-core pipelines can be customised at a few different levels:
+As we learnt in [lesson 1.3.3](../notebooks/1.3_configure.md#viewing-parameters), all nf-core pipelines have a unique set of pipeline-specific parameters that can be used in conjunction with Nextflow parameters to configure the workflow. Generally, nf-core pipelines can be customised at a few different levels:
 
 |Level of effect      |Customisation feature                                                        |
 |---------------------|-----------------------------------------------------------------------------|

@@ -38,9 +38,9 @@ In this exercise, we will create a custom configuration file that writes a detai
 Unlike our institutional config `custom-nimbus.config`, which is required for our run in order to access tools through Singularity and restrict resource use to what we have on our VM, this config will be **optional** and **portable**:
 
 
-- <span style="color:#000080;">We can apply it only as needed</span>
-- <span style="color:#000080;">We can apply it to any nf-core pipeline</span>
-- <span style="color:#000080;">We can apply it to nf-core runs on any machine</span>
+- We can apply it only as needed
+- We can apply it to any nf-core pipeline
+- We can apply it to nf-core runs on any machine
 
 <br/>
 

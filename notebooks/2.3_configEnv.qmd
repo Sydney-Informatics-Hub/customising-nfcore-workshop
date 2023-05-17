@@ -364,7 +364,7 @@ To achieve optimum computational efficiency on your platform, more granular cont
 ::: {.callout-important}
 ### For example, consider the case of a 16 core machine
 
-If you appled `--max_cpus 16` to the nf-core rnaseq workflow, the STAR_ALIGN module would still only utilise 12 CPUs, as this module (as we learned in 2.3.1) has the label `process_high` which sets CPUs to 12.
+If you appled `--max_cpus 16` to the nf-core rnaseq workflow, the STAR_ALIGN module would still only utilise 12 CPUs, as this module (as we learnt in 2.3.1) has the label `process_high` which sets CPUs to 12.
 
 If there were no processes with fulfilled input channels that could make use of the 4 remaining CPUs, those resources would sit idle until the STAR_ALIGN process had completed. 
 
