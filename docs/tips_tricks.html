@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Sydney Informatics Hub training - Nextflow tips and tricks</title>
+<title>Sydney Informatics Hub - Nextflow tips and tricks</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -134,7 +134,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Sydney Informatics Hub training</span>
+    <span class="navbar-title">Sydney Informatics Hub</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -206,10 +206,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <a class="dropdown-item" href="./notebooks/2.4_multiConfig.html">
  <span class="dropdown-text">2.4 Apply multiple configurations</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="./notebooks/2.5_extArgs.html">
- <span class="dropdown-text">2.5 Apply external arguments</span></a>
-  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -232,11 +228,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
    
   <ul>
   <li><a href="#query-specific-pipeline-executions" id="toc-query-specific-pipeline-executions" class="nav-link active" data-scroll-target="#query-specific-pipeline-executions"><strong>Query specific pipeline executions</strong></a></li>
-  <li><a href="#run-nextflow-in-the-background" id="toc-run-nextflow-in-the-background" class="nav-link" data-scroll-target="#run-nextflow-in-the-background"><strong>Run Nextflow in the background</strong></a></li>
+  <li><a href="#execute-nextflow-in-the-background" id="toc-execute-nextflow-in-the-background" class="nav-link" data-scroll-target="#execute-nextflow-in-the-background"><strong>Execute Nextflow in the background</strong></a></li>
   <li><a href="#capture-a-nextflow-pipelines-configuration" id="toc-capture-a-nextflow-pipelines-configuration" class="nav-link" data-scroll-target="#capture-a-nextflow-pipelines-configuration"><strong>Capture a Nextflow pipeline’s configuration</strong></a></li>
   <li><a href="#clean-nextflow-cache-and-work-directories" id="toc-clean-nextflow-cache-and-work-directories" class="nav-link" data-scroll-target="#clean-nextflow-cache-and-work-directories"><strong>Clean Nextflow cache and work directories</strong></a></li>
   <li><a href="#access-private-github-repositories" id="toc-access-private-github-repositories" class="nav-link" data-scroll-target="#access-private-github-repositories"><strong>Access private GitHub repositories</strong></a></li>
-  <li><a href="#send-processes-to-a-job-scheduler-on-hpc" id="toc-send-processes-to-a-job-scheduler-on-hpc" class="nav-link" data-scroll-target="#send-processes-to-a-job-scheduler-on-hpc"><strong>Send processes to a job scheduler on HPC</strong></a></li>
+  <li><a href="#run-nextflow-on-hpc" id="toc-run-nextflow-on-hpc" class="nav-link" data-scroll-target="#run-nextflow-on-hpc"><strong>Run Nextflow on HPC</strong></a></li>
+  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources"><strong>Additional resources</strong></a></li>
   </ul>
 </nav>
     </div>
@@ -262,41 +259,112 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="query-specific-pipeline-executions" class="level3">
 <h3 class="anchored" data-anchor-id="query-specific-pipeline-executions"><strong>Query specific pipeline executions</strong></h3>
-<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>nextflow log &lt;run_name&gt; -f  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <a href="https://www.nextflow.io/docs/latest/cli.html#log">Nextflow log</a> command is useful for querying execution metadata and history. You can filter your queries and output specific fields in the printed log.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>nextflow log &lt;run_name&gt; -help</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="run-nextflow-in-the-background" class="level3">
-<h3 class="anchored" data-anchor-id="run-nextflow-in-the-background"><strong>Run Nextflow in the background</strong></h3>
-<p>The <a href="https://www.nextflow.io/docs/latest/cli.html#config">Nextflow config</a> command is useful for understanding the resolved profiles and parameters that Nextflow will use run a pipeline.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf -bg &gt; workshop_tip.log</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="execute-nextflow-in-the-background" class="level3">
+<h3 class="anchored" data-anchor-id="execute-nextflow-in-the-background"><strong>Execute Nextflow in the background</strong></h3>
+<p>The <a href="https://www.nextflow.io/docs/latest/cli.html?highlight=bg#execution-as-a-background-job"><code>-bg</code></a> options allows you to run your pipeline in the background and continue using your terminal. It is similar to <code>nohup</code>. You can redirect all standard output to a log file.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>nextflow run &lt;workflow_repo/main.nf&gt; -bg &gt; workshop_tip.log</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="capture-a-nextflow-pipelines-configuration" class="level3">
 <h3 class="anchored" data-anchor-id="capture-a-nextflow-pipelines-configuration"><strong>Capture a Nextflow pipeline’s configuration</strong></h3>
-<div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nextflow config nf-core-rnaseq-3.11.1/workflow</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <a href="https://www.nextflow.io/docs/latest/cli.html#config">Nextflow config</a> command prints the resolved pipeline configuration. It is especially useful for printing all resolved parameters and profiles Nextflow will use to run a pipeline.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nextflow config &lt;workflow_repo&gt; -help</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="clean-nextflow-cache-and-work-directories" class="level3">
 <h3 class="anchored" data-anchor-id="clean-nextflow-cache-and-work-directories"><strong>Clean Nextflow cache and work directories</strong></h3>
-<p>Examples of dry run and remove features for <a href="https://www.nextflow.io/docs/latest/cli.html#clean">clean</a></p>
+<p>The <a href="https://www.nextflow.io/docs/latest/cli.html#clean">Nextflow clean</a> command will remove files from previous executions stored in the <code>.nextflow</code> cache and <code>work</code> directories. The <code>-dry-run</code> option allows you to preview which files will be deleted.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>nextflow clean &lt;workflow_repo&gt; -help</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="access-private-github-repositories" class="level3">
 <h3 class="anchored" data-anchor-id="access-private-github-repositories"><strong>Access private GitHub repositories</strong></h3>
-<p>To interact with private repositories on GitHub or when running into GitHub API rate limits for public repositories (i.e.&nbsp;when using Nextflow Tower), you can <a href="https://www.nextflow.io/docs/latest/sharing.html#github-credentials">provide Nextflow with access to GitHub</a> by specifying your GitHub user name and a <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token">Personal Access Token</a> in the <a href="https://www.nextflow.io/docs/latest/sharing.html#scm-configuration-file"><code>scm</code> configuration file</a> inside your specified <code>.nextflow/</code> directory.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>providers {</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  github {</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    user = 'georgiesamaha'</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    password = 'my-personal-access-token'</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To interact with private repositories on GitHub, you can provide Nextflow with <a href="https://www.nextflow.io/docs/latest/sharing.html#github-credentials">access to GitHub</a> by specifying your GitHub user name and a <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token">Personal Access Token</a> in the <a href="https://www.nextflow.io/docs/latest/sharing.html#scm-configuration-file"><code>scm</code> configuration file</a> inside your specified <code>.nextflow/</code> directory:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>providers {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  github {</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    user = 'georgiesamaha'</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    password = 'my-personal-access-token'</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="send-processes-to-a-job-scheduler-on-hpc" class="level3">
-<h3 class="anchored" data-anchor-id="send-processes-to-a-job-scheduler-on-hpc"><strong>Send processes to a job scheduler on HPC</strong></h3>
-<p>Write a custom configuration file for your HPCs job scheduler: specify for all processes, withName {}, withLabel {}.</p>
+<section id="run-nextflow-on-hpc" class="level3">
+<h3 class="anchored" data-anchor-id="run-nextflow-on-hpc"><strong>Run Nextflow on HPC</strong></h3>
+<p>Nextflow, by default, spawns parallel task executions wherever it is running. You can use <a href="https://www.nextflow.io/docs/latest/executor.html">Nextflow’s executors</a> feature to run these tasks using an HPC job schedulers such as <a href="https://www.nextflow.io/docs/latest/executor.html#slurm">SLURM</a> and <a href="https://www.nextflow.io/docs/latest/executor.html#pbs-pro">PBS Pro</a>. Use a custom configuration file to send all processes to the job scheduler as separate jobs and define essential resource requests like <code>cpus</code>, <code>time</code>, <code>memory</code>, and <code>queue</code> inside a <code>process {}</code> <a href="https://www.nextflow.io/docs/latest/process.html#processes">scope</a>.</p>
+<section id="run-all-workflow-tasks-as-separate-jobs-on-hpc" class="level4">
+<h4 class="anchored" data-anchor-id="run-all-workflow-tasks-as-separate-jobs-on-hpc"><strong>Run all workflow tasks as separate jobs on HPC</strong></h4>
+<p>In this custom configuration file we have sent all tasks that a workflow is running to a PBS Pro job scheduler and specified jobs to be run on the normal queue, each running for a max time of 3 hours with 1 cpu and 4 Gb of memory:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>process {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  executor = 'pbspro'</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  queue = 'normal'</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  cpus = 1</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  time = '3h'</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  memory = '4.GB'</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="run-processes-with-different-resource-profiles-as-hpc-jobs" class="level4">
+<h4 class="anchored" data-anchor-id="run-processes-with-different-resource-profiles-as-hpc-jobs"><strong>Run processes with different resource profiles as HPC jobs</strong></h4>
+<p>Adjusting the custom configuration file above, we can use the <code>withName {}</code> <a href="https://www.nextflow.io/docs/latest/config.html?highlight=withname#process-selectors">process selector</a> to specify process-specific resource requirements:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>process {</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  executor = 'pbspro'</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  withName processONE {</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    queue = 'normal'</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    cpus = 1</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    time = '3h'</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    memory = '4.GB'</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  withName processTWO {</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    queue = 'hugemem'</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    cpus = 48</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    time = '10h'</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    memory = '400.GB'</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="specify-infrastructure-specific-directives-for-your-jobs" class="level4">
+<h4 class="anchored" data-anchor-id="specify-infrastructure-specific-directives-for-your-jobs"><strong>Specify infrastructure-specific directives for your jobs</strong></h4>
+<p>Adjusting the custom configuration file above, we can define any native configuration options using the <a href="https://www.nextflow.io/docs/latest/process.html#process-clusteroptions">clusterOptions</a> directive. We can use this to specify non-standard resources. Below we have specified which HPC project code to bill for all process jobs:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>process {</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  executor = 'pbspro'</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  clusterOptions = '-P project001'</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  withName processONE {</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    queue = 'normal'</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    cpus = 1</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    time = '3h'</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    memory = '4.GB'</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  withName processTWO {</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    queue = 'hugemem'</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    cpus = 48</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    time = '10h'</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    memory = '400.GB'</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="additional-resources" class="level3">
+<h3 class="anchored" data-anchor-id="additional-resources"><strong>Additional resources</strong></h3>
+<p>Here are some useful resources to help you get started with running nf-core pipelines and developing Nextflow pipelines:</p>
+<ul>
+<li><a href="https://nf-co.re/docs/usage/nextflow">Nextflow tutorials</a></li>
+<li><a href="https://nf-co.re/usage/usage_tutorials">nf-core pipeline tutorials</a></li>
+<li><a href="https://nextflow-io.github.io/patterns/index.html">Nextflow patterns</a></li>
+<li><a href="https://www.nextflow.io/blog/2021/5_tips_for_hpc_users.html">HPC tips and tricks</a></li>
+<li><a href="https://carpentries-incubator.github.io/Pipeline_Training_with_Nextflow/07-Nextflow_Best_Practice/index.html">Nextflow coding best practice recommendations</a></li>
+<li><a href="https://www.nextflow.io/blog.html">The Nextflow blog</a></li>
+</ul>
 
 
 </section>
 
-<p>All materials copyright Sydney Informatics Hub, University of Sydney</p></main> <!-- /main -->
+<div style="font-size: 14px;">
+All materials copyright Sydney Informatics Hub, University of Sydney
+</div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

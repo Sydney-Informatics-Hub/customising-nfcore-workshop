@@ -4,7 +4,7 @@ project:
 
 website:
   page-navigation: true
-  title: "Sydney Informatics Hub training"
+  title: "Sydney Informatics Hub"
   navbar:
     background: primary
     left:
@@ -38,11 +38,9 @@ website:
           href: notebooks/2.3_configEnv.html
         - text: "2.4 Apply multiple configurations"
           href: notebooks/2.4_multiConfig.html
-        - text: "2.5 Apply external arguments"
-          href: notebooks/2.5_extArgs.html
       - text: "Tips & Tricks"
         href: tips_tricks.html
-  body-footer: "All materials copyright Sydney Informatics Hub, University of Sydney"
+  body-footer: "<div style='font-size: 14px;'>All materials copyright Sydney Informatics Hub, University of Sydney</div>"
 
           
 format:

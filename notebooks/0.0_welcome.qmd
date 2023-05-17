@@ -11,19 +11,22 @@ from: markdown+emoji
 
 In this workshop, we explore Nextflow and nf-core as powerful tools for bioinformatics data processing pipelines. Our goal for this workshop is to provide you with foundational knowledge required to understand the code base of any nf-core pipeline and responsibly apply and customise an nf-core pipelines to your own research. 
 
-These sessions will be a challenging but rewarding experience that will provide you with an opportunity to develop your skills and get exposure to key concepts in Nextflow. Even if you are already familiar with Nextflow and have some experience with nf-core pipelines, it will take you time and practice beyond this workshop to fully understand the concepts and terminology laid out here. 
+These sessions will provide you with an opportunity to develop your skills and get exposure to key concepts in Nextflow and nf-core pipelines. Even if you are already familiar with Nextflow and have some experience with nf-core pipelines, it will take you time and practice beyond this workshop to fully understand the concepts and terminology laid out here. 
 
 ### **Lesson plan**{.unlisted}
 
-| Session | Lesson | Outcomes |
-|--|--------|----------------|
-| 1.| 1. Introduction to Nextflow | Understand core features of Nextflow and learn fundamental Nextflow options and features. |
-| | 2. Introduction to nf-core | Understand core features of nf-core and learn how to use `nf-core tools` utility. |
-| | 3. Configuring nf-core workflows | Understand the structure of an nf-core pipeline and the use of customisation options. |
-| | 4. Commands for users | Apply the `nf-core tools` utility's `list`, `download`, and `launch` commands. |
-||||
-| 2.| 1. Design a run command | Build a run command for the nf-core/rnaseq pipeline using required and optional parameters. |
-| | 2. Reproducible parameters | Troubleshoot a pipeline warning message and apply a params file to track our parameters. |
-| | 3. Configure compute resources | Configure compute resources for the workflow using a custom configuration file. |
-| | 4. Apply multiple configurations | Apply multiple configuration files to customise various pipeline settings for the same run. |
-| | 5. Apply additional arguments | Supply external arguments to a process that are not preset as pipeline parameters. |
+| Session | Lesson | Outcomes | Time (min) 
+|--|--------|----------------|--|
+| 1| Session 1 kick-off | Discuss session 1 learning outcomes and set up working space. |10 |
+| | Introduction to Nextflow | Understand core features of Nextflow and learn fundamental Nextflow options and features. |40 |
+| | Introduction to nf-core | Understand core features of nf-core and learn how to use `nf-core tools` utility. |15 |
+| | Break |:coffee: |15 |
+| | Configuring nf-core workflows | Understand the structure of an nf-core pipeline and the use of customisation options. |40 |
+| | Commands for users | Apply the `nf-core tools` utility's `list`, `download`, and `launch` commands. |30 |
+|||||
+| 2| Session 2 kick-off | Discuss session 2 learning outcomes and set up working space. |10 |
+| | Design a run command | Build a run command for the nf-core/rnaseq pipeline using required and optional parameters. |30|
+| | Reproducible parameters | Troubleshoot a pipeline warning message and apply a parameter file to track our parameters. |20|
+| | Break |:coffee: |15 |
+| | Configure compute resources | Configure compute resources for the workflow using a custom configuration file. ||
+| | Apply multiple configurations | Apply multiple configuration files to customise various pipeline settings for the same run. ||

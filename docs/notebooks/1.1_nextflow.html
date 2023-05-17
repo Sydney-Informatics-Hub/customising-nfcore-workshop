@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Sydney Informatics Hub training - Introduction to Nextflow</title>
+<title>Sydney Informatics Hub - Introduction to Nextflow</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -134,7 +134,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Sydney Informatics Hub training</span>
+    <span class="navbar-title">Sydney Informatics Hub</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -205,10 +205,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         <li>
     <a class="dropdown-item" href="../notebooks/2.4_multiConfig.html">
  <span class="dropdown-text">2.4 Apply multiple configurations</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../notebooks/2.5_extArgs.html">
- <span class="dropdown-text">2.5 Apply external arguments</span></a>
   </li>  
     </ul>
   </li>
@@ -438,7 +434,7 @@ Solution
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Create a new folder with the path <code>/home/ubuntu/singularity_cache</code> to store your singularity images and export its location using the <code>NXF_SINGULARITY_CACHEDIR</code> environmental variable:</p>
+<p>Create a new folder with the path <code>/home/training/singularity_cache</code> to store your singularity images and export its location using the <code>NXF_SINGULARITY_CACHEDIR</code> environmental variable:</p>
 </div>
 </div>
 <div class="callout-caution callout callout-style-default callout-captioned">
@@ -456,7 +452,7 @@ Solution
 <p>Make a new folder for your singularity images:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mkdir /home/ubuntu/singularity_cache</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Export your new folder as your cache directory for singularity images using the <code>NXF_SINGULARITY_CACHEDIR</code> environmental variable:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>export NXF_SINGULARITY_CACHEDIR=/home/ubuntu/singularity_cache</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>export NXF_SINGULARITY_CACHEDIR=/home/training/singularity_cache</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Singularity images downloaded by workflow executions will now be stored in this directory.</p>
 </div>
 </div>
@@ -784,7 +780,9 @@ Solution
 
 </section>
 
-<p>All materials copyright Sydney Informatics Hub, University of Sydney</p></main> <!-- /main -->
+<div style="font-size: 14px;">
+All materials copyright Sydney Informatics Hub, University of Sydney
+</div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Sydney Informatics Hub training - Set up your computer</title>
+<title>Sydney Informatics Hub - Set up your computer</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -134,7 +134,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Sydney Informatics Hub training</span>
+    <span class="navbar-title">Sydney Informatics Hub</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -206,10 +206,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <a class="dropdown-item" href="./notebooks/2.4_multiConfig.html">
  <span class="dropdown-text">2.4 Apply multiple configurations</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="./notebooks/2.5_extArgs.html">
- <span class="dropdown-text">2.5 Apply external arguments</span></a>
-  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -259,8 +255,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In this workshop series, we will be using Pawsey’s Nimbus cloud. The <a href="https://pawsey.org.au/about-us/about-pawsey/">Pawsey Supercomputing Research Centre</a> is one of two, Tier-1, High Performance Computing facilities in Australia.</p>
 <p>The main requirements for this workshop are a personal computer with:</p>
 <ul>
-<li>A web broswer</li>
-<li>Visual Studio Code or a terminal application</li>
+<li>A web browser</li>
+<li>Visual Studio Code (recommended) or a terminal application</li>
 </ul>
 <p>Below, you will find instructions on how to set up a terminal application and web browser on your computer and how to connect to Nimbus. Each participant will be provided with their instance’s IP address at the beginning of the workshop.</p>
 <section id="option-1-install-and-set-up-visual-studio-code" class="level3">
@@ -290,32 +286,109 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="https://user-images.githubusercontent.com/73086054/236149551-1703e56c-680b-4733-8613-c3409f43b6f2.png" class="img-fluid"></p>
 <section id="login-via-visual-studio-code" class="level4">
 <h4 class="anchored" data-anchor-id="login-via-visual-studio-code"><strong>Login via Visual Studio Code</strong></h4>
-<ul>
-<li><p>Connect to your instance with VS code by adding the host details to your <code>.ssh</code> config file:</p>
-<ul>
-<li><code>Ctrl</code>+<code>Shift</code>+<code>P</code> to open command palette</li>
-<li>Select <code>Remote-SSH: Open SSH configuraiton file</code></li>
-<li>Add new entry, filling out host name and identity file:</li>
-</ul></li>
-</ul>
+<p>Connect to your instance with VS code by adding the host details to your <code>.ssh</code> config file:</p>
+<ol type="1">
+<li>Go to the list of instance IP addresses provided in the Slack channel</li>
+<li>Find and copy your IP address, it will start with 146.118.XXX.XX</li>
+<li>In a new VS code terminal, type <code>Ctrl</code>+<code>Shift</code>+<code>P</code> if you’re on a Windows machine or <code>Cmd</code>+<code>Shift</code>+<code>P</code> for MacOS to open the command palette</li>
+<li>Select <code>Select Remote-SSH: Open SSH configuration file</code> and select your <code>.ssh</code> config file</li>
+<li>Add a new entry using your allocated IP address and save your <code>.ssh</code> config file:</li>
+</ol>
 <div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Host nfcoreWorkshop</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  HostName 146.118.XX.XXX  </span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  User training     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<ul>
-<li>Connect to this addres:
-<ul>
-<li><code>Ctrl</code>+<code>Shift</code>+<code>P</code> to open command palette</li>
-<li>Select <code>Remote-SSH: Connect to Host</code> and select name of your host</li>
-<li>Select <code>Linux</code> from dropdown menu and then <code>continue</code></li>
-</ul></li>
-<li>Having successfully logged in, you should see a small green box in the bottom left corner of your screen:</li>
-</ul>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  HostName 146.118.XXX.XX</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  User training</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="6" type="1">
+<li>Type <code>Ctrl</code>+<code>Shift</code>+<code>P</code> and select <code>Remote-SSH: Connect to Host</code> and <code>nfcoreWorkshop</code></li>
+<li>When prompted, select <code>Linux</code> as the platform of the remote host from the dropdown menu</li>
+<li>Type in your provided password (see the Slack channel for the password) and hit enter</li>
+</ol>
+<p>Having successfully logged in, you should see a small blue or green box in the bottom left corner of your screen:</p>
 <p><img src="https://user-images.githubusercontent.com/73086054/228143085-20a5bdfc-f4e7-4472-b43f-2c975ae5eb4c.png" class="img-fluid"></p>
+<p>To set up your VS Code window for the workshop:</p>
+<ol type="1">
+<li>Open a new folder in the file explorer panel on the left side of the screen by typing <code>Ctrl</code> + <code>K</code>, <code>Ctrl</code> + <code>O</code> if you’re running Windows or <code>Cmd</code>+<code>K</code>+ <code>Cmd</code> + <code>O</code> for MacOS</li>
+<li>Select <code>/home/training</code> to open your instance’s $HOME folder, this is where we will be working</li>
+<li>When prompted, select the box for <code>Trust the authors of all files in the parent folder ‘home’</code> then click <code>Yes, I trust the authors</code></li>
+<li>To open a terminal, type <code>Ctrl</code>+<code>J</code> if you’re on a Windows machine or <code>Cmd</code>+<code>J</code> on MacOS</li>
+</ol>
+</section>
+<section id="tips-for-using-vs-code" class="level4">
+<h4 class="anchored" data-anchor-id="tips-for-using-vs-code"><strong>Tips for using VS Code</strong></h4>
 <ul>
-<li>Under the actions listed under <code>Start</code>, select <code>Open folder</code> then open <code>/home/training</code></li>
-<li>Select the box for <code>Trust the authors of all files in the parent folder ‘home’</code> then click <code>Yes, I trust the authors</code></li>
-<li>To open a terminal, from the top ribbon options, select <code>Terminal</code> –&gt; <code>New Terminal</code></li>
+<li><a href="https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf">VS code cheatsheet for Windows</a></li>
+<li><a href="https://code.visualstudio.com/shortcuts/keyboard-shortcuts-macos.pdf">VS code cheatsheet for MacOS</a></li>
 </ul>
+<table class="table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Shortcut</th>
+<th>Windows</th>
+<th>MacOS</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Show command palette</td>
+<td><code>ctrl</code>+<code>shift</code>+<code>P</code></td>
+<td><code>cmd</code>+<code>shift</code>+<code>P</code></td>
+</tr>
+<tr class="even">
+<td>Toggle sidebar</td>
+<td><code>ctrl</code>+<code>B</code></td>
+<td><code>cmd</code>+<code>B</code></td>
+</tr>
+<tr class="odd">
+<td>Open new window</td>
+<td><code>ctrl</code>+<code>shift</code>+<code>N</code></td>
+<td><code>cmd</code>+<code>shift</code>+<code>N</code></td>
+</tr>
+<tr class="even">
+<td>Open/close terminal</td>
+<td><code>ctrl</code>+<code>J</code></td>
+<td><code>cmd</code>+<code>J</code></td>
+</tr>
+<tr class="odd">
+<td>Quick file open</td>
+<td><code>ctrl</code>+<code>P</code></td>
+<td><code>cmd</code>+<code>P</code></td>
+</tr>
+<tr class="even">
+<td>Zoom in</td>
+<td><code>ctrl +</code></td>
+<td><code>cmd +</code></td>
+</tr>
+<tr class="odd">
+<td>Zoom out</td>
+<td><code>ctrl -</code></td>
+<td><code>cmd -</code></td>
+</tr>
+<tr class="even">
+<td>Find</td>
+<td><code>ctrl</code>+<code>F</code></td>
+<td><code>cmd</code>+<code>F</code></td>
+</tr>
+<tr class="odd">
+<td>Save</td>
+<td><code>ctrl</code>+<code>S</code></td>
+<td><code>cmd</code>+<code>S</code></td>
+</tr>
+<tr class="even">
+<td>Select current line</td>
+<td><code>ctrl</code>+<code>L</code></td>
+<td><code>cmd</code>+<code>L</code></td>
+</tr>
+<tr class="odd">
+<td>Edit every instance of highlighted string</td>
+<td><code>ctrl</code>+<code>shift</code>+<code>L</code></td>
+<td><code>cmd</code>+<code>shift</code>+<code>L</code></td>
+</tr>
+</tbody>
+</table>
 <p><br></p>
 </section>
 </section>
@@ -346,17 +419,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="login-via-terminal" class="level4">
 <h4 class="anchored" data-anchor-id="login-via-terminal"><strong>Login via Terminal</strong></h4>
-<p>To log in to Nimbus, we will use a Secure Shell (SSH) connection. To connect, you need 3 things: 1. The assigned IP address of your instance (i.e.&nbsp;###.###.##.###). Each participant will be provided with their instance’s IP address at the beginning of the workshop. 2. Your login name. In our case, this will be <strong>training</strong> for all participants. 3. Your password. All participants will be provided with a password at the beginning of the workshop.</p>
-<p>To log in, type the following into your terminal, using your login name and the instance’s IP address:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ssh training@###.###.###.###</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To log in to Nimbus, we will use a Secure Shell (SSH) connection. To connect, you need 3 things:</p>
+<ul>
+<li>The assigned IP address of your instance (i.e.&nbsp;146.118.XXX.XX). Each participant will be provided with their instance’s IP address at the beginning of the workshop.</li>
+<li>Your login name. In our case, this will be <strong>training</strong> for all participants.</li>
+<li>Your password. All participants will be provided with a password at the beginning of the workshop.</li>
+</ul>
+<p>To log in: type the following into your terminal, using your allocated instance’s IP address:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ssh training@146.118.XXX.XX</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You will receive a message saying:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>The authenticity of host 'XXX.XXX.XX.XXX (XXX.XXX.XX.XXX)' can't be established.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>The authenticity of host '146.118.XX.XXX (146.118.XX.XXX)' can't be established.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Remember your host address will be different than the one above. There will then be a message saying:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Are you sure you want to continue connecting (yes/no)?</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If you would like to skip this message next time you log in, answer ‘yes’. It will then give a warning:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Warning: Permanently added 'XXX.XXX.XX.XXX' (ECDSA) to the list of known hosts.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Warning: Permanently added '146.118.XX.XXX' (ECDSA) to the list of known hosts.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Enter the password provided at the beginning of the workshop. Ask one of the demonstrators if you’ve forgotten it.</p>
-<div class="callout-note callout callout-style-simple callout-captioned">
+<div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -376,7 +454,9 @@ Pay Attention
 </section>
 </section>
 
-<p>All materials copyright Sydney Informatics Hub, University of Sydney</p></main> <!-- /main -->
+<div style="font-size: 14px;">
+All materials copyright Sydney Informatics Hub, University of Sydney
+</div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

@@ -13,16 +13,14 @@ from: markdown+emoji
 - Learn how to check the default configurations that are applied to nf-core workflows
 - Understand how to over-ride default configurations with custom configuration files
 - Write a custom config file for your local environment and apply this configuration to your run
-- Observe the heirarchy of parameter configuration in action  
+- Observe the hierarchy of parameter configuration in action  
 :::
 
-In the previous exercises, we have explored how to customise a run with **workflow parameters** on the command line or within a parameters file. 
-
-We will now look at **configuration settings**, which manage **how the workflow is implemented on your system**. 
+In the previous exercises, we have explored how to customise a run with **workflow parameters** on the command line or within a parameters file. In this lesson we will now look at **configuration settings**, which manage **how the workflow is implemented on your system**. 
 
 ::: callout-note
 ### 
-Nextflow's portability is achieved by separating **workflow implementation** (input data, custom parameters, etc) from the **configuration settings** (tool access, compute resources, etc) required to execute it. This portability facilitates **reproducibility**: by applying the same parameters as a colleague, and adjusting configurations to suit your platform, you can achieve the same results on any machine with no requirement to edit the code.
+Nextflow's portability is achieved by separating **workflow implementation** (input data, custom parameters, etc.) from the **configuration settings** (tool access, compute resources, etc.) required to execute it. This portability facilitates **reproducibility**: by applying the same parameters as a colleague, and adjusting configurations to suit your platform, you can achieve the same results on any machine with no requirement to edit the code.
 :::  
 
 <br/>
@@ -43,7 +41,7 @@ The critical configuration aspects can be grouped into 3 general  categories:
 3. Software
 <br/><br/>
 
- Let's take a look at these two configuration files to gain an undertsanding of how defaults are applied.
+ Let's take a look at these two configuration files to gain an understanding of how defaults are applied.
 
 &#x27A4; Using the `more` command, take a few moments to scroll through both the `nextflow.config` and `base.config` files:
 ``` default
@@ -77,7 +75,7 @@ The `nextflow.config` file is more workflow-specific, and sets the defaults for 
 
 The parameters `--max_cpus`, `--max_memory` and `--max_time` are applied as a **cap** for a workflow, to ensure that no single process attempts to use more resources than you have available on your platform. 
 
-<span style="color:#000080;"> Setting these values to the maximum or near-maximum on your machine/node is an important customisation to prevent uneccessary failed runs.</span>  
+<span style="color:#000080;"> Setting these values to the maximum or near-maximum on your machine/node is an important customisation to prevent unnecessary failed runs.</span>  
 
 Default settings for `--max_cpus`, `--max_memory` and `--max_time` are applied within the nf-core `workflow/nextflow.config`. These are generous values expecting to be over-ridden with your custom settings. 
 
@@ -140,7 +138,7 @@ Institutional configs help us create **efficient** workflows that can be **share
 
 ::: {.callout-note collapse="true"}
 ### Why should I be concerned with computational efficiency? :earth_asia: 
-Bioinformatics relies on large-scale computational infrastructures and has a signficant carbon footprint due to the energy required to run computational workflows. We can optimise our worklfows to not only reduce their runtime, but also adopt more sustainable computing practices. This [paper](https://academic.oup.com/mbe/article/39/3/msac034/6526403) makes for an interesting read about the carbon footprint of bioinformatics workflows and tools!
+Bioinformatics relies on large-scale computational infrastructures and has a significant carbon footprint due to the energy required to run computational workflows. We can optimise our workflows to not only reduce their runtime, but also adopt more sustainable computing practices. This [paper](https://academic.oup.com/mbe/article/39/3/msac034/6526403) makes for an interesting read about the carbon footprint of bioinformatics workflows and tools!
 :::
 <br/>
 
@@ -168,7 +166,7 @@ more  nf-core-rnaseq-3.11.1/configs/conf/pawsey_nimbus.config
 
 - What arguments would we apply to our command line to utilise the `pawsey_nimbus.config` and set the right configurations for software and compute for our VMs?
 
-:bulb: Hint: the Nimbus training VM 'instance flavour' is 'c2r8' ie 2 CPU and 8 GB RAM. See the [Pawsey Nimbus nf-core config documentation](https://github.com/nf-core/configs/blob/master/docs/pawsey_nimbus.md) for help. 
+:bulb: Hint: the Nimbus training VM 'instance flavour' is 'c2r8' i.e. 2 CPU and 8 GB RAM. See the [Pawsey Nimbus nf-core config documentation](https://github.com/nf-core/configs/blob/master/docs/pawsey_nimbus.md) for help. 
 :::
 
 ::: {.callout-caution collapse="true"}
@@ -181,7 +179,7 @@ To select the institutional config, we apply `-profile <config_basename>`. To se
 <br/>
 
 
-In the event where your institution does not have a publicly availabe configuration file and/or you want to apply your own customisations, you will need to **write your own config file**. 
+In the event where your institution does not have a publicly available configuration file and/or you want to apply your own customisations, you will need to **write your own config file**. 
 
 :bulb: <span style="color:#000080;"> You can contribute to the nf-core community by [sharing your config!](https://github.com/nf-core/configs/tree/master#adding-a-new-config)</span>
 <br/><br/>
@@ -219,7 +217,7 @@ profiles {
     singularity {
       enabled     = true
       autoMounts  = true
-      cacheDir    = "/home/ubuntu/singularity_cache"
+      cacheDir    = "/home/training/singularity_cache"
     }
   }
 }
@@ -244,7 +242,7 @@ profiles {
     singularity {
       enabled     = true
       autoMounts  = true
-      cacheDir    = "/home/ubuntu/singularity_cache"
+      cacheDir    = "/home/training/singularity_cache"
     }
     params {
       max_cpus   = 2
@@ -275,7 +273,7 @@ profiles {
     singularity {
       enabled     = true
       autoMounts  = true
-      cacheDir    = "/home/ubuntu/singularity_cache"
+      cacheDir    = "/home/training/singularity_cache"
     }
     params {
       config_profile_description  = 'Pawsey Nimbus c2r8 profile'
@@ -366,7 +364,7 @@ To achieve optimum computational efficiency on your platform, more granular cont
 ::: {.callout-important}
 ### For example, consider the case of a 16 core machine
 
-If you appled `--max_cpus 16` to the nf-core rnaseq workflow, the STAR_ALIGN module would still only utilise 12 CPUs, as this module (as we learned in 2.3.1) has the label `process_high` which sets CPUs to 12.
+If you appled `--max_cpus 16` to the nf-core rnaseq workflow, the STAR_ALIGN module would still only utilise 12 CPUs, as this module (as we learnt in 2.3.1) has the label `process_high` which sets CPUs to 12.
 
 If there were no processes with fulfilled input channels that could make use of the 4 remaining CPUs, those resources would sit idle until the STAR_ALIGN process had completed. 
 
@@ -411,7 +409,7 @@ profiles {
         singularity {
             enabled = true
             autoMounts = true
-            cacheDir = '/home/ubuntu/singularity_cache'
+            cacheDir = '/home/training/singularity_cache'
         }
         params {
             config_profile_description = 'Pawsey Nimbuc c2r8 profile'
@@ -492,18 +490,17 @@ You can [view the modules.conf file on Github](https://github.com/nf-core/rnaseq
 
 ```default
 grep STAR nf-core-rnaseq-3.11.1/workflow/conf/modules.config
-
-##
-#    withName: 'UNTAR_.*|STAR_GENOMEGENERATE|STAR_GENOMEGENERATE_IGENOMES|HISAT2_BUILD' {
-#// STAR Salmon alignment options
-#        withName: '.*:ALIGN_STAR:STAR_ALIGN|.*:ALIGN_STAR:STAR_ALIGN_IGENOMES' {
-#        withName: '.*:QUANTIFY_STAR_SALMON:SALMON_QUANT' {
-#        withName: '.*:QUANTIFY_STAR_SALMON:SALMON_TX2GENE' {
-#        withName: '.*:QUANTIFY_STAR_SALMON:SALMON_TXIMPORT' {
-#        withName: '.*:QUANTIFY_STAR_SALMON:SALMON_SE_.*' {
-#            withName: 'DESEQ2_QC_STAR_SALMON' {
-#// STAR RSEM alignment options
-##
+```
+```default
+withName: 'UNTAR_.*|STAR_GENOMEGENERATE|STAR_GENOMEGENERATE_IGENOMES|HISAT2_BUILD' {
+// STAR Salmon alignment options
+        withName: '.*:ALIGN_STAR:STAR_ALIGN|.*:ALIGN_STAR:STAR_ALIGN_IGENOMES' {
+        withName: '.*:QUANTIFY_STAR_SALMON:SALMON_QUANT' {
+        withName: '.*:QUANTIFY_STAR_SALMON:SALMON_TX2GENE' {
+        withName: '.*:QUANTIFY_STAR_SALMON:SALMON_TXIMPORT' {
+        withName: '.*:QUANTIFY_STAR_SALMON:SALMON_SE_.*' {
+            withName: 'DESEQ2_QC_STAR_SALMON' {
+// STAR RSEM alignment options
 ```
 
 - Note that this does not provide the PIPELINE or WORKFLOW name at the front of the path
@@ -561,7 +558,7 @@ profiles {
         singularity {
             enabled = true
             autoMounts = true
-            cacheDir = '/home/ubuntu/singularity_cache'
+            cacheDir = '/home/training/singularity_cache'
         }
         params {
             config_profile_description = 'Pawsey Nimbuc c2r8 profile'
@@ -614,16 +611,15 @@ If your execution path for the STAR_ALIGN module was specified correctly, your r
 What do you expect would happen to your run if your execution path for the module was **not** specified correctly?
 :::
 
-<details>
-<summary> :stop_sign: </summary>
+::: {.callout-note appearance="simple" collapse="true"}
+### Answer
 In this case, our pipeline would complete OK, because the resources for the STAR_ALIGN process have been appropriately set for our VM using the `process_high` label within our `custom-nimbus.config`. 
 
 The directives set within the `withName` scope would not be applicable, and a warning would be printed, eg
 ```default
 WARN: There's no process matching config selector: .*:RNASEQ:ALIGN_STAR:STARALIGN
 ```
-</details>
-
+:::
 
 <br/><br/>
 

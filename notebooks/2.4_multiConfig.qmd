@@ -17,7 +17,6 @@ from: markdown+emoji
 - Apply multiple custom configuration files in a single workflow execution with `-c <conf-1,conf2,...>` 
 :::
 
-
 Using multiple configuration files allows you to customise nf-core pipelines to your specific needs. They can be applied in a **modular** fashion, where custom configs can be added to or dropped from a pipeline execution only as required. 
 
 This flexibility ensures that we preserve the  **portability** and **reproducibility** of nf-core pipelines by **not editing the core workflow code** to make bespoke customisations. 
@@ -39,9 +38,9 @@ In this exercise, we will create a custom configuration file that writes a detai
 Unlike our institutional config `custom-nimbus.config`, which is required for our run in order to access tools through Singularity and restrict resource use to what we have on our VM, this config will be **optional** and **portable**:
 
 
-- <span style="color:#000080;">We can apply it only as needed</span>
-- <span style="color:#000080;">We can apply it to any nf-core pipeline</span>
-- <span style="color:#000080;">We can apply it to nf-core runs on any machine</span>
+- We can apply it only as needed
+- We can apply it to any nf-core pipeline
+- We can apply it to nf-core runs on any machine
 
 <br/>
 
@@ -291,23 +290,22 @@ Given what you have learnt about custom configuration files so far, take a momen
 ### Thoughts? :thought_balloon:
 **For maintaining portability and reproducibility, what is the best way to specify our custom Trim Galore container when we execute the `nf-core/rnaseq` pipeline?** 
 
-**a)** Within the `custom-nimbus.config` institutional config file. It's already working well on our platform, so we can build on it for further customisations without issue. 
+**a.** Within the `custom-nimbus.config` institutional config file. It's already working well on our platform, so we can build on it for further customisations without issue. 
 
-**b)** Within a separate custom config file named `custom-trimgalore-version.config`. We would then apply it at `-c` along with our institutional config whenever it was required. 
+**b.** Within a separate custom config file named `custom-trimgalore-version.config`. We would then apply it at `-c` along with our institutional config whenever it was required. 
 
-**c)** Within the Trim Galore `main.nf` file. This way, we don't need to worry about adding another custom config when we execute the `run` command. 
+**c.** Within the Trim Galore `main.nf` file. This way, we don't need to worry about adding another custom config when we execute the `run` command. 
 
 :::
 
-<details>
-<summary> :stop_sign: </summary>
+::: {.callout-note appearance="simple" collapse="true"}
+### Answer
 In the event that we are testing a different tool version, this should **not** be placed within the institutional config that is shareable with others using nf-core pipelines on the same infrastructure. Doing so would prevent our institutional config from being portable to other analyses. 
 
 In general, editing the process `main.nf` file is **not** recommended, as this impedes reproducibility. Swapping out tool versions is a bespoke adaptation of the nf-core workflow that would harm reproducibility if it was inadvertently executed, which is likely to happen if it is hidden within the source code.  
 
 By placing it within a clearly named custom config file, there is less chance of unwittingly executing a workflow that does not match the expected utilisation of tools. Whenever we run an nf-core pipeline, the custom configs we applied are listed under **Core Nextflow options** in the run log, so there is a record that the particular configuration file was applied. Take care to **save** any custom configuration files applied to a run along with the project outputs, and to **use an informative config name**. 
-</details>
-<br/>
+:::
 
 &#x27A4; Identify the default version of Trim Galore that has been used in our runs so far from the `software_versions.yml` file: 
 
@@ -318,12 +316,11 @@ By placing it within a clearly named custom config file, there is less chance of
 
 ```default
 more Lesson-2.4.2/pipeline_info/software_versions.yml
-
-##
-#TRIMGALORE:
-#  cutadapt: '3.4'
-#  trimgalore: 0.6.7
-#
+```
+```default
+TRIMGALORE:
+  cutadapt: '3.4'
+  trimgalore: 0.6.7
 ```
 
 ::: callout-tip
@@ -332,11 +329,10 @@ more Lesson-2.4.2/pipeline_info/software_versions.yml
 
 ``` default
 grep container nf-core-rnaseq-3.11.1/workflow/modules/nf-core/trimgalore/main.nf 
-
-##
-#    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-#        'quay.io/biocontainers/trim-galore:0.6.7--hdfd78af_0' }"
-##
+```
+```default
+    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+        'quay.io/biocontainers/trim-galore:0.6.7--hdfd78af_0' }"
 ```
 
 This should not often be the case, as nf-core pipelines should first be run with a test dataset *before* executing your full run and delving into custom configuration.
@@ -359,10 +355,9 @@ nf-core pipelines ship with `test` datasets to enable easy testing on your infra
 
 ``` default
 ls /cvmfs/singularity.galaxyproject.org/t/r/trim*
-
-##
-#  /cvmfs/singularity.galaxyproject.org/t/r/trim-galore:0.6.10--hdfd78af_0
-##
+```
+```default
+/cvmfs/singularity.galaxyproject.org/t/r/trim-galore:0.6.10--hdfd78af_0
 ```
 <br/>
 
@@ -370,14 +365,13 @@ ls /cvmfs/singularity.galaxyproject.org/t/r/trim*
 
 ``` default
 grep -i galore nf-core-rnaseq-3.11.1/workflow/conf/modules.config 
-
-##
-#    if (params.trimmer == 'trimgalore') {
-#            withName: '.*:FASTQ_FASTQC_UMITOOLS_TRIMGALORE:FASTQC' {
-#    if (params.trimmer == 'trimgalore') {
-#            withName: '.*:FASTQ_FASTQC_UMITOOLS_TRIMGALORE:TRIMGALORE' {
-#                        params.extra_trimgalore_args ? params.extra_trimgalore_args.split("\\s(?=--)") : ''
-##
+```
+```default
+    if (params.trimmer == 'trimgalore') {
+            withName: '.*:FASTQ_FASTQC_UMITOOLS_TRIMGALORE:FASTQC' {
+    if (params.trimmer == 'trimgalore') {
+            withName: '.*:FASTQ_FASTQC_UMITOOLS_TRIMGALORE:TRIMGALORE' {
+                        params.extra_trimgalore_args ? params.extra_trimgalore_args.split("\\s(?=--)") : ''
 ```
 <br/>
 
@@ -449,18 +443,17 @@ For now we will skip forward to the next lesson and check on the results of this
 
 ```default
 grep -i galore Lesson-2.4.3/pipeline_info/software_versions.yml
-
-##
-#TRIMGALORE:
-#  trimgalore: 0.6.10
-##
-
+```
+```default
+TRIMGALORE:
+  trimgalore: 0.6.10
+```
+```default
 grep -i galore Lesson-2.4.2/pipeline_info/software_versions.yml 
-
-##
-#TRIMGALORE:
-#  trimgalore: 0.6.7
-##
+```
+```default
+TRIMGALORE:
+  trimgalore: 0.6.7
 ```
 <br/><br/>
 
@@ -633,7 +626,7 @@ The message `Pipeline completed successfully` printed to your terminal every tim
 :exclamation: In this example, it is clear that our `ext.args` customisation was successfully applied because of the catastrophic failure it produced. In less dramatic cases, **how can we confirm that the external argument was actually applied?** :thinking:
 <br/><br/>
 
-- Within your MultiQC report, navigate to the section **'nf-core/rnaseq Workflow Summary'**
+Within your MultiQC report, navigate to the section **'nf-core/rnaseq Workflow Summary'**
 
   - Unlike our custom **options**, **profiles**, and **configs**, the custom quality parameter is **not documented!**
   - :thinking: seems worthy of a feature request...
@@ -648,24 +641,23 @@ head Lesson-2.4.4/trimgalore/SRR3473988.fastq.gz_trimming_report.txt
 <br/><br/>
 
 
-- In the absence of an informative tool log, you can always rely on `nextflow log` :smiling_face_with_three_hearts:
+In the absence of an informative tool log, you can always rely on `nextflow log` :smiling_face_with_three_hearts:
 ```default
 nextflow log <run_name> -f script | grep -A 10 trim_galore
-
-##
-#        trim_galore \
-#            --quality 40 \
-#            --cores 1 \
-#            --gzip \
-#            SRR3473989.fastq.gz
-##
+```
+```default
+trim_galore \
+  --quality 40 \
+  --cores 1 \
+  --gzip \
+  SRR3473989.fastq.gz
 ```
 <br/><br/>
 
 
 &#x27A4;  **Optional final run for the purists at heart :angel:**
 
-- If you would like to conclude today's compute with a successful run, try changing the Trim Galore `--quality` threshold to 30
+If you would like to conclude today's compute with a successful run, try changing the Trim Galore `--quality` threshold to 30
 <br/><br/><br/> 
 
 

@@ -11,10 +11,10 @@ In this workshop series, we will be using Pawsey’s Nimbus cloud. The [Pawsey S
 
 The main requirements for this workshop are a personal computer with:
 
-* A web broswer 
-* Visual Studio Code or a terminal application 
+* A web browser 
+* Visual Studio Code (recommended) or a terminal application 
 
-Below, you will find instructions on how to set up a terminal application and web browser on your computer and how to connect to Nimbus. Each participant will be provided with their instance’s IP address at the beginning of the workshop.
+Below, you will find instructions on how to set up a terminal application and web browser on your computer and how to connect to Nimbus. Each participant will be provided with their instance’s IP address at the beginning of the workshop. 
 
 ### **Option 1: Install and set up Visual Studio Code**
 
@@ -43,29 +43,53 @@ Visual Studio Code (VS Code) is a lightweight and powerful source code editor av
 
 #### **Login via Visual Studio Code**
 
-- Connect to your instance with VS code by adding the host details to your `.ssh` config file:
+Connect to your instance with VS code by adding the host details to your `.ssh` config file:
 
-  - `Ctrl`+`Shift`+`P` to open command palette 
-  - Select `Remote-SSH: Open SSH configuraiton file`
-  - Add new entry, filling out host name and identity file:
+  1. Go to the list of instance IP addresses provided in the Slack channel
+  2. Find and copy your IP address, it will start with 146.118.XXX.XX 
+  3. In a new VS code terminal, type `Ctrl`+`Shift`+`P` if you're on a Windows machine or `Cmd`+`Shift`+`P` for MacOS to open the command palette 
+  4. Select `Select Remote-SSH: Open SSH configuration file` and select your `.ssh` config file
+  5. Add a new entry using your allocated IP address and save your `.ssh` config file: 
 
-```default
-Host nfcoreWorkshop
-  HostName 146.118.XX.XXX  
-  User training  	
-```
-- Connect to this addres:
-  - `Ctrl`+`Shift`+`P` to open command palette 
-  - Select `Remote-SSH: Connect to Host` and select name of your host
-  - Select `Linux` from dropdown menu and then `continue` 
+  ```default
+  Host nfcoreWorkshop
+    HostName 146.118.XXX.XX
+    User training
+  ```
 
-- Having successfully logged in, you should see a small green box in the bottom left corner of your screen:
+  6. Type `Ctrl`+`Shift`+`P` and select `Remote-SSH: Connect to Host` and `nfcoreWorkshop` 
+  7. When prompted, select `Linux` as the platform of the remote host from the dropdown menu 
+  8. Type in your provided password (see the Slack channel for the password) and hit enter 
+
+Having successfully logged in, you should see a small blue or green box in the bottom left corner of your screen:
 
 ![](https://user-images.githubusercontent.com/73086054/228143085-20a5bdfc-f4e7-4472-b43f-2c975ae5eb4c.png)
 
-- Under the actions listed under `Start`, select `Open folder` then open `/home/training`
--	Select the box for `Trust the authors of all files in the parent folder ‘home’` then click `Yes, I trust the authors`
--	To open a terminal, from the top ribbon options, select `Terminal` --> `New Terminal` 
+To set up your VS Code window for the workshop:
+
+1. Open a new folder in the file explorer panel on the left side of the screen by typing `Ctrl` + `K`, `Ctrl` + `O` if you're running Windows or `Cmd`+`K`+ `Cmd` + `O` for MacOS 
+2. Select `/home/training` to open your instance's $HOME folder, this is where we will be working
+2. When prompted, select the box for `Trust the authors of all files in the parent folder ‘home’` then click `Yes, I trust the authors`
+3.	To open a terminal, type `Ctrl`+`J` if you're on a Windows machine or `Cmd`+`J` on MacOS
+
+#### **Tips for using VS Code**
+
+* [VS code cheatsheet for Windows](https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf)
+* [VS code cheatsheet for MacOS](https://code.visualstudio.com/shortcuts/keyboard-shortcuts-macos.pdf)
+
+|Shortcut |Windows |MacOS |
+|--|--|--|
+|Show command palette | `ctrl`+`shift`+`P` |`cmd`+`shift`+`P` |
+|Toggle sidebar |`ctrl`+`B`|`cmd`+`B`|
+|Open new window|`ctrl`+`shift`+`N`|`cmd`+`shift`+`N`|
+|Open/close terminal|`ctrl`+`J`|`cmd`+`J`|
+|Quick file open|`ctrl`+`P`|`cmd`+`P`|
+|Zoom in|`ctrl +`| `cmd +`|
+|Zoom out|`ctrl -`|`cmd -`|
+|Find|`ctrl`+`F`|`cmd`+`F`|
+|Save|`ctrl`+`S`|`cmd`+`S`|
+|Select current line|`ctrl`+`L`| `cmd`+`L`|
+|Edit every instance of highlighted string|`ctrl`+`shift`+`L`|`cmd`+`shift`+`L`|
 
 <br/>
 
@@ -98,20 +122,21 @@ To install and start using MobaXterm:
 #### **Login via Terminal**
 
 To log in to Nimbus, we will use a Secure Shell (SSH) connection. To connect, you need 3 things:
-1. The assigned IP address of your instance (i.e. ###.###.##.###). Each participant will be provided with their instance’s IP address at the beginning of the workshop.
-2. Your login name. In our case, this will be **training** for all participants.
-3. Your password. All participants will be provided with a password at the beginning of the workshop.
 
-To log in, type the following into your terminal, using your login name and the instance’s IP address:
+* The assigned IP address of your instance (i.e. 146.118.XXX.XX). Each participant will be provided with their instance’s IP address at the beginning of the workshop.
+* Your login name. In our case, this will be **training** for all participants.
+* Your password. All participants will be provided with a password at the beginning of the workshop.
+
+To log in: type the following into your terminal, using your allocated instance’s IP address:
 
 ```default
-ssh training@###.###.###.###
+ssh training@146.118.XXX.XX
 ```
 
 You will receive a message saying:
 
 ```default
-The authenticity of host 'XXX.XXX.XX.XXX (XXX.XXX.XX.XXX)' can't be established.
+The authenticity of host '146.118.XX.XXX (146.118.XX.XXX)' can't be established.
 ```
 
 Remember your host address will be different than the one above. There will then be a message saying:
@@ -123,12 +148,12 @@ Are you sure you want to continue connecting (yes/no)?
 If you would like to skip this message next time you log in, answer ‘yes’. It will then give a warning:
 
 ```default
-Warning: Permanently added 'XXX.XXX.XX.XXX' (ECDSA) to the list of known hosts.
+Warning: Permanently added '146.118.XX.XXX' (ECDSA) to the list of known hosts.
 ```
 
 Enter the password provided at the beginning of the workshop. Ask one of the demonstrators if you’ve forgotten it.
 
-::: {.callout-note appearance="simple"}
+::: {.callout-note}
 ## Pay Attention
 When you type a password on the terminal, there will not be any indication the password is being entered. You'll not see a moving cursor, or even any asterisks, or bullets. That is an intentional security mechanism used by all terminal applications and can trip us up sometimes, so be careful when typing or copying your password in.  
 :::
