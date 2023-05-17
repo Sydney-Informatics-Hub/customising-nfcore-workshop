@@ -4,7 +4,7 @@ project:
 
 website:
   page-navigation: true
-  title: "Sydney Informatics Hub"
+  title: "Sydney Informatics Hub training"
   navbar:
     background: primary
     left:
