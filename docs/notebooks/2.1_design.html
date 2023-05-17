@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Sydney Informatics Hub - 2.1. Design and execute an nf-core run command</title>
+<title>Sydney Informatics Hub training - 2.1. Design and execute an nf-core run command</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -134,7 +134,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Sydney Informatics Hub</span>
+    <span class="navbar-title">Sydney Informatics Hub training</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -328,38 +328,38 @@ Solution
 <div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ls -l nf-core-rnaseq-3.11.1/*</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>nf-core-rnaseq-3.11.1/configs:</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>total 64</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu  1562 Apr  21 09:17 CITATION.cff</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu  1064 Apr  21 09:17 LICENSE</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu 17476 Apr  21 09:17 README.md</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 2 ubuntu ubuntu  4096 Apr  21 09:17 bin</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 3 ubuntu ubuntu  4096 Apr  21 09:17 conf</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu   204 Apr  21 09:17 configtest.nf</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 4 ubuntu ubuntu  4096 Apr  21 09:17 docs</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu    70 Apr  21 09:17 nextflow.config</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu  8249 Apr  21 09:17 nfcore_custom.config</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 2 ubuntu ubuntu  4096 Apr  21 09:17 pipeline</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 training training  1562 Apr  21 09:17 CITATION.cff</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 training training  1064 Apr  21 09:17 LICENSE</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 training training 17476 Apr  21 09:17 README.md</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 2 training training  4096 Apr  21 09:17 bin</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 3 training training  4096 Apr  21 09:17 conf</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 training training   204 Apr  21 09:17 configtest.nf</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 4 training training  4096 Apr  21 09:17 docs</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 training training    70 Apr  21 09:17 nextflow.config</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 training training  8249 Apr  21 09:17 nfcore_custom.config</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 2 training training  4096 Apr  21 09:17 pipeline</span>
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>nf-core-rnaseq-3.11.1/workflow:</span>
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>total 216</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu 58889 Apr  21 09:17 CHANGELOG.md</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu  9681 Apr  21 09:17 CITATIONS.md</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu  9078 Apr  21 09:17 CODE_OF_CONDUCT.md</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu  1096 Apr  21 09:17 LICENSE</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu 10002 Apr  21 09:17 README.md</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 3 ubuntu ubuntu  4096 Apr  21 09:17 assets</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 2 ubuntu ubuntu  4096 Apr  21 09:17 bin</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 2 ubuntu ubuntu  4096 Apr  21 09:17 conf</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 3 ubuntu ubuntu  4096 Apr  21 09:17 docs</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 2 ubuntu ubuntu  4096 Apr  21 09:17 lib</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu  2736 Apr  21 09:17 main.nf</span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 4 ubuntu ubuntu  4096 Apr  21 09:17 modules</span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu 13970 Apr  21 09:17 modules.json</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu 10847 Apr  21 09:17 nextflow.config</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu 42576 Apr  21 09:17 nextflow_schema.json</span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu   359 Apr  21 09:17 pyproject.toml</span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 4 ubuntu ubuntu  4096 Apr  21 09:17 subworkflows</span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 ubuntu ubuntu  1684 Apr  21 09:17 tower.yml</span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 2 ubuntu ubuntu  4096 Apr  21 09:17 workflows</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 training training 58889 Apr  21 09:17 CHANGELOG.md</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 training training  9681 Apr  21 09:17 CITATIONS.md</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 training training  9078 Apr  21 09:17 CODE_OF_CONDUCT.md</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 training training  1096 Apr  21 09:17 LICENSE</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 training training 10002 Apr  21 09:17 README.md</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 3 training training  4096 Apr  21 09:17 assets</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 2 training training  4096 Apr  21 09:17 bin</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 2 training training  4096 Apr  21 09:17 conf</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 3 training training  4096 Apr  21 09:17 docs</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 2 training training  4096 Apr  21 09:17 lib</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 training training  2736 Apr  21 09:17 main.nf</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 4 training training  4096 Apr  21 09:17 modules</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 training training 13970 Apr  21 09:17 modules.json</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 training training 10847 Apr  21 09:17 nextflow.config</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 training training 42576 Apr  21 09:17 nextflow_schema.json</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 training training   359 Apr  21 09:17 pyproject.toml</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 4 training training  4096 Apr  21 09:17 subworkflows</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>-rwxrwxr-x 1 training training  1684 Apr  21 09:17 tower.yml</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 2 training training  4096 Apr  21 09:17 workflows</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br> The public <a href="https://github.com/nf-core/configs">institutional configs</a> were downloaded to the <code>configs</code> directory. The code base for our pipeline will be stored in the <code>workflow</code> directory. The files and directories we will be working with in this session are:</p>
 <table class="table">
 <colgroup>
@@ -587,9 +587,9 @@ Answer
 </ol>
 <p>➤ Our input fastq files (<code>fastqs/</code>), reference data (<code>mm10_reference/</code>), and full sample sheet (<code>samplesheet.csv</code>) are already available on an external file system called CernVM-FS that we can access from our Nimbus instances. Take a look at the files:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ls -l /cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 2 ubuntu ubuntu 4096 Feb 14 05:36 fastqs</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 3 ubuntu ubuntu 4096 Feb 14 05:46 mm10_reference</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>-rw-rw-r-- 1 ubuntu ubuntu  641 Feb 16 05:57 samplesheet.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 2 training training 4096 Feb 14 05:36 fastqs</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 3 training training 4096 Feb 14 05:46 mm10_reference</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>-rw-rw-r-- 1 training training  641 Feb 16 05:57 samplesheet.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>➤ Our CVMFS path is very long, for the sake of tidiness, store the CVMFS path in a variable for our run command:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>materials=/cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/UnlockNfcore_0523</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>➤ Given we are only testing the pipeline in this session, we only need to work with a couple of samples. Copy the first two samples from the full prepared sample sheet to a local version of the file:</p>
@@ -710,15 +710,15 @@ Answer
 <p>The pipeline ran successfully, however, note the warning about all samples having failed the strandedness check. We’ll explore that in the next lesson.</p>
 <p>➤ In the meantime, list (<code>ls -la</code>) the contents of your directory, you’ll see a few new directories (and a hidden directory and log file) have been created:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>total 416</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x   7 ubuntu ubuntu 4.0K Apr 21 03:44 .</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>drwxr-x---  15 ubuntu ubuntu 4.0K Apr 21 01:56 ..</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x   4 ubuntu ubuntu 4.0K Apr 21 03:58 .nextflow</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>-rw-rw-r--   1 ubuntu ubuntu 371K Apr 21 03:58 .nextflow.log</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>-rw-rw-r--   1 ubuntu ubuntu  17K Apr 21 03:50 .nextflow.log.1</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x   7 ubuntu ubuntu 4.0K Apr 21 03:58 Lesson-2.1</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x   4 ubuntu ubuntu 4.0K Apr 21 02:08 nf-core-rnaseq-3.11.1</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>-rw-rw-r--   1 ubuntu ubuntu  563 Apr 21 03:14 samplesheet.csv</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 143 ubuntu ubuntu 4.0K Apr 21 03:58 work</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x   7 training training 4.0K Apr 21 03:44 .</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>drwxr-x---  15 training training 4.0K Apr 21 01:56 ..</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x   4 training training 4.0K Apr 21 03:58 .nextflow</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>-rw-rw-r--   1 training training 371K Apr 21 03:58 .nextflow.log</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>-rw-rw-r--   1 training training  17K Apr 21 03:50 .nextflow.log.1</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x   7 training training 4.0K Apr 21 03:58 Lesson-2.1</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x   4 training training 4.0K Apr 21 02:08 nf-core-rnaseq-3.11.1</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>-rw-rw-r--   1 training training  563 Apr 21 03:14 samplesheet.csv</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 143 training training 4.0K Apr 21 03:58 work</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><span class="emoji" data-emoji="eyes">👀</span> Nextflow has created 2 new output directories, <strong>work</strong> and <strong>Lesson-2.1</strong> in the current directory.</p>
 <section id="the-work-directory" class="level4">
 <h4 class="anchored" data-anchor-id="the-work-directory">The <code>work</code> directory</h4>
