@@ -56,6 +56,6 @@ Please fill out our [course survey](https://www.surveymonkey.com/r/custom-nfcore
 
 ### **Credits and acknowledgements**{.unlisted}
 
-This workshop event and accompanying materials were developed by the Sydney Informatics Hub, University of Sydney in partnership with Seqera Labs, Pawsey Supercomputing Research Centre, and Australia’s National Research Education Network (AARNet) enabled through the Australian BioCommons (NCRIS via Bioplatforms Australia). This workshop was developed as a part of the Australian BioCommons Bring Your Own Data Platforms project. 
+This workshop event and accompanying materials were developed by the Sydney Informatics Hub, University of Sydney in partnership with Seqera Labs, Pawsey Supercomputing Research Centre, and Australia’s National Research Education Network (AARNet). The workshop was enabled through the Australian BioCommons - Bring Your Own Data Platforms project (Australian Research Data Commons and NCRIS via Bioplatforms Australia). 
 
 ![](./figs/0.0_logos.png)

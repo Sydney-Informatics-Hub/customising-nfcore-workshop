@@ -28,5 +28,5 @@ These sessions will provide you with an opportunity to develop your skills and g
 | | Design a run command | Build a run command for the nf-core/rnaseq pipeline using required and optional parameters. |30|
 | | Reproducible parameters | Troubleshoot a pipeline warning message and apply a parameter file to track our parameters. |20|
 | | Break |:coffee: |15 |
-| | Configure compute resources | Configure compute resources for the workflow using a custom configuration file. ||
-| | Apply multiple configurations | Apply multiple configuration files to customise various pipeline settings for the same run. ||
+| | Configure compute resources | Configure compute resources for the workflow using a custom configuration file. |50|
+| | Apply multiple configurations | Apply multiple configuration files to customise various pipeline settings for the same run. |50|

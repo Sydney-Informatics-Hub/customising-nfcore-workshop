@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.296">
+<meta name="generator" content="quarto-1.2.262">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,10 +17,9 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -47,13 +46,43 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
+    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -108,85 +137,83 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <span class="navbar-title">Sydney Informatics Hub training</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html" rel="" target="">
+    <a class="nav-link" href="../index.html">
  <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../setup.html" rel="" target="">
+    <a class="nav-link" href="../setup.html">
  <span class="menu-text">Setup</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../notebooks/0.0_welcome.html" rel="" target="">
+    <a class="nav-link" href="../notebooks/0.0_welcome.html">
  <span class="menu-text">Lesson plan</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-session-1" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-session-1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Session 1</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-session-1">    
         <li>
-    <a class="dropdown-item" href="../notebooks/1.0_intro.html" rel="" target="">
+    <a class="dropdown-item" href="../notebooks/1.0_intro.html">
  <span class="dropdown-text">1.0 Session 1 kick-off</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/1.1_nextflow.html" rel="" target="">
+    <a class="dropdown-item" href="../notebooks/1.1_nextflow.html">
  <span class="dropdown-text">1.1 Introduction to Nextflow</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/1.2_nfcore.html" rel="" target="">
+    <a class="dropdown-item" href="../notebooks/1.2_nfcore.html">
  <span class="dropdown-text">1.2 Introduction to nf-core</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/1.3_configure.html" rel="" target="">
+    <a class="dropdown-item" href="../notebooks/1.3_configure.html">
  <span class="dropdown-text">1.3 Configuring nf-core workflows</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/1.4_users.html" rel="" target="">
+    <a class="dropdown-item" href="../notebooks/1.4_users.html">
  <span class="dropdown-text">1.4 Commands for users</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-session-2" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-session-2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Session 2</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-session-2">    
         <li>
-    <a class="dropdown-item" href="../notebooks/2.0_intro.html" rel="" target="">
+    <a class="dropdown-item" href="../notebooks/2.0_intro.html">
  <span class="dropdown-text">2.0 Session 2 kick-off</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/2.1_design.html" rel="" target="">
+    <a class="dropdown-item" href="../notebooks/2.1_design.html">
  <span class="dropdown-text">2.1 Design a run command</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/2.2_params.html" rel="" target="">
+    <a class="dropdown-item" href="../notebooks/2.2_params.html">
  <span class="dropdown-text">2.2 Use a parameters file</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/2.3_configEnv.html" rel="" target="">
+    <a class="dropdown-item" href="../notebooks/2.3_configEnv.html">
  <span class="dropdown-text">2.3 Configure resources</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../notebooks/2.4_multiConfig.html" rel="" target="">
+    <a class="dropdown-item" href="../notebooks/2.4_multiConfig.html">
  <span class="dropdown-text">2.4 Apply multiple configurations</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../tips_tricks.html" rel="" target="">
+    <a class="nav-link" href="../tips_tricks.html">
  <span class="menu-text">Tips &amp; Tricks</span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools ms-auto">
-</div>
+              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -227,12 +254,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Objectives
 </div>
 </div>
@@ -284,12 +311,12 @@ Objectives
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br></p>
 <p>➤ Before submitting your run, delete or comment out the <code>withName: '.*:RNASEQ:ALIGN_STAR:STAR_ALIGN'</code> block we applied in the <code>custom-nimbus.config</code> file</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Comments in Nextflow
 </div>
 </div>
@@ -299,12 +326,12 @@ Comments in Nextflow
 </div>
 <p><br></p>
 <p>➤ Save both configs and resume your previous run, adding our second custom config <code>custom-trace.config</code> at <code>-c</code> and setting <code>outdir</code> to <code>Lesson-2.4.1</code>:</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Specify multiple configs
 </div>
 </div>
@@ -318,7 +345,7 @@ Specify multiple configs
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  -params-file workshop-params.yaml \</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  --outdir Lesson-2.4.1 \</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  -resume </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><span class="emoji" data-emoji="eyes">👀</span> Notice that your multiple custom configurations are listed under <strong>Core Nextflow options</strong> on the launch log printed to the screen: <br><br> <img src="../figs/2.4_screenshot_config_list.png" class="quarto-discovered-preview-image img-fluid"> <br><br></p>
+<p><span class="emoji" data-emoji="eyes">👀</span> Notice that your multiple custom configurations are listed under <strong>Core Nextflow options</strong> on the launch log printed to the screen: <br><br> <img src="../figs/2.4_screenshot_config_list.png" class="img-fluid"> <br><br></p>
 <p>➤ Once the workflow has run, take a look at the <code>Lesson-2.4.1/custom-resource-trace-${trace_timestamp}.txt</code> file:</p>
 <p><span class="emoji" data-emoji="eyes">👀</span> Notice that while the status is <code>CACHED</code>, the resources reported are from the actual compute required to execute the process, and not the time this execution took to restore the data from cache</p>
 <p><img src="../figs/2.4_screenshot_custom_trace.png" class="img-fluid"> <br><br><br></p>
@@ -327,12 +354,12 @@ Specify multiple configs
 <h3 class="anchored" data-anchor-id="configure-multiqc-reports"><strong>2.4.2. Configure MultiQC reports</strong></h3>
 <p>Many nf-core pipelines use <a href="https://multiqc.info/docs/">MultiQC</a> to aggregate results and statistics output by various bioinformatics tools, helping to summarise experiments containing multiple samples and multiple analysis steps.</p>
 <p>MultiQC allows users the flexibility of <a href="https://multiqc.info/docs/reports/customisation/">customising the output reports</a>. nf-core has enabled users to take full advantage of this functionality through the inclusion of the <a href="https://nf-co.re/rnaseq/3.11.1/parameters#multiqc_config"><code>--multiqc_config</code> parameter</a>.</p>
-<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-important callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Hidden nf-core parameters
 </div>
 </div>
@@ -347,12 +374,12 @@ Hidden nf-core parameters
 <li>Add a custom report header <br><br></li>
 </ul>
 <p>➤ Open a file for editing named <code>custom-multiqc-config.yaml</code> and add the following content:</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Tip
 </div>
 </div>
@@ -376,12 +403,12 @@ Tip
 <div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>multiqc_config: "custom-multiqc-config.yaml" </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br></p>
 <p>➤ Make sure both YAML files are saved, then re-run the workflow, applying our customisations for both trace reporting and MultiQC formatting:</p>
-<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Challenge
 </div>
 </div>
@@ -390,12 +417,12 @@ Challenge
 <p><span class="emoji" data-emoji="bulb">💡</span> Think about <strong>nf-core parameters</strong> versus <strong>Nextflow configuration files</strong></p>
 </div>
 </div>
-<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-caution callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
@@ -414,12 +441,12 @@ Solution
 </div>
 <p><br></p>
 <p>➤ View the html file <code>Lesson-2.4.2/multiqc/star_salmon/multiqc_report.html</code> and compare it to the report generated by a previous run:</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Reminder: Viewing the MultiQC HTML
 </div>
 </div>
@@ -435,12 +462,12 @@ Reminder: Viewing the MultiQC HTML
 <p>Navigate to the section titled <strong>FastQC: Per Sequence GC Content</strong>. Compare the two plots to observe the custom track has been successfully added.</p>
 <p><img src="../figs/2.4_MultiQC.png" class="img-fluid"> <br></p>
 <p><span class="emoji" data-emoji="eyes">👀</span> This track has shown that our sample transcriptomes follow a normal distribution consistent with the mm10 reference. <br><br></p>
-<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Challenge
 </div>
 </div>
@@ -450,12 +477,12 @@ Challenge
 <p><span class="emoji" data-emoji="bulb">💡</span> So here is a freebie to get you started: correcting for GC bias in this analysis requires operation at the transcript quantification step, which is performed by the <code>SALMON_QUANT</code> module</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-caution callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
@@ -477,12 +504,12 @@ Solution
 </div>
 </div>
 <p><br><br></p>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 When <code>extra_&lt;tool&gt;_args</code> is not available <span class="emoji" data-emoji="scream">😱</span>
 </div>
 </div>
@@ -494,12 +521,12 @@ When <code>extra_&lt;tool&gt;_args</code> is not available <span class="emoji" d
 </section>
 <section id="configure-your-run-to-use-a-non-default-container" class="level3">
 <h3 class="anchored" data-anchor-id="configure-your-run-to-use-a-non-default-container"><strong>2.4.3. Configure your run to use a non-default container</strong></h3>
-<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-important callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Caveat
 </div>
 </div>
@@ -510,12 +537,12 @@ Caveat
 <p>For this example, let’s assume we want to test out the latest version of <a href="https://github.com/FelixKrueger/TrimGalore">Trim Galore</a>, which is newer than the default version of Trim Galore used by version 3.11.1 of <code>nf-core/rnaseq</code>.</p>
 <p>As can often be the case in programming, <a href="https://wiki.treasurers.org/wiki/TIMTOWTDI"><strong>TIMTOWTDI</strong>!</a></p>
 <p>Given what you have learnt about custom configuration files so far, take a moment to think about the <strong>optimal method to use</strong> for this customisation.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Thoughts? <span class="emoji" data-emoji="thought_balloon">💭</span>
 </div>
 </div>
@@ -526,12 +553,12 @@ Thoughts? <span class="emoji" data-emoji="thought_balloon">💭</span>
 <p><strong>c.</strong> Within the Trim Galore <code>main.nf</code> file. This way, we don’t need to worry about adding another custom config when we execute the <code>run</code> command.</p>
 </div>
 </div>
-<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-note callout callout-style-simple callout-captioned">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
@@ -546,12 +573,12 @@ Answer
 </div>
 <p><br></p>
 <p>➤ Identify the default version of Trim Galore that has been used in our runs so far from the <code>software_versions.yml</code> file:</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 
 </div>
 </div>
@@ -568,12 +595,12 @@ Answer
 <div class="sourceCode" id="cb10"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>TRIMGALORE:</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  cutadapt: '3.4'</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  trimgalore: 0.6.7</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 If you have not yet run this version of the pipeline
 </div>
 </div>
@@ -588,12 +615,12 @@ If you have not yet run this version of the pipeline
 </div>
 <p><br></p>
 <p>➤ Identify the container path for Trim Galore v. 0.6.10 hosted at CernVM-FS:</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Biocontainers at cvmfs
 </div>
 </div>
@@ -619,12 +646,12 @@ Biocontainers at cvmfs
 <span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br></p>
 <p>➤ Then copy the TRIMGALORE module execution path from your terminal inside the <code>withName</code> block:</p>
-<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-warning callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 
 </div>
 </div>
@@ -639,12 +666,12 @@ Biocontainers at cvmfs
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br></p>
 <p>➤ Finally, add the container details inside the <code>withName</code> block:</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 
 </div>
 </div>
@@ -665,12 +692,12 @@ Biocontainers at cvmfs
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  -params-file workshop-params.yaml \</span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  --outdir Lesson-2.4.3 \</span>
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  -resume </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-warning callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 <span class="emoji" data-emoji="hourglass">⌛</span>
 </div>
 </div>
@@ -722,12 +749,12 @@ Biocontainers at cvmfs
 <div class="sourceCode" id="cb25"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>nextflow log </span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>nextflow log &lt;run_name&gt; -f script</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br><br></p>
-<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-warning callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Warning
 </div>
 </div>
@@ -737,12 +764,12 @@ Warning
 </div>
 <p><br><br></p>
 <p>We will now pass an optional flag to the Trim Galore process using <code>ext.args</code> in a custom configuration file.</p>
-<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-important callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Disclaimer <span class="emoji" data-emoji="hand_over_mouth">🤭</span>
 </div>
 </div>
@@ -764,12 +791,12 @@ Disclaimer <span class="emoji" data-emoji="hand_over_mouth">🤭</span>
 <p><span class="emoji" data-emoji="toolbox">🧰</span> <a href="https://github.com/FelixKrueger/TrimGalore/blob/master/Docs/Trim_Galore_User_Guide.md#general-options">Trim Galore docs</a></p>
 <p><span class="emoji" data-emoji="toolbox">🧰</span> <a href="https://nf-co.re/rnaseq/3.11.1/parameters#read-trimming-options">nf-core/rnaseq trimming params v.3.11.1</a> vs <a href="https://nf-co.re/rnaseq/3.10.1/parameters#read-trimming-options">v.3.10.1</a></p>
 <p><span class="emoji" data-emoji="toolbox">🧰</span> <a href="https://github.com/nf-core/rnaseq/blob/3.11.1/modules/nf-core/trimgalore/main.nf">Trim Galore <code>main.nf</code></a> <br></p>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Inclusion of ext.args
 </div>
 </div>
@@ -786,12 +813,12 @@ Inclusion of ext.args
 <li><code>ext.args</code> <strong>is</strong> defined in <code>trimgalore/main.nf</code></li>
 </ul>
 <p><br></p>
-<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 <strong>Challenge</strong>
 </div>
 </div>
@@ -801,12 +828,12 @@ Inclusion of ext.args
 <p><span class="emoji" data-emoji="bulb">💡</span> <strong>Hint:</strong> you may find it helpful to take a copy of the <code>custom-trimgalore-version.config</code> file from the previous exercise</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-caution callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
@@ -843,12 +870,12 @@ Solution
 <li><p>Comparing the outputs in <code>Lesson-2.4.4</code> to a previous run, notice there is no <code>star_salmon</code> directory. These modules did not have their input channels fulfilled by the previous modules in the workflow, so they were not executed.<br>
 <br><br></p></li>
 </ul>
-<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-important callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Stay vigilant!
 </div>
 </div>
@@ -874,12 +901,12 @@ Stay vigilant!
 <p><br><br></p>
 <p>➤ <strong>Optional final run for the purists at heart <span class="emoji" data-emoji="angel">👼</span></strong></p>
 <p>If you would like to conclude today’s compute with a successful run, try changing the Trim Galore <code>--quality</code> threshold to 30. <br><br><br></p>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 <strong>Key points</strong>
 </div>
 </div>
@@ -927,23 +954,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
-      }
-    }
-    return false;
-  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
+    target: function(trigger) {
+      return trigger.previousElementSibling;
     }
   });
   clipboard.on('success', function(e) {
@@ -1008,92 +1021,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
