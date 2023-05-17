@@ -531,7 +531,7 @@ Caveat
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Note that for deploying nf-core workflows, it is not recommended to replace the tools within the workflow, as this will decrease portability and reproducibilty! This exercise is to demonstrate how you can specify containers, as this may aid you in developing and testing your own Nextflow workflows or testing new tool versions</p>
+<p>Note that for deploying nf-core workflows, it is not recommended to change the tool versions within the workflow, as this will decrease portability and reproducibilty! This exercise is to demonstrate how you can specify containers, as this may aid you in developing and testing your own Nextflow workflows or testing new tool versions</p>
 </div>
 </div>
 <p>For this example, let’s assume we want to test out the latest version of <a href="https://github.com/FelixKrueger/TrimGalore">Trim Galore</a>, which is newer than the default version of Trim Galore used by version 3.11.1 of <code>nf-core/rnaseq</code>.</p>
@@ -632,12 +632,9 @@ Biocontainers at cvmfs
 <div class="sourceCode" id="cb14"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>/cvmfs/singularity.galaxyproject.org/t/r/trim-galore:0.6.10--hdfd78af_0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br></p>
 <p>➤ Next, identify the execution path for the TRIMGALORE module:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>grep -i galore nf-core-rnaseq-3.11.1/workflow/conf/modules.config </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb16"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>    if (params.trimmer == 'trimgalore') {</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>            withName: '.*:FASTQ_FASTQC_UMITOOLS_TRIMGALORE:FASTQC' {</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    if (params.trimmer == 'trimgalore') {</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>            withName: '.*:FASTQ_FASTQC_UMITOOLS_TRIMGALORE:TRIMGALORE' {</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                        params.extra_trimgalore_args ? params.extra_trimgalore_args.split("\\s(?=--)") : ''</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>grep GALORE nf-core-rnaseq-3.11.1/workflow/conf/modules.config </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>            withName: '.*:FASTQ_FASTQC_UMITOOLS_TRIMGALORE:FASTQC' {</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>            withName: '.*:FASTQ_FASTQC_UMITOOLS_TRIMGALORE:TRIMGALORE' {</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br></p>
 <p>➤ Open a file for editing named <code>custom-trimgalore-version.config</code>, and start building your config with the <code>process</code> scope and <code>withName</code> selector that we covered in <a href="2.3_configEnv.html#custom-resource-configuration-using-process-names">lesson 2.3.5</a>:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>// Config to test out newer trimgalore</span>
@@ -762,7 +759,7 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><span class="emoji" data-emoji="hourglass">⌛</span> Before we continue, time for a quick check back on the <code>Lesson-2.4.3</code> run!</p>
+<p><span class="emoji" data-emoji="hourglass">⌛</span> Before we continue, time for a quick check back on the <code>Lesson-2.4.3</code> run! We want to check that our custom version of Trim Galore has been used.</p>
 </div>
 </div>
 <p><br><br></p>

@@ -251,7 +251,7 @@ The `extra_<tool>_args` parameter is not available for every tool used in nf-cor
 
 ::: callout-important
 ### Caveat
-Note that for deploying nf-core workflows, it is not recommended to replace the tools within the workflow, as this will decrease portability and reproducibilty! This exercise is to demonstrate how you can specify containers, as this may aid you in developing and testing your own Nextflow workflows or testing new tool versions 
+Note that for deploying nf-core workflows, it is not recommended to change the tool versions within the workflow, as this will decrease portability and reproducibilty! This exercise is to demonstrate how you can specify containers, as this may aid you in developing and testing your own Nextflow workflows or testing new tool versions 
 :::
 
 For this example, let's assume we want to test out the latest version of [Trim Galore](https://github.com/FelixKrueger/TrimGalore), which is newer than the default version of Trim Galore used by version 3.11.1 of `nf-core/rnaseq`. 
@@ -337,14 +337,11 @@ ls /cvmfs/singularity.galaxyproject.org/t/r/trim*
 &#x27A4; Next, identify the execution path for the TRIMGALORE module: 
 
 ``` default
-grep -i galore nf-core-rnaseq-3.11.1/workflow/conf/modules.config 
+grep GALORE nf-core-rnaseq-3.11.1/workflow/conf/modules.config 
 ```
 ```default
-    if (params.trimmer == 'trimgalore') {
             withName: '.*:FASTQ_FASTQC_UMITOOLS_TRIMGALORE:FASTQC' {
-    if (params.trimmer == 'trimgalore') {
             withName: '.*:FASTQ_FASTQC_UMITOOLS_TRIMGALORE:TRIMGALORE' {
-                        params.extra_trimgalore_args ? params.extra_trimgalore_args.split("\\s(?=--)") : ''
 ```
 <br/>
 
@@ -478,6 +475,7 @@ nextflow log <run_name> -f script
 
 ::: {.callout-warning}
 :hourglass: Before we continue, time for a quick check back on the `Lesson-2.4.3` run! 
+We want to check that our custom version of Trim Galore has been used.
 :::
 <br/><br/>
 

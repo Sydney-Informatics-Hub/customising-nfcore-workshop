@@ -101,12 +101,12 @@ In our runs so far, we have avoided the need for a custom resource configuration
 - Over-riding the default tool access method of `$PATH` by specifying the `singularity` profile defined in `workflow/nextflow.config`
   - Without this, our runs for this workshop would fail because we do not have the workflow tools (eg STAR, salmon) installed locally on our VMs
 - Over-riding the default values for CPUs and memory set in `nextflow.config` with `--max_cpus 2` and `--max_memory 6.GB` to fit on our small VMs
-  - Without these parameters, our runs would fail at the first process that requests more than this, because Nextflow workflows check that the requested resources are available before attempting to execute a module  
+  - Without these parameters, our runs would fail at the first process that requests more than this, because Nextflow workflows check that the requested resources are available before attempting to execute a workflow  
 
 These are basic configurations. What if:
 
 - We wanted to increase the resources used above what is requested with process labels to take advantage of high CPU or high memory infrastructures?
-- We wanted to run on a HPC with PBS Pro or SLURM job scheduling? 
+- We wanted to run on a HPC or cloud infrastructure? 
 - We wanted to execute specific modules on specific node types on a cluster?
 - We wanted to use a non-default software container? 
 - We wanted to customise outputs beyond what was possible with the nf-core workflow parameters?
@@ -206,7 +206,7 @@ profiles {
     singularity {
       enabled     = true
       autoMounts  = true
-      cacheDir    = "/home/training/singularity_cache"
+      cacheDir    = '/home/training/singularity_cache'
     }
   }
 }
@@ -231,7 +231,7 @@ profiles {
     singularity {
       enabled     = true
       autoMounts  = true
-      cacheDir    = "/home/training/singularity_cache"
+      cacheDir    = '/home/training/singularity_cache'
     }
     params {
       max_cpus   = 2
@@ -262,7 +262,7 @@ profiles {
     singularity {
       enabled     = true
       autoMounts  = true
-      cacheDir    = "/home/training/singularity_cache"
+      cacheDir    = '/home/training/singularity_cache'
     }
     params {
       config_profile_description  = 'Pawsey Nimbus c2r8 profile'
@@ -286,7 +286,7 @@ nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
   -resume
 ```
 
-::: {.callout-note}
+::: {.callout-note collapse="true"}
 ### Using profiles from local configs vs nf-core configs repo
 Because our `profile` is described within a local config, we need to specify both the name of the profile we want to apply to the run and the config that describes it. If our config was part of the  nf-core config repository, we would not need to specify the config at `-c`. The basename of the config would be supplied at `-profile` and any profiles within that config that we wanted to apply to the run would be specified in a comma-delimted list. 
 
@@ -360,7 +360,7 @@ Capping workflow resources using the `max` parameters is a bit of a blunt instru
 To achieve optimum computational efficiency on your platform, more granular control may be required. 
 
 ::: {.callout-important}
-### For example, consider the case of a 16 core machine
+### For example, consider the case of a 16 core machine eg Nimbus 'c16r64'
 
 If you appled `--max_cpus 16` to the nf-core rnaseq workflow, the STAR_ALIGN module would still only utilise 12 CPUs, as this module (as we learnt in 2.3.1) has the label `process_high` which sets CPUs to 12.
 
@@ -443,6 +443,10 @@ You run should have a summary message similar to below:
 ```default
 -[nf-core/rnaseq] Pipeline completed successfully with skipped sampl(es)-
 -[nf-core/rnaseq] Please check MultiQC report: 2/2 samples failed strandedness check.-
+Completed at: 11-May-2023 13:21:50
+Duration    : 7m 8s
+CPU hours   : 0.2
+Succeeded   : 66
 ```
 with the following output directories:
 ```default
@@ -484,8 +488,9 @@ This exercise will demonstrate how to adjust the resource configurations for a s
 `withName` is a powerful tool:
 
 - Specifically target individual modules
-- No need to edit the module `main.nf` file to add a process label
 - Multiple module names can be supplied using wildcards or 'or' (`*` or `|`) notation
+- No need to edit the module `main.nf` file to add a process label
+- Has a [higher priority](https://www.nextflow.io/docs/latest/config.html#selector-priority) than `withLabel` 
 <br/><br/>
 
 To utilise `withName`, we first need to ensure we have the correct and specific **executuion path** for the module/modules that we wish to target.
@@ -523,20 +528,14 @@ withName: 'UNTAR_.*|STAR_GENOMEGENERATE|STAR_GENOMEGENERATE_IGENOMES|HISAT2_BUIL
 - Note that this does not provide the PIPELINE or WORKFLOW name at the front of the path.  You can add these manually (eg `PIPELINE` is NFCORE_RNASEQ and `WORKFLOW` is RNASEQ) but the path within `modules.config` is usually all that is required for specificity within a workflow
 - If you have previously run the pipeline, you could also extract it from your run log printed to screen, execution trace etc 
 
-::: callout-tip
-### **Challenge**{.unlisted}
-What extended execution path could we use to ensure our customisations were applied only to the STAR_ALIGN module? 
-:::
+For STAR_ALIGN within the `nf-core/rnaseq` workflow, any of the following would be correct and specific:
 
-::: {.callout-caution collapse="true"}
-### Solution
-Any of the following would be correct and specific:
-```
+``` default
 'NFCORE_RNASEQ:RNASEQ:ALIGN_STAR:STAR_ALIGN'
 '.*:RNASEQ:ALIGN_STAR:STAR_ALIGN'
 '.*:ALIGN_STAR:STAR_ALIGN'
 ```
-:::
+
 <br/><br/>
 
 &#x27A4; Continue editing `custom-nimbus.config`. Inside the `process` scope, provide the execution path for the STAR_ALIGN module to the `withName` selector:
@@ -617,7 +616,7 @@ nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf \
   -resume 
 ```
 
-If your execution path for the STAR_ALIGN module was specified correctly, your run should have died with the following error:
+If your execution path for the STAR_ALIGN module was specified correctly, your run should have died with the error shown below because Nextflow checks that the resources requested are available before executing a workflow:  
 
 ![](../figs/2.3_star_failed_resources.png)
 
@@ -625,7 +624,7 @@ If your execution path for the STAR_ALIGN module was specified correctly, your r
 
 ::: {.callout-tip}
 ### Thoughts? :thought_balloon:
-What do you expect would happen to your run if your execution path for the module was **not** specified correctly?
+What do you expect would happen to your run if your execution path for the STAR_ALIGN module was **not** specified correctly?
 :::
 
 ::: {.callout-note appearance="simple" collapse="true"}
@@ -645,6 +644,7 @@ WARN: There's no process matching config selector: .*:RNASEQ:ALIGN_STAR:STARALIG
 ### **Key points**
 - nf-core workflows work 'out of the box' but there are compute and software configurations we should customise for our runs to work well on our compute infrastructure
 - nf-core executes by default with `workflow/nextflow.config` and `workflow/conf/base.config` and has a repository of community-contributed institutional configs that ship with the workflow 
+- we can write (and contribute) our own institutional config for reproducible runs on our compute platform 
 - custom configs can be applied to a run with `-c <config_name>`, and will over-ride settings in the default configs
 - customisations can be targeted to specific processes using `withLabel` or `withName`
 - workflow parameters belong in `-params-file <params_file>` and not `-c <custom_config>`
