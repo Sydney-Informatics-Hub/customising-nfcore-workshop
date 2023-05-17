@@ -48,13 +48,13 @@ Connect to your instance with VS code by adding the host details to your `.ssh` 
   1. Go to the list of instance IP addresses provided in the Slack channel
   2. Find and copy your IP address, it will start with 146.118.XXX.XX 
   3. In a new VS code terminal, type `Ctrl`+`Shift`+`P` if you're on a Windows machine or `Cmd`+`Shift`+`P` for MacOS to open the command palette 
-  4. Select `Remote-SSH: Connect to Host` and select `Open SSH configuraiton file` 
+  4. Select `Select Remote-SSH: Open SSH configuration file` and select your `.ssh` config file
   5. Add a new entry using your allocated IP address and save your `.ssh` config file: 
 
   ```default
   Host nfcoreWorkshop
-  HostName 146.118.XXX.XX
-  User training
+    HostName 146.118.XXX.XX
+    User training
   ```
 
   6. Type `Ctrl`+`Shift`+`P` and select `Remote-SSH: Connect to Host` and `nfcoreWorkshop` 
