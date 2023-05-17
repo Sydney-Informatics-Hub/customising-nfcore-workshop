@@ -186,7 +186,7 @@ The following sections of the documentation can be used to understand what the p
 :::
 
 ::: {.callout-note appearance="simple" collapse="true"}
-### Solution
+### Answer
 
 The correct answer is **b**. The nf-core/rnaseq pipeline allows users to choose between pseudo-alignment and quantification or several different methods for genome-based read alignment and quantification. 
 
