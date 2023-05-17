@@ -32,7 +32,7 @@ echo $NXF_SINGULARITY_CACHEDIR
 :eyes: This should match the directory you set in the previous session: 
 
 ```default
-/home/ubuntu/singularity_cache
+/home/training/singularity_cache
 ```
 ::: callout-tip
 ### **Challenge**{.unlisted}
