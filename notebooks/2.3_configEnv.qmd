@@ -217,7 +217,7 @@ profiles {
     singularity {
       enabled     = true
       autoMounts  = true
-      cacheDir    = "/home/ubuntu/singularity_cache"
+      cacheDir    = "/home/training/singularity_cache"
     }
   }
 }
@@ -242,7 +242,7 @@ profiles {
     singularity {
       enabled     = true
       autoMounts  = true
-      cacheDir    = "/home/ubuntu/singularity_cache"
+      cacheDir    = "/home/training/singularity_cache"
     }
     params {
       max_cpus   = 2
@@ -273,7 +273,7 @@ profiles {
     singularity {
       enabled     = true
       autoMounts  = true
-      cacheDir    = "/home/ubuntu/singularity_cache"
+      cacheDir    = "/home/training/singularity_cache"
     }
     params {
       config_profile_description  = 'Pawsey Nimbus c2r8 profile'
@@ -409,7 +409,7 @@ profiles {
         singularity {
             enabled = true
             autoMounts = true
-            cacheDir = '/home/ubuntu/singularity_cache'
+            cacheDir = '/home/training/singularity_cache'
         }
         params {
             config_profile_description = 'Pawsey Nimbuc c2r8 profile'
@@ -558,7 +558,7 @@ profiles {
         singularity {
             enabled = true
             autoMounts = true
-            cacheDir = '/home/ubuntu/singularity_cache'
+            cacheDir = '/home/training/singularity_cache'
         }
         params {
             config_profile_description = 'Pawsey Nimbuc c2r8 profile'
