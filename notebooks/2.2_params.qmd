@@ -60,11 +60,11 @@ ls -la Lesson-2.1/multiqc/star_salmon/
 
 ```default
 total 1468
-drwxrwxr-x 4 ubuntu ubuntu    4096 Apr 12 04:13 .
-drwxrwxr-x 3 ubuntu ubuntu    4096 Apr 12 04:13 ..
-drwxrwxr-x 2 ubuntu ubuntu    4096 Apr 12 04:13 multiqc_data
-drwxrwxr-x 5 ubuntu ubuntu    4096 Apr 12 04:13 multiqc_plots
--rw-rw-r-- 1 ubuntu ubuntu 1483297 Apr 12 04:13 multiqc_report.html
+drwxrwxr-x 4 training training    4096 Apr 12 04:13 .
+drwxrwxr-x 3 training training    4096 Apr 12 04:13 ..
+drwxrwxr-x 2 training training    4096 Apr 12 04:13 multiqc_data
+drwxrwxr-x 5 training training    4096 Apr 12 04:13 multiqc_plots
+-rw-rw-r-- 1 training training 1483297 Apr 12 04:13 multiqc_report.html
 ```
 
 &#x27A4; Open the `multiqc_report.html` the file navigator panel on the left side of your VS Code window by right-clicking on it and then selecting `Open with Live Server`
@@ -119,7 +119,7 @@ This will print a list of executed pipelines:
 ```default
 TIMESTAMP               DURATION        RUN NAME                STATUS  REVISION ID     SESSION ID                              COMMAND                                                                                                                                                                                                                                                                                                                                                    
 2023-04-21 00:30:30     -               friendly_montalcini     -       f421ddc35d      685266bb-b99b-4945-9a54-981e8f4b1b07    nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf --help                                                                                                                                                                                                                                                                                                 
-2023-04-21 00:40:58     9m 16s         mighty_swanson        OK      f421ddc35d      055e7b7f-c3ea-4fd9-a915-02343099939e    nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf --input samplesheet.csv -profile singularity --fasta /home/ubuntu/session2/materials/mm10_reference/mm10_chr18.fa --gtf /home/ubuntu/session2/materials/mm10_reference/mm10_chr18.gtf --star_index /home/ubuntu/session2/materials/mm10_reference/STAR --max_memory 6.GB --max_cpus 2 --outdir Lesson-1
+2023-04-21 00:40:58     9m 16s         mighty_swanson        OK      f421ddc35d      055e7b7f-c3ea-4fd9-a915-02343099939e    nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf --input samplesheet.csv -profile singularity --fasta /home/training/session2/materials/mm10_reference/mm10_chr18.fa --gtf /home/training/session2/materials/mm10_reference/mm10_chr18.gtf --star_index /home/training/session2/materials/mm10_reference/STAR --max_memory 6.GB --max_cpus 2 --outdir Lesson-1
 ```
 
 &#x27A4; All recent runs will be listed in this file, with the most recent at the bottom. Run the command below after filling in your unique run name for our previous lesson. For example: 
@@ -158,19 +158,19 @@ nextflow log ${run_name} | while read line;
 That will list all process `.command.sh` scripts containing 'salmon'. There are a few different processes that run Salmon to perform other steps in the workflow. We are looking for Salmon quant which performs the read quantification:
 
 ```default
-/home/ubuntu/session2/work/50/d4462ece237213ace901a779a45286/.command.sh
-/home/ubuntu/session2/work/2f/11774c859f9f55f816b754a65290a7/.command.sh
-/home/ubuntu/session2/work/bc/0478d8de4d1c6df1413c50f4bffcb1/.command.sh
-/home/ubuntu/session2/work/af/57d1741b614927225fe6381333d615/.command.sh
-/home/ubuntu/session2/work/e6/6a644b0d85f03ec91cd2efe5a485d2/.command.sh
-/home/ubuntu/session2/work/7d/ff697b987403d2f085b8b538260b67/.command.sh
-/home/ubuntu/session2/work/3e/1b7b0f03c7c7c462a4593f77be544e/.command.sh
-/home/ubuntu/session2/work/31/5e6865dbbbb164a87d2254b68670fa/.command.sh
-/home/ubuntu/session2/work/79/93034bd48f5a0de82e79a1fd12f6ac/.command.sh
-/home/ubuntu/session2/work/ca/bbfba0ea604d479bdc4870e9b3b4ce/.command.sh
-/home/ubuntu/session2/work/ec/0a013bfb1f96d3c7170137262294e7/.command.sh
-/home/ubuntu/session2/work/b7/37428bc5be1fd2c34e3911fb827334/.command.sh
-/home/ubuntu/session2/work/57/a18fcea6a06565b14140ab06a3d077/.command.sh
+/home/training/session2/work/50/d4462ece237213ace901a779a45286/.command.sh
+/home/training/session2/work/2f/11774c859f9f55f816b754a65290a7/.command.sh
+/home/training/session2/work/bc/0478d8de4d1c6df1413c50f4bffcb1/.command.sh
+/home/training/session2/work/af/57d1741b614927225fe6381333d615/.command.sh
+/home/training/session2/work/e6/6a644b0d85f03ec91cd2efe5a485d2/.command.sh
+/home/training/session2/work/7d/ff697b987403d2f085b8b538260b67/.command.sh
+/home/training/session2/work/3e/1b7b0f03c7c7c462a4593f77be544e/.command.sh
+/home/training/session2/work/31/5e6865dbbbb164a87d2254b68670fa/.command.sh
+/home/training/session2/work/79/93034bd48f5a0de82e79a1fd12f6ac/.command.sh
+/home/training/session2/work/ca/bbfba0ea604d479bdc4870e9b3b4ce/.command.sh
+/home/training/session2/work/ec/0a013bfb1f96d3c7170137262294e7/.command.sh
+/home/training/session2/work/b7/37428bc5be1fd2c34e3911fb827334/.command.sh
+/home/training/session2/work/57/a18fcea6a06565b14140ab06a3d077/.command.sh
 ```
 
 Compared with the salmon quant `main.nf` file, we get a lot more fine scale details from the `.command.sh` process scripts: 

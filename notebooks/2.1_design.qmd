@@ -73,38 +73,38 @@ ls -l nf-core-rnaseq-3.11.1/*
 ```default
 nf-core-rnaseq-3.11.1/configs:
 total 64
--rwxrwxr-x 1 ubuntu ubuntu  1562 Apr  21 09:17 CITATION.cff
--rwxrwxr-x 1 ubuntu ubuntu  1064 Apr  21 09:17 LICENSE
--rwxrwxr-x 1 ubuntu ubuntu 17476 Apr  21 09:17 README.md
-drwxrwxr-x 2 ubuntu ubuntu  4096 Apr  21 09:17 bin
-drwxrwxr-x 3 ubuntu ubuntu  4096 Apr  21 09:17 conf
--rwxrwxr-x 1 ubuntu ubuntu   204 Apr  21 09:17 configtest.nf
-drwxrwxr-x 4 ubuntu ubuntu  4096 Apr  21 09:17 docs
--rwxrwxr-x 1 ubuntu ubuntu    70 Apr  21 09:17 nextflow.config
--rwxrwxr-x 1 ubuntu ubuntu  8249 Apr  21 09:17 nfcore_custom.config
-drwxrwxr-x 2 ubuntu ubuntu  4096 Apr  21 09:17 pipeline
+-rwxrwxr-x 1 training training  1562 Apr  21 09:17 CITATION.cff
+-rwxrwxr-x 1 training training  1064 Apr  21 09:17 LICENSE
+-rwxrwxr-x 1 training training 17476 Apr  21 09:17 README.md
+drwxrwxr-x 2 training training  4096 Apr  21 09:17 bin
+drwxrwxr-x 3 training training  4096 Apr  21 09:17 conf
+-rwxrwxr-x 1 training training   204 Apr  21 09:17 configtest.nf
+drwxrwxr-x 4 training training  4096 Apr  21 09:17 docs
+-rwxrwxr-x 1 training training    70 Apr  21 09:17 nextflow.config
+-rwxrwxr-x 1 training training  8249 Apr  21 09:17 nfcore_custom.config
+drwxrwxr-x 2 training training  4096 Apr  21 09:17 pipeline
 
 nf-core-rnaseq-3.11.1/workflow:
 total 216
--rwxrwxr-x 1 ubuntu ubuntu 58889 Apr  21 09:17 CHANGELOG.md
--rwxrwxr-x 1 ubuntu ubuntu  9681 Apr  21 09:17 CITATIONS.md
--rwxrwxr-x 1 ubuntu ubuntu  9078 Apr  21 09:17 CODE_OF_CONDUCT.md
--rwxrwxr-x 1 ubuntu ubuntu  1096 Apr  21 09:17 LICENSE
--rwxrwxr-x 1 ubuntu ubuntu 10002 Apr  21 09:17 README.md
-drwxrwxr-x 3 ubuntu ubuntu  4096 Apr  21 09:17 assets
-drwxrwxr-x 2 ubuntu ubuntu  4096 Apr  21 09:17 bin
-drwxrwxr-x 2 ubuntu ubuntu  4096 Apr  21 09:17 conf
-drwxrwxr-x 3 ubuntu ubuntu  4096 Apr  21 09:17 docs
-drwxrwxr-x 2 ubuntu ubuntu  4096 Apr  21 09:17 lib
--rwxrwxr-x 1 ubuntu ubuntu  2736 Apr  21 09:17 main.nf
-drwxrwxr-x 4 ubuntu ubuntu  4096 Apr  21 09:17 modules
--rwxrwxr-x 1 ubuntu ubuntu 13970 Apr  21 09:17 modules.json
--rwxrwxr-x 1 ubuntu ubuntu 10847 Apr  21 09:17 nextflow.config
--rwxrwxr-x 1 ubuntu ubuntu 42576 Apr  21 09:17 nextflow_schema.json
--rwxrwxr-x 1 ubuntu ubuntu   359 Apr  21 09:17 pyproject.toml
-drwxrwxr-x 4 ubuntu ubuntu  4096 Apr  21 09:17 subworkflows
--rwxrwxr-x 1 ubuntu ubuntu  1684 Apr  21 09:17 tower.yml
-drwxrwxr-x 2 ubuntu ubuntu  4096 Apr  21 09:17 workflows
+-rwxrwxr-x 1 training training 58889 Apr  21 09:17 CHANGELOG.md
+-rwxrwxr-x 1 training training  9681 Apr  21 09:17 CITATIONS.md
+-rwxrwxr-x 1 training training  9078 Apr  21 09:17 CODE_OF_CONDUCT.md
+-rwxrwxr-x 1 training training  1096 Apr  21 09:17 LICENSE
+-rwxrwxr-x 1 training training 10002 Apr  21 09:17 README.md
+drwxrwxr-x 3 training training  4096 Apr  21 09:17 assets
+drwxrwxr-x 2 training training  4096 Apr  21 09:17 bin
+drwxrwxr-x 2 training training  4096 Apr  21 09:17 conf
+drwxrwxr-x 3 training training  4096 Apr  21 09:17 docs
+drwxrwxr-x 2 training training  4096 Apr  21 09:17 lib
+-rwxrwxr-x 1 training training  2736 Apr  21 09:17 main.nf
+drwxrwxr-x 4 training training  4096 Apr  21 09:17 modules
+-rwxrwxr-x 1 training training 13970 Apr  21 09:17 modules.json
+-rwxrwxr-x 1 training training 10847 Apr  21 09:17 nextflow.config
+-rwxrwxr-x 1 training training 42576 Apr  21 09:17 nextflow_schema.json
+-rwxrwxr-x 1 training training   359 Apr  21 09:17 pyproject.toml
+drwxrwxr-x 4 training training  4096 Apr  21 09:17 subworkflows
+-rwxrwxr-x 1 training training  1684 Apr  21 09:17 tower.yml
+drwxrwxr-x 2 training training  4096 Apr  21 09:17 workflows
 ```
 
 </br>
@@ -244,9 +244,9 @@ ls -l /cvmfs/data.biocommons.aarnet.edu.au/training_materials/SIH_training/Unloc
 ```
 
 ```default
-drwxrwxr-x 2 ubuntu ubuntu 4096 Feb 14 05:36 fastqs
-drwxrwxr-x 3 ubuntu ubuntu 4096 Feb 14 05:46 mm10_reference
--rw-rw-r-- 1 ubuntu ubuntu  641 Feb 16 05:57 samplesheet.csv
+drwxrwxr-x 2 training training 4096 Feb 14 05:36 fastqs
+drwxrwxr-x 3 training training 4096 Feb 14 05:46 mm10_reference
+-rw-rw-r-- 1 training training  641 Feb 16 05:57 samplesheet.csv
 ```
 
 &#x27A4; Our CVMFS path is very long, for the sake of tidiness, store the CVMFS path in a variable for our run command:
@@ -387,15 +387,15 @@ The pipeline ran successfully, however, note the warning about all samples havin
 
 ```default
 total 416
-drwxrwxr-x   7 ubuntu ubuntu 4.0K Apr 21 03:44 .
-drwxr-x---  15 ubuntu ubuntu 4.0K Apr 21 01:56 ..
-drwxrwxr-x   4 ubuntu ubuntu 4.0K Apr 21 03:58 .nextflow
--rw-rw-r--   1 ubuntu ubuntu 371K Apr 21 03:58 .nextflow.log
--rw-rw-r--   1 ubuntu ubuntu  17K Apr 21 03:50 .nextflow.log.1
-drwxrwxr-x   7 ubuntu ubuntu 4.0K Apr 21 03:58 Lesson-2.1
-drwxrwxr-x   4 ubuntu ubuntu 4.0K Apr 21 02:08 nf-core-rnaseq-3.11.1
--rw-rw-r--   1 ubuntu ubuntu  563 Apr 21 03:14 samplesheet.csv
-drwxrwxr-x 143 ubuntu ubuntu 4.0K Apr 21 03:58 work
+drwxrwxr-x   7 training training 4.0K Apr 21 03:44 .
+drwxr-x---  15 training training 4.0K Apr 21 01:56 ..
+drwxrwxr-x   4 training training 4.0K Apr 21 03:58 .nextflow
+-rw-rw-r--   1 training training 371K Apr 21 03:58 .nextflow.log
+-rw-rw-r--   1 training training  17K Apr 21 03:50 .nextflow.log.1
+drwxrwxr-x   7 training training 4.0K Apr 21 03:58 Lesson-2.1
+drwxrwxr-x   4 training training 4.0K Apr 21 02:08 nf-core-rnaseq-3.11.1
+-rw-rw-r--   1 training training  563 Apr 21 03:14 samplesheet.csv
+drwxrwxr-x 143 training training 4.0K Apr 21 03:58 work
 ```
 
 :eyes: Nextflow has created 2 new output directories, **work** and **Lesson-2.1** in the current directory. 
