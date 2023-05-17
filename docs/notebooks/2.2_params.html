@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Sydney Informatics Hub - 2.2. Managing parameter reproducibility</title>
+<title>Sydney Informatics Hub training - 2.2. Managing parameter reproducibility</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -134,7 +134,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Sydney Informatics Hub</span>
+    <span class="navbar-title">Sydney Informatics Hub training</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -313,11 +313,11 @@ Handling dodgy error messages <span class="emoji" data-emoji="cursing_face">🤬
 <p>➤ Take a look at the MultiQC report, as directed by the second message. You can find the MultiQC report in the <code>Lesson-2.1/</code> directory:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ls -la Lesson-2.1/multiqc/star_salmon/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>total 1468</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 4 ubuntu ubuntu    4096 Apr 12 04:13 .</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 3 ubuntu ubuntu    4096 Apr 12 04:13 ..</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 2 ubuntu ubuntu    4096 Apr 12 04:13 multiqc_data</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 5 ubuntu ubuntu    4096 Apr 12 04:13 multiqc_plots</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>-rw-rw-r-- 1 ubuntu ubuntu 1483297 Apr 12 04:13 multiqc_report.html</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 4 training training    4096 Apr 12 04:13 .</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 3 training training    4096 Apr 12 04:13 ..</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 2 training training    4096 Apr 12 04:13 multiqc_data</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>drwxrwxr-x 5 training training    4096 Apr 12 04:13 multiqc_plots</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>-rw-rw-r-- 1 training training 1483297 Apr 12 04:13 multiqc_report.html</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>➤ Open the <code>multiqc_report.html</code> the file navigator panel on the left side of your VS Code window by right-clicking on it and then selecting <code>Open with Live Server</code></p>
 <p>Take a look a the section labelled <strong>WARNING: Fail Strand Check</strong></p>
 <p><img src="../figs/2.2_multiqc.png" class="img-fluid"></p>
@@ -360,7 +360,7 @@ Handling dodgy error messages <span class="emoji" data-emoji="cursing_face">🤬
 <p>This will print a list of executed pipelines:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>TIMESTAMP               DURATION        RUN NAME                STATUS  REVISION ID     SESSION ID                              COMMAND                                                                                                                                                                                                                                                                                                                                                    </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>2023-04-21 00:30:30     -               friendly_montalcini     -       f421ddc35d      685266bb-b99b-4945-9a54-981e8f4b1b07    nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf --help                                                                                                                                                                                                                                                                                                 </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>2023-04-21 00:40:58     9m 16s         mighty_swanson        OK      f421ddc35d      055e7b7f-c3ea-4fd9-a915-02343099939e    nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf --input samplesheet.csv -profile singularity --fasta /home/ubuntu/session2/materials/mm10_reference/mm10_chr18.fa --gtf /home/ubuntu/session2/materials/mm10_reference/mm10_chr18.gtf --star_index /home/ubuntu/session2/materials/mm10_reference/STAR --max_memory 6.GB --max_cpus 2 --outdir Lesson-1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>2023-04-21 00:40:58     9m 16s         mighty_swanson        OK      f421ddc35d      055e7b7f-c3ea-4fd9-a915-02343099939e    nextflow run nf-core-rnaseq-3.11.1/workflow/main.nf --input samplesheet.csv -profile singularity --fasta /home/training/session2/materials/mm10_reference/mm10_chr18.fa --gtf /home/training/session2/materials/mm10_reference/mm10_chr18.gtf --star_index /home/training/session2/materials/mm10_reference/STAR --max_memory 6.GB --max_cpus 2 --outdir Lesson-1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>➤ All recent runs will be listed in this file, with the most recent at the bottom. Run the command below after filling in your unique run name for our previous lesson. For example:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>nextflow log mighty_swanson</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>That command will list out all the work subdirectories for all processes run. Recall from Session 1 that the actual command issued by a processes are all recorded in hidden script files called <code>.command.sh</code> within the execution process directory. One way of observing the actual run commands issued by the workflow is to view these command scripts.</p>
@@ -379,19 +379,19 @@ Handling dodgy error messages <span class="emoji" data-emoji="cursing_face">🤬
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>      fi; </span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    done </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>That will list all process <code>.command.sh</code> scripts containing ‘salmon’. There are a few different processes that run Salmon to perform other steps in the workflow. We are looking for Salmon quant which performs the read quantification:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>/home/ubuntu/session2/work/50/d4462ece237213ace901a779a45286/.command.sh</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>/home/ubuntu/session2/work/2f/11774c859f9f55f816b754a65290a7/.command.sh</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>/home/ubuntu/session2/work/bc/0478d8de4d1c6df1413c50f4bffcb1/.command.sh</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>/home/ubuntu/session2/work/af/57d1741b614927225fe6381333d615/.command.sh</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>/home/ubuntu/session2/work/e6/6a644b0d85f03ec91cd2efe5a485d2/.command.sh</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>/home/ubuntu/session2/work/7d/ff697b987403d2f085b8b538260b67/.command.sh</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>/home/ubuntu/session2/work/3e/1b7b0f03c7c7c462a4593f77be544e/.command.sh</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>/home/ubuntu/session2/work/31/5e6865dbbbb164a87d2254b68670fa/.command.sh</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>/home/ubuntu/session2/work/79/93034bd48f5a0de82e79a1fd12f6ac/.command.sh</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>/home/ubuntu/session2/work/ca/bbfba0ea604d479bdc4870e9b3b4ce/.command.sh</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>/home/ubuntu/session2/work/ec/0a013bfb1f96d3c7170137262294e7/.command.sh</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>/home/ubuntu/session2/work/b7/37428bc5be1fd2c34e3911fb827334/.command.sh</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>/home/ubuntu/session2/work/57/a18fcea6a06565b14140ab06a3d077/.command.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>/home/training/session2/work/50/d4462ece237213ace901a779a45286/.command.sh</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>/home/training/session2/work/2f/11774c859f9f55f816b754a65290a7/.command.sh</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>/home/training/session2/work/bc/0478d8de4d1c6df1413c50f4bffcb1/.command.sh</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>/home/training/session2/work/af/57d1741b614927225fe6381333d615/.command.sh</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>/home/training/session2/work/e6/6a644b0d85f03ec91cd2efe5a485d2/.command.sh</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>/home/training/session2/work/7d/ff697b987403d2f085b8b538260b67/.command.sh</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>/home/training/session2/work/3e/1b7b0f03c7c7c462a4593f77be544e/.command.sh</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>/home/training/session2/work/31/5e6865dbbbb164a87d2254b68670fa/.command.sh</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>/home/training/session2/work/79/93034bd48f5a0de82e79a1fd12f6ac/.command.sh</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>/home/training/session2/work/ca/bbfba0ea604d479bdc4870e9b3b4ce/.command.sh</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>/home/training/session2/work/ec/0a013bfb1f96d3c7170137262294e7/.command.sh</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>/home/training/session2/work/b7/37428bc5be1fd2c34e3911fb827334/.command.sh</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>/home/training/session2/work/57/a18fcea6a06565b14140ab06a3d077/.command.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Compared with the salmon quant <code>main.nf</code> file, we get a lot more fine scale details from the <code>.command.sh</code> process scripts:</p>
 <p><img src="../figs/2.2_salmon-quant.png" class="img-fluid"></p>
 <p>Looking at the nf-core/rnaseq Parameter documentation and Salmon documentation, we found that we can override this default using the <code>--salmon_quant_libtype U</code> <a href="https://nf-co.re/rnaseq/3.11.1/parameters#salmon_quant_libtype">parameter</a> to indicate our data is unstranded and override <code>samplesheet.csv</code> input.</p>
