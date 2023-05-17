@@ -16,9 +16,7 @@ from: markdown+emoji
 - Observe the hierarchy of parameter configuration in action  
 :::
 
-In the previous exercises, we have explored how to customise a run with **workflow parameters** on the command line or within a parameters file. 
-
-We will now look at **configuration settings**, which manage **how the workflow is implemented on your system**. 
+In the previous exercises, we have explored how to customise a run with **workflow parameters** on the command line or within a parameters file. In this lesson we will now look at **configuration settings**, which manage **how the workflow is implemented on your system**. 
 
 ::: callout-note
 ### 
