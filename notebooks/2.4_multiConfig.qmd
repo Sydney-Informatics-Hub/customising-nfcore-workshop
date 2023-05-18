@@ -1,5 +1,5 @@
 ---
-title: "**2.4. Using multiple configuration files at once**"
+title: "**2.4. Configurations to customise outputs**"
 output:
   html_document:
     toc: false
@@ -17,7 +17,10 @@ from: markdown+emoji
 - Apply multiple custom configuration files in a single workflow execution with `-c <conf-1,conf2,...>` 
 :::
 
-Using multiple configuration files allows you to customise nf-core pipelines to your specific needs, with different configs to each alter the output in some specific way. They can be applied in a **modular** fashion, either added to or dropped from a pipeline execution as required. 
+
+In the previous lesson, we applied a custom **resource configuration** file. In this lesson, we will create custom configuration files that **alter the pipeline output** in some specific way. 
+
+By containing these within configuration files, we can apply them to runs in a **modular** fashion, either added to or dropped from a pipeline execution as required. 
 
 This flexibility ensures that we preserve the  **portability** and **reproducibility** of nf-core pipelines by **not editing the core workflow code** to make bespoke customisations. 
 
@@ -25,9 +28,9 @@ In this lesson we will create four custom configuration files for different cust
 
 Unlike our institutional config `custom-nimbus.config`, these configs are **optional** and **portable**:
 
-- We can apply them only as needed
+- We can apply them if and when needed
 - We can apply them to nf-core runs on any machine
-- We can apply them to any nf-core pipeline that uses the module the config operates on
+- We can apply them to any nf-core pipeline that uses the module that the custom config operates on
 <br/><br/>
 
 
@@ -48,7 +51,7 @@ nextflow log -list-fields
 Note that percent CPU and percent memory are `%cpu%` and `%mem` when used as arguments to the `trace` option, yet `pcpu` and `pmem` for the Nextflow `log` command. 
 <br/><br/>
 
-&#x27A4; Use the Nextflow `log` command with `fields` option to extract some specific fields for a recent run. Choose any fields you like, and add them in a comma-separated , for example:
+&#x27A4; Use the Nextflow `log` command with `fields` option to extract some specific fields for a recent run. Choose any fields you like, and add them in a comma-separated list, for example:
 
 ```default
 nextflow log | tail -1
@@ -314,7 +317,7 @@ grep container nf-core-rnaseq-3.11.1/workflow/modules/nf-core/trimgalore/main.nf
 
 This should not often be the case, as nf-core pipelines should first be run with a test dataset *before* executing your full run and delving into custom configuration.
 
-nf-core pipelines ship with `test` datasets to enable easy testing on your infrastructure with eg `nextflow run <workflow> -profile singularity,test` 
+nf-core pipelines ship with `test` datasets to enable easy testing on your infrastructure with eg `nextflow run <workflow> -profile singularity,test <params>` 
 :::
 <br/>
 
