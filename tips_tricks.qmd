@@ -38,6 +38,24 @@ The [Nextflow clean](https://www.nextflow.io/docs/latest/cli.html#clean) command
 nextflow clean <workflow_repo> -help
 ```
 
+
+### **Change default Nextflow cache strategy**
+Workflow execution is [sometimes not resumed as expected](https://training.nextflow.io/basic_training/cache_and_resume/#resume-troubleshootingl). The [default behaviour of Nextflow cache keys](https://www.nextflow.io/docs/latest/process.html#cache) is to index the input files meta-data information. Reducing the cache stringency to `lenient` means the files cache keys are based only on filesize and path, and can help to avoid unexpectedly re-running certain processes when `-resume` is in use. 
+
+To apply lenient cache strategy to all of your runs, you could add to a custom configuration file:
+
+```default
+process {
+    cache = 'lenient'
+}
+```
+
+You can specify different cache stategies for different processes by using `withName` or `withLabel`. You can specify a particular cache strategy be applied to certain `profiles` within your institutional config, or to apply to all profiles described within that config by placing the above `process` code block outside the `profiles` scope.    
+
+
+
+
+
 ### **Access private GitHub repositories**
 
 To interact with private repositories on GitHub, you can provide Nextflow with [access to GitHub](https://www.nextflow.io/docs/latest/sharing.html#github-credentials) by specifying your GitHub user name and a [Personal Access Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) in the [`scm` configuration file](https://www.nextflow.io/docs/latest/sharing.html#scm-configuration-file) inside your specified `.nextflow/` directory:

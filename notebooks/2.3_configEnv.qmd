@@ -132,7 +132,7 @@ Bioinformatics relies on large-scale computational infrastructures and has a sig
 :::
 <br/>
 
-There is a [repository of institutional configs](https://github.com/nf-core/configs/tree/master) for nf-core pipelines. These have been contributed to by the community. 
+In [lesson 1](http://localhost:5645/notebooks/1.3_configure.html#shared-configuration-files) you learnt that there is a [repository of institutional configs](https://github.com/nf-core/configs/tree/master) for nf-core pipelines. These have been contributed to by the community. 
 
 We have created an [nf-core config for Pawsey’s Nimbus cloud](https://github.com/nf-core/configs/blob/master/conf/pawsey_nimbus.config): this (and other institutional configs) was downloaded along with the workflow code. 
 <br/><br/>
@@ -150,25 +150,20 @@ more  nf-core-rnaseq-3.11.1/configs/conf/pawsey_nimbus.config
 ```
 <br/>
 
-::: callout-tip
-### Challenge{.unlisted}
+::: callout-note
+### Using a shared config
+We can use one of these configs by specifying `-profile <config_basename>`, and adding any `profiles` from within this config that we wanted to apply to our run to the `-profile` option in a comma-delimted list. 
 
-- What arguments would we apply to our command line to utilise the `pawsey_nimbus.config` and set the right configurations for software and compute for our VMs?
+For example, to use the shared config for [Pawsey's Nimbus VMs](https://github.com/nf-core/configs/blob/master/docs/pawsey_nimbus.md) on our `c2r8` training VMs we would apply the following to our run command: 
 
-:bulb: Hint: the Nimbus training VM 'instance flavour' is 'c2r8' i.e. 2 CPU and 8 GB RAM. See the [Pawsey Nimbus nf-core config documentation](https://github.com/nf-core/configs/blob/master/docs/pawsey_nimbus.md) for help. 
-:::
-
-::: {.callout-caution collapse="true"}
-### Solution
 ``` default
 -profile pawsey_nimbus,singularity,c2r8
 ``` 
-To select the institutional config, we apply `-profile <config_basename>`. To select the desired profiles from within that config, we further add the `singularity` and `c2r8` profiles in a comma-delimited list. 
 :::
 <br/>
 
 
-In the event where your institution does not have a publicly available configuration file and/or you want to apply your own customisations, you will need to **write your own config file**. 
+In the event where your institution does *not* have a publicly available configuration file and/or you want to apply your own customisations, you will need to **write your own institutional config file**.  
 
 :bulb: <span style="color:#000080;"> You can contribute to the nf-core community by [sharing your config!](https://github.com/nf-core/configs/tree/master#adding-a-new-config)</span>
 <br/><br/>
@@ -181,7 +176,9 @@ For the sake of the exercise, let's assume there wasn't a Pawsey Nimbus config p
 // Nimbus nf-core workshop configuration file
 
 profiles {
-  workshop {}
+  workshop {
+    
+  }
 }
 ```
 Using the [profiles scope](https://www.nextflow.io/docs/latest/config.html?highlight=scope#config-profiles) in a configuration file groups attributes that belong to the same profile, in our case a profile we have chosen to name **workshop**. 
@@ -242,20 +239,18 @@ profiles {
 ```
 <br/><br/>
 
-&#x27A4; Add finally, add a profile description using the `config_profile_description` parameter and set the cache behaviour to lenient:
+&#x27A4; Add finally, add a profile description using the `config_profile_description` parameter:
 
 
-::: {.callout-warning collapse="true"}
-### Nextflow cache and resume
-Workflow execution is [sometimes not resumed as expected](https://training.nextflow.io/basic_training/cache_and_resume/#resume-troubleshootingl). The [default behaviour of Nextflow cache keys](https://www.nextflow.io/docs/latest/process.html#cache) is to index the input files meta-data information. Reducing the cache stringency to 'lenient' means the files cache keys are based only on filesize and path, and can help to avoid unexpectedly re-running certain processes when `-resume` is in use. 
+::: {.callout-warning}
+### Another parameter within a custom config?!
+:speech_balloon: **But I thought that was not allowed?**
+
+Kudos for remembering! It's an important lesson. **Workflow parameters** should definitely *not* be in custom config files. **Resource configurations** on the other hand can have exceptions. Here we are setting resources so that our runs can execute on our environment, and giving the configuration profile that sets them a descriptive name.
 :::
 
 ```default
 // Nimbus nf-core workshop configuration file
-
-process {
-    cache = 'lenient'
-}
 
 profiles {
   workshop {
@@ -359,7 +354,7 @@ Capping workflow resources using the `max` parameters is a bit of a blunt instru
 
 To achieve optimum computational efficiency on your platform, more granular control may be required. 
 
-::: {.callout-important}
+::: {.callout-note collapse=true}
 ### For example, consider the case of a 16 core machine eg Nimbus 'c16r64'
 
 If you appled `--max_cpus 16` to the nf-core rnaseq workflow, the STAR_ALIGN module would still only utilise 12 CPUs, as this module (as we learnt in 2.3.1) has the label `process_high` which sets CPUs to 12.
@@ -368,39 +363,36 @@ If there were no processes with fulfilled input channels that could make use of 
 
 Optimisation for this platform might for example set `max_cpus` to 8 so two samples could be aligned concurrently, or over-ride the CPU resources assigned to the STAR_ALIGN module to 16. 
 :::
-<br/>
 
 The next two lessons will demonstrate how to achieve this using custom configuration files that fine-tune resources using `process labels` to assign the same resources to groups of processes sharing the same label, or `withName` to target specific processes. 
+
+In order to do this, we need to use the `process` scope. Nextflow has a number of different [`scopes`](https://www.nextflow.io/docs/latest/config.html) that can be included in configuration files, for example the `params` scope you will recall from [lesson 1.3](1.3_configure.html).
+
+Within the `process` scope, we can configure resources and additional arguments for workflow processes.
 <br/>
 
-::: {.callout-note}
+
+
+::: {.callout-warning}
 The following exercise is trivial given the limitations of our VMs. Consider how this approach can be really powerful when working on HPC or cloud infrastructures, where the [`executor`](https://www.nextflow.io/docs/latest/executor.html) and [`queue`](https://www.nextflow.io/docs/latest/process.html#queue) directives enable you to take full advantage of the compute resources available on your platform.   
 :::
 <br/>
 
-&#x27A4; Edit `custom-nimbus.config` to set `cpus` to 2 and `memory` to 6 GB within the `process` scope:
+&#x27A4; Edit `custom-nimbus.config` to set `cpus = 2` and `memory = 6.GB` using `process labels` within the `process` scope:
 
-::: callout-tip
-### Challenge{.unlisted}
-Set 2 CPUs and 6 GB memory for the process labels `process_low`, `process_medium` and `process_high` within the process scope 
-
-:bulb: Hint: View the file `nf-core-rnaseq-3.11.1/workflow/conf/base.config` for syntax example 
-:::
-
-::: {.callout-caution collapse="true"}
-### Solution
-
+::: {.callout-note}
+- :bulb: View the file `nf-core-rnaseq-3.11.1/workflow/conf/base.config` for syntax example 
 - Delete the `max_cpus` and `max_memory` parameters from the `params` scope 
 - Add a `process` scope inside the `workshop` profile
-- Use `withLabel: <label_name>` to set resources for each label
+- Use `withLabel: <label_name>` to set resources for each of the following labels:
+  - `process_low`
+  - `process_medium`
+  - `process_high`
+:::
 
 
 ```default
 // Nimbus nf-core workshop configuration profile
-
-process {
-    cache = 'lenient'    
-}
 
 profiles {
     workshop {
@@ -429,7 +421,6 @@ profiles {
     }
 }
 ```
-:::
 <br/>
 
 &#x27A4; Save the file then re-run the workflow with our custom configuration, setting `outdir` parameter to `Lesson-2.3.4`:

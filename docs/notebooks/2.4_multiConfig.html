@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.262">
+<meta name="generator" content="quarto-1.2.269">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Sydney Informatics Hub training - 2.4. Using multiple configuration files at once</title>
+<title>Sydney Informatics Hub training - 2.4. Configurations to customise outputs</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -239,7 +239,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><strong>2.4. Using multiple configuration files at once</strong></h1>
+<h1 class="title"><strong>2.4. Configurations to customise outputs</strong></h1>
 </div>
 
 
@@ -276,14 +276,15 @@ Objectives
 </ul>
 </div>
 </div>
-<p>Using multiple configuration files allows you to customise nf-core pipelines to your specific needs, with different configs to each alter the output in some specific way. They can be applied in a <strong>modular</strong> fashion, either added to or dropped from a pipeline execution as required.</p>
+<p>In the previous lesson, we applied a custom <strong>resource configuration</strong> file. In this lesson, we will create custom configuration files that <strong>alter the pipeline output</strong> in some specific way.</p>
+<p>By containing these within configuration files, we can apply them to runs in a <strong>modular</strong> fashion, either added to or dropped from a pipeline execution as required.</p>
 <p>This flexibility ensures that we preserve the <strong>portability</strong> and <strong>reproducibility</strong> of nf-core pipelines by <strong>not editing the core workflow code</strong> to make bespoke customisations.</p>
 <p>In this lesson we will create four custom configuration files for different customisation scenarios, and apply them to the one run command.</p>
 <p>Unlike our institutional config <code>custom-nimbus.config</code>, these configs are <strong>optional</strong> and <strong>portable</strong>:</p>
 <ul>
-<li>We can apply them only as needed</li>
+<li>We can apply them if and when needed</li>
 <li>We can apply them to nf-core runs on any machine</li>
-<li>We can apply them to any nf-core pipeline that uses the module the config operates on <br><br></li>
+<li>We can apply them to any nf-core pipeline that uses the module that the custom config operates on <br><br></li>
 </ul>
 <section id="customised-resource-tracing" class="level3">
 <h3 class="anchored" data-anchor-id="customised-resource-tracing"><strong>2.4.1. Customised resource tracing</strong></h3>
@@ -292,7 +293,7 @@ Objectives
 <p>➤ View the available fields using the Nextflow <code>log</code> command, or <a href="https://www.nextflow.io/docs/latest/tracing.html#trace-fields">online</a></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>nextflow log -list-fields</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Note that percent CPU and percent memory are <code>%cpu%</code> and <code>%mem</code> when used as arguments to the <code>trace</code> option, yet <code>pcpu</code> and <code>pmem</code> for the Nextflow <code>log</code> command. <br><br></p>
-<p>➤ Use the Nextflow <code>log</code> command with <code>fields</code> option to extract some specific fields for a recent run. Choose any fields you like, and add them in a comma-separated , for example:</p>
+<p>➤ Use the Nextflow <code>log</code> command with <code>fields</code> option to extract some specific fields for a recent run. Choose any fields you like, and add them in a comma-separated list, for example:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>nextflow log | tail -1</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>nextflow log &lt;run_name&gt; -f name,status,exit,realtime,cpus,pcpu,memory,pmem,rss</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br><br></p>
@@ -747,7 +748,7 @@ Biocontainers at cvmfs
 <p><img src="../figs/2.5_ext-args.png" class="img-fluid"> <br><br></p>
 <p><span class="emoji" data-emoji="eyes">👀</span> You can observe the empty <code>$args</code> variable at play within <code>.command.sh</code> scripts for a run:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>nextflow log </span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>nextflow log &lt;run_name&gt; -f script</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>nextflow log &lt;run_name&gt; -f process,script</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br><br></p>
 <div class="callout-warning callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
