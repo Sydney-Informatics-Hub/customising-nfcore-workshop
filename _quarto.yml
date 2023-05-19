@@ -36,7 +36,7 @@ website:
           href: notebooks/2.2_params.html
         - text: "2.3 Configure resources"
           href: notebooks/2.3_configEnv.html
-        - text: "2.4 Apply multiple configurations"
+        - text: "2.4 Configurations to customise outputs"
           href: notebooks/2.4_multiConfig.html
       - text: "Tips & Tricks"
         href: tips_tricks.html
