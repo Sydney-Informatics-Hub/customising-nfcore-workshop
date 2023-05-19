@@ -204,7 +204,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </li>  
         <li>
     <a class="dropdown-item" href="../notebooks/2.4_multiConfig.html">
- <span class="dropdown-text">2.4 Apply multiple configurations</span></a>
+ <span class="dropdown-text">2.4 Configurations to customise outputs</span></a>
   </li>  
     </ul>
   </li>
@@ -611,7 +611,7 @@ If you have not yet run this version of the pipeline
 <div class="sourceCode" id="cb12"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>    container "${ workflow.containerEngine == 'singularity' &amp;&amp; !task.ext.singularity_pull_docker_container ?</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>        'quay.io/biocontainers/trim-galore:0.6.7--hdfd78af_0' }"</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This should not often be the case, as nf-core pipelines should first be run with a test dataset <em>before</em> executing your full run and delving into custom configuration.</p>
-<p>nf-core pipelines ship with <code>test</code> datasets to enable easy testing on your infrastructure with eg <code>nextflow run &lt;workflow&gt; -profile singularity,test</code></p>
+<p>nf-core pipelines ship with <code>test</code> datasets to enable easy testing on your infrastructure with eg <code>nextflow run &lt;workflow&gt; -profile singularity,test &lt;params&gt;</code></p>
 </div>
 </div>
 <p><br></p>
@@ -748,7 +748,7 @@ Biocontainers at cvmfs
 <p><img src="../figs/2.5_ext-args.png" class="img-fluid"> <br><br></p>
 <p><span class="emoji" data-emoji="eyes">👀</span> You can observe the empty <code>$args</code> variable at play within <code>.command.sh</code> scripts for a run:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>nextflow log </span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>nextflow log &lt;run_name&gt; -f process,script</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>nextflow log &lt;run_name&gt; -f script</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br><br></p>
 <div class="callout-warning callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
