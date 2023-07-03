@@ -40,6 +40,7 @@ website:
           href: notebooks/2.4_multiConfig.html
       - text: "Tips & Tricks"
         href: tips_tricks.html
+  google-analytics: "G-TNWWV3HK57"
   body-footer: "<div style='font-size: 14px;'>All materials copyright Sydney Informatics Hub, University of Sydney</div>"
 
           
