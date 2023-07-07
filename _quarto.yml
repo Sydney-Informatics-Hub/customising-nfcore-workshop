@@ -40,6 +40,11 @@ website:
           href: notebooks/2.4_multiConfig.html
       - text: "Tips & Tricks"
         href: tips_tricks.html
+  cookie-consent: 
+    type: express
+    style: simple
+    palette: light
+    policy-url: https://www.sydney.edu.au/privacy-statement.html
   google-analytics: "G-TNWWV3HK57"
   body-footer: "<div style='font-size: 14px;'>All materials copyright Sydney Informatics Hub, University of Sydney</div>"
 
